@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=6 format=3 uid="uid://c3q0txluph24y"]
+
+[ext_resource type="Script" path="res://Combat/Core/ItemResource.cs" id="1_150a0"]
+[ext_resource type="Script" path="res://Combat/Core/StatContainer.cs" id="1_ktx6g"]
+[ext_resource type="Script" path="res://Combat/Core/Stat.cs" id="2_2yvpj"]
+
+[sub_resource type="Resource" id="Resource_qvkyg"]
+script = ExtResource("2_2yvpj")
+statType = 0
+value = 3
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_e22ji"]
+script = ExtResource("1_ktx6g")
+stats = [SubResource("Resource_qvkyg")]
+
+[resource]
+script = ExtResource("1_150a0")
+name = "Leather Cuirass"
+description = "Heavy
++3 constitution"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 3
+itemCategory = 3
+price = 0
+affectedStats = SubResource("Resource_e22ji")
+usableOutsideCombat = false

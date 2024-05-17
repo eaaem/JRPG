@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cdlo1pemj7l26"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_tkk1p"]
+
+[node name="Back" type="Panel"]
+custom_minimum_size = Vector2(20, 20)
+size_flags_stretch_ratio = 0.0
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(10, 10)
+texture = SubResource("CanvasTexture_tkk1p")

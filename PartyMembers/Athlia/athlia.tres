@@ -1,0 +1,181 @@
+[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=34 format=3 uid="uid://0y8iemdigx00"]
+
+[ext_resource type="Resource" uid="uid://lx78kbhd5261" path="res://CombatOld/Abilities/Player/Resources/minor_heal.tres" id="1_eyugy"]
+[ext_resource type="Script" path="res://PartyMembers/PartyMemberBase.cs" id="2_t3evx"]
+[ext_resource type="Resource" uid="uid://bpy8me6753noe" path="res://CombatOld/Abilities/Player/Resources/heartburst.tres" id="3_ur7c3"]
+[ext_resource type="Script" path="res://Combat/Core/StatContainer.cs" id="4_fk4sf"]
+[ext_resource type="Script" path="res://Combat/Core/Stat.cs" id="5_0lmme"]
+
+[sub_resource type="Resource" id="Resource_is12c"]
+script = ExtResource("5_0lmme")
+statType = 1
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_4t25u"]
+script = ExtResource("5_0lmme")
+statType = 3
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_wttku"]
+script = ExtResource("5_0lmme")
+statType = 5
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_lqttl"]
+script = ExtResource("4_fk4sf")
+stats = [SubResource("Resource_is12c"), SubResource("Resource_4t25u"), SubResource("Resource_wttku")]
+
+[sub_resource type="Resource" id="Resource_em5ir"]
+script = ExtResource("5_0lmme")
+statType = 0
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_d0yt3"]
+script = ExtResource("5_0lmme")
+statType = 4
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_pwgtv"]
+script = ExtResource("5_0lmme")
+statType = 1
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_xogdc"]
+script = ExtResource("5_0lmme")
+statType = 7
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_ijsi1"]
+script = ExtResource("4_fk4sf")
+stats = [SubResource("Resource_em5ir"), SubResource("Resource_d0yt3"), SubResource("Resource_pwgtv"), SubResource("Resource_xogdc")]
+
+[sub_resource type="Resource" id="Resource_60re2"]
+script = ExtResource("5_0lmme")
+statType = 8
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_qb4wp"]
+script = ExtResource("5_0lmme")
+statType = 1
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_o8s0v"]
+script = ExtResource("5_0lmme")
+statType = 5
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_u60t3"]
+script = ExtResource("5_0lmme")
+statType = 9
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_pscef"]
+script = ExtResource("4_fk4sf")
+stats = [SubResource("Resource_60re2"), SubResource("Resource_qb4wp"), SubResource("Resource_o8s0v"), SubResource("Resource_u60t3")]
+
+[sub_resource type="Resource" id="Resource_1hurl"]
+script = ExtResource("5_0lmme")
+statType = 8
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_bbjwe"]
+script = ExtResource("5_0lmme")
+statType = 0
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_en0mr"]
+script = ExtResource("5_0lmme")
+statType = 9
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_rq8gw"]
+script = ExtResource("4_fk4sf")
+stats = [SubResource("Resource_1hurl"), SubResource("Resource_bbjwe"), SubResource("Resource_en0mr")]
+
+[sub_resource type="Resource" id="Resource_1bqk1"]
+script = ExtResource("5_0lmme")
+statType = 0
+value = 3
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_2hvwu"]
+script = ExtResource("5_0lmme")
+statType = 1
+value = 12
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_hfgig"]
+script = ExtResource("5_0lmme")
+statType = 2
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_cl4vs"]
+script = ExtResource("5_0lmme")
+statType = 3
+value = 9
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_58gc1"]
+script = ExtResource("5_0lmme")
+statType = 4
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_fc1q7"]
+script = ExtResource("5_0lmme")
+statType = 5
+value = 5
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_ec5ms"]
+script = ExtResource("5_0lmme")
+statType = 6
+value = 7
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_sbkv1"]
+script = ExtResource("5_0lmme")
+statType = 7
+value = 5
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_kjkpx"]
+script = ExtResource("5_0lmme")
+statType = 8
+value = 9
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_u3gn0"]
+script = ExtResource("5_0lmme")
+statType = 9
+value = 1
+baseValue = 0
+
+[resource]
+script = ExtResource("2_t3evx")
+memberName = "Athlia"
+memberType = 3
+stats = [SubResource("Resource_1bqk1"), SubResource("Resource_2hvwu"), SubResource("Resource_hfgig"), SubResource("Resource_cl4vs"), SubResource("Resource_58gc1"), SubResource("Resource_fc1q7"), SubResource("Resource_ec5ms"), SubResource("Resource_sbkv1"), SubResource("Resource_kjkpx"), SubResource("Resource_u3gn0")]
+statIncreasesPerLevel = [SubResource("Resource_lqttl"), SubResource("Resource_ijsi1"), SubResource("Resource_pscef"), SubResource("Resource_rq8gw"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+abilities = [ExtResource("1_eyugy")]
+specialAbility = ExtResource("3_ur7c3")
+affinity = 6
+passiveName = "Kind"
+passiveDescription = "Athlia’s attacks deal only 10% damage. Athlia’s heals and buffs are increased in strength by 50%."
+itemCategoryWorn = 1
+itemCategoryWielded = 0

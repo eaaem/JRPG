@@ -1,0 +1,68 @@
+[gd_resource type="Resource" script_class="StatContainer" load_steps=13 format=3 uid="uid://ddlpl4vxbsicc"]
+
+[ext_resource type="Script" path="res://Combat/Core/StatContainer.cs" id="1_2f04g"]
+[ext_resource type="Script" path="res://Combat/Core/Stat.cs" id="2_7af6q"]
+
+[sub_resource type="Resource" id="Resource_g7nct"]
+script = ExtResource("2_7af6q")
+statType = 0
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_33cop"]
+script = ExtResource("2_7af6q")
+statType = 1
+value = 15
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_j31kk"]
+script = ExtResource("2_7af6q")
+statType = 2
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_eu7pt"]
+script = ExtResource("2_7af6q")
+statType = 3
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_7fuyv"]
+script = ExtResource("2_7af6q")
+statType = 4
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_ynvmq"]
+script = ExtResource("2_7af6q")
+statType = 5
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_4jjs5"]
+script = ExtResource("2_7af6q")
+statType = 6
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_tjkl4"]
+script = ExtResource("2_7af6q")
+statType = 7
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_m7psj"]
+script = ExtResource("2_7af6q")
+statType = 8
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_m7mu8"]
+script = ExtResource("2_7af6q")
+statType = 9
+value = 0
+baseValue = 0
+
+[resource]
+script = ExtResource("1_2f04g")
+stats = [SubResource("Resource_g7nct"), SubResource("Resource_33cop"), SubResource("Resource_j31kk"), SubResource("Resource_eu7pt"), SubResource("Resource_7fuyv"), SubResource("Resource_ynvmq"), SubResource("Resource_4jjs5"), SubResource("Resource_tjkl4"), SubResource("Resource_m7psj"), SubResource("Resource_m7mu8")]

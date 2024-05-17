@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://b3661813p24qo"]
+
+[ext_resource type="Script" path="res://Combat/Core/AbilityResource.cs" id="1_116kt"]
+
+[resource]
+script = ExtResource("1_116kt")
+name = "MinorHeal"
+description = ""
+manaCost = 0
+scriptName = "EnemyHeal"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = true
+hitsTeam = true
+bypassesDeaths = false
+requiredLevel = 0

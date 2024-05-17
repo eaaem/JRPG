@@ -1,0 +1,193 @@
+[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=36 format=3 uid="uid://b6424vyj7dspo"]
+
+[ext_resource type="Resource" uid="uid://w2syul01fgj0" path="res://CombatOld/Abilities/Player/Resources/rend.tres" id="1_w51kx"]
+[ext_resource type="Script" path="res://PartyMembers/PartyMemberBase.cs" id="2_26irj"]
+[ext_resource type="Resource" uid="uid://c0firmfb658pd" path="res://CombatOld/Abilities/Player/Resources/enrage.tres" id="3_ossxt"]
+[ext_resource type="Script" path="res://Combat/Core/StatContainer.cs" id="4_qm4wy"]
+[ext_resource type="Script" path="res://Combat/Core/Stat.cs" id="5_w5ef2"]
+
+[sub_resource type="Resource" id="Resource_bjaub"]
+script = ExtResource("5_w5ef2")
+statType = 0
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_37yef"]
+script = ExtResource("5_w5ef2")
+statType = 2
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_oefb2"]
+script = ExtResource("5_w5ef2")
+statType = 4
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_aun7w"]
+script = ExtResource("5_w5ef2")
+statType = 5
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_0uxnb"]
+script = ExtResource("4_qm4wy")
+stats = [SubResource("Resource_bjaub"), SubResource("Resource_37yef"), SubResource("Resource_oefb2"), SubResource("Resource_aun7w")]
+
+[sub_resource type="Resource" id="Resource_yjyws"]
+script = ExtResource("5_w5ef2")
+statType = 1
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_jn8js"]
+script = ExtResource("5_w5ef2")
+statType = 0
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_b4uh2"]
+script = ExtResource("5_w5ef2")
+statType = 8
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_x6eig"]
+script = ExtResource("5_w5ef2")
+statType = 6
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_6ca5y"]
+script = ExtResource("4_qm4wy")
+stats = [SubResource("Resource_yjyws"), SubResource("Resource_jn8js"), SubResource("Resource_b4uh2"), SubResource("Resource_x6eig")]
+
+[sub_resource type="Resource" id="Resource_7ue47"]
+script = ExtResource("5_w5ef2")
+statType = 9
+value = 3
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_krdx2"]
+script = ExtResource("5_w5ef2")
+statType = 0
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_eegln"]
+script = ExtResource("5_w5ef2")
+statType = 2
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_i8ole"]
+script = ExtResource("5_w5ef2")
+statType = 1
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_3ogae"]
+script = ExtResource("4_qm4wy")
+stats = [SubResource("Resource_7ue47"), SubResource("Resource_krdx2"), SubResource("Resource_eegln"), SubResource("Resource_i8ole")]
+
+[sub_resource type="Resource" id="Resource_4c5ji"]
+script = ExtResource("5_w5ef2")
+statType = 6
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_2x7dt"]
+script = ExtResource("5_w5ef2")
+statType = 4
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_2r5f5"]
+script = ExtResource("5_w5ef2")
+statType = 5
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_qc8tl"]
+script = ExtResource("5_w5ef2")
+statType = 2
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_qptqt"]
+script = ExtResource("4_qm4wy")
+stats = [SubResource("Resource_4c5ji"), SubResource("Resource_2x7dt"), SubResource("Resource_2r5f5"), SubResource("Resource_qc8tl")]
+
+[sub_resource type="Resource" id="Resource_t25pn"]
+script = ExtResource("5_w5ef2")
+statType = 0
+value = 10
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_5gxje"]
+script = ExtResource("5_w5ef2")
+statType = 1
+value = 5
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_mupom"]
+script = ExtResource("5_w5ef2")
+statType = 2
+value = 14
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_jad1v"]
+script = ExtResource("5_w5ef2")
+statType = 3
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_jfa5e"]
+script = ExtResource("5_w5ef2")
+statType = 4
+value = 8
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_2kk5y"]
+script = ExtResource("5_w5ef2")
+statType = 5
+value = 8
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_j87gw"]
+script = ExtResource("5_w5ef2")
+statType = 6
+value = 5
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_rypt4"]
+script = ExtResource("5_w5ef2")
+statType = 7
+value = 6
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_i752s"]
+script = ExtResource("5_w5ef2")
+statType = 8
+value = 7
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_1114y"]
+script = ExtResource("5_w5ef2")
+statType = 9
+value = 8
+baseValue = 0
+
+[resource]
+script = ExtResource("2_26irj")
+memberName = "Vakthol"
+memberType = 1
+stats = [SubResource("Resource_t25pn"), SubResource("Resource_5gxje"), SubResource("Resource_mupom"), SubResource("Resource_jad1v"), SubResource("Resource_jfa5e"), SubResource("Resource_2kk5y"), SubResource("Resource_j87gw"), SubResource("Resource_rypt4"), SubResource("Resource_i752s"), SubResource("Resource_1114y")]
+statIncreasesPerLevel = [SubResource("Resource_0uxnb"), SubResource("Resource_6ca5y"), SubResource("Resource_3ogae"), SubResource("Resource_qptqt"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+abilities = [ExtResource("1_w51kx")]
+specialAbility = ExtResource("3_ossxt")
+affinity = 5
+passiveName = "Berserker"
+passiveDescription = "Vakthol’s damage scales up the more health he has, up to 100% more damage at maximum health. His physical and magical defense scale up the less health he has, up to 100% more defense at one health."
+itemCategoryWorn = 3
+itemCategoryWielded = 6

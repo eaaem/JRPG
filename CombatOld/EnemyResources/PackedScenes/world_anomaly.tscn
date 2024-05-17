@@ -1,0 +1,29 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5fbvuvk8bfpt"]
+
+[ext_resource type="PackedScene" uid="uid://w38bu8yq1t63" path="res://CombatOld/EnemyResources/Models/anomaly.glb" id="1_1hoa3"]
+[ext_resource type="Script" path="res://CombatOld/Scripts/WorldEnemy.cs" id="1_ls8yo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_x1tw4"]
+size = Vector3(1.5, 1.5, 4)
+
+[node name="WorldAnomaly" type="CharacterBody3D"]
+script = ExtResource("1_ls8yo")
+
+[node name="Model" parent="." instance=ExtResource("1_1hoa3")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.761, 0.712209)
+shape = SubResource("BoxShape3D_x1tw4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.761, 0.712209)
+shape = SubResource("BoxShape3D_x1tw4")
+
+[connection signal="body_entered" from="Area3D" to="." method="OnBodyEntered"]

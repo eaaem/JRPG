@@ -1,0 +1,77 @@
+[gd_resource type="Resource" load_steps=17 format=3 uid="uid://d2xt5m6uos6gt"]
+
+[ext_resource type="Resource" uid="uid://bty7yryqil7jl" path="res://CombatOld/Abilities/Enemy/Resources/bite.tres" id="1_b5vvu"]
+[ext_resource type="Script" path="res://Combat/Core/Enemy.cs" id="1_cxmnj"]
+[ext_resource type="PackedScene" uid="uid://bht2re1xoovps" path="res://CombatOld/EnemyResources/PackedScenes/lupine_anomaly.tscn" id="1_r0ngd"]
+[ext_resource type="Resource" uid="uid://d2vnsafyfiu0i" path="res://CombatOld/Abilities/Enemy/Resources/bloodlet.tres" id="2_jtmi4"]
+[ext_resource type="Script" path="res://Combat/Core/Stat.cs" id="3_8722r"]
+[ext_resource type="Resource" uid="uid://de0oher4b5hb6" path="res://CombatOld/Abilities/Enemy/Resources/howl.tres" id="3_c73x0"]
+
+[sub_resource type="Resource" id="Resource_8y2bf"]
+script = ExtResource("3_8722r")
+statType = 0
+value = 50
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_hm27w"]
+script = ExtResource("3_8722r")
+statType = 1
+value = 11
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_swv0l"]
+script = ExtResource("3_8722r")
+statType = 2
+value = 14
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_s33mn"]
+script = ExtResource("3_8722r")
+statType = 3
+value = 11
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_ixhjd"]
+script = ExtResource("3_8722r")
+statType = 4
+value = 12
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_laxf5"]
+script = ExtResource("3_8722r")
+statType = 5
+value = 8
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_ahnf1"]
+script = ExtResource("3_8722r")
+statType = 6
+value = 15
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_2u5sc"]
+script = ExtResource("3_8722r")
+statType = 7
+value = 10
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_2ggm5"]
+script = ExtResource("3_8722r")
+statType = 8
+value = 9
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_7moac"]
+script = ExtResource("3_8722r")
+statType = 9
+value = 100
+baseValue = 0
+
+[resource]
+script = ExtResource("1_cxmnj")
+enemyName = "Lupine Anomaly"
+level = 5
+stats = [SubResource("Resource_8y2bf"), SubResource("Resource_hm27w"), SubResource("Resource_swv0l"), SubResource("Resource_s33mn"), SubResource("Resource_ixhjd"), SubResource("Resource_laxf5"), SubResource("Resource_ahnf1"), SubResource("Resource_2u5sc"), SubResource("Resource_2ggm5"), SubResource("Resource_7moac")]
+model = ExtResource("1_r0ngd")
+affinity = 1
+abilities = [ExtResource("1_b5vvu"), ExtResource("2_jtmi4"), ExtResource("3_c73x0")]

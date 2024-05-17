@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://b0itiinn5nr7j"]
+
+[ext_resource type="StyleBox" uid="uid://bc3272th8cw8m" path="res://CombatOld/Themes/base_party_highlight.tres" id="1_d6b1i"]
+[ext_resource type="Script" path="res://CombatOld/Abilities/Scripts/OlrenSpecialArrowHolder.cs" id="1_vtjp0"]
+
+[node name="AbilityButton1" type="Button"]
+custom_minimum_size = Vector2(150, 0)
+offset_right = 200.0
+offset_bottom = 25.0
+tooltip_text = "tes t test teset"
+theme_override_font_sizes/font_size = 15
+text = "Test"
+
+[node name="Highlight" type="Panel" parent="."]
+visible = false
+show_behind_parent = true
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 30.0
+theme_override_styles/panel = ExtResource("1_d6b1i")
+
+[node name="ScriptHolder" type="Node2D" parent="."]
+script = ExtResource("1_vtjp0")

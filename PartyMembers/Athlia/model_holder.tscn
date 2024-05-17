@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=3 uid="uid://dgg48odnop3d3"]
+
+[ext_resource type="PackedScene" uid="uid://c11giyurtxndd" path="res://PartyMembers/Athlia/athlia.glb" id="1_tg700"]
+[ext_resource type="Script" path="res://Dialogue/Scripts/DialogueInteraction.cs" id="3_pspvd"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_snhpk"]
+radius = 0.25
+height = 1.7
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6jyj8"]
+size = Vector3(1, 2, 1)
+
+[node name="athlia_holder" type="Node3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.83816, 0)
+shape = SubResource("CapsuleShape3D_snhpk")
+
+[node name="Model" parent="." instance=ExtResource("1_tg700")]
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+path_desired_distance = 0.5
+target_desired_distance = 0.5
+
+[node name="BackAnchor" type="Node3D" parent="."]
+transform = Transform3D(0.87339, -0.487022, 0, 0.487022, 0.87339, 0, 0, 0, 1, 0.405872, -0.481838, -0.155067)
+
+[node name="IdleCombatAnchor" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1)
+
+[node name="DialogueHolder" type="Node3D" parent="."]
+script = ExtResource("3_pspvd")
+
+[node name="DialogueBox" type="StaticBody3D" parent="."]
+collision_layer = 4
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DialogueBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.02305, 0)
+shape = SubResource("BoxShape3D_6jyj8")
+
+[node name="Weapon" type="Node3D" parent="."]
+
+[node name="CameraPositioner" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.3166, 0)
+
+[node name="SecondaryAnchor" type="Node3D" parent="."]
+transform = Transform3D(-0.158533, -0.487022, 0.858881, -0.0884016, 0.87339, 0.478932, -0.983388, 2.23517e-08, -0.181515, 0.303228, -0.2582, -0.144977)
+
+[node name="SecondaryWeapon" type="Node3D" parent="."]
+transform = Transform3D(-0.158533, -0.487022, 0.858881, -0.0884016, 0.87339, 0.478932, -0.983388, 2.23517e-08, -0.181515, 0.303228, -0.2582, -0.144977)

@@ -1,0 +1,634 @@
+[gd_resource type="Resource" script_class="CutsceneObject" load_steps=108 format=3 uid="uid://c43prhpve5kq0"]
+
+[ext_resource type="Script" path="res://Dialogue/Scripts/DialogueObject.cs" id="1_dojiv"]
+[ext_resource type="Script" path="res://Cutscenes/ActorBehavior.cs" id="1_jwsqp"]
+[ext_resource type="Script" path="res://Cutscenes/CutsceneObject.cs" id="1_u1tyt"]
+[ext_resource type="Script" path="res://Cutscenes/ActorStatus.cs" id="2_fky42"]
+[ext_resource type="Script" path="res://Dialogue/Scripts/DialogueList.cs" id="2_w44sn"]
+[ext_resource type="Script" path="res://Dialogue/Scripts/InspectorDialogueInteraction.cs" id="3_k8rm4"]
+
+[sub_resource type="Resource" id="Resource_oiikw"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("lupine_anomaly-place--100,0,653", "lupine_anomaly-rot-48", "vakthol-place--99,0,650", "vakthol-rot--26", "thalria-place--97,0,649", "thalria-rot--44", "olren-place--95,0,651", "olren-rot--62", "athlia-place--94,0,652", "athlia-rot--73")
+
+[sub_resource type="Resource" id="Resource_3mj0r"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_yhgdf"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_f2f4d"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_57a01"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_m21s1"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_2hm3w"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("thalria-rot-122")
+
+[sub_resource type="Resource" id="Resource_bg0w6"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("olren-rot--129", "athlia-rot--129", "vakthol-rot-86")
+
+[sub_resource type="Resource" id="Resource_ixsa7"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_mqgl1"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("thalria-rot--44")
+
+[sub_resource type="Resource" id="Resource_51fok"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_0n2j0"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_18emc"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_gyjew"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("thalria-rot-40")
+
+[sub_resource type="Resource" id="Resource_6ik44"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_66dwl"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("olren-rot-160", "olren-move--95,0,652", "lock_speech", "pause-0.5", "unlock_speech", "vakthol-rot-160", "athlia-rot-160", "thalria-rot-160")
+
+[sub_resource type="Resource" id="Resource_g6wc8"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_v11gp"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("thalria-rot--38")
+
+[sub_resource type="Resource" id="Resource_wrkkj"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("thalria-move--98,0,651")
+
+[sub_resource type="Resource" id="Resource_nww08"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_7sa3x"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_xwatr"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_og4ne"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_2dhe4"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_cfpq4"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_jor3a"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("vakthol-rot--133", "lock_speech", "pause-1.5", "unlock_speech")
+
+[sub_resource type="Resource" id="Resource_j35of"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_dm7mp"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_aamtf"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("vakthol-rot-160")
+
+[sub_resource type="Resource" id="Resource_jggly"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_fhkj2"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_rovex"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_f3p2w"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("vakthol-rot--7", "athlia-rot--96", "olren-rot--96")
+
+[sub_resource type="Resource" id="Resource_hrqew"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_avy6q"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_3skjj"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_tdv3y"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("vakthol-rot-90")
+
+[sub_resource type="Resource" id="Resource_wqwv4"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("athlia-rot--90", "olren-rot--90")
+
+[sub_resource type="Resource" id="Resource_m8ujm"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_h7751"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("thalria-rot-123")
+
+[sub_resource type="Resource" id="Resource_fy4ir"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_2mvjk"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_37oum"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("lock_speech", "pause-3", "hide_speech", "thalria-rot-162", "thalria-move--95,0,635", "pause-2", "vakthol-rot-162", "vakthol-move--95,0,635", "pause-1.5", "olren-rot-170", "olren-move--95,0,635", "pause-2", "athlia-rot--160", "athlia-move--97,0,645", "pause-4.5", "athlia-rot--15", "show_speech", "unlock_speech", "speak_next")
+
+[sub_resource type="Resource" id="Resource_aum0n"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_wdoka"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_5gjbc"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray("lock_speech", "hide_speech", "pause-1", "athlia-rot--160", "athlia-move--95,0,635", "pause-3", "show_speech", "unlock_speech", "speak_next")
+
+[sub_resource type="Resource" id="Resource_2y31k"]
+script = ExtResource("1_jwsqp")
+commands = PackedStringArray()
+
+[sub_resource type="Resource" id="Resource_6j3e4"]
+script = ExtResource("2_fky42")
+actorName = "lupine_anomaly"
+idleAnim = "Dead"
+walkAnim = ""
+moveSpeed = 0.0
+tiedMember = ""
+
+[sub_resource type="Resource" id="Resource_6t3ww"]
+script = ExtResource("2_fky42")
+actorName = "vakthol"
+idleAnim = "Idle"
+walkAnim = "Walk"
+moveSpeed = 2.5
+tiedMember = ""
+
+[sub_resource type="Resource" id="Resource_80gaw"]
+script = ExtResource("2_fky42")
+actorName = "thalria"
+idleAnim = "Idle"
+walkAnim = "Walk"
+moveSpeed = 2.5
+tiedMember = ""
+
+[sub_resource type="Resource" id="Resource_vy5ew"]
+script = ExtResource("2_fky42")
+actorName = "athlia"
+idleAnim = "Idle"
+walkAnim = "Walk"
+moveSpeed = 2.5
+tiedMember = ""
+
+[sub_resource type="Resource" id="Resource_l85p5"]
+script = ExtResource("2_fky42")
+actorName = "olren"
+idleAnim = "Idle"
+walkAnim = "Walk"
+moveSpeed = 2.5
+tiedMember = ""
+
+[sub_resource type="Resource" id="Resource_2r2ld"]
+script = ExtResource("1_dojiv")
+speaker = "Olren"
+characterType = 0
+emotion = 0
+content = "...I-is it dead?"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_xk4q1"]
+script = ExtResource("1_dojiv")
+speaker = "Vakthol"
+characterType = 0
+emotion = 0
+content = "[i]Ha![/i] Not even a challenge!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_0svwn"]
+script = ExtResource("1_dojiv")
+speaker = "Thalria"
+characterType = 0
+emotion = 0
+content = "Sure. As if you would've stood a chance without us here."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_nefe8"]
+script = ExtResource("1_dojiv")
+speaker = "Vakthol"
+characterType = 0
+emotion = 0
+content = "Pft, are you kidding? That was [i]easy.[/i]"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_l5aub"]
+script = ExtResource("1_dojiv")
+speaker = "Thalria"
+characterType = 0
+emotion = 0
+content = "Solnara, you're insufferable."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_a3msl"]
+script = ExtResource("1_dojiv")
+speaker = "Athlia"
+characterType = 0
+emotion = 0
+content = "What matters in the end is that we did it! Theralin is saved!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_41ep7"]
+script = ExtResource("1_dojiv")
+speaker = "Thalria"
+characterType = 0
+emotion = 0
+content = "...Well..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_2bhmk"]
+script = ExtResource("1_dojiv")
+speaker = "Olren"
+characterType = 0
+emotion = 0
+content = "H-huh?"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_tnsul"]
+script = ExtResource("1_dojiv")
+speaker = "Thalria"
+characterType = 0
+emotion = 0
+content = "..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_teleg"]
+script = ExtResource("1_dojiv")
+speaker = "Thalria"
+characterType = 0
+emotion = 0
+content = "It's an Anomaly. Either it randomly formed, or..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_xcdjl"]
+script = ExtResource("1_dojiv")
+speaker = "Olren"
+characterType = 0
+emotion = 0
+content = "Or... what?"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_3jr1o"]
+script = ExtResource("1_dojiv")
+speaker = "Thalria"
+characterType = 0
+emotion = 0
+content = "I... I can't remember. I [i]know[/i] Dad said something about this to me, but it's... it's just on the tip of my tongue..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_qiirr"]
+script = ExtResource("1_dojiv")
+speaker = "Athlia"
+characterType = 0
+emotion = 0
+content = "Don't worry, Thalria. It probably was just random, like you said!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_3alch"]
+script = ExtResource("1_dojiv")
+speaker = "Thalria"
+characterType = 0
+emotion = 0
+content = "No, no, something is [i]not[/i] right here. It can't be -"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_wee7m"]
+script = ExtResource("1_dojiv")
+speaker = "???"
+characterType = 0
+emotion = 0
+content = "Oh, thank the gods!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_ikvl0"]
+script = ExtResource("1_dojiv")
+speaker = "Olren"
+characterType = 0
+emotion = 0
+content = "Ack!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_wqeap"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "Solnara, I was so worried! Are you all alright?"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_guyik"]
+script = ExtResource("1_dojiv")
+speaker = "Vakthol"
+characterType = 0
+emotion = 0
+content = "We're all good here."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_g3hnx"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "Oh, thank Solnara! You could've gotten lost, or been bitten by something poisonous, or been injured, or -"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_ddslf"]
+script = ExtResource("1_dojiv")
+speaker = "Vakthol"
+characterType = 0
+emotion = 0
+content = "Hey. We're fine."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_7c2sw"]
+script = ExtResource("1_dojiv")
+speaker = "Olren"
+characterType = 0
+emotion = 0
+content = "Y-yeah. We even got the Anomaly!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_l1pgl"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "Oh!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_xcrer"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "That's why you ran off here? Gods, how dangerous!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_7p6nr"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_rn5sx"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "Vakthol, you swore to me you wouldn't do this..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_xfqh6"]
+script = ExtResource("1_dojiv")
+speaker = "Vakthol"
+characterType = 0
+emotion = 0
+content = "..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_mf4l6"]
+script = ExtResource("1_dojiv")
+speaker = "Athlia"
+characterType = 0
+emotion = 0
+content = "But... it all turned out, right?"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_vdeto"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "I... I guess so."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_gywnd"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "I just... please, don't do this again. You could've been killed!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_bd421"]
+script = ExtResource("1_dojiv")
+speaker = "Olren"
+characterType = 0
+emotion = 0
+content = "...S-sorry."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_gf3bv"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_ih2a3"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "Is everything alright, Thalria?"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_g5ef7"]
+script = ExtResource("1_dojiv")
+speaker = "Thalria"
+characterType = 0
+emotion = 0
+content = "Mmm... it's definitely an Anomaly, but it doesn't [i]look[/i] random..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_animx"]
+script = ExtResource("1_dojiv")
+speaker = "Thalria"
+characterType = 0
+emotion = 0
+content = "And if you consider how quickly we're becoming stronger, then..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_xgxts"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_e0ccu"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "Erm... why don't you all head back to Theralin, and grab yourselves something at the tavern?"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_vuvfw"]
+script = ExtResource("1_dojiv")
+speaker = "Vakthol"
+characterType = 0
+emotion = 0
+content = "Can't disagree with that. Man, I'm [i]starving.[/i]"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_viecn"]
+script = ExtResource("1_dojiv")
+speaker = "Athlia"
+characterType = 0
+emotion = 0
+content = "And we can tell Theralin the good news!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_hj6nt"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "Thalria? How about it?"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_hb6tw"]
+script = ExtResource("1_dojiv")
+speaker = "Thalria"
+characterType = 0
+emotion = 0
+content = "But I can't stop now! I'm so [i]close[/i] to remembering, I just need more time!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_l5h0k"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "It'll still be here when you're done. I'll keep an eye on it for you, okay?"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_v3u1x"]
+script = ExtResource("1_dojiv")
+speaker = "Thalria"
+characterType = 0
+emotion = 0
+content = "..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_2dplp"]
+script = ExtResource("1_dojiv")
+speaker = "Thalria"
+characterType = 0
+emotion = 0
+content = "Right..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_ffy51"]
+script = ExtResource("1_dojiv")
+speaker = "Athlia"
+characterType = 0
+emotion = 0
+content = "We'll bring you back something, Uncle Dathrel!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_2jonx"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "...Thanks, Athlia."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_buu1m"]
+script = ExtResource("1_dojiv")
+speaker = ""
+characterType = 0
+emotion = 0
+content = ""
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_7uoke"]
+script = ExtResource("1_dojiv")
+speaker = "Dathrel"
+characterType = 0
+emotion = 0
+content = "..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_yuy3p"]
+script = ExtResource("2_w44sn")
+dialogues = [SubResource("Resource_2r2ld"), SubResource("Resource_xk4q1"), SubResource("Resource_0svwn"), SubResource("Resource_nefe8"), SubResource("Resource_l5aub"), SubResource("Resource_a3msl"), SubResource("Resource_41ep7"), SubResource("Resource_2bhmk"), SubResource("Resource_tnsul"), SubResource("Resource_teleg"), SubResource("Resource_xcdjl"), SubResource("Resource_3jr1o"), SubResource("Resource_qiirr"), SubResource("Resource_3alch"), SubResource("Resource_wee7m"), SubResource("Resource_ikvl0"), SubResource("Resource_wqeap"), SubResource("Resource_guyik"), SubResource("Resource_g3hnx"), SubResource("Resource_ddslf"), SubResource("Resource_7c2sw"), SubResource("Resource_l1pgl"), SubResource("Resource_xcrer"), SubResource("Resource_7p6nr"), SubResource("Resource_rn5sx"), SubResource("Resource_xfqh6"), SubResource("Resource_mf4l6"), SubResource("Resource_vdeto"), SubResource("Resource_gywnd"), SubResource("Resource_bd421"), SubResource("Resource_gf3bv"), SubResource("Resource_ih2a3"), SubResource("Resource_g5ef7"), SubResource("Resource_animx"), SubResource("Resource_xgxts"), SubResource("Resource_e0ccu"), SubResource("Resource_vuvfw"), SubResource("Resource_viecn"), SubResource("Resource_hj6nt"), SubResource("Resource_hb6tw"), SubResource("Resource_l5h0k"), SubResource("Resource_v3u1x"), SubResource("Resource_2dplp"), SubResource("Resource_ffy51"), SubResource("Resource_2jonx"), SubResource("Resource_buu1m"), SubResource("Resource_7uoke")]
+branchName = ""
+isBranching = false
+branchingDialogues = [null]
+
+[sub_resource type="Resource" id="Resource_0qb6a"]
+script = ExtResource("3_k8rm4")
+dialogues = SubResource("Resource_yuy3p")
+associatedInteractor = 0
+associatedReceiver = 0
+
+[resource]
+script = ExtResource("1_u1tyt")
+actorBehaviors = [SubResource("Resource_oiikw"), SubResource("Resource_3mj0r"), SubResource("Resource_yhgdf"), SubResource("Resource_f2f4d"), SubResource("Resource_57a01"), SubResource("Resource_m21s1"), SubResource("Resource_2hm3w"), SubResource("Resource_bg0w6"), SubResource("Resource_ixsa7"), SubResource("Resource_mqgl1"), SubResource("Resource_51fok"), SubResource("Resource_0n2j0"), SubResource("Resource_18emc"), SubResource("Resource_gyjew"), SubResource("Resource_6ik44"), SubResource("Resource_66dwl"), SubResource("Resource_g6wc8"), SubResource("Resource_v11gp"), SubResource("Resource_wrkkj"), SubResource("Resource_nww08"), SubResource("Resource_7sa3x"), SubResource("Resource_xwatr"), SubResource("Resource_og4ne"), SubResource("Resource_2dhe4"), SubResource("Resource_cfpq4"), SubResource("Resource_jor3a"), SubResource("Resource_j35of"), SubResource("Resource_dm7mp"), SubResource("Resource_aamtf"), SubResource("Resource_jggly"), SubResource("Resource_fhkj2"), SubResource("Resource_rovex"), SubResource("Resource_f3p2w"), SubResource("Resource_hrqew"), SubResource("Resource_avy6q"), SubResource("Resource_3skjj"), SubResource("Resource_tdv3y"), SubResource("Resource_wqwv4"), SubResource("Resource_m8ujm"), SubResource("Resource_h7751"), SubResource("Resource_fy4ir"), SubResource("Resource_2mvjk"), SubResource("Resource_37oum"), SubResource("Resource_aum0n"), SubResource("Resource_wdoka"), SubResource("Resource_5gjbc"), SubResource("Resource_2y31k")]
+actors = [SubResource("Resource_6j3e4"), SubResource("Resource_6t3ww"), SubResource("Resource_80gaw"), SubResource("Resource_vy5ew"), SubResource("Resource_l85p5")]
+dialogueInteraction = SubResource("Resource_0qb6a")
+hideParty = true
+cameraPosition = Vector3(-91.4286, 6.62758, 645.813)
+cameraRotation = Vector3(-0.438967, 2.30246, 0)

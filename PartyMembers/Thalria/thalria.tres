@@ -1,0 +1,187 @@
+[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=35 format=3 uid="uid://ck7wy6s7wajxw"]
+
+[ext_resource type="Script" path="res://PartyMembers/PartyMemberBase.cs" id="1_dk47k"]
+[ext_resource type="Resource" uid="uid://uhdvsljdtwyn" path="res://CombatOld/Abilities/Player/Resources/fireball.tres" id="1_lyvx3"]
+[ext_resource type="Resource" uid="uid://cbg64o2r8b2x" path="res://CombatOld/Abilities/Player/Resources/elemental_explosion.tres" id="2_0kyka"]
+[ext_resource type="Script" path="res://Combat/Core/Stat.cs" id="2_tmlbf"]
+[ext_resource type="Script" path="res://Combat/Core/StatContainer.cs" id="3_s0llh"]
+
+[sub_resource type="Resource" id="Resource_2jyjl"]
+script = ExtResource("2_tmlbf")
+statType = 3
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_38hit"]
+script = ExtResource("2_tmlbf")
+statType = 1
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_gdfcn"]
+script = ExtResource("2_tmlbf")
+statType = 8
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_rkx8r"]
+script = ExtResource("2_tmlbf")
+statType = 5
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_2ig6e"]
+script = ExtResource("3_s0llh")
+stats = [SubResource("Resource_2jyjl"), SubResource("Resource_38hit"), SubResource("Resource_gdfcn"), SubResource("Resource_rkx8r")]
+
+[sub_resource type="Resource" id="Resource_ui4we"]
+script = ExtResource("2_tmlbf")
+statType = 3
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_xcmdc"]
+script = ExtResource("2_tmlbf")
+statType = 1
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_wj8iv"]
+script = ExtResource("2_tmlbf")
+statType = 0
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_fg67n"]
+script = ExtResource("3_s0llh")
+stats = [SubResource("Resource_ui4we"), SubResource("Resource_xcmdc"), SubResource("Resource_wj8iv")]
+
+[sub_resource type="Resource" id="Resource_dgxm3"]
+script = ExtResource("2_tmlbf")
+statType = 1
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_jt7ob"]
+script = ExtResource("2_tmlbf")
+statType = 9
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_shi27"]
+script = ExtResource("2_tmlbf")
+statType = 3
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_n0e82"]
+script = ExtResource("2_tmlbf")
+statType = 7
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_7lthp"]
+script = ExtResource("3_s0llh")
+stats = [SubResource("Resource_dgxm3"), SubResource("Resource_jt7ob"), SubResource("Resource_shi27"), SubResource("Resource_n0e82")]
+
+[sub_resource type="Resource" id="Resource_pktdx"]
+script = ExtResource("2_tmlbf")
+statType = 0
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_sm7vr"]
+script = ExtResource("2_tmlbf")
+statType = 9
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_3cn4y"]
+script = ExtResource("2_tmlbf")
+statType = 8
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_7rp0a"]
+script = ExtResource("2_tmlbf")
+statType = 3
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_twreo"]
+script = ExtResource("3_s0llh")
+stats = [SubResource("Resource_pktdx"), SubResource("Resource_sm7vr"), SubResource("Resource_3cn4y"), SubResource("Resource_7rp0a")]
+
+[sub_resource type="Resource" id="Resource_7ejbf"]
+script = ExtResource("2_tmlbf")
+statType = 0
+value = 5
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_y83fi"]
+script = ExtResource("2_tmlbf")
+statType = 1
+value = 10
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_c1ao5"]
+script = ExtResource("2_tmlbf")
+statType = 2
+value = 3
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_esxch"]
+script = ExtResource("2_tmlbf")
+statType = 3
+value = 10
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_fobo4"]
+script = ExtResource("2_tmlbf")
+statType = 4
+value = 4
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_ll4yj"]
+script = ExtResource("2_tmlbf")
+statType = 5
+value = 7
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_b21jt"]
+script = ExtResource("2_tmlbf")
+statType = 6
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_umdyc"]
+script = ExtResource("2_tmlbf")
+statType = 7
+value = 5
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_vu2wb"]
+script = ExtResource("2_tmlbf")
+statType = 8
+value = 8
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_ml2yi"]
+script = ExtResource("2_tmlbf")
+statType = 9
+value = 4
+baseValue = 0
+
+[resource]
+script = ExtResource("1_dk47k")
+memberName = "Thalria"
+memberType = 2
+stats = [SubResource("Resource_7ejbf"), SubResource("Resource_y83fi"), SubResource("Resource_c1ao5"), SubResource("Resource_esxch"), SubResource("Resource_fobo4"), SubResource("Resource_ll4yj"), SubResource("Resource_b21jt"), SubResource("Resource_umdyc"), SubResource("Resource_vu2wb"), SubResource("Resource_ml2yi")]
+statIncreasesPerLevel = [SubResource("Resource_2ig6e"), SubResource("Resource_fg67n"), SubResource("Resource_7lthp"), SubResource("Resource_twreo"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
+abilities = [ExtResource("1_lyvx3")]
+specialAbility = ExtResource("2_0kyka")
+affinity = 8
+passiveName = "Perfectionist"
+passiveDescription = "Thalria's abilities and attacks always hit."
+itemCategoryWorn = 2
+itemCategoryWielded = 5

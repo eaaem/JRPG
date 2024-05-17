@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://cxn2617gd032j"]
+
+[ext_resource type="PackedScene" uid="uid://c8sbeheqi10fl" path="res://PartyMembers/Vakthol/vakthol.glb" id="1_bdygk"]
+[ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_s2ilf"]
+[ext_resource type="PackedScene" uid="uid://yhwlyfetwmre" path="res://PartyMembers/Vakthol/vakthol_axe.glb" id="2_ota3g"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x2kqx"]
+
+[node name="vakthol" type="CharacterBody3D"]
+collision_mask = 0
+script = ExtResource("1_s2ilf")
+
+[node name="Model" parent="." instance=ExtResource("1_bdygk")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.974979, 0)
+shape = SubResource("CapsuleShape3D_x2kqx")
+
+[node name="BackAnchor" type="Node3D" parent="."]
+transform = Transform3D(0.87339, -0.487022, 0, 0.487022, 0.87339, 0, 0, 0, 1, 0.416, -0.5, -0.129)
+
+[node name="Weapon" parent="." instance=ExtResource("2_ota3g")]
+visible = false

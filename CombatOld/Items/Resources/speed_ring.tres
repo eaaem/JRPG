@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=6 format=3 uid="uid://b7k5er341gpds"]
+
+[ext_resource type="Script" path="res://Combat/Core/StatContainer.cs" id="1_y0goe"]
+[ext_resource type="Script" path="res://Combat/Core/Stat.cs" id="2_h3xsk"]
+[ext_resource type="Script" path="res://Combat/Core/ItemResource.cs" id="2_pem7t"]
+
+[sub_resource type="Resource" id="Resource_e3u12"]
+script = ExtResource("2_h3xsk")
+statType = 8
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_yi5cr"]
+script = ExtResource("1_y0goe")
+stats = [SubResource("Resource_e3u12")]
+
+[resource]
+script = ExtResource("2_pem7t")
+name = "Speed Ring"
+description = "Accessory
++2 speed"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 6
+itemCategory = 0
+price = 100
+affectedStats = SubResource("Resource_yi5cr")
+usableOutsideCombat = false

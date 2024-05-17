@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://cwee74btvhq8k"]
+
+[node name="HolderParent" type="Node3D"]
+
+[node name="Holder" type="Node3D" parent="."]

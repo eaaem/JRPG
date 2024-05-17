@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://cvour86yaerwa"]
+
+[ext_resource type="Script" path="res://Combat/Core/AbilityResource.cs" id="1_h8s7w"]
+
+[resource]
+script = ExtResource("1_h8s7w")
+name = "Bird's-eye"
+description = "Increases the accuracy of self and allies by 25% for 3 turns."
+manaCost = 3
+scriptName = "Birdseye"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = true
+hitsTeam = true
+onlyHitsTeam = true
+bypassesDeaths = false
+requiredLevel = 2

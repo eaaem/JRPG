@@ -1,0 +1,162 @@
+[gd_resource type="Resource" script_class="InspectorDialogueInteraction" load_steps=23 format=3 uid="uid://qj2h22d5qxc1"]
+
+[ext_resource type="Script" path="res://Dialogue/Scripts/DialogueObject.cs" id="1_dbf66"]
+[ext_resource type="Script" path="res://Dialogue/Scripts/DialogueList.cs" id="1_jq830"]
+[ext_resource type="Script" path="res://Dialogue/Scripts/InspectorDialogueInteraction.cs" id="1_rwy0o"]
+
+[sub_resource type="Resource" id="Resource_xudt3"]
+script = ExtResource("1_dbf66")
+speaker = "Vakthol"
+characterType = 1
+emotion = 13
+content = "Now, hold on! [i]Stop![/i]"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_ukfaj"]
+script = ExtResource("1_dbf66")
+speaker = "Thalria"
+characterType = 2
+emotion = 13
+content = "Oh, enough of this, Vakthol! We're not letting you march out here alone like an idiot!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_eygul"]
+script = ExtResource("1_dbf66")
+speaker = "Vakthol"
+characterType = 1
+emotion = 17
+content = "Hey, I [i]know[/i] what I'm doing. None of you do! You'll get yourselves killed!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_shkst"]
+script = ExtResource("1_dbf66")
+speaker = "Thalria"
+characterType = 2
+emotion = 7
+content = "Solnara almighty, we're not helpless idiots!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_q31xq"]
+script = ExtResource("1_dbf66")
+speaker = "Vakthol"
+characterType = 1
+emotion = 3
+content = "..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_yij7c"]
+script = ExtResource("1_dbf66")
+speaker = "Vakthol"
+characterType = 1
+emotion = 17
+content = "Then you're fine with putting them in danger, [i]just[/i] to prove a point?"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_cf8v5"]
+script = ExtResource("1_dbf66")
+speaker = "Olren"
+characterType = 4
+emotion = 0
+content = "H-hey, we're useful, too! We can fight!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_twtw2"]
+script = ExtResource("1_dbf66")
+speaker = "Athlia"
+characterType = 0
+emotion = 0
+content = "Yeah!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_vqm8s"]
+script = ExtResource("1_dbf66")
+speaker = "Vakthol"
+characterType = 1
+emotion = 3
+content = "No. It's back to Theralin for all of you. [i]Now -[/i]"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_rk2eh"]
+script = ExtResource("1_dbf66")
+speaker = "Thalria"
+characterType = 2
+emotion = 10
+content = "If you send us back, we'll tell Uncle Dathrel that you're here."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_at15r"]
+script = ExtResource("1_dbf66")
+speaker = "Vakthol"
+characterType = 1
+emotion = 7
+content = "Wh - wait, really? You're pulling an \"I'll tell on you\"?"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_ptp2p"]
+script = ExtResource("1_dbf66")
+speaker = "Thalria"
+characterType = 2
+emotion = 17
+content = "Well? What'll it be? Letting us help you before you get yourself killed, or looking him in the eye and telling him you broke your promise?"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_y0qvb"]
+script = ExtResource("1_dbf66")
+speaker = "Vakthol"
+characterType = 1
+emotion = 10
+content = "..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_47jnk"]
+script = ExtResource("1_dbf66")
+speaker = "Vakthol"
+characterType = 1
+emotion = 15
+content = "..."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_dulxc"]
+script = ExtResource("1_dbf66")
+speaker = "Vakthol"
+characterType = 1
+emotion = 11
+content = "Fine."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_rnil7"]
+script = ExtResource("1_dbf66")
+speaker = "Athlia"
+characterType = 0
+emotion = 0
+content = "Yay!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_bvq1e"]
+script = ExtResource("1_dbf66")
+speaker = "Vakthol"
+characterType = 1
+emotion = 10
+content = "On the condition that you all stay behind me. If you step out of line, I'll drag you out of here myself!"
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_x6bc1"]
+script = ExtResource("1_dbf66")
+speaker = "Thalria"
+characterType = 2
+emotion = 0
+content = "Yes, yes, we get it. Now, let's move before we lose it."
+opensShop = false
+
+[sub_resource type="Resource" id="Resource_f7qwe"]
+script = ExtResource("1_jq830")
+dialogues = [SubResource("Resource_xudt3"), SubResource("Resource_ukfaj"), SubResource("Resource_eygul"), SubResource("Resource_shkst"), SubResource("Resource_q31xq"), SubResource("Resource_yij7c"), SubResource("Resource_cf8v5"), SubResource("Resource_twtw2"), SubResource("Resource_vqm8s"), SubResource("Resource_rk2eh"), SubResource("Resource_at15r"), SubResource("Resource_ptp2p"), SubResource("Resource_y0qvb"), SubResource("Resource_47jnk"), SubResource("Resource_dulxc"), SubResource("Resource_rnil7"), SubResource("Resource_bvq1e"), SubResource("Resource_x6bc1")]
+branchName = ""
+isBranching = false
+branchingDialogues = []
+
+[resource]
+script = ExtResource("1_rwy0o")
+dialogues = SubResource("Resource_f7qwe")
+associatedInteractor = 0
+associatedReceiver = 0

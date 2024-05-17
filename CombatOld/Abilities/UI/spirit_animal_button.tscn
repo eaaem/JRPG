@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dajoruyquu4sb"]
+
+[ext_resource type="Script" path="res://Combat/Core/SpiritAnimalHolder.cs" id="1_clty2"]
+[ext_resource type="StyleBox" uid="uid://bc3272th8cw8m" path="res://CombatOld/Themes/base_party_highlight.tres" id="1_o0qjm"]
+
+[node name="AbilityButton1" type="Button"]
+offset_right = 200.0
+offset_bottom = 25.0
+tooltip_text = "tes t test teset"
+theme_override_font_sizes/font_size = 15
+
+[node name="Highlight" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 25.0
+theme_override_styles/panel = ExtResource("1_o0qjm")
+
+[node name="ScriptHolder" type="Node2D" parent="."]
+script = ExtResource("1_clty2")

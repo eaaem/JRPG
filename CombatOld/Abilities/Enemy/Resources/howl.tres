@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://de0oher4b5hb6"]
+
+[ext_resource type="Script" path="res://Combat/Core/AbilityResource.cs" id="1_bp0oa"]
+
+[resource]
+script = ExtResource("1_bp0oa")
+name = ""
+description = ""
+manaCost = 0
+scriptName = "Howl"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = true
+hitsTeam = false
+bypassesDeaths = false
+requiredLevel = 0

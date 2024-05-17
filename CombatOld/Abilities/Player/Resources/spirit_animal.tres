@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://7wj8dcfbpmvg"]
+
+[ext_resource type="Script" path="res://Combat/Core/AbilityResource.cs" id="1_7v8ve"]
+
+[resource]
+script = ExtResource("1_7v8ve")
+name = "Spirit Animal"
+description = "eeeee"
+manaCost = 7
+scriptName = "SpiritAnimal"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = true
+hitsTeam = false
+onlyHitsTeam = false
+onlyHitsSelf = true
+bypassesDeaths = false
+requiredLevel = 0

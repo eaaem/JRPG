@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://iu8354v6nx7l"]
+
+[ext_resource type="Script" path="res://Combat/Core/EnemyDataHolder.cs" id="1_fgfj4"]
+[ext_resource type="PackedScene" uid="uid://dgj7l22tjsjmm" path="res://CombatOld/EnemyResources/Models/jackalope.glb" id="2_0v7lo"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_816vj"]
+size = Vector3(0.5, 0.75, 0.75)
+
+[node name="dire_wolf" type="Node3D"]
+
+[node name="ScriptHolder" type="Node3D" parent="."]
+script = ExtResource("1_fgfj4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ScriptHolder"]
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ScriptHolder/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.390482, 0)
+shape = SubResource("BoxShape3D_816vj")
+
+[node name="Model" parent="." instance=ExtResource("2_0v7lo")]

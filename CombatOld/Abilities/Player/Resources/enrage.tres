@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://c0firmfb658pd"]
+
+[ext_resource type="Script" path="res://Combat/Core/AbilityResource.cs" id="1_byklr"]
+
+[resource]
+script = ExtResource("1_byklr")
+name = "Enrage"
+description = "Vakthol gains 50% more strength in exchange for 50% less accuracy and 25% less defense. This ability is a toggle: activating it toggles Enrage on or off. When Enrage is toggled on, it cannot be toggled off for the remainder of Vakthol’s next turn. This ability does not take up Vakthol’s turn and counts as a free action."
+manaCost = 0
+scriptName = "Enrage"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = true
+hitsTeam = false
+onlyHitsTeam = false
+onlyHitsSelf = true
+bypassesDeaths = false
+requiredLevel = 0

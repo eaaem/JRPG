@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://bixa7mhcrb4xk"]
+
+[ext_resource type="Script" path="res://Combat/Core/AbilityResource.cs" id="1_uyx3c"]
+
+[resource]
+script = ExtResource("1_uyx3c")
+name = "Nightbreak"
+description = "edgy stuff"
+manaCost = 0
+scriptName = ""
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+requiredLevel = 0

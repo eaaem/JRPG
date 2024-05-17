@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6kduo8pi2cc4"]
+
+[ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_0wb46"]
+[ext_resource type="PackedScene" uid="uid://bjwqevig1dt1t" path="res://CombatOld/EnemyResources/Models/lupine_anomaly.glb" id="1_wbjxf"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x2kqx"]
+
+[node name="lupine_anomaly" type="CharacterBody3D"]
+collision_mask = 0
+script = ExtResource("1_0wb46")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.974979, 0)
+shape = SubResource("CapsuleShape3D_x2kqx")
+
+[node name="Model" parent="." instance=ExtResource("1_wbjxf")]

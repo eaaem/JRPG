@@ -1,0 +1,78 @@
+[gd_scene load_steps=10 format=3 uid="uid://7nrqikik8ftl"]
+
+[ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://test.png" id="1_0wgwd"]
+[ext_resource type="Texture2D" uid="uid://d2n58dy4r63eg" path="res://selection_highlight_texture.png" id="2_ur28j"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3r3hm"]
+shading_mode = 0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qlp6l"]
+material = SubResource("StandardMaterial3D_3r3hm")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dkrli"]
+emission_shape = 1
+emission_sphere_radius = 5.0
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -4.35
+radial_accel_max = -4.35
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5o18m"]
+transparency = 1
+albedo_texture = ExtResource("1_0wgwd")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_116hg"]
+material = SubResource("StandardMaterial3D_5o18m")
+size = Vector2(1, 1)
+orientation = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iv7p0"]
+shading_mode = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_h3mbi"]
+material = SubResource("StandardMaterial3D_iv7p0")
+radius = 2.0
+height = 4.0
+
+[node name="EnemyPlacement1" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.741, 0, 0.379)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CylinderMesh_qlp6l")
+
+[node name="CritLabel" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
+billboard = 1
+no_depth_test = true
+text = "CRIT"
+font_size = 100
+
+[node name="SpawnParticles" type="GPUParticles3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.212524, 0)
+visible = false
+visibility_range_end = 45.0
+amount = 300
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_dkrli")
+draw_pass_1 = SubResource("PlaneMesh_116hg")
+
+[node name="SpawnMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.212524, 0)
+visible = false
+cast_shadow = 0
+mesh = SubResource("SphereMesh_h3mbi")
+skeleton = NodePath("../SpawnParticles")
+
+[node name="SelectionHighlight" type="Decal" parent="."]
+visible = false
+texture_albedo = ExtResource("2_ur28j")
+texture_emission = ExtResource("2_ur28j")
+cull_mask = 32
