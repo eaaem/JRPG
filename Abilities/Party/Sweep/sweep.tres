@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://bu0min3dpejiu"]
+
+[ext_resource type="Script" path="res://Combat/0Core/AbilityResource.cs" id="1_0fji4"]
+
+[resource]
+script = ExtResource("1_0fji4")
+name = "Sweep"
+description = "Sweep at a target, dealing damage to the target and surrounding enemies.
+Mana Cost: 3"
+manaCost = 3
+scriptName = "Sweep"
+hitsAll = false
+hitsSurrounding = true
+requiredLevel = 3

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://cbg64o2r8b2x"]
+
+[ext_resource type="Script" path="res://Combat/0Core/AbilityResource.cs" id="1_m58wi"]
+
+[resource]
+script = ExtResource("1_m58wi")
+name = "Elemental Explosion"
+description = "blah"
+manaCost = 7
+scriptName = "ElementalExplosion"
+hitsAll = true
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+bypassesDeaths = false
+requiredLevel = 0

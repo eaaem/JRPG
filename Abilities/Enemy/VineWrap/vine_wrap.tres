@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://cqfihfdw05vjc"]
+
+[ext_resource type="Script" path="res://Combat/0Core/AbilityResource.cs" id="1_6soge"]
+
+[resource]
+script = ExtResource("1_6soge")
+name = ""
+description = ""
+manaCost = 5
+scriptName = "VineWrap"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+bypassesDeaths = false
+requiredLevel = 0

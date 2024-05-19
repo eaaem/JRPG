@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://d2vnsafyfiu0i"]
+
+[ext_resource type="Script" path="res://Combat/0Core/AbilityResource.cs" id="1_bsiqb"]
+
+[resource]
+script = ExtResource("1_bsiqb")
+name = ""
+description = ""
+manaCost = 5
+scriptName = "Bloodlet"
+hitsAll = true
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+bypassesDeaths = false
+requiredLevel = 0

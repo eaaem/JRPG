@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=7 format=3 uid="uid://bi6wovgrhfd0i"]
+
+[ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="1_v7p1m"]
+[ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="2_23j6y"]
+[ext_resource type="Script" path="res://Combat/0Core/ItemResource.cs" id="3_b51bh"]
+
+[sub_resource type="Resource" id="Resource_rv5hx"]
+script = ExtResource("2_23j6y")
+statType = 0
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_snx6f"]
+script = ExtResource("2_23j6y")
+statType = 5
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_1lnan"]
+script = ExtResource("1_v7p1m")
+stats = [SubResource("Resource_rv5hx"), SubResource("Resource_snx6f")]
+
+[resource]
+script = ExtResource("3_b51bh")
+name = "Simple Dress"
+description = "Light
++1 constitution, +1 willpower"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 3
+itemCategory = 1
+price = 0
+affectedStats = SubResource("Resource_1lnan")
+usableOutsideCombat = false

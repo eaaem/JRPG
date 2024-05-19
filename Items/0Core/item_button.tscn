@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://dbbaek7pmrokf"]
+
+[ext_resource type="Script" path="res://Combat/0Core/ItemResourceHolder.cs" id="1_8htmd"]
+[ext_resource type="Script" path="res://Core/CustomTooltipButton.cs" id="1_hl6gy"]
+
+[node name="ItemButton" type="Button"]
+custom_minimum_size = Vector2(320, 0)
+text = "This is an item"
+alignment = 0
+script = ExtResource("1_hl6gy")
+
+[node name="ScriptHolder" type="Node2D" parent="."]
+
+[node name="ResourceHolder" type="Node2D" parent="."]
+script = ExtResource("1_8htmd")

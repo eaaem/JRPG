@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ctx6x6i2srelv"]
 
-[ext_resource type="PackedScene" uid="uid://b6ut8vyjhyc4x" path="res://PartyMembers/Olren/olren.glb" id="1_mf8gb"]
+[ext_resource type="PackedScene" uid="uid://b6ut8vyjhyc4x" path="res://Party/Olren/olren.glb" id="1_mf8gb"]
 [ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_vef2k"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x2kqx"]

@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=6 format=3 uid="uid://1c8vf6te7kai"]
+
+[ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="1_82ic3"]
+[ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="2_kn7qb"]
+[ext_resource type="Script" path="res://Combat/0Core/ItemResource.cs" id="3_ue806"]
+
+[sub_resource type="Resource" id="Resource_ia3k5"]
+script = ExtResource("2_kn7qb")
+statType = 2
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_ygyno"]
+script = ExtResource("1_82ic3")
+stats = [SubResource("Resource_ia3k5")]
+
+[resource]
+script = ExtResource("3_ue806")
+name = "Steel Battleaxe"
+description = "Battleaxe
++2 strength"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 1
+itemCategory = 6
+price = 0
+affectedStats = SubResource("Resource_ygyno")
+usableOutsideCombat = false

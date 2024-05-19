@@ -65,10 +65,8 @@ public partial class Actor : CharacterBody3D
       weapon.Visible = true;
    }
 
-   public async void MoveCharacter(ActorStatus actorStatus, string destinationString)
+   public async void MoveCharacter(ActorStatus actorStatus, Vector3 destination)
    {
-      Vector3 destination = GetVector3FromString(destinationString);
-
       Vector3 direction = GlobalPosition.DirectionTo(destination);
       float distance = GlobalPosition.DistanceTo(destination);
 
@@ -79,9 +77,6 @@ public partial class Actor : CharacterBody3D
          player.Play(actorStatus.walkAnim);
       }
 
-      //int id = movementCounter;
-      //movementCounter++;
-
       currentMoveSpeed = actorStatus.moveSpeed;
       currentDestination = destination;
       currentDirection = direction;
@@ -89,11 +84,6 @@ public partial class Actor : CharacterBody3D
 
       while (distance > 0.1f)
       {
-         /*if (movementCounter > id + 1)
-         {
-            break;
-         }*/
-
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
 
          distance = GlobalPosition.DistanceTo(destination); 
@@ -107,20 +97,12 @@ public partial class Actor : CharacterBody3D
 
    public async void RotateCharacter(float targetRotation)
    {
-      //int id = rotationCounter;
-     // rotationCounter++;
-
       targetRotation = Mathf.DegToRad(targetRotation);
 
       Node3D model = GetNode<Node3D>("Model");
 
       while (Mathf.Abs(model.Rotation.Y - targetRotation) > 0.05f)
       {
-         /*if (rotationCounter > id + 1)
-         {
-            break;
-         }*/
-
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
 
          Vector3 rotation = model.Rotation;
@@ -158,10 +140,9 @@ public partial class Actor : CharacterBody3D
       player.Play(actorStatus.idleAnim);
    }
 
-   public void PlaceCharacterAtPoint(string pointString)
+   public void PlaceCharacterAtPoint(Vector3 destination)
    {
-      Vector3 point = GetVector3FromString(pointString);
-      GlobalPosition = point;
+      GlobalPosition = destination;
    }
 
    public void RotateCharacterInstantly(float targetRotation)

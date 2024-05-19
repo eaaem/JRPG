@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System;
 
 public partial class CutsceneTrigger : Node
@@ -12,7 +13,7 @@ public partial class CutsceneTrigger : Node
 
    bool hasStartedCutscene = false;
 
-	public override void _Ready()
+   public override void _Ready()
 	{
       cutsceneManager = GetNode<CutsceneManager>("/root/BaseNode/CutsceneManager");
 	}

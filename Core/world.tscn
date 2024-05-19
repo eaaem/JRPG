@@ -1,0 +1,4694 @@
+[gd_scene load_steps=270 format=3 uid="uid://d3jboextng2ij"]
+
+[ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
+[ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
+[ext_resource type="Script" path="res://Combat/0Core/StatusData.cs" id="4_t2qrl"]
+[ext_resource type="PackedScene" uid="uid://dbbaek7pmrokf" path="res://Items/0Core/item_button.tscn" id="5_2svhw"]
+[ext_resource type="Script" path="res://Combat/0Core/CombatAbilityManager.cs" id="5_ejkmm"]
+[ext_resource type="Script" path="res://Combat/0Core/CombatUIManager.cs" id="6_143na"]
+[ext_resource type="PackedScene" uid="uid://cwee74btvhq8k" path="res://Combat/0Core/holder_parent.tscn" id="6_gn3sp"]
+[ext_resource type="Script" path="res://Combat/0Core/AffinityStrengths.cs" id="7_f260g"]
+[ext_resource type="Script" path="res://Combat/0Core/CombatPassiveManager.cs" id="7_x03at"]
+[ext_resource type="Script" path="res://Combat/0Core/CombatItemManager.cs" id="8_hnce1"]
+[ext_resource type="PackedScene" uid="uid://c5yikq1y5un0d" path="res://Combat/0Core/ability_button.tscn" id="8_o4pbx"]
+[ext_resource type="Script" path="res://Combat/0Core/CombatStackStatusManager.cs" id="9_1u2nm"]
+[ext_resource type="PackedScene" uid="uid://cdlo1pemj7l26" path="res://Combat/0Core/effect.tscn" id="9_67pu3"]
+[ext_resource type="Script" path="res://Party/0Core/PartyManager.cs" id="9_ah2fn"]
+[ext_resource type="Resource" uid="uid://b6424vyj7dspo" path="res://Party/Vakthol/vakthol.tres" id="10_7pwb7"]
+[ext_resource type="PackedScene" uid="uid://bn35oip147owg" path="res://Combat/0Core/stack_prefab.tscn" id="11_qyibu"]
+[ext_resource type="Resource" uid="uid://ck7wy6s7wajxw" path="res://Party/Thalria/thalria.tres" id="11_wj8pa"]
+[ext_resource type="Resource" uid="uid://0y8iemdigx00" path="res://Party/Athlia/athlia.tres" id="12_h78bi"]
+[ext_resource type="StyleBox" uid="uid://grtx6x4ut0jg" path="res://Combat/ButtonThemes/altered_party_highlight.tres" id="13_3vjj1"]
+[ext_resource type="Resource" uid="uid://cuw45oxjrj1jr" path="res://Party/Olren/olren.tres" id="13_nnw16"]
+[ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="14_oxatk"]
+[ext_resource type="PackedScene" uid="uid://b0itiinn5nr7j" path="res://Combat/0Core/special_arrow.tscn" id="15_27lj8"]
+[ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="15_86siq"]
+[ext_resource type="Script" path="res://Combat/0Core/ItemResource.cs" id="16_5bni6"]
+[ext_resource type="Resource" uid="uid://bos1dl2vq377j" path="res://Items/Thalria/heirloom_staff.tres" id="17_vxtna"]
+[ext_resource type="Resource" uid="uid://cbhi3btbfskrg" path="res://Items/Armor/Medium/leather_greaves.tres" id="18_ti5f1"]
+[ext_resource type="Resource" uid="uid://bt2f8yoo0nup8" path="res://Items/Olren/pine_bow.tres" id="19_4kg3f"]
+[ext_resource type="StyleBox" uid="uid://bc3272th8cw8m" path="res://Combat/ButtonThemes/base_party_highlight.tres" id="20_5bpft"]
+[ext_resource type="LabelSettings" uid="uid://d3mi4nujst60y" path="res://Combat/0Core/combat_ui_text.tres" id="21_u7sgt"]
+[ext_resource type="Script" path="res://Dialogue/0Core/DialogueManager.cs" id="22_argjw"]
+[ext_resource type="Script" path="res://Dialogue/0Core/DialogueObject.cs" id="23_22ic3"]
+[ext_resource type="Script" path="res://Dialogue/0Core/DialogueList.cs" id="24_akffl"]
+[ext_resource type="Script" path="res://Dialogue/0Core/InspectorDialogueInteraction.cs" id="25_vl2xh"]
+[ext_resource type="PackedScene" uid="uid://b1ub3e88mq513" path="res://Dialogue/0Core/branch_button.tscn" id="26_tb1nj"]
+[ext_resource type="Script" path="res://Menus/Party/PartyMenuManager.cs" id="27_o3g2u"]
+[ext_resource type="PackedScene" uid="uid://dl1uyhuu43vfo" path="res://Menus/Party/member_button.tscn" id="28_40bba"]
+[ext_resource type="PackedScene" uid="uid://cou82d6jx808b" path="res://Menus/Party/ability_label.tscn" id="29_jtio8"]
+[ext_resource type="PackedScene" uid="uid://d3kvmela4ory0" path="res://Menus/Party/reequip_button.tscn" id="30_bblpj"]
+[ext_resource type="Script" path="res://Core/CustomTooltipLabel.cs" id="31_g468s"]
+[ext_resource type="Script" path="res://Menus/Items/ItemMenuManager.cs" id="32_1h4ro"]
+[ext_resource type="Script" path="res://Menus/Settings/SettingsMenuManager.cs" id="33_jvddv"]
+[ext_resource type="Script" path="res://Menus/Misc/MiscMenuManager.cs" id="34_bcm0h"]
+[ext_resource type="Script" path="res://Menus/0Core/MenuManager.cs" id="35_dwed3"]
+[ext_resource type="Script" path="res://Levels/1Features/ItemPickup/ItemPickupManager.cs" id="36_qnjxv"]
+[ext_resource type="Script" path="res://Levels/1Features/Shop/ShopMenuManager.cs" id="37_jygy0"]
+[ext_resource type="PackedScene" uid="uid://c08d1vnprgeay" path="res://Levels/1Features/Shop/item_button_prefab.tscn" id="38_xtl2k"]
+[ext_resource type="Script" path="res://Party/0Core/CharacterController.cs" id="39_q0foa"]
+[ext_resource type="PackedScene" uid="uid://c8sbeheqi10fl" path="res://Party/Vakthol/vakthol.glb" id="40_va38g"]
+[ext_resource type="PackedScene" uid="uid://yhwlyfetwmre" path="res://Party/Vakthol/vakthol_axe.glb" id="41_8y4r5"]
+[ext_resource type="Script" path="res://Party/0Core/OverworldPartyController.cs" id="42_pt17i"]
+[ext_resource type="Script" path="res://Core/SaveManager.cs" id="43_n85qj"]
+[ext_resource type="Script" path="res://Levels/0Core/LevelManager.cs" id="44_yvp60"]
+[ext_resource type="Script" path="res://Cutscenes/CutsceneManager.cs" id="45_2ss0b"]
+[ext_resource type="Script" path="res://Levels/0Core/DoorBehavior.cs" id="46_2mc4k"]
+[ext_resource type="Script" path="res://Menus/Main/MainMenuManager.cs" id="47_k3f71"]
+
+[sub_resource type="Resource" id="Resource_vsscq"]
+script = ExtResource("7_f260g")
+affinity = 0
+strongAgainst1 = 0
+strongAgainst2 = 0
+weakTo1 = 0
+weakTo2 = 0
+
+[sub_resource type="Resource" id="Resource_fk2ok"]
+script = ExtResource("7_f260g")
+affinity = 1
+strongAgainst1 = 3
+strongAgainst2 = 7
+weakTo1 = 5
+weakTo2 = 8
+
+[sub_resource type="Resource" id="Resource_b1i57"]
+script = ExtResource("7_f260g")
+affinity = 2
+strongAgainst1 = 8
+strongAgainst2 = 0
+weakTo1 = 7
+weakTo2 = 0
+
+[sub_resource type="Resource" id="Resource_i7a2u"]
+script = ExtResource("7_f260g")
+affinity = 3
+strongAgainst1 = 5
+strongAgainst2 = 6
+weakTo1 = 7
+weakTo2 = 10
+
+[sub_resource type="Resource" id="Resource_hqnmo"]
+script = ExtResource("7_f260g")
+affinity = 4
+strongAgainst1 = 9
+strongAgainst2 = 0
+weakTo1 = 3
+weakTo2 = 0
+
+[sub_resource type="Resource" id="Resource_lojwi"]
+script = ExtResource("7_f260g")
+affinity = 5
+strongAgainst1 = 10
+strongAgainst2 = 5
+weakTo1 = 9
+weakTo2 = 7
+
+[sub_resource type="Resource" id="Resource_8rq4s"]
+script = ExtResource("7_f260g")
+affinity = 6
+strongAgainst1 = 10
+strongAgainst2 = 4
+weakTo1 = 8
+weakTo2 = 3
+
+[sub_resource type="Resource" id="Resource_f5wbw"]
+script = ExtResource("7_f260g")
+affinity = 7
+strongAgainst1 = 3
+strongAgainst2 = 4
+weakTo1 = 5
+weakTo2 = 6
+
+[sub_resource type="Resource" id="Resource_bih4v"]
+script = ExtResource("7_f260g")
+affinity = 8
+strongAgainst1 = 7
+strongAgainst2 = 6
+weakTo1 = 4
+weakTo2 = 10
+
+[sub_resource type="Resource" id="Resource_0qamu"]
+script = ExtResource("7_f260g")
+affinity = 9
+strongAgainst1 = 9
+strongAgainst2 = 8
+weakTo1 = 10
+weakTo2 = 7
+
+[sub_resource type="Resource" id="Resource_xl1dm"]
+script = ExtResource("4_t2qrl")
+effect = 0
+description = ""
+isCleanseable = false
+isNegative = false
+
+[sub_resource type="Resource" id="Resource_igf5a"]
+script = ExtResource("4_t2qrl")
+effect = 1
+description = "Unable to move"
+isCleanseable = true
+isNegative = true
+
+[sub_resource type="Resource" id="Resource_vj0lt"]
+script = ExtResource("4_t2qrl")
+effect = 2
+description = "Losing health each turn"
+isCleanseable = true
+isNegative = true
+
+[sub_resource type="Resource" id="Resource_h6dwx"]
+script = ExtResource("4_t2qrl")
+effect = 3
+description = "Losing health each turn"
+isCleanseable = true
+isNegative = true
+
+[sub_resource type="Resource" id="Resource_5kq13"]
+script = ExtResource("4_t2qrl")
+effect = 4
+description = "Physical damage decreased and losing health each turn"
+isCleanseable = true
+isNegative = true
+
+[sub_resource type="Resource" id="Resource_mftyv"]
+script = ExtResource("4_t2qrl")
+effect = 5
+description = "Hits ally or enemy at random"
+isCleanseable = true
+isNegative = true
+
+[sub_resource type="Resource" id="Resource_e01c7"]
+script = ExtResource("4_t2qrl")
+effect = 6
+description = "Maximum health and mana decreased"
+isCleanseable = true
+isNegative = true
+
+[sub_resource type="Resource" id="Resource_au516"]
+script = ExtResource("4_t2qrl")
+effect = 7
+description = "All stats increased"
+isCleanseable = false
+isNegative = false
+
+[sub_resource type="Resource" id="Resource_1u3ta"]
+script = ExtResource("4_t2qrl")
+effect = 8
+description = "Accuracy increased"
+isCleanseable = false
+isNegative = false
+
+[sub_resource type="Resource" id="Resource_1rshu"]
+script = ExtResource("4_t2qrl")
+effect = 9
+description = "Evasion increased
+Breaks upon attacking or taking damage"
+isCleanseable = false
+isNegative = false
+
+[sub_resource type="Resource" id="Resource_rv5hx"]
+script = ExtResource("15_86siq")
+statType = 2
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_1lnan"]
+script = ExtResource("14_oxatk")
+stats = [SubResource("Resource_rv5hx")]
+
+[sub_resource type="Resource" id="Resource_gaxvb"]
+script = ExtResource("16_5bni6")
+name = "Plain Battleaxe"
+description = "Battleaxe
++1 strength"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 1
+itemCategory = 6
+price = 0
+affectedStats = SubResource("Resource_1lnan")
+usableOutsideCombat = false
+
+[sub_resource type="Resource" id="Resource_qvkyg"]
+script = ExtResource("15_86siq")
+statType = 0
+value = 3
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_e22ji"]
+script = ExtResource("14_oxatk")
+stats = [SubResource("Resource_qvkyg")]
+
+[sub_resource type="Resource" id="Resource_cxsht"]
+script = ExtResource("16_5bni6")
+name = "Leather Cuirass"
+description = "Heavy
++3 constitution"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 3
+itemCategory = 3
+price = 0
+affectedStats = SubResource("Resource_e22ji")
+usableOutsideCombat = false
+
+[sub_resource type="Resource" id="Resource_80ryb"]
+script = ExtResource("15_86siq")
+statType = 4
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_3yqt4"]
+script = ExtResource("15_86siq")
+statType = 5
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_mokav"]
+script = ExtResource("14_oxatk")
+stats = [SubResource("Resource_80ryb"), SubResource("Resource_3yqt4")]
+
+[sub_resource type="Resource" id="Resource_lxtj8"]
+script = ExtResource("16_5bni6")
+name = "Rusty Greaves"
+description = "Heavy
++2 fortitude, +1 willpower"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 4
+itemCategory = 3
+price = 0
+affectedStats = SubResource("Resource_mokav")
+usableOutsideCombat = false
+
+[sub_resource type="Resource" id="Resource_wfh0i"]
+script = ExtResource("15_86siq")
+statType = 0
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_snx6f"]
+script = ExtResource("15_86siq")
+statType = 3
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_acqbc"]
+script = ExtResource("14_oxatk")
+stats = [SubResource("Resource_wfh0i"), SubResource("Resource_snx6f")]
+
+[sub_resource type="Resource" id="Resource_y8mwe"]
+script = ExtResource("16_5bni6")
+name = "Worn Robe"
+description = "Medium
++2 intelligence, +1 constitution"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 3
+itemCategory = 2
+price = 0
+affectedStats = SubResource("Resource_acqbc")
+usableOutsideCombat = false
+
+[sub_resource type="Resource" id="Resource_tvppx"]
+script = ExtResource("15_86siq")
+statType = 0
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_sf6qq"]
+script = ExtResource("15_86siq")
+statType = 5
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_aqtwx"]
+script = ExtResource("14_oxatk")
+stats = [SubResource("Resource_tvppx"), SubResource("Resource_sf6qq")]
+
+[sub_resource type="Resource" id="Resource_hb6rw"]
+script = ExtResource("16_5bni6")
+name = "Simple Dress"
+description = "Light
++1 constitution, +1 willpower"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 3
+itemCategory = 1
+price = 0
+affectedStats = SubResource("Resource_aqtwx")
+usableOutsideCombat = false
+
+[sub_resource type="Resource" id="Resource_acghi"]
+script = ExtResource("15_86siq")
+statType = 7
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_fp6dw"]
+script = ExtResource("15_86siq")
+statType = 8
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_nckpm"]
+script = ExtResource("14_oxatk")
+stats = [SubResource("Resource_acghi"), SubResource("Resource_fp6dw")]
+
+[sub_resource type="Resource" id="Resource_de2wb"]
+script = ExtResource("16_5bni6")
+name = "Cloth Trousers"
+description = "Light
++1 speed, +1 evasion"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 4
+itemCategory = 1
+price = 0
+affectedStats = SubResource("Resource_nckpm")
+usableOutsideCombat = false
+
+[sub_resource type="Resource" id="Resource_c3ip4"]
+script = ExtResource("15_86siq")
+statType = 0
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_m0kgq"]
+script = ExtResource("15_86siq")
+statType = 7
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_ptgw5"]
+script = ExtResource("14_oxatk")
+stats = [SubResource("Resource_c3ip4"), SubResource("Resource_m0kgq")]
+
+[sub_resource type="Resource" id="Resource_rmxds"]
+script = ExtResource("16_5bni6")
+name = "Leather Tunic"
+description = "Light
++1 constitution, +1 evasion"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 3
+itemCategory = 1
+price = 0
+affectedStats = SubResource("Resource_ptgw5")
+usableOutsideCombat = false
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_fvio1"]
+
+[sub_resource type="Theme" id="Theme_3108v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hsqgl"]
+bg_color = Color(0.0117647, 0.109804, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7kkw0"]
+bg_color = Color(0.478431, 1, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pvgnr"]
+bg_color = Color(0, 0, 0.184314, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7n1xf"]
+bg_color = Color(0, 0.6, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fpoax"]
+bg_color = Color(0.203922, 0.203922, 0.203922, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1mn27"]
+bg_color = Color(1, 1, 1, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l7mf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6snfy"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tt0fo"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xkk30"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kg4xf"]
+bg_color = Color(0.94902, 0.333333, 0.266667, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hl231"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_18icv"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Resource" id="Resource_c4tih"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "You're not beating yourself up about not knowing what's going on with the Anomalies, right?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_a86kg"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Wh - you're kidding me! Since when do I beat myself up?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_cyqn4"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "...Since you freaked out yesterday?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_0x75u"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "I wasn't [i]freaking out.[/i] I was thinking."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_svxa1"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "Uncle Dathrel was literally seconds away from dragging you into Theralin to make sure you weren't dying. I know I'm not the smart one here, but I don't think that qualifies as thinking."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_vfp4d"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Well, you're right, you [i]aren't[/i] the smart one here. So, maybe you shouldn't make judgments!"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_0nm5v"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_8ecpg"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "Look, I'm just worried about you. Ever since all this chaos started, you've been all -"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_n1878"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "You're [i]always[/i] crazily worried, Vakthol. You'll hardly let us walk out of your sight!"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_2npa7"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Ugh... we shouldn't even be talking right now. We're in the middle of the deadliest place in a ten kilometer radius!"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_4ticq"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "So... we're just going to change the subject, then?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_vugnu"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "All I want is for us to focus. Is that too much to ask?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_n5p0i"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "...No. I guess not."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_w5q2x"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_c4tih"), SubResource("Resource_a86kg"), SubResource("Resource_cyqn4"), SubResource("Resource_0x75u"), SubResource("Resource_svxa1"), SubResource("Resource_vfp4d"), SubResource("Resource_0nm5v"), SubResource("Resource_8ecpg"), SubResource("Resource_n1878"), SubResource("Resource_2npa7"), SubResource("Resource_4ticq"), SubResource("Resource_vugnu"), SubResource("Resource_n5p0i")]
+branchName = "Knowledge"
+branchingDialogues = []
+
+[sub_resource type="Resource" id="Resource_ca0x6"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Come on, Vakthol, this isn't the time to talk!"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_0ekom"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_ca0x6")]
+branchName = ""
+branchingDialogues = [SubResource("Resource_w5q2x")]
+
+[sub_resource type="Resource" id="Resource_fgumm"]
+script = ExtResource("25_vl2xh")
+dialogues = SubResource("Resource_0ekom")
+associatedInteractor = 1
+associatedReceiver = 2
+
+[sub_resource type="Resource" id="Resource_b5xoq"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 5
+content = "So... you're sure you don't want to go back? Check on Uncle Dathrel or something?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_g15r8"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 0
+emotion = 0
+content = "Nope! I want to help."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_is5h8"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 15
+content = "..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_2e0jq"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 0
+emotion = 0
+content = "..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_wr1lm"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 0
+emotion = 0
+content = "You're worried it'll happen again, aren't you?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_auiwc"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 7
+content = "Of course not!"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_l7j72"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 15
+content = "I'm just... thinking about it."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_nk7v7"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 0
+emotion = 0
+content = "It'll be fine, Vakthol. It's different now. We're more capable, and... um..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_lphi5"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 0
+emotion = 0
+content = "..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_7vwk1"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 16
+content = "Athlia?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_0hren"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 0
+emotion = 0
+content = "Can we just... focus on the wolf?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_7sdn8"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 10
+content = "Well, we can't just -"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_hg0vp"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 0
+emotion = 0
+content = "I'm not leaving. That's final."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_dloan"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 11
+content = "..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_iftxe"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_b5xoq"), SubResource("Resource_g15r8"), SubResource("Resource_is5h8"), SubResource("Resource_2e0jq"), SubResource("Resource_wr1lm"), SubResource("Resource_auiwc"), SubResource("Resource_l7j72"), SubResource("Resource_nk7v7"), SubResource("Resource_lphi5"), SubResource("Resource_7vwk1"), SubResource("Resource_0hren"), SubResource("Resource_7sdn8"), SubResource("Resource_hg0vp"), SubResource("Resource_dloan")]
+branchName = "Safety"
+branchingDialogues = []
+
+[sub_resource type="Resource" id="Resource_ivspw"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "Yeah, Vakthol?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_lnqph"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_ivspw")]
+branchName = ""
+branchingDialogues = [SubResource("Resource_iftxe")]
+
+[sub_resource type="Resource" id="Resource_wsmn1"]
+script = ExtResource("25_vl2xh")
+dialogues = SubResource("Resource_lnqph")
+associatedInteractor = 1
+associatedReceiver = 3
+
+[sub_resource type="Resource" id="Resource_vkr4d"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "You got a knife, right?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_aax47"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "Um... yeah. Why?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_mmopu"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 2
+content = "Well, if we're gonna kill that wolf, it'd be a shame to let the pelt go to waste."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_4fe4y"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 16
+content = "...Y-you want me to skin it?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_heexd"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 9
+content = "You've done it before, right?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_hxea2"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 5
+content = "Yes, but... I-I'm not very good at it..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_xj8ef"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "Hey, don't kid yourself. You got this."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_e8bme"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 15
+content = "I-I hope so."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_srl5c"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_vkr4d"), SubResource("Resource_aax47"), SubResource("Resource_mmopu"), SubResource("Resource_4fe4y"), SubResource("Resource_heexd"), SubResource("Resource_hxea2"), SubResource("Resource_xj8ef"), SubResource("Resource_e8bme")]
+branchName = "Pelt"
+branchingDialogues = []
+
+[sub_resource type="Resource" id="Resource_70l6y"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "Erm… should we really be talking right now?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_up1da"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_70l6y")]
+branchName = ""
+branchingDialogues = [SubResource("Resource_srl5c")]
+
+[sub_resource type="Resource" id="Resource_bqlyv"]
+script = ExtResource("25_vl2xh")
+dialogues = SubResource("Resource_up1da")
+associatedInteractor = 1
+associatedReceiver = 4
+
+[sub_resource type="Resource" id="Resource_rukh8"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 3
+content = "Well, since we're here... could we talk about how utterly stupid you are?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_gl266"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "I mean, we do that all the time, but sure, why not?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_dq3vd"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "You decided to march into Athili Copse, [i]alone[/i], to fight [i]the most dangerous beast we've ever encountered,[/i] while everything around us - including ourselves - is mysteriously becoming way too powerful, way too quickly."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_1smcl"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "Uh huh. And?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_j2pon"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Marla almighty, how have you not gotten yourself killed yet?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_cw4me"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "I guess I'm just too handsome to die."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_rdqhk"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Says the man who runs around with no trousers..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_bbdy5"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "But I still have impeccable style!"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_b3mcs"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_rukh8"), SubResource("Resource_gl266"), SubResource("Resource_dq3vd"), SubResource("Resource_1smcl"), SubResource("Resource_j2pon"), SubResource("Resource_cw4me"), SubResource("Resource_rdqhk"), SubResource("Resource_bbdy5")]
+branchName = "Stupid"
+branchingDialogues = []
+
+[sub_resource type="Resource" id="Resource_us2gm"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 2
+content = "Well, well, look who's stopping to talk."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_45uty"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_us2gm")]
+branchName = ""
+branchingDialogues = [SubResource("Resource_b3mcs")]
+
+[sub_resource type="Resource" id="Resource_ljqi8"]
+script = ExtResource("25_vl2xh")
+dialogues = SubResource("Resource_45uty")
+associatedInteractor = 2
+associatedReceiver = 1
+
+[sub_resource type="Resource" id="Resource_dxd11"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "I've been thinking that we should have Uncle Dathrel teach you how to use a weapon."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_h8nly"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "But... I don't want to hurt anyone."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_5vqfd"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "It'd just be for emergency situations, like this one. It's stupid to walk around in dangerous places without being able to defend yourself."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_i6txu"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "But..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_yn5wj"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "It's just a suggestion. Besides, I imagine that Uncle Dathrel would be more than happy to teach you."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_iab21"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_uu07d"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "Maybe we should've just let him take care of it..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_ocor5"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Mmm... I'm not certain about that."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_rld80"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "Why...?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_wwxg4"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Well... I feel like he's hiding something from us."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_ef6yv"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "But you trust him, right?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_nach8"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Yes, of [i]course[/i] I trust him. I just think that we should look into it ourselves, at least for a little bit."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_q210d"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_c0yfy"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_dxd11"), SubResource("Resource_h8nly"), SubResource("Resource_5vqfd"), SubResource("Resource_i6txu"), SubResource("Resource_yn5wj"), SubResource("Resource_iab21"), SubResource("Resource_uu07d"), SubResource("Resource_ocor5"), SubResource("Resource_rld80"), SubResource("Resource_wwxg4"), SubResource("Resource_ef6yv"), SubResource("Resource_nach8"), SubResource("Resource_q210d")]
+branchName = "Combat"
+branchingDialogues = []
+
+[sub_resource type="Resource" id="Resource_wyjb6"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "Yeah, Thalria?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_os0pj"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_wyjb6")]
+branchName = ""
+branchingDialogues = [SubResource("Resource_c0yfy")]
+
+[sub_resource type="Resource" id="Resource_bdyoq"]
+script = ExtResource("25_vl2xh")
+dialogues = SubResource("Resource_os0pj")
+associatedInteractor = 2
+associatedReceiver = 3
+
+[sub_resource type="Resource" id="Resource_yoh43"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "You know, if you don't feel safe, you can go back to Theralin at any time. I imagine that Vakthol will be all too happy to escort you."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_a8w3w"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "O-oh. But... I want to help."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_vv1p1"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "I know. I'm just saying..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_0yina"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_1ak4g"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "M-maybe you and Vakthol are right. I'm not tough enough to be here..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_25ge8"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Well, we never said [i]that.[/i] We're just being cautious, that's all."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_g74n4"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "But... do you think that?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_p4aqu"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "No, no, of course not. You're probably more capable than Vakthol."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_k8xg8"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "...Well, not really, but..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_67l8q"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "So... it's okay if I stay?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_bdkau"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Only if you watch out for yourself."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_k46yc"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "I-I will."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_gl8m7"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_yoh43"), SubResource("Resource_a8w3w"), SubResource("Resource_vv1p1"), SubResource("Resource_0yina"), SubResource("Resource_1ak4g"), SubResource("Resource_25ge8"), SubResource("Resource_g74n4"), SubResource("Resource_p4aqu"), SubResource("Resource_k8xg8"), SubResource("Resource_67l8q"), SubResource("Resource_bdkau"), SubResource("Resource_k46yc")]
+branchName = "Safety"
+branchingDialogues = []
+
+[sub_resource type="Resource" id="Resource_gahpe"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "Y-yeah, Thalria?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_u3d06"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_gahpe")]
+branchName = ""
+branchingDialogues = [SubResource("Resource_gl8m7")]
+
+[sub_resource type="Resource" id="Resource_fyd3b"]
+script = ExtResource("25_vl2xh")
+dialogues = SubResource("Resource_u3d06")
+associatedInteractor = 2
+associatedReceiver = 4
+
+[sub_resource type="Resource" id="Resource_g0ioy"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "How upset do you think Uncle Dathrel will be that we broke our promise?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_2w3ws"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "Well, to be fair, it was [i]my[/i] promise, not any of yours. Either way, I don't think he'll care."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_y0aas"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "Really?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_st6xr"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "Athlia, he has literally defended people that have tried to beat him to death. He'll barely bat an eye at a broken promise."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_ffu7y"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "But... that doesn't seem right."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_1qvtj"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "Well, he wasn't going to let off unless I promised, so what does he expect?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_m6m2c"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "...Hmm..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_t4c3j"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_g0ioy"), SubResource("Resource_2w3ws"), SubResource("Resource_y0aas"), SubResource("Resource_st6xr"), SubResource("Resource_ffu7y"), SubResource("Resource_1qvtj"), SubResource("Resource_m6m2c")]
+branchName = "Promise"
+branchingDialogues = []
+
+[sub_resource type="Resource" id="Resource_usv4q"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "Yeah, Athlia?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_3w0p1"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_usv4q")]
+branchName = ""
+branchingDialogues = [SubResource("Resource_t4c3j")]
+
+[sub_resource type="Resource" id="Resource_utd24"]
+script = ExtResource("25_vl2xh")
+dialogues = SubResource("Resource_3w0p1")
+associatedInteractor = 3
+associatedReceiver = 1
+
+[sub_resource type="Resource" id="Resource_d5gos"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "Do you think we could ever befriend an Anomaly?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_bj110"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Well, they're abominations of pure magic with an undying desire to slaughter everything in their path, so... no?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_xcc3t"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "Aww..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_mxf28"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_d5gos"), SubResource("Resource_bj110"), SubResource("Resource_xcc3t")]
+branchName = "Befriend"
+branchingDialogues = []
+
+[sub_resource type="Resource" id="Resource_c0ik0"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Hmm?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_dy6gr"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_c0ik0")]
+branchName = ""
+branchingDialogues = [SubResource("Resource_mxf28")]
+
+[sub_resource type="Resource" id="Resource_enfyn"]
+script = ExtResource("25_vl2xh")
+dialogues = SubResource("Resource_dy6gr")
+associatedInteractor = 3
+associatedReceiver = 2
+
+[sub_resource type="Resource" id="Resource_a41am"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "Isn't it great to have your new bow for occasions like this?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_nl01t"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "Y-yeah, but..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_roeq7"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "But what?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_js8ll"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "...I-I don't know how much I'll be able to do with it."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_6htjq"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "I'm not very good with it..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_2bhcb"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "Aww, but you're amazing with it!"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_0bcqx"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "I bet you could shoot an arrow right past Thalria's head and give her a haircut, just like how Vakthol always wants you to do it!"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_b8fl1"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "I-I don't know about that."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_7416u"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "You'll do great. You'll see!"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_62sw3"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_a41am"), SubResource("Resource_nl01t"), SubResource("Resource_roeq7"), SubResource("Resource_js8ll"), SubResource("Resource_6htjq"), SubResource("Resource_2bhcb"), SubResource("Resource_0bcqx"), SubResource("Resource_b8fl1"), SubResource("Resource_7416u")]
+branchName = "Bow"
+branchingDialogues = []
+
+[sub_resource type="Resource" id="Resource_8dejs"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "Yeah, Athlia?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_bcct3"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_8dejs")]
+branchName = ""
+branchingDialogues = [SubResource("Resource_62sw3")]
+
+[sub_resource type="Resource" id="Resource_ga2o4"]
+script = ExtResource("25_vl2xh")
+dialogues = SubResource("Resource_bcct3")
+associatedInteractor = 3
+associatedReceiver = 4
+
+[sub_resource type="Resource" id="Resource_ujn7w"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "So... the wolf Anomaly was once a regular wolf?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_kggka"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Yeah. They all start as regular creatures, before pure magic twists them."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_vkw0v"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_k7m45"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Is that a problem?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_5hxwl"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "Well... i-it seems wrong to slaughter it. It's just doing what its instincts tell it."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_snrri"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "It's killing people, Olren. You have to draw the line somewhere."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_fbd1r"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "I-I know, but..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_w6ntn"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "I just wish there was another way."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_qdref"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_ujn7w"), SubResource("Resource_kggka"), SubResource("Resource_vkw0v"), SubResource("Resource_k7m45"), SubResource("Resource_5hxwl"), SubResource("Resource_snrri"), SubResource("Resource_fbd1r"), SubResource("Resource_w6ntn")]
+branchName = "Anomaly"
+branchingDialogues = []
+
+[sub_resource type="Resource" id="Resource_als4u"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Mmm, Olren?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_ll7ob"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_als4u")]
+branchName = ""
+branchingDialogues = [SubResource("Resource_qdref")]
+
+[sub_resource type="Resource" id="Resource_4kb2n"]
+script = ExtResource("25_vl2xh")
+dialogues = SubResource("Resource_ll7ob")
+associatedInteractor = 4
+associatedReceiver = 2
+
+[sub_resource type="Resource" id="Resource_43t44"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "D-did you hear Vakthol's back crack when he jumped that log?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_iyr76"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "...Maybe. Why?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_ulfa7"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "I don't know. I-I guess Vakthol and Thalria are just really old now."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_ypig2"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "Well, they're not [i]that[/i] old! They're just a little..."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_mq1qd"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 4
+emotion = 0
+content = "Ancient?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_je601"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "Okay... maybe you're right."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_u0uas"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_43t44"), SubResource("Resource_iyr76"), SubResource("Resource_ulfa7"), SubResource("Resource_ypig2"), SubResource("Resource_mq1qd"), SubResource("Resource_je601")]
+branchName = "Old"
+branchingDialogues = []
+
+[sub_resource type="Resource" id="Resource_bkw60"]
+script = ExtResource("23_22ic3")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "Yeah, Olren?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_1pc5i"]
+script = ExtResource("24_akffl")
+dialogues = [SubResource("Resource_bkw60")]
+branchName = ""
+branchingDialogues = [SubResource("Resource_u0uas")]
+
+[sub_resource type="Resource" id="Resource_yx4q4"]
+script = ExtResource("25_vl2xh")
+dialogues = SubResource("Resource_1pc5i")
+associatedInteractor = 4
+associatedReceiver = 3
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_bnc6q"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_42qah"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_cblsy"]
+color = Color(0.203922, 0.203922, 0.203922, 1)
+grow_begin = 4.0
+thickness = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pw0yk"]
+
+[sub_resource type="Theme" id="Theme_oe3fy"]
+PopupMenu/font_sizes/font_size = 30
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_snhpk"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjda6"]
+bg_color = Color(0.384314, 0.384314, 0.384314, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qwivw"]
+bg_color = Color(0.862745, 0.462745, 0.490196, 1)
+
+[node name="BaseNode" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000612859, -3.72529e-09, 0.0018937)
+
+[node name="ManagerReferenceHolder" type="Node3D" parent="." node_paths=PackedStringArray("PartyManager", "Controller", "LevelManager", "SaveManager", "MenuManager", "ItemPickupManager", "DialogueManager", "CutsceneManager", "ShopMenuManager", "PartyMenuManager")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15193e-07, 3.72529e-09, 2.97208e-07)
+script = ExtResource("1_7hlfi")
+PartyManager = NodePath("../PartyManager")
+Controller = NodePath("../PartyMembers/Member1")
+LevelManager = NodePath("../LevelManager")
+SaveManager = NodePath("../SaveManager")
+MenuManager = NodePath("../UI/PartyMenuLayer/PartyMenu/MenuManager")
+ItemPickupManager = NodePath("../UI/ItemPickup/Back")
+DialogueManager = NodePath("../UI/DialogueScreen/Back")
+CutsceneManager = NodePath("../CutsceneManager")
+ShopMenuManager = NodePath("../UI/Shop/Background")
+PartyMenuManager = NodePath("../UI/PartyMenuLayer/PartyMenu/TabContainer/Party")
+
+[node name="CombatManager" type="Node3D" parent="." node_paths=PackedStringArray("managers", "uiManager", "abilityManager", "itemManager", "stacksAndStatusManager", "passiveManager", "playerCamera", "baseNode")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.36896, -1.7533, -8.04547)
+script = ExtResource("1_821s7")
+affinityTable = [SubResource("Resource_vsscq"), SubResource("Resource_fk2ok"), SubResource("Resource_b1i57"), SubResource("Resource_i7a2u"), SubResource("Resource_hqnmo"), SubResource("Resource_lojwi"), SubResource("Resource_8rq4s"), SubResource("Resource_f5wbw"), SubResource("Resource_bih4v"), SubResource("Resource_0qamu")]
+StatusDatas = Array[Object]([SubResource("Resource_xl1dm"), SubResource("Resource_igf5a"), SubResource("Resource_vj0lt"), SubResource("Resource_h6dwx"), SubResource("Resource_5kq13"), SubResource("Resource_mftyv"), SubResource("Resource_e01c7"), SubResource("Resource_au516"), SubResource("Resource_1u3ta"), SubResource("Resource_1rshu")])
+managers = NodePath("../ManagerReferenceHolder")
+uiManager = NodePath("UIManager")
+abilityManager = NodePath("AbilityManager")
+itemManager = NodePath("ItemManager")
+stacksAndStatusManager = NodePath("StacksStatusManager")
+passiveManager = NodePath("PassiveManager")
+playerCamera = NodePath("../PartyMembers/Member1/CameraTarget/PlayerCamera")
+baseNode = NodePath("..")
+
+[node name="CameraHolder" type="Node3D" parent="CombatManager"]
+
+[node name="AbilityManager" type="Node3D" parent="CombatManager" node_paths=PackedStringArray("combatManager", "uiManager")]
+script = ExtResource("5_ejkmm")
+combatManager = NodePath("..")
+uiManager = NodePath("../UIManager")
+enemyAbilityUseHolder = ExtResource("6_gn3sp")
+
+[node name="UIManager" type="Node3D" parent="CombatManager" node_paths=PackedStringArray("managers", "combatManager", "UI", "partyList", "enemyList", "selectionBox", "abilityContainer", "abilityButtonContainer", "secondaryOptions", "secondaryOptionsContainer", "messageText", "cancelButton", "finalizeButton", "itemsList", "itemsContainer", "victoryScreen")]
+script = ExtResource("6_143na")
+managers = NodePath("../../ManagerReferenceHolder")
+combatManager = NodePath("..")
+abilityButton = ExtResource("8_o4pbx")
+effectPrefab = ExtResource("9_67pu3")
+itemPrefab = ExtResource("5_2svhw")
+stackPrefab = ExtResource("11_qyibu")
+UI = NodePath("../../UI")
+partyList = NodePath("../../UI/CombatPartyList")
+enemyList = NodePath("../../UI/CombatEnemyList")
+selectionBox = NodePath("../../UI/Options")
+abilityContainer = NodePath("../../UI/Options/Abilities")
+abilityButtonContainer = NodePath("../../UI/Options/Abilities/ScrollContainer/VBoxContainer")
+secondaryOptions = NodePath("../../UI/Options/SecondaryOptions")
+secondaryOptionsContainer = NodePath("../../UI/Options/SecondaryOptions/ScrollContainer/VBoxContainer")
+messageText = NodePath("../../UI/Message/Text")
+cancelButton = NodePath("../../UI/Options/CancelButton")
+finalizeButton = NodePath("../../UI/Options/FinalizeButton")
+itemsList = NodePath("../../UI/Options/Items")
+itemsContainer = NodePath("../../UI/Options/Items/ScrollContainer/VBoxContainer")
+victoryScreen = NodePath("../../UI/VictoryScreen")
+baseHighlight = ExtResource("20_5bpft")
+alteredHighlight = ExtResource("13_3vjj1")
+
+[node name="PassiveManager" type="Node3D" parent="CombatManager" node_paths=PackedStringArray("combatManager", "uiManager", "stacksAndStatusManager")]
+script = ExtResource("7_x03at")
+combatManager = NodePath("..")
+uiManager = NodePath("../UIManager")
+stacksAndStatusManager = NodePath("../StacksStatusManager")
+olrenSpecialArrowPrefab = ExtResource("15_27lj8")
+
+[node name="ItemManager" type="Node3D" parent="CombatManager" node_paths=PackedStringArray("combatManager", "uiManager")]
+script = ExtResource("8_hnce1")
+combatManager = NodePath("..")
+uiManager = NodePath("../UIManager")
+
+[node name="StacksStatusManager" type="Node3D" parent="CombatManager" node_paths=PackedStringArray("combatManager", "uiManager")]
+script = ExtResource("9_1u2nm")
+combatManager = NodePath("..")
+uiManager = NodePath("../UIManager")
+
+[node name="PartyManager" type="Node3D" parent="." node_paths=PackedStringArray("managers")]
+script = ExtResource("9_ah2fn")
+baseMembers = [ExtResource("10_7pwb7"), ExtResource("11_wj8pa"), ExtResource("12_h78bi"), ExtResource("13_nnw16")]
+vaktholItems = [SubResource("Resource_gaxvb"), SubResource("Resource_cxsht"), SubResource("Resource_lxtj8")]
+thalriaItems = [ExtResource("17_vxtna"), ExtResource("18_ti5f1"), SubResource("Resource_y8mwe")]
+athliaItems = [SubResource("Resource_hb6rw"), SubResource("Resource_de2wb")]
+olrenItems = [ExtResource("19_4kg3f"), SubResource("Resource_rmxds"), SubResource("Resource_de2wb")]
+experienceThreshholds = PackedInt32Array(10, 20, 40, 99999, 160, 320, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+managers = NodePath("../ManagerReferenceHolder")
+
+[node name="UI" type="Node2D" parent="."]
+
+[node name="Overlay" type="CanvasLayer" parent="UI"]
+
+[node name="BlackScreen" type="ColorRect" parent="UI/Overlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+
+[node name="LoadingText" type="Label" parent="UI/Overlay"]
+visible = false
+offset_right = 1920.0
+offset_bottom = 1080.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 50
+text = "Loading..."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DefeatScreen" type="Node2D" parent="UI/Overlay"]
+visible = false
+
+[node name="Title" type="Label" parent="UI/Overlay/DefeatScreen"]
+offset_top = 450.0
+offset_right = 1920.0
+offset_bottom = 516.0
+theme_override_font_sizes/font_size = 45
+text = "You have been defeated."
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LastSave" type="Button" parent="UI/Overlay/DefeatScreen"]
+offset_left = 700.0
+offset_top = 550.0
+offset_right = 912.0
+offset_bottom = 593.0
+theme_override_font_sizes/font_size = 25
+text = "Reload Last Save"
+
+[node name="Quit" type="Button" parent="UI/Overlay/DefeatScreen"]
+offset_left = 1000.0
+offset_top = 550.0
+offset_right = 1212.0
+offset_bottom = 593.0
+theme_override_font_sizes/font_size = 25
+text = "Quit to Menu"
+
+[node name="CombatPartyList" type="CanvasGroup" parent="UI"]
+visible = false
+
+[node name="Back" type="Sprite2D" parent="UI/CombatPartyList"]
+position = Vector2(920, 912)
+scale = Vector2(1760, 200)
+texture = SubResource("CanvasTexture_fvio1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/CombatPartyList"]
+custom_minimum_size = Vector2(440, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 811.2
+offset_right = 1800.0
+offset_bottom = 1011.2
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+alignment = 1
+
+[node name="Panel1" type="Panel" parent="UI/CombatPartyList/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Holder" type="Node2D" parent="UI/CombatPartyList/HBoxContainer/Panel1"]
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+visible = false
+offset_right = 435.2
+offset_bottom = 200.0
+theme = SubResource("Theme_3108v")
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+offset_right = 440.0
+offset_bottom = 41.6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 81.6
+text = "Health"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 88.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="HealthDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 105.6
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+offset_top = 92.8
+offset_right = 440.0
+offset_bottom = 134.4
+text = "Mana"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 140.8
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 158.4
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+offset_top = 144.0
+offset_right = 440.0
+offset_bottom = 185.6
+text = "Action"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+offset_left = 16.0
+offset_top = 168.0
+offset_right = 416.0
+offset_bottom = 192.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fpoax")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1mn27")
+rounded = true
+show_percentage = false
+
+[node name="Effects" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+offset_top = -104.0
+offset_right = 440.0
+theme_override_constants/separation = 1
+alignment = 2
+
+[node name="Stacks" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Effects"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="StatusRows" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row1" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Row2" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="CompanionHolder" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+visible = false
+offset_top = 200.0
+offset_right = 437.0
+offset_bottom = 260.0
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
+visible = false
+layout_mode = 0
+offset_right = 437.0
+offset_bottom = 60.0
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Duration" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "# turns"
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 435.0
+offset_bottom = 31.0
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "#/#"
+horizontal_alignment = 1
+
+[node name="Selection" type="Button" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 437.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_tt0fo")
+
+[node name="Panel2" type="Panel" parent="UI/CombatPartyList/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Holder" type="Node2D" parent="UI/CombatPartyList/HBoxContainer/Panel2"]
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+visible = false
+offset_right = 435.2
+offset_bottom = 200.0
+theme = SubResource("Theme_3108v")
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+offset_right = 440.0
+offset_bottom = 41.6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 81.6
+text = "Health"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 88.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="HealthDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 105.6
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+offset_top = 92.8
+offset_right = 440.0
+offset_bottom = 134.4
+text = "Mana"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 140.8
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 158.4
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+offset_top = 144.0
+offset_right = 440.0
+offset_bottom = 185.6
+text = "Action"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+offset_left = 16.0
+offset_top = 168.0
+offset_right = 416.0
+offset_bottom = 192.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fpoax")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1mn27")
+rounded = true
+show_percentage = false
+
+[node name="Effects" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+offset_top = -104.0
+offset_right = 440.0
+theme_override_constants/separation = 1
+alignment = 2
+
+[node name="Stacks" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Effects"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="StatusRows" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row1" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Row2" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="CompanionHolder" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+visible = false
+offset_top = 200.0
+offset_right = 437.0
+offset_bottom = 260.0
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
+visible = false
+layout_mode = 0
+offset_right = 437.0
+offset_bottom = 60.0
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Duration" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "# turns"
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 435.0
+offset_bottom = 31.0
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "#/#"
+horizontal_alignment = 1
+
+[node name="Selection" type="Button" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 437.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_xkk30")
+
+[node name="Panel3" type="Panel" parent="UI/CombatPartyList/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Holder" type="Node2D" parent="UI/CombatPartyList/HBoxContainer/Panel3"]
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+visible = false
+offset_right = 435.2
+offset_bottom = 200.0
+theme = SubResource("Theme_3108v")
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+offset_right = 440.0
+offset_bottom = 41.6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 81.6
+text = "Health"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 88.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="HealthDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 105.6
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+offset_top = 92.8
+offset_right = 440.0
+offset_bottom = 134.4
+text = "Mana"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 140.8
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 158.4
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+offset_top = 144.0
+offset_right = 440.0
+offset_bottom = 185.6
+text = "Action"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+offset_left = 16.0
+offset_top = 168.0
+offset_right = 416.0
+offset_bottom = 192.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fpoax")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1mn27")
+rounded = true
+show_percentage = false
+
+[node name="Effects" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+offset_top = -104.0
+offset_right = 440.0
+theme_override_constants/separation = 1
+alignment = 2
+
+[node name="Stacks" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Effects"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="StatusRows" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row1" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Row2" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="CompanionHolder" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+visible = false
+offset_top = 200.0
+offset_right = 437.0
+offset_bottom = 260.0
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
+visible = false
+layout_mode = 0
+offset_right = 437.0
+offset_bottom = 60.0
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Duration" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "# turns"
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 435.0
+offset_bottom = 31.0
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "#/#"
+horizontal_alignment = 1
+
+[node name="Selection" type="Button" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 437.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_xkk30")
+
+[node name="Panel4" type="Panel" parent="UI/CombatPartyList/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Holder" type="Node2D" parent="UI/CombatPartyList/HBoxContainer/Panel4"]
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+visible = false
+offset_right = 435.2
+offset_bottom = 200.0
+theme = SubResource("Theme_3108v")
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+offset_right = 440.0
+offset_bottom = 41.6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 81.6
+text = "Health"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 88.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="HealthDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 105.6
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+offset_top = 92.8
+offset_right = 440.0
+offset_bottom = 134.4
+text = "Mana"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 140.8
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 158.4
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+offset_top = 144.0
+offset_right = 440.0
+offset_bottom = 185.6
+text = "Action"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+offset_left = 16.0
+offset_top = 168.0
+offset_right = 416.0
+offset_bottom = 192.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fpoax")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1mn27")
+rounded = true
+show_percentage = false
+
+[node name="Effects" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+offset_top = -104.0
+offset_right = 440.0
+theme_override_constants/separation = 1
+alignment = 2
+
+[node name="Stacks" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Effects"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="StatusRows" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row1" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Row2" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="CompanionHolder" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+visible = false
+offset_top = 200.0
+offset_right = 437.0
+offset_bottom = 260.0
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
+visible = false
+layout_mode = 0
+offset_right = 437.0
+offset_bottom = 60.0
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Duration" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "# turns"
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 435.0
+offset_bottom = 31.0
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "#/#"
+horizontal_alignment = 1
+
+[node name="Selection" type="Button" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 437.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_xkk30")
+
+[node name="CombatEnemyList" type="CanvasGroup" parent="UI"]
+visible = false
+
+[node name="Back" type="Sprite2D" parent="UI/CombatEnemyList"]
+position = Vector2(920, 125)
+scale = Vector2(1760, 112)
+texture = SubResource("CanvasTexture_fvio1")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/CombatEnemyList"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 40.0
+offset_top = 70.0
+offset_right = 1800.0
+offset_bottom = 182.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+alignment = 1
+
+[node name="Panel1" type="Panel" parent="UI/CombatEnemyList/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Holder" type="Node2D" parent="UI/CombatEnemyList/HBoxContainer/Panel1"]
+
+[node name="Highlight" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder"]
+visible = false
+offset_right = 435.2
+offset_bottom = 112.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kg4xf")
+
+[node name="Title" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder"]
+offset_right = 440.0
+offset_bottom = 41.6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthTitle" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder"]
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 88.0
+text = "Health"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 88.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="HealthDescription" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 112.0
+theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="Effects" type="VBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder"]
+offset_top = 110.0
+offset_right = 437.0
+offset_bottom = 214.0
+theme_override_constants/separation = 1
+
+[node name="StatusRows" type="VBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="Row1" type="HBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Effects/StatusRows"]
+custom_minimum_size = Vector2(437, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Row2" type="HBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(437, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Stacks" type="HBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="CompanionHolder" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder"]
+visible = false
+offset_top = -60.0
+offset_right = 437.0
+
+[node name="Highlight" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
+visible = false
+layout_mode = 0
+offset_right = 437.0
+offset_bottom = 60.0
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Duration" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "# turns"
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 435.0
+offset_bottom = 31.0
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "#/#"
+horizontal_alignment = 1
+
+[node name="Selection" type="Button" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 437.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_18icv")
+
+[node name="Panel2" type="Panel" parent="UI/CombatEnemyList/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Holder" type="Node2D" parent="UI/CombatEnemyList/HBoxContainer/Panel2"]
+
+[node name="Highlight" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder"]
+visible = false
+offset_right = 435.2
+offset_bottom = 112.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kg4xf")
+
+[node name="Title" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder"]
+offset_right = 440.0
+offset_bottom = 41.6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthTitle" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder"]
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 88.0
+text = "Health"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 88.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="HealthDescription" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 112.0
+theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="Effects" type="VBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder"]
+offset_top = 110.0
+offset_right = 437.0
+offset_bottom = 214.0
+theme_override_constants/separation = 1
+
+[node name="StatusRows" type="VBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="Row1" type="HBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Effects/StatusRows"]
+custom_minimum_size = Vector2(437, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Row2" type="HBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(437, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Stacks" type="HBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="CompanionHolder" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder"]
+visible = false
+offset_top = -60.0
+offset_right = 437.0
+
+[node name="Highlight" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
+visible = false
+layout_mode = 0
+offset_right = 437.0
+offset_bottom = 60.0
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Duration" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "# turns"
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 435.0
+offset_bottom = 31.0
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "#/#"
+horizontal_alignment = 1
+
+[node name="Selection" type="Button" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 437.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_18icv")
+
+[node name="Panel3" type="Panel" parent="UI/CombatEnemyList/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Holder" type="Node2D" parent="UI/CombatEnemyList/HBoxContainer/Panel3"]
+
+[node name="Highlight" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder"]
+visible = false
+offset_right = 435.2
+offset_bottom = 112.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kg4xf")
+
+[node name="Title" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder"]
+offset_right = 440.0
+offset_bottom = 41.6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthTitle" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder"]
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 88.0
+text = "Health"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 88.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="HealthDescription" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 112.0
+theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="Effects" type="VBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder"]
+offset_top = 110.0
+offset_right = 437.0
+offset_bottom = 214.0
+theme_override_constants/separation = 1
+
+[node name="StatusRows" type="VBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="Row1" type="HBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Effects/StatusRows"]
+custom_minimum_size = Vector2(437, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Row2" type="HBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(437, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Stacks" type="HBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="CompanionHolder" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder"]
+visible = false
+offset_top = -60.0
+offset_right = 437.0
+
+[node name="Highlight" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
+visible = false
+layout_mode = 0
+offset_right = 437.0
+offset_bottom = 60.0
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Duration" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "# turns"
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 435.0
+offset_bottom = 31.0
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "#/#"
+horizontal_alignment = 1
+
+[node name="Selection" type="Button" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 437.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_18icv")
+
+[node name="Panel4" type="Panel" parent="UI/CombatEnemyList/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="Holder" type="Node2D" parent="UI/CombatEnemyList/HBoxContainer/Panel4"]
+
+[node name="Highlight" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder"]
+visible = false
+offset_right = 435.2
+offset_bottom = 112.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_kg4xf")
+
+[node name="Title" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder"]
+offset_right = 440.0
+offset_bottom = 41.6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthTitle" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder"]
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 88.0
+text = "Health"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 88.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="HealthDescription" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 112.0
+theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="Effects" type="VBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder"]
+offset_top = 110.0
+offset_right = 437.0
+offset_bottom = 214.0
+theme_override_constants/separation = 1
+
+[node name="StatusRows" type="VBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="Row1" type="HBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Effects/StatusRows"]
+custom_minimum_size = Vector2(437, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Row2" type="HBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(437, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Stacks" type="HBoxContainer" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="CompanionHolder" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder"]
+visible = false
+offset_top = -60.0
+offset_right = 437.0
+
+[node name="Highlight" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
+visible = false
+layout_mode = 0
+offset_right = 437.0
+offset_bottom = 60.0
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Duration" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "# turns"
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 435.0
+offset_bottom = 31.0
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "#/#"
+horizontal_alignment = 1
+
+[node name="Selection" type="Button" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 437.0
+offset_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_18icv")
+
+[node name="Options" type="CanvasGroup" parent="UI"]
+visible = false
+
+[node name="Panel" type="Panel" parent="UI/Options"]
+offset_left = 48.0
+offset_top = 504.0
+offset_right = 208.0
+offset_bottom = 704.0
+mouse_filter = 1
+
+[node name="AttackButton" type="Button" parent="UI/Options/Panel"]
+layout_mode = 0
+offset_right = 160.0
+offset_bottom = 67.2
+theme_override_font_sizes/font_size = 25
+text = "Attack"
+
+[node name="CastButton" type="Button" parent="UI/Options/Panel"]
+layout_mode = 0
+offset_top = 67.2
+offset_right = 160.0
+offset_bottom = 134.4
+theme_override_font_sizes/font_size = 25
+text = "Cast"
+
+[node name="ItemButton" type="Button" parent="UI/Options/Panel"]
+layout_mode = 0
+offset_top = 134.4
+offset_right = 160.0
+offset_bottom = 201.6
+theme_override_font_sizes/font_size = 25
+text = "Item"
+
+[node name="Abilities" type="Panel" parent="UI/Options"]
+visible = false
+offset_left = 224.0
+offset_top = 504.0
+offset_right = 424.0
+offset_bottom = 744.0
+mouse_filter = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Options/Abilities"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 240.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Options/Abilities/ScrollContainer"]
+custom_minimum_size = Vector2(125, 0)
+layout_mode = 2
+
+[node name="CancelButton" type="Button" parent="UI/Options"]
+visible = false
+offset_left = 48.0
+offset_top = 445.0
+offset_right = 208.0
+offset_bottom = 494.6
+text = "Cancel"
+
+[node name="FinalizeButton" type="Button" parent="UI/Options"]
+visible = false
+offset_left = 48.0
+offset_top = 380.0
+offset_right = 208.0
+offset_bottom = 429.6
+text = "Cast"
+
+[node name="Items" type="Panel" parent="UI/Options"]
+visible = false
+offset_left = 240.0
+offset_top = 504.0
+offset_right = 560.0
+offset_bottom = 705.6
+mouse_filter = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Options/Items"]
+layout_mode = 0
+offset_right = 400.0
+offset_bottom = 240.0
+horizontal_scroll_mode = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Options/Items/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="SecondaryOptions" type="Panel" parent="UI/Options"]
+visible = false
+offset_left = 450.0
+offset_top = 500.0
+offset_right = 600.0
+offset_bottom = 700.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Options/SecondaryOptions"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 200.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Options/SecondaryOptions/ScrollContainer"]
+layout_mode = 2
+
+[node name="Message" type="CanvasGroup" parent="UI"]
+visible = false
+
+[node name="Back" type="Panel" parent="UI/Message"]
+offset_left = 25.0
+offset_top = 400.0
+offset_right = 1125.0
+offset_bottom = 426.0
+mouse_filter = 2
+
+[node name="Text" type="Label" parent="UI/Message"]
+offset_left = 25.0
+offset_top = 400.0
+offset_right = 1125.0
+offset_bottom = 426.0
+
+[node name="VictoryScreen" type="CanvasGroup" parent="UI"]
+visible = false
+
+[node name="Back" type="Panel" parent="UI/VictoryScreen"]
+offset_left = 640.0
+offset_top = 280.0
+offset_right = 1200.0
+offset_bottom = 760.0
+mouse_filter = 2
+
+[node name="Title" type="Label" parent="UI/VictoryScreen/Back"]
+layout_mode = 0
+offset_right = 560.0
+offset_bottom = 41.6
+theme_override_font_sizes/font_size = 20
+text = "Victory!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ExpNotif1" type="Label" parent="UI/VictoryScreen/Back"]
+visible = false
+layout_mode = 0
+offset_top = 41.6
+offset_right = 560.0
+offset_bottom = 83.2
+text = "### gains # EXP"
+
+[node name="ExpNotif2" type="Label" parent="UI/VictoryScreen/Back"]
+visible = false
+layout_mode = 0
+offset_top = 83.2
+offset_right = 560.0
+offset_bottom = 124.8
+text = "### gains # EXP"
+
+[node name="ExpNotif3" type="Label" parent="UI/VictoryScreen/Back"]
+visible = false
+layout_mode = 0
+offset_top = 124.8
+offset_right = 560.0
+offset_bottom = 166.4
+text = "### gains # EXP"
+
+[node name="ExpNotif4" type="Label" parent="UI/VictoryScreen/Back"]
+visible = false
+layout_mode = 0
+offset_top = 166.4
+offset_right = 560.0
+offset_bottom = 208.0
+text = "### gains # EXP"
+
+[node name="ItemNotif" type="Label" parent="UI/VictoryScreen/Back"]
+visible = false
+layout_mode = 0
+offset_top = 208.0
+offset_right = 560.0
+offset_bottom = 249.6
+text = "Gained # ###"
+
+[node name="Exit" type="Button" parent="UI/VictoryScreen/Back"]
+layout_mode = 0
+offset_left = 200.0
+offset_top = 400.0
+offset_right = 344.0
+offset_bottom = 449.6
+text = "Exit"
+
+[node name="DialogueScreen" type="CanvasGroup" parent="UI"]
+visible = false
+
+[node name="Back" type="Panel" parent="UI/DialogueScreen" node_paths=PackedStringArray("managers")]
+offset_left = 40.0
+offset_top = 768.0
+offset_right = 1800.0
+offset_bottom = 1043.0
+mouse_filter = 2
+script = ExtResource("22_argjw")
+dialoguesInThisRegion = [SubResource("Resource_fgumm"), SubResource("Resource_wsmn1"), SubResource("Resource_bqlyv"), SubResource("Resource_ljqi8"), SubResource("Resource_bdyoq"), SubResource("Resource_fyd3b"), SubResource("Resource_utd24"), SubResource("Resource_enfyn"), SubResource("Resource_ga2o4"), SubResource("Resource_4kb2n"), SubResource("Resource_yx4q4")]
+branchingButton = ExtResource("26_tb1nj")
+managers = NodePath("../../../ManagerReferenceHolder")
+
+[node name="Body" type="RichTextLabel" parent="UI/DialogueScreen/Back"]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 64.0
+offset_right = 1760.0
+offset_bottom = 264.0
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 30
+theme_override_font_sizes/italics_font_size = 30
+theme_override_font_sizes/bold_italics_font_size = 30
+theme_override_font_sizes/mono_font_size = 30
+bbcode_enabled = true
+text = "This is the body of the text"
+
+[node name="Title" type="RichTextLabel" parent="UI/DialogueScreen/Back"]
+layout_mode = 0
+offset_left = 344.0
+offset_right = 1760.0
+offset_bottom = 64.0
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "Vakthol"
+
+[node name="Sprite" type="Sprite2D" parent="UI/DialogueScreen/Back"]
+position = Vector2(168, -160)
+texture = SubResource("CanvasTexture_bnc6q")
+
+[node name="Branches" type="VBoxContainer" parent="UI/DialogueScreen/Back"]
+visible = false
+layout_mode = 0
+offset_left = 1520.0
+offset_top = -328.0
+offset_right = 1760.0
+offset_bottom = -8.0
+mouse_filter = 2
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="PartyMenuLayer" type="CanvasLayer" parent="UI"]
+
+[node name="PartyMenu" type="CanvasGroup" parent="UI/PartyMenuLayer"]
+visible = false
+
+[node name="TabContainer" type="TabContainer" parent="UI/PartyMenuLayer/PartyMenu"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 300.0
+offset_top = 100.0
+offset_right = 1660.0
+offset_bottom = 900.0
+grow_horizontal = 0
+grow_vertical = 2
+pivot_offset = Vector2(680, 400)
+tab_alignment = 1
+
+[node name="Party" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer" node_paths=PackedStringArray("managers")]
+layout_mode = 2
+script = ExtResource("27_o3g2u")
+memberButtonPrefab = ExtResource("28_40bba")
+abilityLabelPrefab = ExtResource("29_jtio8")
+reequipButtonPrefab = ExtResource("30_bblpj")
+managers = NodePath("../../../../../ManagerReferenceHolder")
+
+[node name="ListBackground" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+custom_minimum_size = Vector2(320, 720)
+layout_mode = 2
+offset_left = 16.0
+offset_top = 32.0
+offset_right = 336.0
+offset_bottom = 752.0
+
+[node name="List" type="ScrollContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/ListBackground"]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 720.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/ListBackground/List"]
+layout_mode = 2
+
+[node name="Image" type="Sprite2D" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+position = Vector2(552, 176)
+scale = Vector2(320, 320)
+texture = SubResource("CanvasTexture_42qah")
+
+[node name="Stats" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+layout_mode = 0
+offset_left = 392.0
+offset_top = 352.0
+offset_right = 712.0
+offset_bottom = 736.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats"]
+layout_mode = 0
+offset_right = 320.0
+offset_bottom = 384.0
+
+[node name="Affinity" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+theme_override_font_sizes/normal_font_size = 20
+text = "Affinity:"
+
+[node name="Constitution" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+tooltip_text = "Maximum health"
+theme_override_font_sizes/normal_font_size = 20
+text = "Constitution:"
+script = ExtResource("31_g468s")
+
+[node name="Knowledge" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+tooltip_text = "Maximum mana"
+theme_override_font_sizes/normal_font_size = 20
+text = "Knowledge:"
+script = ExtResource("31_g468s")
+
+[node name="Strength" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+tooltip_text = "Physical damage"
+theme_override_font_sizes/normal_font_size = 20
+text = "Strength:"
+script = ExtResource("31_g468s")
+
+[node name="Intelligence" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+tooltip_text = "Magical damage"
+theme_override_font_sizes/normal_font_size = 20
+text = "Intelligence:"
+script = ExtResource("31_g468s")
+
+[node name="Fortitude" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+tooltip_text = "Physical defense"
+theme_override_font_sizes/normal_font_size = 20
+text = "Fortitude:"
+script = ExtResource("31_g468s")
+
+[node name="Willpower" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+tooltip_text = "Magical defense"
+theme_override_font_sizes/normal_font_size = 20
+text = "Willpower:"
+script = ExtResource("31_g468s")
+
+[node name="Accuracy" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+tooltip_text = "Hit chance"
+theme_override_font_sizes/normal_font_size = 20
+text = "Accuracy:"
+script = ExtResource("31_g468s")
+
+[node name="Evasion" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+tooltip_text = "Dodge chance"
+theme_override_font_sizes/normal_font_size = 20
+text = "Evasion:"
+script = ExtResource("31_g468s")
+
+[node name="Speed" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 32)
+layout_mode = 2
+tooltip_text = "Turn order"
+theme_override_font_sizes/normal_font_size = 20
+text = "Speed:"
+script = ExtResource("31_g468s")
+
+[node name="Abilities" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+layout_mode = 0
+offset_left = 736.0
+offset_top = 48.0
+offset_right = 1336.0
+offset_bottom = 336.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Abilities"]
+layout_mode = 0
+offset_right = 600.0
+offset_bottom = 320.0
+
+[node name="Equipment" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+layout_mode = 0
+offset_left = 736.0
+offset_top = 352.0
+offset_right = 1032.0
+offset_bottom = 736.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment"]
+layout_mode = 0
+offset_right = 296.0
+offset_bottom = 384.0
+theme_override_constants/separation = 32
+
+[node name="Weapon" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Weapon:"
+alignment = 0
+
+[node name="Head" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Head:"
+alignment = 0
+
+[node name="Chest" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Chest:"
+alignment = 0
+
+[node name="Legs" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Legs:"
+alignment = 0
+
+[node name="Arms" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Arms:"
+alignment = 0
+
+[node name="Accessory" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Accessory:"
+alignment = 0
+
+[node name="ReequipBackground" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+custom_minimum_size = Vector2(296, 384)
+layout_mode = 2
+offset_left = 1040.0
+offset_top = 352.0
+offset_right = 1336.0
+offset_bottom = 736.0
+
+[node name="Reequip" type="ScrollContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/ReequipBackground"]
+layout_mode = 0
+offset_right = 296.0
+offset_bottom = 384.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/ReequipBackground/Reequip"]
+layout_mode = 2
+
+[node name="Passive" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+layout_mode = 0
+offset_left = 736.0
+offset_top = 16.0
+offset_right = 1216.0
+offset_bottom = 48.0
+theme_override_font_sizes/normal_font_size = 20
+text = "Passive:"
+script = ExtResource("31_g468s")
+
+[node name="SwapButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+layout_mode = 0
+offset_left = 96.0
+offset_right = 248.0
+offset_bottom = 35.2
+theme_override_font_sizes/font_size = 15
+text = "Swap"
+
+[node name="AddPartyButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+layout_mode = 0
+offset_left = 1080.0
+offset_top = 8.0
+offset_right = 1188.8
+offset_bottom = 43.2
+theme_override_font_sizes/font_size = 15
+text = "Add to Party"
+
+[node name="RemovePartyButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+layout_mode = 0
+offset_left = 1200.0
+offset_top = 8.0
+offset_right = 1320.0
+offset_bottom = 43.2
+theme_override_font_sizes/font_size = 12
+text = "Remove from Party"
+
+[node name="Items" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer" node_paths=PackedStringArray("managers")]
+visible = false
+layout_mode = 2
+script = ExtResource("32_1h4ro")
+itemButtonPrefab = ExtResource("5_2svhw")
+memberButtonPrefab = ExtResource("28_40bba")
+managers = NodePath("../../../../../ManagerReferenceHolder")
+
+[node name="ItemSContainer" type="ScrollContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Items"]
+layout_mode = 0
+offset_right = 1360.0
+offset_bottom = 750.4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Items/ItemSContainer"]
+layout_mode = 2
+
+[node name="ListBackground" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Items"]
+custom_minimum_size = Vector2(320, 720)
+layout_mode = 0
+offset_left = 1040.0
+offset_top = 16.0
+offset_right = 1360.0
+offset_bottom = 736.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Items/ListBackground"]
+layout_mode = 2
+
+[node name="Settings" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("33_jvddv")
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings"]
+layout_mode = 0
+offset_right = 250.0
+offset_bottom = 769.0
+theme_override_constants/separation = 35
+alignment = 1
+
+[node name="Video" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/ButtonsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Video"
+
+[node name="Controls" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/ButtonsContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 25
+text = "Controls"
+
+[node name="Video" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings"]
+layout_mode = 0
+offset_left = 250.0
+offset_right = 1360.0
+offset_bottom = 769.0
+
+[node name="Resolution" type="Control" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Title" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 40.0
+theme_override_font_sizes/normal_font_size = 25
+text = "Resolution"
+
+[node name="WindowLabel" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution"]
+layout_mode = 0
+offset_top = 40.0
+offset_right = 300.0
+offset_bottom = 80.0
+theme_override_font_sizes/normal_font_size = 20
+text = "Windowed Mode:"
+
+[node name="WindowButton" type="OptionButton" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution"]
+layout_mode = 0
+offset_left = 175.0
+offset_top = 40.0
+offset_right = 383.0
+offset_bottom = 71.0
+theme_override_font_sizes/font_size = 18
+item_count = 3
+selected = 0
+popup/item_0/text = "Fullscreen"
+popup/item_0/id = 0
+popup/item_1/text = "Windowed Fullscreen"
+popup/item_1/id = 1
+popup/item_2/text = "Windowed"
+popup/item_2/id = 2
+
+[node name="ResolutionLabel" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution"]
+layout_mode = 0
+offset_top = 80.0
+offset_right = 300.0
+offset_bottom = 120.0
+theme_override_font_sizes/normal_font_size = 20
+text = "Resolution:"
+
+[node name="ResolutionButton" type="OptionButton" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution"]
+layout_mode = 0
+offset_left = 175.0
+offset_top = 80.0
+offset_right = 404.0
+offset_bottom = 114.0
+theme_override_font_sizes/font_size = 18
+
+[node name="Controls" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings"]
+visible = false
+layout_mode = 0
+offset_left = 250.0
+offset_right = 1360.0
+offset_bottom = 769.0
+
+[node name="Sensitivity" type="Control" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Controls"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Controls/Sensitivity"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 40.0
+theme_override_font_sizes/normal_font_size = 20
+text = "Sensitivity:"
+
+[node name="Slider" type="HSlider" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Controls/Sensitivity"]
+layout_mode = 0
+offset_left = 110.0
+offset_top = 10.0
+offset_right = 260.0
+offset_bottom = 26.0
+theme_override_styles/slider = SubResource("StyleBoxLine_cblsy")
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 5.0
+
+[node name="SpinBox" type="SpinBox" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Controls/Sensitivity"]
+layout_mode = 0
+offset_left = 275.0
+offset_right = 358.063
+offset_bottom = 40.0
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 5.0
+
+[node name="Menu" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer"]
+visible = false
+layout_mode = 2
+script = ExtResource("34_bcm0h")
+
+[node name="SaveAndQuit" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 320.0
+offset_right = 760.0
+offset_bottom = 369.6
+text = "Save and Quit"
+
+[node name="QuitNoSave" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 390.0
+offset_right = 763.0
+offset_bottom = 439.6
+text = "Quit Without Saving"
+
+[node name="ConfirmationWindow" type="CanvasGroup" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu"]
+visible = false
+z_index = 1
+
+[node name="Back" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/ConfirmationWindow"]
+offset_left = 525.0
+offset_top = 275.0
+offset_right = 825.0
+offset_bottom = 475.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_pw0yk")
+
+[node name="Info" type="Label" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/ConfirmationWindow/Back"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 26.0
+text = "Are you sure you want to quit without saving?"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="YesButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/ConfirmationWindow/Back"]
+layout_mode = 0
+offset_left = 175.0
+offset_top = 125.0
+offset_right = 250.0
+offset_bottom = 156.0
+text = "Yes"
+
+[node name="NoButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/ConfirmationWindow/Back"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 125.0
+offset_right = 125.0
+offset_bottom = 156.0
+text = "No"
+
+[node name="SaveButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu"]
+layout_mode = 0
+offset_left = 600.0
+offset_top = 244.0
+offset_right = 750.4
+offset_bottom = 293.6
+text = "Save Game"
+
+[node name="MenuManager" type="Node2D" parent="UI/PartyMenuLayer/PartyMenu"]
+script = ExtResource("35_dwed3")
+
+[node name="ItemPickup" type="CanvasGroup" parent="UI"]
+visible = false
+
+[node name="Back" type="Panel" parent="UI/ItemPickup" node_paths=PackedStringArray("managers")]
+offset_left = 105.0
+offset_top = 900.0
+offset_right = 1805.0
+offset_bottom = 1000.0
+mouse_filter = 2
+script = ExtResource("36_qnjxv")
+managers = NodePath("../../../ManagerReferenceHolder")
+
+[node name="Text" type="Label" parent="UI/ItemPickup/Back"]
+layout_mode = 0
+offset_right = 1700.0
+offset_bottom = 100.0
+theme_override_font_sizes/font_size = 40
+text = "Picked up # ###!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Shop" type="CanvasGroup" parent="UI"]
+visible = false
+
+[node name="Background" type="Panel" parent="UI/Shop" node_paths=PackedStringArray("managers")]
+offset_left = 275.0
+offset_top = 100.0
+offset_right = 1625.0
+offset_bottom = 1000.0
+mouse_filter = 2
+script = ExtResource("37_jygy0")
+itemButtonPrefab = ExtResource("38_xtl2k")
+managers = NodePath("../../../ManagerReferenceHolder")
+
+[node name="Buttons" type="Node2D" parent="UI/Shop/Background"]
+
+[node name="Buy" type="Button" parent="UI/Shop/Background/Buttons"]
+offset_left = 60.0
+offset_top = 800.0
+offset_right = 260.0
+offset_bottom = 850.0
+theme_override_font_sizes/font_size = 25
+text = "Buy"
+
+[node name="Sell" type="Button" parent="UI/Shop/Background/Buttons"]
+offset_left = 400.0
+offset_top = 800.0
+offset_right = 600.0
+offset_bottom = 850.0
+theme_override_font_sizes/font_size = 25
+text = "Sell"
+
+[node name="Exit" type="Button" parent="UI/Shop/Background/Buttons"]
+offset_left = 1100.0
+offset_top = 800.0
+offset_right = 1300.0
+offset_bottom = 850.0
+theme_override_font_sizes/font_size = 25
+text = "Exit"
+
+[node name="BulkLabel" type="RichTextLabel" parent="UI/Shop/Background/Buttons"]
+offset_left = 750.0
+offset_top = 750.0
+offset_right = 950.0
+offset_bottom = 800.0
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[center]Bulk[/center]"
+
+[node name="Bulk" type="OptionButton" parent="UI/Shop/Background/Buttons"]
+offset_left = 750.0
+offset_top = 800.0
+offset_right = 950.0
+offset_bottom = 850.0
+theme = SubResource("Theme_oe3fy")
+theme_override_font_sizes/font_size = 30
+item_count = 6
+selected = 0
+fit_to_longest_item = false
+popup/item_0/text = "1"
+popup/item_0/id = 0
+popup/item_1/text = "5"
+popup/item_1/id = 1
+popup/item_2/text = "10"
+popup/item_2/id = 2
+popup/item_3/text = "25"
+popup/item_3/id = 3
+popup/item_4/text = "50"
+popup/item_4/id = 4
+popup/item_5/text = "100"
+popup/item_5/id = 5
+
+[node name="GoldDisplay" type="RichTextLabel" parent="UI/Shop/Background/Buttons"]
+offset_right = 900.0
+offset_bottom = 50.0
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 26
+bbcode_enabled = true
+text = "Gold:"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/Shop/Background"]
+layout_mode = 0
+offset_top = 50.0
+offset_right = 1350.0
+offset_bottom = 750.0
+
+[node name="ItemContainer" type="VBoxContainer" parent="UI/Shop/Background/ScrollContainer"]
+layout_mode = 2
+
+[node name="Notification" type="Panel" parent="UI/Shop/Background"]
+visible = false
+layout_mode = 0
+offset_left = 410.0
+offset_top = 300.0
+offset_right = 910.0
+offset_bottom = 550.0
+
+[node name="Body" type="RichTextLabel" parent="UI/Shop/Background/Notification"]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 200.0
+theme_override_font_sizes/normal_font_size = 35
+bbcode_enabled = true
+text = " [center]Are you sure you want to buy/sell # item(s)?[/center]"
+
+[node name="YesButton" type="Button" parent="UI/Shop/Background/Notification"]
+layout_mode = 0
+offset_left = 300.0
+offset_top = 175.0
+offset_right = 425.0
+offset_bottom = 225.0
+theme_override_font_sizes/font_size = 30
+text = "Yes"
+
+[node name="NoButton" type="Button" parent="UI/Shop/Background/Notification"]
+layout_mode = 0
+offset_left = 90.0
+offset_top = 175.0
+offset_right = 215.0
+offset_bottom = 225.0
+theme_override_font_sizes/font_size = 30
+text = "No"
+
+[node name="PartyMembers" type="Node3D" parent="."]
+
+[node name="Member1" type="CharacterBody3D" parent="PartyMembers"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.922, 0.613, -24.508)
+collision_layer = 2
+input_ray_pickable = false
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+floor_max_angle = 1.494
+floor_snap_length = 1.0
+script = ExtResource("39_q0foa")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PartyMembers/Member1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_snhpk")
+
+[node name="Model" parent="PartyMembers/Member1" instance=ExtResource("40_va38g")]
+
+[node name="CameraTarget" type="Node3D" parent="PartyMembers/Member1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.573, 0)
+
+[node name="PlayerCamera" type="Camera3D" parent="PartyMembers/Member1/CameraTarget"]
+transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0.3047, -2.23436)
+current = true
+
+[node name="BackAnchor" type="Node3D" parent="PartyMembers/Member1"]
+transform = Transform3D(0.87339, -0.487022, 0, 0.487022, 0.87339, 0, 0, 0, 1, 0.416, -0.5, -0.129)
+
+[node name="IdleCombatAnchor" type="Node3D" parent="PartyMembers/Member1"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1)
+
+[node name="ActiveCombatAnchor" type="Node3D" parent="PartyMembers/Member1"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -0.5)
+
+[node name="Weapon" parent="PartyMembers/Member1" instance=ExtResource("41_8y4r5")]
+
+[node name="SecondaryWeapon" type="Node3D" parent="PartyMembers/Member1"]
+
+[node name="SecondaryAnchor" type="Node3D" parent="PartyMembers/Member1"]
+
+[node name="Member2" type="CharacterBody3D" parent="PartyMembers" node_paths=PackedStringArray("managers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13414, 0.320904, 0)
+collision_layer = 8
+floor_max_angle = 1.48353
+script = ExtResource("42_pt17i")
+index = 1
+managers = NodePath("../../ManagerReferenceHolder")
+
+[node name="Member3" type="CharacterBody3D" parent="PartyMembers" node_paths=PackedStringArray("managers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13414, 0.320904, 0)
+collision_layer = 8
+floor_max_angle = 1.48353
+script = ExtResource("42_pt17i")
+index = 2
+managers = NodePath("../../ManagerReferenceHolder")
+
+[node name="Member4" type="CharacterBody3D" parent="PartyMembers" node_paths=PackedStringArray("managers")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13414, 0.320904, 0)
+collision_layer = 8
+floor_max_angle = 1.48353
+script = ExtResource("42_pt17i")
+index = 3
+managers = NodePath("../../ManagerReferenceHolder")
+
+[node name="SaveManager" type="Node3D" parent="." node_paths=PackedStringArray("managers")]
+script = ExtResource("43_n85qj")
+managers = NodePath("../ManagerReferenceHolder")
+
+[node name="LevelManager" type="Node3D" parent="." node_paths=PackedStringArray("managers")]
+script = ExtResource("44_yvp60")
+managers = NodePath("../ManagerReferenceHolder")
+
+[node name="CutsceneManager" type="Node3D" parent="." node_paths=PackedStringArray("managers", "playerCamera", "cutsceneCamera")]
+script = ExtResource("45_2ss0b")
+managers = NodePath("../ManagerReferenceHolder")
+playerCamera = NodePath("../PartyMembers/Member1/CameraTarget/PlayerCamera")
+cutsceneCamera = NodePath("../CutsceneCamera")
+
+[node name="CutsceneCamera" type="Camera3D" parent="."]
+transform = Transform3D(0.889751, -0.138243, 0.435008, -7.45058e-09, 0.953032, 0.302869, -0.456446, -0.269478, 0.847962, 3.44523, 5.59844, -19.2761)
+
+[node name="Misc" type="Node3D" parent="."]
+
+[node name="DoorHandler" type="Node3D" parent="Misc"]
+script = ExtResource("46_2mc4k")
+
+[node name="MainMenu" type="Control" parent="." node_paths=PackedStringArray("managers")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("47_k3f71")
+managers = NodePath("../ManagerReferenceHolder")
+
+[node name="Background" type="Panel" parent="MainMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bjda6")
+
+[node name="Main" type="CanvasGroup" parent="MainMenu/Background"]
+position = Vector2(960, 540)
+
+[node name="NewGame" type="Button" parent="MainMenu/Background/Main"]
+offset_left = -150.0
+offset_top = -50.0
+offset_right = 150.0
+offset_bottom = -5.0
+theme_override_font_sizes/font_size = 25
+text = "New Game"
+
+[node name="LoadGame" type="Button" parent="MainMenu/Background/Main"]
+offset_left = -150.0
+offset_right = 150.0
+offset_bottom = 45.0
+theme_override_font_sizes/font_size = 25
+text = "Load Game"
+
+[node name="Settings" type="Button" parent="MainMenu/Background/Main"]
+offset_left = -150.0
+offset_top = 50.0
+offset_right = 150.0
+offset_bottom = 95.0
+theme_override_font_sizes/font_size = 25
+text = "Settings"
+
+[node name="QuitGame" type="Button" parent="MainMenu/Background/Main"]
+offset_left = -150.0
+offset_top = 100.0
+offset_right = 150.0
+offset_bottom = 145.0
+theme_override_font_sizes/font_size = 25
+text = "Quit Game"
+
+[node name="Settings" type="CanvasGroup" parent="MainMenu/Background"]
+visible = false
+position = Vector2(960, 540)
+
+[node name="Back" type="Button" parent="MainMenu/Background/Settings"]
+offset_left = -38.0
+offset_top = 400.0
+offset_right = 39.0
+offset_bottom = 450.0
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="LoadGameSlots" type="CanvasGroup" parent="MainMenu/Background"]
+visible = false
+position = Vector2(960, 540)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Background/LoadGameSlots"]
+offset_left = -150.0
+offset_top = -250.0
+offset_right = 150.0
+offset_bottom = 250.0
+
+[node name="Slot1" type="Button" parent="MainMenu/Background/LoadGameSlots/VBoxContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Slot 1"
+
+[node name="Time" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot1"]
+layout_mode = 0
+offset_top = 70.0
+offset_right = 150.0
+offset_bottom = 100.0
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot1"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 70.0
+offset_right = 300.0
+offset_bottom = 100.0
+text = "Location"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot2" type="Button" parent="MainMenu/Background/LoadGameSlots/VBoxContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Slot 1"
+
+[node name="Time" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot2"]
+layout_mode = 0
+offset_top = 70.0
+offset_right = 150.0
+offset_bottom = 100.0
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot2"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 70.0
+offset_right = 300.0
+offset_bottom = 100.0
+text = "Location"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot3" type="Button" parent="MainMenu/Background/LoadGameSlots/VBoxContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Slot 1"
+
+[node name="Time" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot3"]
+layout_mode = 0
+offset_top = 70.0
+offset_right = 150.0
+offset_bottom = 100.0
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot3"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 70.0
+offset_right = 300.0
+offset_bottom = 100.0
+text = "Location"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot4" type="Button" parent="MainMenu/Background/LoadGameSlots/VBoxContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Slot 1"
+
+[node name="Time" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot4"]
+layout_mode = 0
+offset_top = 70.0
+offset_right = 150.0
+offset_bottom = 100.0
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot4"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 70.0
+offset_right = 300.0
+offset_bottom = 100.0
+text = "Location"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slot5" type="Button" parent="MainMenu/Background/LoadGameSlots/VBoxContainer"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme_override_font_sizes/font_size = 35
+text = "Slot 1"
+
+[node name="Time" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot5"]
+layout_mode = 0
+offset_top = 70.0
+offset_right = 150.0
+offset_bottom = 100.0
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot5"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 70.0
+offset_right = 300.0
+offset_bottom = 100.0
+text = "Location"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Back" type="Button" parent="MainMenu/Background/LoadGameSlots"]
+offset_left = -38.0
+offset_top = 400.0
+offset_right = 39.0
+offset_bottom = 450.0
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="DeleteButton" type="Button" parent="MainMenu/Background/LoadGameSlots"]
+offset_left = 175.0
+offset_right = 325.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 25
+text = "Delete Save"
+
+[node name="ConfirmationWindow" type="CanvasGroup" parent="MainMenu/Background/LoadGameSlots"]
+visible = false
+z_index = 1
+
+[node name="Back" type="Panel" parent="MainMenu/Background/LoadGameSlots/ConfirmationWindow"]
+offset_left = -200.0
+offset_top = -150.0
+offset_right = 200.0
+offset_bottom = 150.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qwivw")
+
+[node name="Title" type="Label" parent="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back"]
+layout_mode = 0
+offset_top = 75.0
+offset_right = 400.0
+offset_bottom = 125.0
+theme_override_font_sizes/font_size = 20
+text = "Are you sure you want to delete Slot #?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ConfirmButton" type="Button" parent="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 200.0
+offset_right = 350.0
+offset_bottom = 243.0
+theme_override_font_sizes/font_size = 25
+text = "Yes"
+
+[node name="BackButton" type="Button" parent="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 200.0
+offset_right = 160.0
+offset_bottom = 243.0
+theme_override_font_sizes/font_size = 25
+text = "Cancel"
+
+[node name="MenuCamera" type="Camera2D" parent="MainMenu"]
+position = Vector2(960, 540)
+
+[connection signal="button_down" from="UI/Overlay/DefeatScreen/LastSave" to="CombatManager" method="OnReloadLastButtonDown"]
+[connection signal="button_down" from="UI/Overlay/DefeatScreen/Quit" to="CombatManager" method="OnQuitToMenuButtonDown"]
+[connection signal="button_down" from="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [0, false]]
+[connection signal="mouse_entered" from="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [0, false]]
+[connection signal="mouse_exited" from="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [0, false]]
+[connection signal="button_down" from="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [1, false]]
+[connection signal="mouse_entered" from="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [1, false]]
+[connection signal="mouse_exited" from="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [1, false]]
+[connection signal="button_down" from="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [2, false]]
+[connection signal="mouse_entered" from="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [2, false]]
+[connection signal="mouse_exited" from="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [2, false]]
+[connection signal="button_down" from="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [3, false]]
+[connection signal="mouse_entered" from="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [3, false]]
+[connection signal="mouse_exited" from="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [3, false]]
+[connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [0, true]]
+[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [0, true]]
+[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [0, true]]
+[connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [1, true]]
+[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [1, true]]
+[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [1, true]]
+[connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [2, true]]
+[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [2, true]]
+[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [2, true]]
+[connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [3, true]]
+[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [3, true]]
+[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [3, true]]
+[connection signal="button_down" from="UI/Options/Panel/AttackButton" to="CombatManager" method="OnAttackButtonDown"]
+[connection signal="button_down" from="UI/Options/Panel/CastButton" to="CombatManager" method="OnCastButtonDown"]
+[connection signal="button_down" from="UI/Options/Panel/ItemButton" to="CombatManager" method="OnItemButtonDown"]
+[connection signal="button_down" from="UI/Options/CancelButton" to="CombatManager" method="OnCancelButtonDown"]
+[connection signal="button_down" from="UI/VictoryScreen/Back/Exit" to="CombatManager" method="OnExitButtonDown"]
+[connection signal="tab_clicked" from="UI/PartyMenuLayer/PartyMenu/TabContainer" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnTabPressed"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer/Weapon" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnEquipButtonDown" binds= [1]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer/Head" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnEquipButtonDown" binds= [2]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer/Chest" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnEquipButtonDown" binds= [3]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer/Legs" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnEquipButtonDown" binds= [4]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer/Arms" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnEquipButtonDown" binds= [5]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer/Accessory" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnEquipButtonDown" binds= [6]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/SwapButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnSwapButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/AddPartyButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnAddPartyButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/RemovePartyButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnRemovePartyButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/ButtonsContainer/Video" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings" method="OnTabButtonDown" binds= [0]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/ButtonsContainer/Controls" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings" method="OnTabButtonDown" binds= [1]]
+[connection signal="item_selected" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution/WindowButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings" method="OnSelectWindowedMode"]
+[connection signal="item_selected" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution/ResolutionButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings" method="OnSelectResolution"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Controls/Sensitivity/Slider" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings" method="OnSlideSensitivity"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Controls/Sensitivity/SpinBox" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings" method="OnEnterSensitivity"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/SaveAndQuit" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu" method="OnSaveQuitButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/QuitNoSave" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu" method="OnQuitNoSaveButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/ConfirmationWindow/Back/YesButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu" method="OnConfirmButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/ConfirmationWindow/Back/NoButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu" method="OnCancelButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/SaveButton" to="SaveManager" method="OnSaveButtonDown"]
+[connection signal="button_down" from="UI/Shop/Background/Buttons/Buy" to="UI/Shop/Background" method="OnBuyButtonDown"]
+[connection signal="button_down" from="UI/Shop/Background/Buttons/Sell" to="UI/Shop/Background" method="OnSellButtonDown"]
+[connection signal="button_down" from="UI/Shop/Background/Buttons/Exit" to="UI/Shop/Background" method="OnExitButtonDown"]
+[connection signal="item_selected" from="UI/Shop/Background/Buttons/Bulk" to="UI/Shop/Background" method="OnSelectBulk"]
+[connection signal="button_down" from="UI/Shop/Background/Notification/YesButton" to="UI/Shop/Background" method="OnYesButtonDown"]
+[connection signal="button_down" from="UI/Shop/Background/Notification/NoButton" to="UI/Shop/Background" method="OnNoButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/Main/NewGame" to="MainMenu" method="OnNewGameButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/Main/LoadGame" to="MainMenu" method="OnLoadButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/Main/Settings" to="MainMenu" method="OnSettingsButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/Main/QuitGame" to="MainMenu" method="OnQuitButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/Settings/Back" to="MainMenu" method="OnBackButtonDown" binds= ["Background/Settings", "Background/Main"]]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot1" to="MainMenu" method="OnLoadGameButtonDown" binds= [0]]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot2" to="MainMenu" method="OnLoadGameButtonDown" binds= [1]]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot3" to="MainMenu" method="OnLoadGameButtonDown" binds= [2]]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot4" to="MainMenu" method="OnLoadGameButtonDown" binds= [3]]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot5" to="MainMenu" method="OnLoadGameButtonDown" binds= [4]]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/Back" to="MainMenu" method="OnBackButtonDown" binds= ["Background/LoadGameSlots", "Background/Main"]]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/DeleteButton" to="MainMenu" method="OnDeleteButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back/ConfirmButton" to="MainMenu" method="OnConfirmDelete"]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back/BackButton" to="MainMenu" method="OnBackButtonDown" binds= ["Background/LoadGameSlots/ConfirmationWindow", "Background/LoadGameSlots"]]

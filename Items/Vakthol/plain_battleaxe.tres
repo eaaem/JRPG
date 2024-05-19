@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=6 format=3 uid="uid://c0chh1ibp7pqo"]
+
+[ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="1_r6xls"]
+[ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="2_s4a53"]
+[ext_resource type="Script" path="res://Combat/0Core/ItemResource.cs" id="3_appsv"]
+
+[sub_resource type="Resource" id="Resource_rv5hx"]
+script = ExtResource("2_s4a53")
+statType = 2
+value = 1
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_1lnan"]
+script = ExtResource("1_r6xls")
+stats = [SubResource("Resource_rv5hx")]
+
+[resource]
+script = ExtResource("3_appsv")
+name = "Plain Battleaxe"
+description = "Battleaxe
++1 strength"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 1
+itemCategory = 6
+price = 0
+affectedStats = SubResource("Resource_1lnan")
+usableOutsideCombat = false

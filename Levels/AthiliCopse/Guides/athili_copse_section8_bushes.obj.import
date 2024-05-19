@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://4r17xtky53o2"
+path="res://.godot/imported/athili_copse_section8_bushes.obj-c8bcdb79d73d3664c51b8b5b9bff22be.mesh"
+
+[deps]
+
+files=["res://.godot/imported/athili_copse_section8_bushes.obj-c8bcdb79d73d3664c51b8b5b9bff22be.mesh"]
+
+source_file="res://Levels/AthiliCopse/Guides/athili_copse_section8_bushes.obj"
+dest_files=["res://.godot/imported/athili_copse_section8_bushes.obj-c8bcdb79d73d3664c51b8b5b9bff22be.mesh", "res://.godot/imported/athili_copse_section8_bushes.obj-c8bcdb79d73d3664c51b8b5b9bff22be.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

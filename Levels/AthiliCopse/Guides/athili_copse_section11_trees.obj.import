@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://cvahcuinmlrcp"
+path="res://.godot/imported/athili_copse_section11_trees.obj-119f09fb36b1ebbd89e72d15ef4c6ec6.mesh"
+
+[deps]
+
+files=["res://.godot/imported/athili_copse_section11_trees.obj-119f09fb36b1ebbd89e72d15ef4c6ec6.mesh"]
+
+source_file="res://Levels/AthiliCopse/Guides/athili_copse_section11_trees.obj"
+dest_files=["res://.godot/imported/athili_copse_section11_trees.obj-119f09fb36b1ebbd89e72d15ef4c6ec6.mesh", "res://.godot/imported/athili_copse_section11_trees.obj-119f09fb36b1ebbd89e72d15ef4c6ec6.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

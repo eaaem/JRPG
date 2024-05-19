@@ -1,8 +1,8 @@
 [gd_resource type="Resource" script_class="InspectorDialogueInteraction" load_steps=23 format=3 uid="uid://qj2h22d5qxc1"]
 
-[ext_resource type="Script" path="res://Dialogue/Scripts/DialogueObject.cs" id="1_dbf66"]
-[ext_resource type="Script" path="res://Dialogue/Scripts/DialogueList.cs" id="1_jq830"]
-[ext_resource type="Script" path="res://Dialogue/Scripts/InspectorDialogueInteraction.cs" id="1_rwy0o"]
+[ext_resource type="Script" path="res://Dialogue/0Core/DialogueObject.cs" id="1_dbf66"]
+[ext_resource type="Script" path="res://Dialogue/0Core/DialogueList.cs" id="1_jq830"]
+[ext_resource type="Script" path="res://Dialogue/0Core/InspectorDialogueInteraction.cs" id="1_rwy0o"]
 
 [sub_resource type="Resource" id="Resource_xudt3"]
 script = ExtResource("1_dbf66")

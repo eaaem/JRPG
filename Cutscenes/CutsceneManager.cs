@@ -26,19 +26,17 @@ Actor behaviors always execute BEFORE the corresponding dialogue of that index.
 So actor behavior 1 fires after dialogue 0, actor behavior 2 fires after dialogue 1, etc.
 */
 
+/// <summary>
+/// Manages in-game cutscenes.
+/// </summary>
 public partial class CutsceneManager : Node
 {
+   [Export]
+   private ManagerReferenceHolder managers;
+   [Export]
    private Camera3D playerCamera;
+   [Export]
    private Camera3D cutsceneCamera;
-
-   private CharacterController controller;
-   private DialogueManager dialogueManager;
-
-   private Node3D baseNode;
-
-   private SaveMenuManager saveMenuManager;
-   private LevelManager levelManager;
-   private PartyManager partyManager;
 
    CutsceneObject currentCutsceneObject;
    int currentID;
@@ -47,25 +45,8 @@ public partial class CutsceneManager : Node
 
    bool isCutsceneActive;
 
-   string overrideRotationActorName;
-   bool isRotating;
-
-   public override void _Ready()
-   {
-      baseNode = GetNode<Node3D>("/root/BaseNode");
-      playerCamera = baseNode.GetNode<Camera3D>("PartyMembers/Member1/CameraTarget/PlayerCamera");
-      cutsceneCamera = baseNode.GetNode<Camera3D>("CutsceneCamera");
-      controller = baseNode.GetNode<CharacterController>("PartyMembers/Member1");
-      dialogueManager = baseNode.GetNode<DialogueManager>("UI/DialogueScreen/Back");
-
-      saveMenuManager = baseNode.GetNode<SaveMenuManager>("SaveManager");
-      levelManager = baseNode.GetNode<LevelManager>("LevelManager");
-      partyManager = baseNode.GetNode<PartyManager>("PartyManagerObj");
-   }
-
    public async void InitiateCutscene(CutsceneObject cutsceneObject, int id)
    {
-      //CutsceneObject cutsceneObject = GD.Load<CutsceneObject>("res://Cutscenes/CutsceneObjects/" + signalName + ".tres");
       if (!isCutsceneActive)
       {
          isCutsceneActive = true;
@@ -73,10 +54,10 @@ public partial class CutsceneManager : Node
          currentCutsceneObject = cutsceneObject;
          currentID = id;
 
-         controller.DisableMovement = true;
+         managers.Controller.DisableMovement = true;
 
          GetActors(!cutsceneObject.hideParty);
-         baseNode.GetNode<Node3D>("PartyMembers").Visible = false;
+         GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = false;
 
          if (cutsceneObject.hideParty)
          {
@@ -84,27 +65,47 @@ public partial class CutsceneManager : Node
             cutsceneCamera.Rotation = cutsceneObject.cameraRotation;
             cutsceneCamera.MakeCurrent();
 
-            saveMenuManager.FadeToBlack();
+            managers.SaveManager.FadeToBlack();
             await ToSignal(GetTree().CreateTimer(0.2f), "timeout");
-            saveMenuManager.FadeFromBlack();
+            managers.SaveManager.FadeFromBlack();
          }
 
          if (cutsceneObject.dialogueInteraction != null)
          {
             DialogueInteraction dialogueInteraction = new DialogueInteraction();
             dialogueInteraction.dialogueList = cutsceneObject.dialogueInteraction.dialogues;
-            dialogueManager.InitiateDialogue(dialogueInteraction, true);
+            managers.DialogueManager.InitiateDialogue(dialogueInteraction, true);
          }
 
          ProgressCutscene(0);
       }
    }
 
+   /// <summary>
+   /// Progresses the cutscene, executing actor commands as necessary.
+   /// <br></br><br></br>
+   /// index : the corresponding dialogue index
+   /// </summary>
    public async void ProgressCutscene(int index)
    {
-      for (int i = 0; i < currentCutsceneObject.actorBehaviors[index].commands.Length; i++)
+      ActorBehavior behavior = null;
+
+      for (int i = 0; i < currentCutsceneObject.actorBehaviors.Length; i++)
       {
-         ParseCommand(currentCutsceneObject.actorBehaviors[index].commands[i]);
+         if (currentCutsceneObject.actorBehaviors[i].DialogueIndex == index)
+         {
+            behavior = currentCutsceneObject.actorBehaviors[i];
+         }
+      }
+
+      if (behavior == null)
+      {
+         return;
+      }
+
+      for (int i = 0; i < behavior.Commands.Length; i++)
+      {
+         ParseCommand(behavior.Commands[i]);
 
          if (totalWaitDuration > 0f)
          {
@@ -114,198 +115,95 @@ public partial class CutsceneManager : Node
       }
    }
 
-   void ParseCommand(string command)
+   /// <summary>
+   /// Parses the given command and takes action accordingly.
+   /// </summary>
+   void ParseCommand(ActorCommand command)
    {
-      //string earlySubstr = command.Substring(0, 5);
-      string parsedCommand = command;
-      string actorName = "";
-
-      for (int i = 0; i < currentCutsceneObject.actors.Length; i++)
+      Actor actor = GetActor(command.ActorName);
+      switch (command.CommandType)
       {
-         // Without this if check, an error will be thrown if the name of the actor is longer than the command itself
-         if (currentCutsceneObject.actors[i].actorName.Length > command.Length)
+      case CommandType.None:
+         GD.Print("Empty cutscene command found; skipping");
+         break;
+      case CommandType.Move:
+         actor.MoveCharacter(GetActorStatus(command.ActorName), command.Destination);
+         break;
+      case CommandType.Rotate:
+         actor.RotateCharacter(command.YRotation);
+         break;
+      case CommandType.QuickRotate:
+         actor.RotateCharacterInstantly(command.YRotation);
+         break;
+      case CommandType.ChangeDialogueVisibility:
+         managers.DialogueManager.DialogueContainer.Visible = command.Hide;
+         break;
+      case CommandType.ChangeWeaponVisibility:
+         if (command.Hide)
          {
-            continue;
+            actor.HideWeapon();
          }
-
-         if (command.Substring(0, currentCutsceneObject.actors[i].actorName.Length) == currentCutsceneObject.actors[i].actorName)
+         else
          {
-            actorName = command.Substring(0, currentCutsceneObject.actors[i].actorName.Length);
-            parsedCommand = command.Substring(currentCutsceneObject.actors[i].actorName.Length + 1);
+            actor.ShowWeapon();
          }
-      }
-
-      string earlySubstr = parsedCommand.Substring(0, 5);
-
-      if (earlySubstr == "move-")
-      {
-         GetActor(actorName).MoveCharacter(GetActorStatus(actorName), parsedCommand.Substring(5));
-      }
-      else if (earlySubstr.Substring(0, 4) == "rot-")
-      {
-         GetActor(actorName).RotateCharacter(parsedCommand.Substring(4).ToFloat());
-      }
-      else if (earlySubstr == "pause")
-      {
-         totalWaitDuration += parsedCommand.Substring(6).ToFloat();
-      }
-      else if (earlySubstr == "set_i")
-      {
-         GetActor(actorName).SetAnimation(true, GetActorStatus(actorName), parsedCommand.Substring(9));
-      }
-      else if (earlySubstr == "set_w")
-      {
-         GetActor(actorName).SetAnimation(false, GetActorStatus(actorName), parsedCommand.Substring(9));
-      }
-      else if (parsedCommand == "hide_speech")
-      {
-         dialogueManager.dialogueContainer.Visible = false;
-      }
-      else if (parsedCommand == "show_speech")
-      {
-         dialogueManager.dialogueContainer.Visible = true;
-      }
-      else if (parsedCommand == "lock_speech")
-      {
-         dialogueManager.lockInput = true;
-      }
-      else if (parsedCommand == "unlock_speech")
-      {
-         dialogueManager.lockInput = false;
-      }
-      else if (parsedCommand == "speak_next")
-      {
-         dialogueManager.NextCutsceneDialogue();
-      }
-      else if (earlySubstr == "place")
-      {
-         GetActor(actorName).PlaceCharacterAtPoint(parsedCommand.Substring(6));
-      }
-      else if (earlySubstr == "quick")
-      {
-         GetActor(actorName).RotateCharacterInstantly(parsedCommand.Substring(10).ToFloat());
-      }
-      else if (earlySubstr == "play_")
-      {
-         GetActor(actorName).PlayAnimation(parsedCommand.Substring(10), GetActorStatus(actorName));
-      }
-      else if (earlySubstr == "hide_")
-      {
-         GetActor(actorName).HideWeapon();
-      }
-      else if (earlySubstr == "show_")
-      {
-         GetActor(actorName).ShowWeapon();
-      }
-      else
-      {
-         GD.Print("Command " + command + " not recognized");
+         break;
+      case CommandType.ChangeDialogueLock:
+         managers.DialogueManager.LockInput = command.MakeLocked;
+         break;
+      case CommandType.SpeakNext:
+         managers.DialogueManager.NextCutsceneDialogue();
+         break;
+      case CommandType.SetIdleAnimation:
+         actor.SetAnimation(true, GetActorStatus(command.ActorName), command.AnimationName);
+         break;
+      case CommandType.SetWalkAnimation:
+         actor.SetAnimation(false, GetActorStatus(command.ActorName), command.AnimationName);
+         break;
+      case CommandType.Pause:
+         totalWaitDuration += command.Pause;
+         break;
+      case CommandType.Place:
+         actor.PlaceCharacterAtPoint(command.Destination);
+         break;
+      case CommandType.PlayAnimation:
+         actor.PlayAnimation(command.AnimationName, GetActorStatus(command.ActorName));
+         break;
+      default:
+         GD.Print("Cutscene command invalid.");
+         break;
       }
    }
-
-   /*async void MoveCharacter(string actorName, string destinationString)
-   {
-      CharacterBody3D actor = GetActor(actorName);
-      ActorStatus actorStatus = GetActorStatus(actorName);
-
-      Vector3 destination = GetVector3FromString(destinationString);
-
-      Vector3 direction = actor.GlobalPosition.DirectionTo(destination);
-      float distance = actor.GlobalPosition.DistanceTo(destination);
-
-      AnimationPlayer player = actor.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-
-      if (player.CurrentAnimation != actorStatus.walkAnim)
-      {
-         player.Play(actorStatus.walkAnim);
-      }
-
-      while (distance > 0.1f)
-      {
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-
-         distance = actor.GlobalPosition.DistanceTo(destination);
-         actor.Velocity = direction * actorStatus.moveSpeed;
-         actor.MoveAndSlide();
-      }
-
-      actor.Velocity = Vector3.Zero;
-      player.Play(actorStatus.idleAnim);
-   }
-
-   async void RotateCharacter(string actorName, float targetRotation)
-   {
-      CharacterBody3D actor = GetActor(actorName);
-      targetRotation = Mathf.DegToRad(targetRotation);
-
-      Node3D model = actor.GetNode<Node3D>("Model");
-
-      while (Mathf.Abs(model.Rotation.Y - targetRotation) > 0.05f)
-      {
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-
-         Vector3 rotation = model.Rotation;
-         rotation.Y = Mathf.Lerp(rotation.Y, targetRotation, 0.25f);
-         model.Rotation = rotation;
-      }
-   }
-
-   void SetAnimation(bool isIdle, string actorName, string animName)
-   {
-      ActorStatus actorStatus = GetActorStatus(actorName);
-
-      if (isIdle)
-      {
-         actorStatus.idleAnim = animName;
-      }
-      else
-      {
-         actorStatus.walkAnim = animName;
-      }
-   }
-
-   void PlaceCharacterAtPoint(string actorName, string pointString)
-   {
-      CharacterBody3D actor = GetActor(actorName);
-      Vector3 point = GetVector3FromString(pointString);
-      actor.GlobalPosition = point;
-   }*/
 
    public void EndCutscene()
    {
       if (currentCutsceneObject.hideParty)
       {
-         saveMenuManager.FadeToBlack();
+         managers.SaveManager.FadeToBlack();
       }
       
-      levelManager.LocationDatas[levelManager.ActiveLocationDataID].cutscenesSeen[currentID.ToString()] = true;
+      managers.LevelManager.LocationDatas[managers.LevelManager.ActiveLocationDataID].cutscenesSeen[currentID.ToString()] = true;
 
       for (int i = 0; i < currentCutsceneObject.actors.Length; i++)
       {
-         CharacterBody3D actor = baseNode.GetNode<CharacterBody3D>(currentCutsceneObject.actors[i].actorName);
-         baseNode.RemoveChild(actor);
+         CharacterBody3D actor = GetNode<CharacterBody3D>("/root/BaseNode/" + currentCutsceneObject.actors[i].actorName);
+         GetNode<Node3D>("/root/BaseNode/").RemoveChild(actor);
          actor.QueueFree();
       }
 
-      baseNode.GetNode<Node3D>("PartyMembers").Visible = true;
+      GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = true;
       playerCamera.MakeCurrent();
       isCutsceneActive = false;
 
       if (currentCutsceneObject.hideParty)
       {
-         saveMenuManager.FadeFromBlack();
+         managers.SaveManager.FadeFromBlack();
       }
    }
 
-   /*Vector3 GetVector3FromString(string pointString)
-   {
-      string[] stringParts = pointString.Split(',');
-      return new Vector3(stringParts[0].ToFloat(), stringParts[1].ToFloat(), stringParts[2].ToFloat());
-   }*/
-
    Actor GetActor(string actorName)
    {
-      return baseNode.GetNode<Actor>(actorName);
+      return GetNode<Actor>("/root/BaseNode/" + actorName);
    }
 
    ActorStatus GetActorStatus(string actorName)
@@ -327,50 +225,11 @@ public partial class CutsceneManager : Node
       InitiateCutscene(trigger.cutsceneObject, trigger.id);
    }
 
-   /*public async void ActivateNextActorStep(int dialogueIndex)
-   {
-      dialogueManager.lockInput = true;
-      
-      if (dialogueManager.cutsceneReadyForNextDialogue)
-      {
-         dialogueManager.NextDialogue(dialogueIndex + 1);
-         return;
-      }
-
-      for (int i = 0; i < currentCutsceneObject.actorBehaviors.Length; i++)
-      {
-         ActorBehavior presentBehavior = currentCutsceneObject.actorBehaviors[i];
-         if (presentBehavior.dialogueIndex == dialogueIndex)
-         {
-            CharacterBody3D actor = baseNode.GetNode<CharacterBody3D>(presentBehavior.actorName);
-
-            if (presentBehavior.move)
-            {
-               MoveActor(actor, presentBehavior.destination, presentBehavior.animationName, actor.GetNode<AnimationPlayer>("Model/AnimationPlayer").CurrentAnimation);
-            }
-            
-            if (presentBehavior.rotate)
-            {
-               GD.Print("rotate");
-               RotateActor(actor, presentBehavior.rotation);
-            }
-         }
-      }
-
-      dialogueManager.lockInput = false;
-
-      await ToSignal(GetTree().CreateTimer(currentCutsceneObject.waitPerDialogueIndex[dialogueIndex]), "timeout");
-
-      if (currentCutsceneObject.immediatelyOpenDialoguePerIndex[dialogueIndex] == 1)
-      {
-         dialogueManager.NextDialogue(dialogueIndex + 1);
-      }
-      else
-      {
-         dialogueManager.cutsceneReadyForNextDialogue = true;
-      }
-   }*/
-
+   /// <summary>
+   /// Initializes all actors and adds them to the world.
+   /// <br></br><br></br>
+   /// isTied signals whether the party members are tied to their actors, i.e. the actors should be initialized to the same position and rotation as the party.
+   /// </summary>
    void GetActors(bool isTied)
    {
       for (int i = 0; i < currentCutsceneObject.actors.Length; i++)
@@ -379,16 +238,16 @@ public partial class CutsceneManager : Node
          CharacterBody3D actor = currentActorScene.Instantiate<CharacterBody3D>();
          actor.Name = currentCutsceneObject.actors[i].actorName;
          actor.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play(currentCutsceneObject.actors[i].idleAnim);
-         baseNode.AddChild(actor);
+         GetNode<Node3D>("/root/BaseNode/").AddChild(actor);
 
          if (isTied)
          {
-            for (int j = 0; j < partyManager.Party.Count; j++)
+            for (int j = 0; j < managers.PartyManager.Party.Count; j++)
             {
-               if (partyManager.Party[i].characterType.ToString() == currentCutsceneObject.actors[i].tiedMember)
+               if (managers.PartyManager.Party[i].characterType.ToString() == currentCutsceneObject.actors[i].tiedMember)
                {
-                  actor.GlobalPosition = partyManager.Party[i].model.GlobalPosition;
-                  actor.GlobalRotation = partyManager.Party[i].model.GlobalRotation;
+                  actor.GlobalPosition = managers.PartyManager.Party[i].model.GlobalPosition;
+                  actor.GlobalRotation = managers.PartyManager.Party[i].model.GlobalRotation;
                   break;
                }
             }

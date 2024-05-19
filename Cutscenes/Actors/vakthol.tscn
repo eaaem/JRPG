@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://cxn2617gd032j"]
 
-[ext_resource type="PackedScene" uid="uid://c8sbeheqi10fl" path="res://PartyMembers/Vakthol/vakthol.glb" id="1_bdygk"]
+[ext_resource type="PackedScene" uid="uid://c8sbeheqi10fl" path="res://Party/Vakthol/vakthol.glb" id="1_bdygk"]
 [ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_s2ilf"]
-[ext_resource type="PackedScene" uid="uid://yhwlyfetwmre" path="res://PartyMembers/Vakthol/vakthol_axe.glb" id="2_ota3g"]
+[ext_resource type="PackedScene" uid="uid://yhwlyfetwmre" path="res://Party/Vakthol/vakthol_axe.glb" id="2_ota3g"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x2kqx"]
 

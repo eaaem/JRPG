@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://du6jg4hqw3li3"]
+
+[ext_resource type="PackedScene" uid="uid://dywuqybpsdvjf" path="res://Levels/2Misc/Accessories/wooden_door_thick.glb" id="1_7maql"]
+[ext_resource type="Script" path="res://Levels/0Core/Door.cs" id="2_us8he"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_oiuna"]
+size = Vector3(1.5, 2.2, 0.3)
+
+[node name="wooden_door_thick" instance=ExtResource("1_7maql")]
+script = ExtResource("2_us8he")
+
+[node name="Doorframe" parent="." index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 0.3, 0, 0, 0)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Door" index="0"]
+collision_layer = 33
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Door/StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.671795, -0.0883782, 0)
+shape = SubResource("BoxShape3D_oiuna")

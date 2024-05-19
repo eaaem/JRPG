@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://f4r3ffmrufy0"]
+
+[ext_resource type="ArrayMesh" uid="uid://dfmx7o7tolrqd" path="res://Levels/AthiliCopse/Meshes/grass_plane.res" id="1_qp62r"]
+
+[node name="Grass" type="MeshInstance3D"]
+visibility_range_end = 100.0
+mesh = ExtResource("1_qp62r")

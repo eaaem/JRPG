@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://d3kvmela4ory0"]
+
+[ext_resource type="Script" path="res://Combat/0Core/ItemResourceHolder.cs" id="1_esnyn"]
+[ext_resource type="Script" path="res://Menus/Party/ReequipButton.cs" id="2_2b1yk"]
+
+[node name="ReequipButton" type="Button"]
+custom_minimum_size = Vector2(296, 32)
+text = "Button"
+alignment = 0
+
+[node name="ResourceHolder" type="Node2D" parent="."]
+script = ExtResource("1_esnyn")
+
+[node name="ScriptHolder" type="Node2D" parent="."]
+script = ExtResource("2_2b1yk")

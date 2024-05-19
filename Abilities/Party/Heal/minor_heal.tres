@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://lx78kbhd5261"]
+
+[ext_resource type="Script" path="res://Combat/0Core/AbilityResource.cs" id="1_lvr3b"]
+
+[resource]
+script = ExtResource("1_lvr3b")
+name = "Minor Heal"
+description = "Heal one target for 20% of their maximum health."
+manaCost = 4
+scriptName = "Heal"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = true
+hitsTeam = true
+onlyHitsTeam = true
+onlyHitsSelf = false
+bypassesDeaths = false
+casterGraphic = ""
+targetGraphic = "heal_target"
+requiredLevel = 2

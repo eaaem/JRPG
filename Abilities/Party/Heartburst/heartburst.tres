@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://bpy8me6753noe"]
+
+[ext_resource type="Script" path="res://Combat/0Core/AbilityResource.cs" id="1_lw8du"]
+
+[resource]
+script = ExtResource("1_lw8du")
+name = "Heartburst"
+description = "too long"
+manaCost = 10
+scriptName = "Heartburst"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = true
+hitsTeam = true
+onlyHitsTeam = true
+bypassesDeaths = true
+requiredLevel = 0

@@ -1,0 +1,32 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=6 format=3 uid="uid://bos1dl2vq377j"]
+
+[ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="1_hn6ve"]
+[ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="2_p37ky"]
+[ext_resource type="Script" path="res://Combat/0Core/ItemResource.cs" id="3_fpjt0"]
+
+[sub_resource type="Resource" id="Resource_rv5hx"]
+script = ExtResource("2_p37ky")
+statType = 3
+value = 2
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_1lnan"]
+script = ExtResource("1_hn6ve")
+stats = [SubResource("Resource_rv5hx")]
+
+[resource]
+script = ExtResource("3_fpjt0")
+name = "Heirloom Staff"
+description = "Staff
++2 intelligence"
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 1
+itemCategory = 5
+price = 0
+affectedStats = SubResource("Resource_1lnan")
+usableOutsideCombat = false
