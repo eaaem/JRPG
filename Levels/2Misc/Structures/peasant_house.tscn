@@ -1,16 +1,10 @@
 [gd_scene load_steps=3 format=3 uid="uid://bl17hqpf7tadi"]
 
 [ext_resource type="PackedScene" uid="uid://87ptatcg7fwp" path="res://Levels/2Misc/Structures/peasant_house.glb" id="1_u2mka"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_pbaph"]
-size = Vector3(4.8, 3.5, 9.8)
+[ext_resource type="PackedScene" uid="uid://dxxpwm35v7wq2" path="res://Levels/2Misc/Structures/peasant_collider.tscn" id="2_v61of"]
 
 [node name="PeasantHouse" type="Node3D"]
 
 [node name="peasant_house" parent="." instance=ExtResource("1_u2mka")]
 
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75092, 0)
-shape = SubResource("BoxShape3D_pbaph")
+[node name="StaticBody3D" parent="." instance=ExtResource("2_v61of")]
