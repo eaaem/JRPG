@@ -61,7 +61,7 @@ public partial class SaveManager : Node
          managers.PartyManager.InitializeNewParty();
          managers.Controller.Position = new Vector3(0.922f, 0.603f, -24.508f);
          managers.PartyManager.Items.Clear();
-         managers.LevelManager.CreateLevel("Dathrel's Cabin", "dathrel_cabin", false);
+         managers.LevelManager.CreateLevel("Dathrel's Cabin", "dathrel_cabin", "SpawnPoint", false);
          managers.Controller.DisableMovement = false;
          managers.Controller.HideWeapon();
       }
@@ -166,7 +166,7 @@ public partial class SaveManager : Node
             }
             else
             {
-               managers.LevelManager.CreateLevel((string)nodeData["Location"], (string)nodeData["InternalLocation"], 
+               managers.LevelManager.CreateLevel((string)nodeData["Location"], (string)nodeData["InternalLocation"], "SpawnPoint",
                                         true, managers.LevelManager.LocationDatas[managers.LevelManager.GetLocationDataID((string)nodeData["InternalLocation"])]);
                managers.Controller.Position = new Vector3((float)nodeData["PlayerPosX"], (float)nodeData["PlayerPosY"], (float)nodeData["PlayerPosZ"]);
                managers.Controller.DisableMovement = false;

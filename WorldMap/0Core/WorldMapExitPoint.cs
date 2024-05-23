@@ -5,8 +5,12 @@ public partial class WorldMapExitPoint : Node
 {
    [Export]
    private string mapName;
-   [Export]
    private ManagerReferenceHolder managers;
+
+   public override void _Ready()
+   {
+      managers = GetNode<ManagerReferenceHolder>("/root/BaseNode/ManagerReferenceHolder");
+   }
 
    public void OnBodyEntered(Node3D body)
    {

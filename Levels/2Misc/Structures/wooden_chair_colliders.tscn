@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dv7dpb283oxp3"]
+
+[ext_resource type="PackedScene" uid="uid://va5s3h5o2sd4" path="res://Levels/2Misc/Structures/wooden_chair.glb" id="1_alf06"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_crn1s"]
+size = Vector3(0.5, 1, 0.5)
+
+[node name="wooden_chair_colliders" type="Node3D"]
+
+[node name="wooden_chair" parent="." instance=ExtResource("1_alf06")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.489006, 0)
+shape = SubResource("BoxShape3D_crn1s")

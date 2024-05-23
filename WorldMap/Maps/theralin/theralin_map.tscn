@@ -27,6 +27,7 @@ position = Vector2(447, -306)
 script = ExtResource("1_srptl")
 textLabelName = "Dathrel's Cabin"
 locationName = "dathrel_cabin"
+entrancePointName = "RoadEntrance"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/Cabin"]
 position = Vector2(468, 101)
@@ -45,6 +46,7 @@ position = Vector2(415, -442)
 script = ExtResource("1_srptl")
 textLabelName = "Theralin"
 locationName = "theralin"
+entrancePointName = "FrontEntrance"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/Theralin"]
 position = Vector2(468, 101)

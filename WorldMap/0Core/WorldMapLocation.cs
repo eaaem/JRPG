@@ -7,6 +7,8 @@ public partial class WorldMapLocation : Node
    private string textLabelName;
    [Export]
    private string locationName;
+   [Export]
+   private string entrancePointName;
 
    private WorldMapController worldMapController;
 
@@ -19,7 +21,7 @@ public partial class WorldMapLocation : Node
    {
       if (body.Name == "Player")
       {
-         worldMapController.ReceiveIntersectionData(textLabelName, locationName);
+         worldMapController.ReceiveIntersectionData(textLabelName, locationName, entrancePointName);
       }
    }
 

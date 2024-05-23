@@ -15,6 +15,8 @@ public partial class WorldMapController : CharacterBody2D
    private string targetLocationName;
    private string externalLocationName;
 
+   private string entrancePointName;
+
    public bool DisableMovement { get; set; }
 
    public override void _Ready()
@@ -48,12 +50,13 @@ public partial class WorldMapController : CharacterBody2D
       }
 	}
 
-   public void ReceiveIntersectionData(string labelName, string locationName)
+   public void ReceiveIntersectionData(string labelName, string locationName, string entrancePoint)
    {
       locationInfo.Text = "[center]" + labelName + "[/center]";
       targetLocationName = locationName;
       externalLocationName = labelName;
       locationInfo.Visible = true;
+      entrancePointName = entrancePoint;
    }
 
    public void HideIntersectionLabel()
@@ -65,7 +68,7 @@ public partial class WorldMapController : CharacterBody2D
    {
       if (@event.IsActionPressed("interact") && locationInfo.Visible)
       {
-         levelManager.TransitionLevels(targetLocationName, externalLocationName);
+         levelManager.TransitionLevels(targetLocationName, externalLocationName, entrancePointName);
       }
    }
 }

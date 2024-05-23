@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dl2q7kvjyg0l6"
+path="res://.godot/imported/cabin_road.obj-7c192581dc9564391d81657a235b2c56.mesh"
+
+[deps]
+
+files=["res://.godot/imported/cabin_road.obj-7c192581dc9564391d81657a235b2c56.mesh"]
+
+source_file="res://Levels/dathrel_cabin/cabin_road.obj"
+dest_files=["res://.godot/imported/cabin_road.obj-7c192581dc9564391d81657a235b2c56.mesh", "res://.godot/imported/cabin_road.obj-7c192581dc9564391d81657a235b2c56.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

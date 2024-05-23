@@ -75,7 +75,7 @@ public partial class LevelManager : Node
       }
    }
 
-   public void TransitionLevels(string targetLevelInternal, string targetLevelName)
+   public void TransitionLevels(string targetLevelInternal, string targetLevelName, string entrancePointName)
    {
       DiscardExistingLevel();
 
@@ -90,11 +90,11 @@ public partial class LevelManager : Node
 
       if (locationDataID == -1)
       {
-         CreateLevel(targetLevelName, targetLevelInternal, false);
+         CreateLevel(targetLevelName, targetLevelInternal, entrancePointName, false);
       }
       else
       {
-         CreateLevel(targetLevelName, targetLevelInternal, true, LocationDatas[locationDataID]);
+         CreateLevel(targetLevelName, targetLevelInternal, entrancePointName, true, LocationDatas[locationDataID]);
       }
    }
 
@@ -111,7 +111,7 @@ public partial class LevelManager : Node
       return -1;
    }
 
-	public void CreateLevel(string levelName, string internalLevelName, bool isLoaded, LocationData locationData = null)
+	public void CreateLevel(string levelName, string internalLevelName, string entrancePointName, bool isLoaded, LocationData locationData = null)
    {
       DiscardExistingLevel();
 
@@ -124,8 +124,8 @@ public partial class LevelManager : Node
       location = levelName;
       InternalLocation = internalLevelName;
 
-      managers.Controller.GlobalPosition = level.GetNode<Node3D>("SpawnPoint").GlobalPosition;
-      managers.Controller.GlobalRotation = level.GetNode<Node3D>("SpawnPoint").GlobalRotation;
+      managers.Controller.GlobalPosition = level.GetNode<Node3D>(entrancePointName).GlobalPosition;
+      managers.Controller.GlobalRotation = level.GetNode<Node3D>(entrancePointName).GlobalRotation;
       managers.Controller.DisableMovement = false;
       managers.Controller.GetNode<Camera3D>("CameraTarget/PlayerCamera").MakeCurrent();
       managers.PartyManager.MovePartyMembersBehindPlayer();
