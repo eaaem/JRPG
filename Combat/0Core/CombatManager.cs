@@ -136,6 +136,7 @@ public partial class CombatManager : Node
       Fighters.Clear();
       IsInCombat = true;
       managers.Controller.DisableMovement = true;
+      managers.Controller.DisableCamera = true;
       managers.Controller.IsSprinting = false;
       currentEnemyScript = enemyScript;
 
@@ -1292,6 +1293,7 @@ public partial class CombatManager : Node
       playerCamera.MakeCurrent();
       Input.MouseMode = Input.MouseModeEnum.Captured;
       managers.Controller.DisableMovement = false;
+      managers.Controller.DisableCamera = false;
 
       managers.SaveManager.FadeFromBlack();
 
@@ -1317,6 +1319,7 @@ public partial class CombatManager : Node
       uiManager.SetDefeatScreenVisible(false);
       Input.MouseMode = Input.MouseModeEnum.Captured;
       managers.Controller.DisableMovement = false;
+      managers.Controller.DisableCamera = false;
       ResetCombat();
    }
 

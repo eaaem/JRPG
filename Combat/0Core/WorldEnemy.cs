@@ -191,6 +191,8 @@ public partial class WorldEnemy : CharacterBody3D
       else
       {
          playerController.DisableMovement = true;
+         playerController.DisableCamera = true;
+
          animationPlayer.Play("InitiateBattle");
          await ToSignal(GetTree().CreateTimer(introWaitTime), "timeout");
          combatManager.SetupCombat(enemies, body.GlobalPosition, body.GetNode<Node3D>("Model").GlobalRotation, this);

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cr8o6qvbskqkh"]
+
+[ext_resource type="ArrayMesh" uid="uid://dpujwaqx3b41j" path="res://Levels/2Misc/Structures/stool.obj" id="1_rwiun"]
+[ext_resource type="Material" uid="uid://bij3eok6nabku" path="res://Levels/2Misc/Structures/wood.tres" id="2_xpi3q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3gpro"]
+size = Vector3(0.6, 0.5, 0.6)
+
+[node name="stool_colliders" type="Node3D"]
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_rwiun")
+surface_material_override/0 = ExtResource("2_xpi3q")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.261394, 0)
+shape = SubResource("BoxShape3D_3gpro")

@@ -1837,7 +1837,7 @@ abilityManager = NodePath("AbilityManager")
 itemManager = NodePath("ItemManager")
 stacksAndStatusManager = NodePath("StacksStatusManager")
 passiveManager = NodePath("PassiveManager")
-playerCamera = NodePath("../PartyMembers/Member1/CameraTarget/PlayerCamera")
+playerCamera = NodePath("../PartyMembers/Member1/CameraTarget/SpringArm3D/PlayerCamera")
 baseNode = NodePath("..")
 
 [node name="CameraHolder" type="Node3D" parent="CombatManager"]
@@ -4297,8 +4297,14 @@ shape = SubResource("CapsuleShape3D_snhpk")
 [node name="CameraTarget" type="Node3D" parent="PartyMembers/Member1"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.573, 0)
 
-[node name="PlayerCamera" type="Camera3D" parent="PartyMembers/Member1/CameraTarget"]
-transform = Transform3D(-1, 0, -1.50996e-07, 0, 1, 0, 1.50996e-07, 0, -1, 0, 0.3047, -2.23436)
+[node name="SpringArm3D" type="SpringArm3D" parent="PartyMembers/Member1/CameraTarget"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.32324, 0)
+collision_mask = 13
+spring_length = 2.0
+margin = 0.5
+
+[node name="PlayerCamera" type="Camera3D" parent="PartyMembers/Member1/CameraTarget/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3047, 2.73987)
 current = true
 
 [node name="BackAnchor" type="Node3D" parent="PartyMembers/Member1"]
@@ -4315,6 +4321,8 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 [node name="SecondaryWeapon" type="Node3D" parent="PartyMembers/Member1"]
 
 [node name="SecondaryAnchor" type="Node3D" parent="PartyMembers/Member1"]
+
+[node name="AnimationTree" type="AnimationTree" parent="PartyMembers/Member1"]
 
 [node name="Member2" type="CharacterBody3D" parent="PartyMembers" node_paths=PackedStringArray("managers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13414, 0.320904, 0)
@@ -4351,7 +4359,7 @@ managers = NodePath("../ManagerReferenceHolder")
 [node name="CutsceneManager" type="Node3D" parent="." node_paths=PackedStringArray("managers", "playerCamera", "cutsceneCamera")]
 script = ExtResource("45_2ss0b")
 managers = NodePath("../ManagerReferenceHolder")
-playerCamera = NodePath("../PartyMembers/Member1/CameraTarget/PlayerCamera")
+playerCamera = NodePath("../PartyMembers/Member1/CameraTarget/SpringArm3D/PlayerCamera")
 cutsceneCamera = NodePath("../CutsceneCamera")
 
 [node name="CutsceneCamera" type="Camera3D" parent="."]

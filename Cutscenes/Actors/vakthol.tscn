@@ -7,7 +7,7 @@
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x2kqx"]
 
 [node name="vakthol" type="CharacterBody3D"]
-collision_mask = 0
+collision_layer = 2
 script = ExtResource("1_s2ilf")
 
 [node name="Model" parent="." instance=ExtResource("1_bdygk")]

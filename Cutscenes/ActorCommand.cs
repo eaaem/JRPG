@@ -117,6 +117,7 @@ public partial class ActorCommand : Resource
    public string ActorName { get; set; }
    public Vector3 Destination { get; set; }
    public float YRotation { get; set; }
+   public bool RotateToFace { get; set; }
 
    public float Pause { get; set; }
 
@@ -152,6 +153,12 @@ public partial class ActorCommand : Resource
             {
                { "name", $"Destination" },
                { "type", (int)Variant.Type.Vector3 }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"RotateToFace" },
+               { "type", (int)Variant.Type.Bool }
             });
             break;
          case CommandType.Rotate:

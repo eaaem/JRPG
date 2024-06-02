@@ -58,6 +58,7 @@ public partial class CutsceneManager : Node
 
          GetActors(!cutsceneObject.hideParty);
          GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = false;
+         managers.Controller.isInCutscene = true;
 
          if (cutsceneObject.hideParty)
          {
@@ -65,15 +66,36 @@ public partial class CutsceneManager : Node
             cutsceneCamera.Rotation = cutsceneObject.cameraRotation;
             cutsceneCamera.MakeCurrent();
 
+            managers.Controller.DisableCamera = true;
+            Input.MouseMode = Input.MouseModeEnum.Visible;
+
             managers.SaveManager.FadeToBlack();
             await ToSignal(GetTree().CreateTimer(0.2f), "timeout");
             managers.SaveManager.FadeFromBlack();
          }
 
-         if (cutsceneObject.dialogueInteraction != null)
+         for (int i = 0; i < currentCutsceneObject.PreCutsceneCommands.Length; i++)
+         {
+            ParseCommand(currentCutsceneObject.PreCutsceneCommands[i]);
+
+            if (totalWaitDuration > 0f)
+            {
+               await ToSignal(GetTree().CreateTimer(totalWaitDuration), "timeout");
+               totalWaitDuration = 0f;
+            }
+         }
+
+         if (cutsceneObject.items.Length > 0)
          {
             DialogueInteraction dialogueInteraction = new DialogueInteraction();
-            dialogueInteraction.dialogueList = cutsceneObject.dialogueInteraction.dialogues;
+            dialogueInteraction.dialogueList = new DialogueList();
+            dialogueInteraction.dialogueList.dialogues = new DialogueObject[cutsceneObject.items.Length];
+
+            for (int i = 0; i < cutsceneObject.items.Length; i++)
+            {
+               dialogueInteraction.dialogueList.dialogues[i] = cutsceneObject.items[i].dialogue;
+            }
+
             managers.DialogueManager.InitiateDialogue(dialogueInteraction, true);
          }
 
@@ -88,24 +110,11 @@ public partial class CutsceneManager : Node
    /// </summary>
    public async void ProgressCutscene(int index)
    {
-      ActorBehavior behavior = null;
+      ActorCommand[] commands = currentCutsceneObject.items[index].commands;
 
-      for (int i = 0; i < currentCutsceneObject.actorBehaviors.Length; i++)
+      for (int i = 0; i < commands.Length; i++)
       {
-         if (currentCutsceneObject.actorBehaviors[i].DialogueIndex == index)
-         {
-            behavior = currentCutsceneObject.actorBehaviors[i];
-         }
-      }
-
-      if (behavior == null)
-      {
-         return;
-      }
-
-      for (int i = 0; i < behavior.Commands.Length; i++)
-      {
-         ParseCommand(behavior.Commands[i]);
+         ParseCommand(commands[i]);
 
          if (totalWaitDuration > 0f)
          {
@@ -120,25 +129,29 @@ public partial class CutsceneManager : Node
    /// </summary>
    void ParseCommand(ActorCommand command)
    {
-      Actor actor = GetActor(command.ActorName);
+      Actor actor;
       switch (command.CommandType)
       {
       case CommandType.None:
          GD.Print("Empty cutscene command found; skipping");
          break;
       case CommandType.Move:
-         actor.MoveCharacter(GetActorStatus(command.ActorName), command.Destination);
+         actor = GetActor(command.ActorName);
+         actor.MoveCharacter(GetActorStatus(command.ActorName), command.Destination, command.RotateToFace);
          break;
       case CommandType.Rotate:
+         actor = GetActor(command.ActorName);
          actor.RotateCharacter(command.YRotation);
          break;
       case CommandType.QuickRotate:
+         actor = GetActor(command.ActorName);
          actor.RotateCharacterInstantly(command.YRotation);
          break;
       case CommandType.ChangeDialogueVisibility:
-         managers.DialogueManager.DialogueContainer.Visible = command.Hide;
+         managers.DialogueManager.DialogueContainer.Visible = !command.Hide;
          break;
       case CommandType.ChangeWeaponVisibility:
+         actor = GetActor(command.ActorName);
          if (command.Hide)
          {
             actor.HideWeapon();
@@ -155,18 +168,22 @@ public partial class CutsceneManager : Node
          managers.DialogueManager.NextCutsceneDialogue();
          break;
       case CommandType.SetIdleAnimation:
+         actor = GetActor(command.ActorName);
          actor.SetAnimation(true, GetActorStatus(command.ActorName), command.AnimationName);
          break;
       case CommandType.SetWalkAnimation:
+         actor = GetActor(command.ActorName);
          actor.SetAnimation(false, GetActorStatus(command.ActorName), command.AnimationName);
          break;
       case CommandType.Pause:
          totalWaitDuration += command.Pause;
          break;
       case CommandType.Place:
+         actor = GetActor(command.ActorName);
          actor.PlaceCharacterAtPoint(command.Destination);
          break;
       case CommandType.PlayAnimation:
+         actor = GetActor(command.ActorName);
          actor.PlayAnimation(command.AnimationName, GetActorStatus(command.ActorName));
          break;
       default:
@@ -187,6 +204,31 @@ public partial class CutsceneManager : Node
       for (int i = 0; i < currentCutsceneObject.actors.Length; i++)
       {
          CharacterBody3D actor = GetNode<CharacterBody3D>("/root/BaseNode/" + currentCutsceneObject.actors[i].actorName);
+
+         if (!currentCutsceneObject.hideParty)
+         {
+            for (int j = 0; j < managers.PartyManager.Party.Count; j++)
+            {
+               if (managers.PartyManager.Party[i].characterType.ToString() == currentCutsceneObject.actors[i].tiedMember)
+               {
+                  managers.PartyManager.Party[j].model.GlobalPosition = actor.GlobalPosition;
+                  managers.PartyManager.Party[j].model.GlobalRotation = actor.GlobalRotation;
+
+                  if (j == 0)
+                  {
+                     Node3D cameraHolder = actor.GetNode<Node3D>("CameraTarget");
+                     actor.RemoveChild(cameraHolder);
+                     managers.PartyManager.Party[0].model.AddChild(cameraHolder);
+                  }
+
+                  break;
+               }
+            }
+         }
+
+         managers.Controller.isInCutscene = false;
+         managers.Controller.GetNode<Node3D>("CameraTarget").RotateY(-managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y);
+
          GetNode<Node3D>("/root/BaseNode/").RemoveChild(actor);
          actor.QueueFree();
       }
@@ -244,10 +286,18 @@ public partial class CutsceneManager : Node
          {
             for (int j = 0; j < managers.PartyManager.Party.Count; j++)
             {
-               if (managers.PartyManager.Party[i].characterType.ToString() == currentCutsceneObject.actors[i].tiedMember)
+               if (managers.PartyManager.Party[j].characterType.ToString() == currentCutsceneObject.actors[i].tiedMember)
                {
-                  actor.GlobalPosition = managers.PartyManager.Party[i].model.GlobalPosition;
-                  actor.GlobalRotation = managers.PartyManager.Party[i].model.GlobalRotation;
+                  actor.GlobalPosition = managers.PartyManager.Party[j].model.GlobalPosition;
+                  actor.GlobalRotation = managers.PartyManager.Party[j].model.GlobalRotation;
+
+                  if (j == 0)
+                  {
+                     Node3D cameraHolder = managers.PartyManager.Party[0].model.GetNode<Node3D>("CameraTarget");
+                     managers.PartyManager.Party[0].model.RemoveChild(cameraHolder);
+                     actor.AddChild(cameraHolder);
+                  }
+
                   break;
                }
             }

@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://csp3ssceiochd"]
+
+[ext_resource type="PackedScene" uid="uid://daaitkui0f7q" path="res://Levels/2Misc/Structures/shack.glb" id="1_dgse3"]
+[ext_resource type="Material" uid="uid://bij3eok6nabku" path="res://Levels/2Misc/Structures/wood.tres" id="2_a8t8q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ypcqf"]
+size = Vector3(0.2, 3, 3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5urdp"]
+size = Vector3(0.2, 3, 5.2)
+
+[node name="shack_colliders" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.7648, 0, 4.56394)
+
+[node name="shack" parent="." instance=ExtResource("1_dgse3")]
+
+[node name="Wood" parent="shack" index="0"]
+surface_material_override/0 = ExtResource("2_a8t8q")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.70368, 1.49482, -0.164623)
+shape = SubResource("BoxShape3D_ypcqf")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.70043, 1.49482, -0.164623)
+shape = SubResource("BoxShape3D_ypcqf")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -0.0346375, 1.49482, -1.81425)
+shape = SubResource("BoxShape3D_5urdp")
+
+[editable path="shack"]

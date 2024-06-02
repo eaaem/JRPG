@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dpujwaqx3b41j"
+path="res://.godot/imported/stool.obj-cf2cd049850587d4e26b48628dcf449a.mesh"
+
+[deps]
+
+files=["res://.godot/imported/stool.obj-cf2cd049850587d4e26b48628dcf449a.mesh"]
+
+source_file="res://Levels/2Misc/Structures/stool.obj"
+dest_files=["res://.godot/imported/stool.obj-cf2cd049850587d4e26b48628dcf449a.mesh", "res://.godot/imported/stool.obj-cf2cd049850587d4e26b48628dcf449a.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

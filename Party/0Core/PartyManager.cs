@@ -43,9 +43,7 @@ public partial class PartyManager : Node
    {
       Party.Clear();
       Items.Clear();
-      
-      //for (int i = 0; i < 4; i++)
-     // {
+
       Member memberToAdd = new Member();
       memberToAdd.baseMember = baseMembers[0];
       memberToAdd.level = 1;
@@ -55,9 +53,6 @@ public partial class PartyManager : Node
       memberToAdd.stats = new Stat[10];
       memberToAdd.specialAbility = baseMembers[0].specialAbility;
       memberToAdd.isInParty = true;
-
-      //AddItem(new InventoryItem(item, 3));
-      //AddItem(new InventoryItem(otherCuirass, 1));
 
       for (int i = 0; i < 10; i++) {
          memberToAdd.stats[i] = new Stat();
@@ -71,78 +66,12 @@ public partial class PartyManager : Node
          EquipItem(vaktholItems[i], memberToAdd);
       }
 
-      Member memberToAdd2 = new Member();
-      memberToAdd2.baseMember = baseMembers[1];
-      memberToAdd2.level = 1;
-      memberToAdd2.characterName = baseMembers[1].memberName;
-      memberToAdd2.characterType = baseMembers[1].memberType;
-      memberToAdd2.affinity = baseMembers[1].affinity;
-      memberToAdd2.stats = new Stat[10];
-      memberToAdd2.specialAbility = baseMembers[1].specialAbility;
-      memberToAdd2.isInParty = true;
-
-      //AddItem(new InventoryItem(item, 3));
-      //AddItem(new InventoryItem(otherCuirass, 1));
-
-      for (int i = 0; i < 10; i++) {
-         memberToAdd2.stats[i] = new Stat();
-         memberToAdd2.stats[i].statType = baseMembers[1].stats[i].statType;
-         memberToAdd2.stats[i].value = baseMembers[1].stats[i].value;
-         memberToAdd2.stats[i].baseValue = baseMembers[1].stats[i].value;
-      }
-
-      for (int i = 0; i < athliaItems.Length; i++)
-      {
-         EquipItem(athliaItems[i], memberToAdd2);
-      }
-
-      /*if (i == 0)
-      {
-         for (int j = 0; j < vaktholItems.Length; j++)
-         {
-            EquipItem(vaktholItems[j], memberToAdd);
-         }
-      }
-      else if (i == 1)
-      {
-         for (int j = 0; j < thalriaItems.Length; j++)
-         {
-            EquipItem(thalriaItems[j], memberToAdd);
-         }
-      }
-      else if (i == 2)
-      {
-         for (int j = 0; j < athliaItems.Length; j++)
-         {
-            EquipItem(athliaItems[j], memberToAdd);
-         }
-      }
-      else if (i == 3)
-      {
-         for (int j = 0; j < olrenItems.Length; j++)
-         {
-            EquipItem(olrenItems[j], memberToAdd);
-         }
-      }*/
-
-      //LevelUp(experienceThreshholds[0] + experienceThreshholds[1], memberToAdd);
-
       memberToAdd.currentHealth = memberToAdd.GetMaxHealth();
       memberToAdd.currentMana = memberToAdd.GetMaxMana();
 
       memberToAdd.model = GetNode<Node3D>("/root/BaseNode/PartyMembers/Member1");
 
       Party.Add(memberToAdd);
-      Party.Add(memberToAdd2);
-      managers.PartyMenuManager.AddCharacterToParty(memberToAdd2);
-
-         /*if (i != 0)
-         {
-            partyMenuManager.AddCharacterToParty(memberToAdd);
-         }*/
-      //}
-
-      //partyMenuManager.ResetDialogueHolders();
    }
 
    public void MovePartyMembersBehindPlayer()
@@ -169,9 +98,6 @@ public partial class PartyManager : Node
       newMember.stats = new Stat[10];
       newMember.specialAbility = newMember.baseMember.specialAbility;
       newMember.isInParty = isInParty;
-
-      //AddItem(new InventoryItem(item, 3));
-      //AddItem(new InventoryItem(otherCuirass, 1));
 
       // Initialize stats
       for (int i = 0; i < 10; i++)

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bune7d27r1cwi"]
+
+[ext_resource type="ArrayMesh" uid="uid://08b6fdefjotg" path="res://Levels/2Misc/Structures/round_table.obj" id="1_5ptus"]
+[ext_resource type="Material" uid="uid://bij3eok6nabku" path="res://Levels/2Misc/Structures/wood.tres" id="2_gmfk4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_huhwr"]
+size = Vector3(1.3, 0.9, 1.3)
+
+[node name="round_table_colliders" type="Node3D"]
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = ExtResource("1_5ptus")
+surface_material_override/0 = ExtResource("2_gmfk4")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.424027, 0)
+shape = SubResource("BoxShape3D_huhwr")

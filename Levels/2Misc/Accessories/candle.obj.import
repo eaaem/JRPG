@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://domfy6speucqj"
+path="res://.godot/imported/candle.obj-0c0916930c8d8f9eaeee02d83369d3c9.mesh"
+
+[deps]
+
+files=["res://.godot/imported/candle.obj-0c0916930c8d8f9eaeee02d83369d3c9.mesh"]
+
+source_file="res://Levels/2Misc/Accessories/candle.obj"
+dest_files=["res://.godot/imported/candle.obj-0c0916930c8d8f9eaeee02d83369d3c9.mesh", "res://.godot/imported/candle.obj-0c0916930c8d8f9eaeee02d83369d3c9.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

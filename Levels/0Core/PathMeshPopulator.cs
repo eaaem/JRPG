@@ -27,8 +27,6 @@ public partial class PathMeshPopulator : MultiMeshInstance3D
          PopulateMeshes();
       }
    }
-   [Export]
-   private Path3D path;
    /// <summary>
    /// Uses the in/out values of each point on the path as rotations. These values should be in degrees.
    /// </summary>
@@ -102,63 +100,71 @@ public partial class PathMeshPopulator : MultiMeshInstance3D
    /// </summary>
    void PopulateMeshes()
    {
-      Multimesh.InstanceCount = path.Curve.PointCount;
-
-      foreach (Node obj in GetChildren())
+      if (Engine.IsEditorHint())
       {
-         obj.QueueFree();
-         RemoveChild(obj);
-      }
+         Path3D path = GetNode<Path3D>("Path3D");
 
-      for (int i = 0; i < path.Curve.PointCount; i++)
-      {
-         Transform3D transform = new Transform3D(Basis.Identity, path.Curve.GetPointPosition(i) + path.GlobalPosition);
+         Multimesh.InstanceCount = path.Curve.PointCount;
 
-         if (randomizeRotation)
+         foreach (Node obj in GetChildren())
          {
-            transform.Basis = transform.Basis.Rotated(Vector3.Right, (float)GD.RandRange(Mathf.DegToRad(lowerRotation.X), Mathf.DegToRad(upperRotation.X)));
-            transform.Basis = transform.Basis.Rotated(Vector3.Up, (float)GD.RandRange(Mathf.DegToRad(lowerRotation.Y), Mathf.DegToRad(upperRotation.Y)));
-            transform.Basis = transform.Basis.Rotated(Vector3.Back, (float)GD.RandRange(Mathf.DegToRad(lowerRotation.Z), Mathf.DegToRad(upperRotation.Z)));
-         }
-
-         if (usePointRotations)
-         {
-            // Try to get from the in
-            Vector3 pointRotation = path.Curve.GetPointIn(i);
-
-            // If there's no data for the in, try the out; some points only have an out value
-            if (pointRotation == Vector3.Zero)
+            if (obj.Name != "Path3D")
             {
-               pointRotation = path.Curve.GetPointOut(i);
-            }
-
-            // If the rotation is still zero, we shouldn't try to override and rotate. This supports combining randomization and preset point rotations
-            // (those with nonzero ins/outs have preset rotations, those without should be randomized)
-            if (pointRotation != Vector3.Zero)
-            {
-               transform.Basis = Basis.Identity; // Overrides randomized rotations
-               transform.Basis = transform.Basis.Rotated(Vector3.Right, Mathf.DegToRad(pointRotation.X));
-               transform.Basis = transform.Basis.Rotated(Vector3.Up, Mathf.DegToRad(pointRotation.Y));
-               transform.Basis = transform.Basis.Rotated(Vector3.Back, Mathf.DegToRad(pointRotation.Z));
+               obj.QueueFree();
+               RemoveChild(obj);
             }
          }
 
-         if (randomizeScale)
+         for (int i = 0; i < path.Curve.PointCount; i++)
          {
-            Vector3 scale = new Vector3((float)GD.RandRange(lowerScale.X, upperScale.X), (float)GD.RandRange(lowerScale.Y, upperScale.Y), 
-                                        (float)GD.RandRange(lowerScale.Z, upperScale.Z));
-            transform.Basis = transform.Basis.Scaled(scale);
-         }
+            Transform3D transform = new Transform3D(Basis.Identity, path.Curve.GetPointPosition(i) + path.GlobalPosition);
 
-         if (collisions)
-         {
-            StaticBody3D newCollider = GD.Load<PackedScene>(collisionsPath.ResourcePath).Instantiate<StaticBody3D>();
-            newCollider.Transform = transform;
-            AddChild(newCollider);
-            newCollider.Owner = GetTree().EditedSceneRoot;
-         }
+            if (randomizeRotation)
+            {
+               transform.Basis = transform.Basis.Rotated(Vector3.Right, (float)GD.RandRange(Mathf.DegToRad(lowerRotation.X), Mathf.DegToRad(upperRotation.X)));
+               transform.Basis = transform.Basis.Rotated(Vector3.Up, (float)GD.RandRange(Mathf.DegToRad(lowerRotation.Y), Mathf.DegToRad(upperRotation.Y)));
+               transform.Basis = transform.Basis.Rotated(Vector3.Back, (float)GD.RandRange(Mathf.DegToRad(lowerRotation.Z), Mathf.DegToRad(upperRotation.Z)));
+            }
 
-         Multimesh.SetInstanceTransform(i, transform);
+            if (usePointRotations)
+            {
+               // Try to get from the in
+               Vector3 pointRotation = path.Curve.GetPointIn(i);
+
+               // If there's no data for the in, try the out; some points only have an out value
+               if (pointRotation == Vector3.Zero)
+               {
+                  pointRotation = path.Curve.GetPointOut(i);
+               }
+
+               // If the rotation is still zero, we shouldn't try to override and rotate. This supports combining randomization and preset point rotations
+               // (those with nonzero ins/outs have preset rotations, those without should be randomized)
+               if (pointRotation != Vector3.Zero)
+               {
+                  transform.Basis = Basis.Identity; // Overrides randomized rotations
+                  transform.Basis = transform.Basis.Rotated(Vector3.Right, Mathf.DegToRad(pointRotation.X));
+                  transform.Basis = transform.Basis.Rotated(Vector3.Up, Mathf.DegToRad(pointRotation.Y));
+                  transform.Basis = transform.Basis.Rotated(Vector3.Back, Mathf.DegToRad(pointRotation.Z));
+               }
+            }
+
+            if (randomizeScale)
+            {
+               Vector3 scale = new Vector3((float)GD.RandRange(lowerScale.X, upperScale.X), (float)GD.RandRange(lowerScale.Y, upperScale.Y), 
+                                          (float)GD.RandRange(lowerScale.Z, upperScale.Z));
+               transform.Basis = transform.Basis.Scaled(scale);
+            }
+
+            if (collisions)
+            {
+               StaticBody3D newCollider = GD.Load<PackedScene>(collisionsPath.ResourcePath).Instantiate<StaticBody3D>();
+               newCollider.Transform = transform;
+               AddChild(newCollider);
+               newCollider.Owner = GetTree().EditedSceneRoot;
+            }
+
+            Multimesh.SetInstanceTransform(i, transform);
+         }
       }
    }
 

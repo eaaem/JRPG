@@ -9,7 +9,7 @@ public partial class ShopItemButton : Button
    public override void _Ready()
    {
       shopMenuManager = GetNode<ShopMenuManager>("/root/BaseNode/UI/Shop/Background");
-      customTooltipScene = GD.Load<PackedScene>("res://BasicUI/tooltip_scene.tscn");
+      customTooltipScene = GD.Load<PackedScene>("res://Core/tooltip_scene.tscn");
    }
 
    void OnButtonDown()

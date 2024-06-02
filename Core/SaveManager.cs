@@ -63,6 +63,7 @@ public partial class SaveManager : Node
          managers.PartyManager.Items.Clear();
          managers.LevelManager.CreateLevel("Dathrel's Cabin", "dathrel_cabin", "SpawnPoint", false);
          managers.Controller.DisableMovement = false;
+         managers.Controller.DisableCamera = false;
          managers.Controller.HideWeapon();
       }
 
@@ -170,6 +171,7 @@ public partial class SaveManager : Node
                                         true, managers.LevelManager.LocationDatas[managers.LevelManager.GetLocationDataID((string)nodeData["InternalLocation"])]);
                managers.Controller.Position = new Vector3((float)nodeData["PlayerPosX"], (float)nodeData["PlayerPosY"], (float)nodeData["PlayerPosZ"]);
                managers.Controller.DisableMovement = false;
+               managers.Controller.DisableCamera = false;        
             }
             
             elapsedTime = (float)nodeData["TimeSpent"];

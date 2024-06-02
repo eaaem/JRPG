@@ -66,7 +66,7 @@ public partial class DialogueManager : Node
       title = GetNode<RichTextLabel>("Title");
 
       playerModel = managers.Controller.GetNode<Node3D>("Model");
-      camera = managers.Controller.GetNode<Camera3D>("CameraTarget/PlayerCamera");
+      camera = managers.Controller.GetNode<Camera3D>("CameraTarget/SpringArm3D/PlayerCamera");
       
       branchingDialogueContainer = GetNode<VBoxContainer>("Branches");
 	}
@@ -80,7 +80,13 @@ public partial class DialogueManager : Node
          CurrentInteraction = interaction;
          DialogueContainer.Visible = true;
          managers.Controller.DisableMovement = true;
-         Input.MouseMode = Input.MouseModeEnum.Visible;
+
+         if (!isCutscene)
+         {
+            managers.Controller.DisableCamera = true;
+            Input.MouseMode = Input.MouseModeEnum.Visible;
+         }
+
          DialogueIsActive = true;
 
          currentDialogueList = CurrentInteraction.dialogueList;
@@ -353,6 +359,7 @@ public partial class DialogueManager : Node
    {
       DialogueContainer.Visible = false;
       managers.Controller.DisableMovement = false;
+      managers.Controller.DisableCamera = false;
       Input.MouseMode = Input.MouseModeEnum.Captured;
       DialogueIsActive = false;
    }

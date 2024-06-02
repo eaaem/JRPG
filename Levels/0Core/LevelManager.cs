@@ -29,6 +29,8 @@ public partial class LevelManager : Node
       DiscardExistingLevel();
 
       managers.Controller.DisableMovement = true;
+      managers.Controller.DisableCamera = true;
+      
       // We need to move the controller away so that it doesn't reactivate an exit point immediately upon exiting the world map
       managers.Controller.GlobalPosition = new Vector3(0f, 25f, 0f);
 
@@ -127,7 +129,9 @@ public partial class LevelManager : Node
       managers.Controller.GlobalPosition = level.GetNode<Node3D>(entrancePointName).GlobalPosition;
       managers.Controller.GlobalRotation = level.GetNode<Node3D>(entrancePointName).GlobalRotation;
       managers.Controller.DisableMovement = false;
-      managers.Controller.GetNode<Camera3D>("CameraTarget/PlayerCamera").MakeCurrent();
+      managers.Controller.DisableCamera = false;
+
+      managers.Controller.GetNode<Camera3D>("CameraTarget/SpringArm3D/PlayerCamera").MakeCurrent();
       managers.PartyManager.MovePartyMembersBehindPlayer();
 
       // Only combat levels have arenas
@@ -162,10 +166,6 @@ public partial class LevelManager : Node
             }
 
             cutsceneCounter++;
-         }
-         else if (level.GetChild(i).IsInGroup("shopkeeper"))
-         {
-            level.GetChild(i).GetNode<AnimationPlayer>("AnimationPlayer").Play("ShopIdle");
          }
       }
 

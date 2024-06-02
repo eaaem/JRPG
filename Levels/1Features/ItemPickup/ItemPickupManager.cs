@@ -15,7 +15,7 @@ public partial class ItemPickupManager : Node
 	public override void _Ready()
 	{
       baseNode = GetNode<Node3D>("/root/BaseNode");
-      camera = managers.Controller.GetNode<Camera3D>("CameraTarget/PlayerCamera");
+      camera = managers.Controller.GetNode<Camera3D>("CameraTarget/SpringArm3D/PlayerCamera");
 
       itemPickupContainer = GetParent<CanvasGroup>();
       itemPickupText = GetNode<Label>("Text");
@@ -46,6 +46,7 @@ public partial class ItemPickupManager : Node
                {
                   ItemHolder itemHolder = collided.GetParent().GetNode<ItemHolder>("ItemHolder");
                   managers.Controller.DisableMovement = true;
+                  managers.Controller.DisableCamera = true;
 
                   string plural = itemHolder.quantity > 1 ? "s" : "";
                   itemPickupText.Text = "Picked up " + itemHolder.quantity + " " + itemHolder.heldItem.name + plural + "!";
@@ -62,6 +63,7 @@ public partial class ItemPickupManager : Node
          else
          {
             managers.Controller.DisableMovement = false;
+            managers.Controller.DisableCamera = false;
             itemPickupContainer.Visible = false;
          }
       }

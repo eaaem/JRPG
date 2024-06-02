@@ -9,7 +9,7 @@ public partial class DoorBehavior : Node
    public override void _Ready()
    {
       baseNode = GetNode<Node3D>("/root/BaseNode");
-      camera = GetNode<Camera3D>("/root/BaseNode/PartyMembers/Member1/CameraTarget/PlayerCamera");
+      camera = GetNode<Camera3D>("/root/BaseNode/PartyMembers/Member1/CameraTarget/SpringArm3D/PlayerCamera");
    }
 
    public override void _Input(InputEvent @event)

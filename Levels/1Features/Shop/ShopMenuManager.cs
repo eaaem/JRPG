@@ -50,6 +50,7 @@ public partial class ShopMenuManager : Node
    {
       currentShopItem = shopItem;
       managers.Controller.DisableMovement = true;
+      managers.Controller.DisableCamera = true;
       bulkButton.Select(0);
       currentBulk = 1;
       IsBuying = true;

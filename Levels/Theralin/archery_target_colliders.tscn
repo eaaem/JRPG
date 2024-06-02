@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://dpia0wu6w3n2w"]
+
+[ext_resource type="PackedScene" uid="uid://pt0hkagsuovp" path="res://Levels/Theralin/archery_target.glb" id="1_sfwj1"]
+[ext_resource type="Material" uid="uid://bij3eok6nabku" path="res://Levels/2Misc/Structures/wood.tres" id="2_r7cbc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_epb63"]
+size = Vector3(1.8, 2, 1.5)
+
+[node name="archery_target_colliders" type="Node3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6806, 0, -3.57279)
+
+[node name="archery_target" parent="." instance=ExtResource("1_sfwj1")]
+
+[node name="Cube" parent="archery_target" index="1"]
+surface_material_override/0 = ExtResource("2_r7cbc")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04003, -0.257714)
+shape = SubResource("BoxShape3D_epb63")
+
+[editable path="archery_target"]

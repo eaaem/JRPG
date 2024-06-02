@@ -65,7 +65,7 @@ public partial class Actor : CharacterBody3D
       weapon.Visible = true;
    }
 
-   public async void MoveCharacter(ActorStatus actorStatus, Vector3 destination)
+   public async void MoveCharacter(ActorStatus actorStatus, Vector3 destination, bool turnToDestination)
    {
       Vector3 direction = GlobalPosition.DirectionTo(destination);
       float distance = GlobalPosition.DistanceTo(destination);
@@ -81,6 +81,11 @@ public partial class Actor : CharacterBody3D
       currentDestination = destination;
       currentDirection = direction;
       isMoving = true;
+
+      if (turnToDestination)
+      {
+         LookAt(destination);
+      }
 
       while (distance > 0.1f)
       {

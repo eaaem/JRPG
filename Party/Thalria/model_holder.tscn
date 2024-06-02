@@ -1,8 +1,32 @@
-[gd_scene load_steps=6 format=3 uid="uid://uq4i3kybaxhq"]
+[gd_scene load_steps=11 format=3 uid="uid://uq4i3kybaxhq"]
 
 [ext_resource type="PackedScene" uid="uid://byhtfco1xbelx" path="res://Party/Thalria/thalria.glb" id="1_sr7k5"]
 [ext_resource type="PackedScene" uid="uid://d4hbovi73um7x" path="res://Party/Thalria/thalria_staff.glb" id="2_hpaat"]
 [ext_resource type="Script" path="res://Dialogue/0Core/DialogueInteraction.cs" id="3_quwwp"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wk5t4"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y612c"]
+animation = &"Run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jbo8h"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_10gv5"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_wk5t4")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_y612c")
+blend_point_1/pos = 1.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_jbo8h")
+blend_point_2/pos = 0.0
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_3t2uf"]
+graph_offset = Vector2(-154.884, 163.27)
+nodes/BasicMovement/node = SubResource("AnimationNodeBlendSpace1D_10gv5")
+nodes/BasicMovement/position = Vector2(100, 140)
+nodes/output/position = Vector2(320, 120)
+node_connections = [&"output", 0, &"BasicMovement"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_snhpk"]
 radius = 0.25
@@ -15,6 +39,12 @@ size = Vector3(1, 2, 1)
 [node name="Weapon" parent="." instance=ExtResource("2_hpaat")]
 
 [node name="Model" parent="." instance=ExtResource("1_sr7k5")]
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource("AnimationNodeBlendTree_3t2uf")
+anim_player = NodePath("../Model/AnimationPlayer")
+active = true
+parameters/BasicMovement/blend_position = -0.00289297
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

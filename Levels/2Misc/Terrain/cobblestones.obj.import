@@ -1,0 +1,21 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dqwg7vxqjpln2"
+path="res://.godot/imported/cobblestones.obj-cc93af854aa6bbc8be062bd759705db1.mesh"
+
+[deps]
+
+files=["res://.godot/imported/cobblestones.obj-cc93af854aa6bbc8be062bd759705db1.mesh"]
+
+source_file="res://Levels/2Misc/Terrain/cobblestones.obj"
+dest_files=["res://.godot/imported/cobblestones.obj-cc93af854aa6bbc8be062bd759705db1.mesh", "res://.godot/imported/cobblestones.obj-cc93af854aa6bbc8be062bd759705db1.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true

@@ -85,6 +85,7 @@ public partial class MenuManager : Node
    {
       menu.Visible = true;
       controller.DisableMovement = true;
+      controller.DisableCamera = true;
       controller.IsSprinting = false;
       controller.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Idle");
       EnableTabs();
@@ -102,6 +103,7 @@ public partial class MenuManager : Node
    {
       menu.Visible = false;
       controller.DisableMovement = false;
+      controller.DisableCamera = false;
       Input.MouseMode = Input.MouseModeEnum.Captured;
 
       if (baseNode.HasNode("WorldMap"))

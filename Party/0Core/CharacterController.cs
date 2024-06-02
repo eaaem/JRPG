@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Threading;
 
 public partial class CharacterController : CharacterBody3D
 {
@@ -17,6 +15,7 @@ public partial class CharacterController : CharacterBody3D
    private Node3D cameraTarget;
    private Node3D model;
    private AnimationPlayer animationPlayer;
+   private AnimationTree animationTree;
 
    private Node3D weapon;
    private Node3D weaponAnchor;
@@ -28,6 +27,10 @@ public partial class CharacterController : CharacterBody3D
    BoneAttachment3D secondaryAttachment;
 
    public bool DisableMovement { get; set; }
+   public bool DisableCamera { get; set; }
+   public bool isInCutscene { get; set; }
+
+   public int MovementBlend { get; set; } = 0;
 
    public override void _Ready()
    {
@@ -39,6 +42,7 @@ public partial class CharacterController : CharacterBody3D
       cameraTarget = GetNode<Node3D>("CameraTarget");
       model = GetNode<Node3D>("Model");
       animationPlayer = GetNode<AnimationPlayer>("Model/AnimationPlayer");
+      animationTree = GetNode<AnimationTree>("AnimationTree");
 
       weapon = GetNode<Node3D>("Weapon");
       weaponAnchor = GetNode<Node3D>("BackAnchor");
@@ -87,11 +91,6 @@ public partial class CharacterController : CharacterBody3D
          if (Input.IsActionPressed("sprint"))
          {
             IsSprinting = true;
-
-            if (animationPlayer.CurrentAnimation != "Run" && direction != Vector3.Zero) 
-            {
-               animationPlayer.Play("Run");
-            }
          }
 
          if (Input.IsActionJustReleased("sprint"))
@@ -101,12 +100,15 @@ public partial class CharacterController : CharacterBody3D
 
          if (direction != Vector3.Zero)
          {
-            if (animationPlayer.CurrentAnimation != "Walk" && !IsSprinting) 
+            if ((IsSprinting && MovementBlend < 10) || (!IsSprinting && MovementBlend < 0)) 
             {
-               animationPlayer.Play("Walk");
+               MovementBlend += 1;
+            }
+            else if (!IsSprinting && MovementBlend > 0)
+            {
+               MovementBlend -= 1;
             }
             
-            //model.LookAt(Position + direction);
             Vector3 modelRotation = model.Rotation;
             modelRotation.Y = Mathf.LerpAngle(model.Rotation.Y, Mathf.Atan2(-inputDir.X, -inputDir.Y), 0.25f);
             model.Rotation = modelRotation;
@@ -116,36 +118,49 @@ public partial class CharacterController : CharacterBody3D
          }
          else
          {
-            if (animationPlayer.CurrentAnimation != "Idle")
+            if (MovementBlend > -10)
             {
-               animationPlayer.Play("Idle");
+               MovementBlend -= 1;
             }
 
             velocity.X = Mathf.MoveToward(Velocity.X, 0, speedToUse);
             velocity.Z = Mathf.MoveToward(Velocity.Z, 0, speedToUse);
          }
 
+         animationTree.Set("parameters/BasicMovement/blend_position", MovementBlend / 10f);
          Velocity = velocity;
 
          MoveAndSlide();
+      }
+      else
+      {
+         animationTree.Set("parameters/BasicMovement/blend_position", -1f);
       }
 	}
 
    public override void _Input(InputEvent @event)
    {
-	  if (@event is InputEventMouseMotion mouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured && !DisableMovement) {
-		 // Rotates the camera target, which in turn rotates the camera
-		 RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * HorizontalSensitivity));
+      if (@event is InputEventMouseMotion mouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured && !DisableCamera)
+      {
+         // Rotates the character controller, which in turn rotates the camera
+         if (!isInCutscene)
+         {
+            RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * HorizontalSensitivity));
+         }
+         else
+         {
+            cameraTarget.RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * HorizontalSensitivity));
+         }
 
-		 // Rotate the model accordingly
-		 model.RotateY(Mathf.DegToRad(mouseMotion.Relative.X * HorizontalSensitivity));
+         // Rotate the model accordingly
+         model.RotateY(Mathf.DegToRad(mouseMotion.Relative.X * HorizontalSensitivity));
 
-		 // Rotates along the x-axis, clamping to prevent too much rotation
-		 Vector3 clampRotation = cameraTarget.Rotation;
-		 clampRotation.X -= mouseMotion.Relative.Y / 50f;
-		 clampRotation.X = Mathf.Clamp(clampRotation.X, Mathf.DegToRad(-45f), Mathf.DegToRad(90f));
-		 cameraTarget.Rotation = clampRotation;
-	  }
+         // Rotates along the x-axis, clamping to prevent too much rotation
+         Vector3 clampRotation = cameraTarget.Rotation;
+         clampRotation.X -= mouseMotion.Relative.Y / 50f;
+         clampRotation.X = Mathf.Clamp(clampRotation.X, Mathf.DegToRad(-45f), Mathf.DegToRad(90f));
+         cameraTarget.Rotation = clampRotation;
+      }
    }
 
    public void PlaceWeaponOnBack()
