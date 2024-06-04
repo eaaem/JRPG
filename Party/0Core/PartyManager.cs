@@ -70,6 +70,11 @@ public partial class PartyManager : Node
       memberToAdd.currentMana = memberToAdd.GetMaxMana();
 
       memberToAdd.model = GetNode<Node3D>("/root/BaseNode/PartyMembers/Member1");
+      managers.PartyMenuManager.AddNewComponentsToModel(memberToAdd);
+      GetNode<CharacterController>("/root/BaseNode/PartyMembers/Member1").ResetNodes();
+
+      // Make sure you can't try to talk to yourself
+      memberToAdd.model.GetNode<StaticBody3D>("DialogueBox").QueueFree();
 
       Party.Add(memberToAdd);
    }

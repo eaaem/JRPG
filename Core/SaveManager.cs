@@ -189,7 +189,7 @@ public partial class SaveManager : Node
          }
          else if (nodeData.ContainsKey("LocationName")) // Location data
          {
-            managers.LevelManager.LocationDatas.Add(new LocationData((string)nodeData["LocationName"],
+            managers.LevelManager.LocationDatas.Add(new LocationData((string)nodeData["LocationName"], (int)nodeData["LevelProgress"],
                                     (Godot.Collections.Dictionary<string, bool>)nodeData["DefeatedEnemies"],
                                     (Godot.Collections.Dictionary<string, bool>)nodeData["PickedUpItems"],
                                     (Godot.Collections.Dictionary<string, bool>)nodeData["CutscenesSeen"], (double)nodeData["TimeSinceLastVisit"]));

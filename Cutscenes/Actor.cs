@@ -6,10 +6,16 @@ public partial class Actor : CharacterBody3D
   // int rotationCounter = 0;
   // int movementCounter = 0;
 
+   [Export]
+   private bool hasWeapon;
+
    bool isMoving;
    float currentMoveSpeed = 0f;
    Vector3 currentDestination;
    Vector3 currentDirection;
+
+   private bool isRotating;
+   private float currentTargetRotation;
 
    private Node3D weapon;
    private Node3D weaponAnchor;
@@ -19,24 +25,34 @@ public partial class Actor : CharacterBody3D
 
    private BoneAttachment3D attachment;
 
+   private bool isTracking;
+   Actor trackingTarget;
+   private float trackingTargetRotation;
+   Node3D model;
+
    public override void _Ready()
    {
-      weapon = GetNode<Node3D>("Weapon");
-      weaponAnchor = GetNode<Node3D>("BackAnchor");
+      model = GetNode<Node3D>("Model");
 
-      //secondaryWeapon = GetNode<Node3D>("SecondaryWeapon");
-      //secondaryAnchor = GetNode<Node3D>("SecondaryAnchor");
+      if (hasWeapon)
+      {
+         weapon = GetNode<Node3D>("Weapon");
+         weaponAnchor = GetNode<Node3D>("BackAnchor");
 
-      RemoveChild(weapon);
+         //secondaryWeapon = GetNode<Node3D>("SecondaryWeapon");
+         //secondaryAnchor = GetNode<Node3D>("SecondaryAnchor");
 
-      attachment = new BoneAttachment3D();
-      attachment.Name = "WeaponAttachment";
-      Skeleton3D skeleton = GetNode<Skeleton3D>("Model/Armature/Skeleton3D");
+         RemoveChild(weapon);
 
-      skeleton.AddChild(attachment);
-      attachment.AddChild(weapon);
+         attachment = new BoneAttachment3D();
+         attachment.Name = "WeaponAttachment";
+         Skeleton3D skeleton = GetNode<Skeleton3D>("Model/Armature/Skeleton3D");
 
-      PlaceWeaponOnBack();
+         skeleton.AddChild(attachment);
+         attachment.AddChild(weapon);
+
+         PlaceWeaponOnBack();
+      }
    }
 
    public void PlaceWeaponOnBack()
@@ -70,13 +86,6 @@ public partial class Actor : CharacterBody3D
       Vector3 direction = GlobalPosition.DirectionTo(destination);
       float distance = GlobalPosition.DistanceTo(destination);
 
-      AnimationPlayer player = GetNode<AnimationPlayer>("Model/AnimationPlayer");
-
-      if (player.CurrentAnimation != actorStatus.walkAnim)
-      {
-         player.Play(actorStatus.walkAnim);
-      }
-
       currentMoveSpeed = actorStatus.moveSpeed;
       currentDestination = destination;
       currentDirection = direction;
@@ -84,8 +93,13 @@ public partial class Actor : CharacterBody3D
 
       if (turnToDestination)
       {
-         LookAt(destination);
+         Node3D model = GetNode<Node3D>("Model");
+         model.LookAt(destination);
+         model.RotateY(Mathf.DegToRad(180));
       }
+
+      AnimationPlayer player = GetNode<AnimationPlayer>("Model/AnimationPlayer");
+      player.Play(actorStatus.walkAnim, 0.5f);
 
       while (distance > 0.1f)
       {
@@ -100,28 +114,40 @@ public partial class Actor : CharacterBody3D
       player.Play(actorStatus.idleAnim);
    }
 
-   public async void RotateCharacter(float targetRotation)
+   public void RotateCharacter(float targetRotation)
    {
-      targetRotation = Mathf.DegToRad(targetRotation);
-
-      Node3D model = GetNode<Node3D>("Model");
-
-      while (Mathf.Abs(model.Rotation.Y - targetRotation) > 0.05f)
-      {
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-
-         Vector3 rotation = model.Rotation;
-         rotation.Y = Mathf.Lerp(rotation.Y, targetRotation, 0.25f);
-         model.Rotation = rotation;
-      }
+      currentTargetRotation = Mathf.DegToRad(targetRotation);
+      isRotating = true;
    }
 
-   public override void _PhysicsProcess(double delta)
+   public async override void _PhysicsProcess(double delta)
    {
       if (isMoving)
       {
          Velocity = currentDirection * currentMoveSpeed;
          MoveAndSlide();
+      }
+
+      if (isRotating)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+
+         Vector3 rotation = model.Rotation;
+         rotation.Y = Mathf.Lerp(rotation.Y, currentTargetRotation, 0.25f);
+         model.Rotation = rotation;
+
+         if (Mathf.Abs(model.Rotation.Y - currentTargetRotation) < 0.05f)
+         {
+            isRotating = false;
+         }
+      }
+
+      if (isTracking)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+
+         model.LookAt(trackingTarget.GlobalPosition);
+         model.RotateY(Mathf.DegToRad(180f));
       }
    }
 
@@ -137,12 +163,32 @@ public partial class Actor : CharacterBody3D
       }
    }
 
-   public async void PlayAnimation(string animationName, ActorStatus actorStatus)
+   public async void PlayAnimation(string animationName, ActorStatus actorStatus, float blend, bool useLength, float waitTime = 0f)
    {
       AnimationPlayer player = GetNode<AnimationPlayer>("Model/AnimationPlayer");
-      player.Play(animationName);
-      await ToSignal(GetTree().CreateTimer(player.CurrentAnimationLength), "timeout");
-      player.Play(actorStatus.idleAnim);
+      player.Play(animationName, blend);
+
+      if (useLength)
+      {
+         await ToSignal(GetTree().CreateTimer(player.CurrentAnimationLength), "timeout");
+      }
+      else
+      {
+         await ToSignal(GetTree().CreateTimer(waitTime), "timeout");
+      }
+
+      player.Play(actorStatus.idleAnim, 1f);
+   }
+
+   public void Track(Actor target)
+   {
+      isTracking = true;
+      trackingTarget = target;
+   }
+
+   public void StopTracking()
+   {
+      isTracking = false;
    }
 
    public void PlaceCharacterAtPoint(Vector3 destination)

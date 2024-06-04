@@ -20,18 +20,18 @@ public partial class CombatAbilityManager : Node
    {
       if (combatManager.CurrentAbility.hitsSelf && !combatManager.CurrentAbility.hitsAll && !combatManager.CurrentAbility.hitsSurrounding 
           && !combatManager.CurrentAbility.hitsTeam && target != combatManager.CurrentFighter)
-         {
-            return;
-         }
+      {
+         return;
+      }
 
-         for (int i = 0; i < combatManager.Fighters.Count; i++)
-         {
-            combatManager.Fighters[i].placementNode.GetNode<Decal>("SelectionHighlight").Visible = false;
-         }
+      for (int i = 0; i < combatManager.Fighters.Count; i++)
+      {
+         combatManager.Fighters[i].placementNode.GetNode<Decal>("SelectionHighlight").Visible = false;
+      }
 
-         combatManager.CurrentTarget = target;
-         uiManager.HideAll();
-         EmitSignal(SignalName.AbilityCast);
+      combatManager.CurrentTarget = target;
+      uiManager.HideAll();
+      EmitSignal(SignalName.AbilityCast);
    }
 
    public void SelectEnemyAbility(Fighter target, List<AbilityResource> validAbilities)

@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://ga2i18ygf8gl"]
 
-[ext_resource type="Texture2D" uid="uid://d1ndqs0sb3llj" path="res://WorldMap/Maps/theralin/theralin.png" id="1_poy1c"]
+[ext_resource type="Texture2D" uid="uid://d1ndqs0sb3llj" path="res://WorldMap/Maps/theralin_map/theralin.png" id="1_poy1c"]
 [ext_resource type="Script" path="res://WorldMap/0Core/WorldMapLocation.cs" id="1_srptl"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_elgrc"]

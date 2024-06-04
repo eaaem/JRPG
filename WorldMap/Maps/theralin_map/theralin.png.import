@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d1ndqs0sb3llj"
-path="res://.godot/imported/theralin.png-af793ec86c27689eb579b0a4ef2a8d24.ctex"
+path="res://.godot/imported/theralin.png-68d7f436fa10ffb2e73553bd78ba2177.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://WorldMap/Maps/theralin/theralin.png"
-dest_files=["res://.godot/imported/theralin.png-af793ec86c27689eb579b0a4ef2a8d24.ctex"]
+source_file="res://WorldMap/Maps/theralin_map/theralin.png"
+dest_files=["res://.godot/imported/theralin.png-68d7f436fa10ffb2e73553bd78ba2177.ctex"]
 
 [params]
 

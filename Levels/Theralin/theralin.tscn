@@ -1,5 +1,6 @@
-[gd_scene load_steps=236 format=3 uid="uid://be52m7kr2a0hf"]
+[gd_scene load_steps=296 format=3 uid="uid://be52m7kr2a0hf"]
 
+[ext_resource type="Script" path="res://Levels/Theralin/TheralinProgress.cs" id="1_6nlxi"]
 [ext_resource type="Script" path="res://Levels/1Features/Shop/ShopItem.cs" id="1_yfmkp"]
 [ext_resource type="Script" path="res://Dialogue/0Core/DialogueInteraction.cs" id="2_0ejmu"]
 [ext_resource type="Script" path="res://Dialogue/0Core/DialogueObject.cs" id="3_xigqe"]
@@ -60,6 +61,7 @@
 [ext_resource type="Script" path="res://Cutscenes/ActorStatus.cs" id="57_54ffb"]
 [ext_resource type="Script" path="res://Cutscenes/CutsceneObject.cs" id="57_wqgyi"]
 [ext_resource type="Script" path="res://Cutscenes/CutsceneItem.cs" id="58_2jsij"]
+[ext_resource type="PackedScene" uid="uid://cqprbsttd2w5l" path="res://Cutscenes/Actors/arlitha.tscn" id="61_vbu55"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_1mypl"]
 vertices = PackedVector3Array(-73.2147, 3.3687, 130.08, -73.2147, 3.3687, 130.58, -71.2147, 3.3687, 132.33, -60.2147, 0.8687, 133.08, -67.4369, 2.8687, 131.413, -64.3397, 1.8687, 132.799, -125.965, 0.8687, -6.17, -128.465, 0.8687, -4.67, -129.215, 0.8687, -3.67, -99.9647, 0.8687, -20.42, -109.065, 2.1187, -15.4325, -112.965, 2.1187, -13.295, -115.226, 1.8687, -11.6809, -112.682, 2.3687, -13.1374, -110.139, 2.3687, -14.5939, -102.465, 2.8687, 90.83, -107.715, 3.1187, 93.58, -107.465, 3.1187, 94.33, -103.215, 3.1187, 98.83, -151.715, 0.8687, 13.33, -142.465, 3.1187, 43.33, -138.965, 3.1187, 48.83, -149.753, 3.1187, 18.7915, -150.393, 2.8687, 17.6157, -149.953, 3.1187, 19.0443, -121.215, 3.1187, 76.08, -120.965, 3.1187, 77.08, -113.715, 3.1187, 71.33, -118.215, 0.8687, -12.17, -120.715, 0.8687, -10.67, -125.965, 0.8687, -6.17, -99.9647, 0.8687, -20.42, -106.715, 0.8687, -18.67, -113.104, 1.3687, -15.0589, -112.965, 2.1187, -13.295, -109.065, 2.1187, -15.4325, -151.715, 0.8687, 13.33, -158.965, 0.8687, 19.08, -154.965, 3.1187, 23.83, -154.152, 3.1187, 21.205, -155.765, 3.1187, 22.88, -71.2147, 3.3687, 132.33, -68.2147, 0.8687, 137.58, -60.2147, 0.8687, 133.08, -64.3397, 1.8687, 132.799, -124.965, 3.1187, 70.83, -121.215, 3.1187, 76.08, -113.715, 3.1187, 71.33, -128.465, 3.1187, 65.33, -86.2147, 3.3687, 116.83, -81.9647, 3.3687, 121.33, -77.4647, 3.3687, 125.58, -106.465, 3.1187, 71.58, -104.465, 2.8687, 76.58, -99.4647, 2.8687, 82.08, -91.4647, 0.3687, -30.17, -99.7147, 0.3687, -30.17, -99.9647, 0.8687, -20.42, -99.0203, 0.3687, -21.5033, -99.929, 0.3687, -21.8129, -102.465, 2.8687, 90.83, -103.215, 3.1187, 98.83, -98.9647, 3.1187, 103.33, -99.4647, 2.8687, 86.08, -106.715, 0.8687, -18.67, -112.965, 0.8687, -16.67, -118.215, 0.8687, -12.17, -113.104, 1.3687, -15.0589, -135.465, 3.1187, 54.33, -108.965, 3.1187, 70.33, -106.465, 3.1187, 71.58, -136.715, 0.8687, 2.08, -151.715, 0.8687, 13.33, -138.965, 3.1187, 48.83, -134.763, 3.1187, 6.56387, -149.753, 3.1187, 18.7915, -147.449, 3.1187, 15.8483, -41.9647, 0.3687, -30.17, -50.2147, 0.3687, -30.17, -99.9647, 0.8687, -20.42, -81.255, 2.1187, -23.5652, -73.7712, 0.3687, -24.8232, -75.8921, 0.3687, -25.1377, -80.7066, 1.6187, -24.1942, -154.965, 3.1187, 23.83, -149.715, 3.1187, 32.58, -145.965, 3.1187, 37.83, -151.715, 0.8687, 13.33, -154.152, 3.1187, 21.205, -150.362, 3.1187, 19.0947, -150.7, 2.8687, 17.6535, -58.4647, 0.3687, -30.17, -66.7147, 0.3687, -30.17, -99.9647, 0.8687, -20.42, -81.3613, 1.3687, -24.7907, -77.0682, 0.3687, -25.7993, -79.1835, 0.3687, -26.5137, -80.5689, 0.8687, -26.1075, -90.4647, 3.3687, 112.33, -86.2147, 3.3687, 116.83, -77.4647, 3.3687, 125.58, -52.2147, 0.8687, 128.33, -43.9647, 0.6187, 123.83, -35.9647, 0.8687, 119.08, -136.715, 0.8687, 2.08, -144.215, 0.8687, 7.58, -151.715, 0.8687, 13.33, -77.4647, 3.3687, 125.58, -73.2147, 3.3687, 130.08, -60.2147, 0.8687, 133.08, -52.2147, 0.8687, 128.33, -62.6118, 3.3687, 127.198, -67.4369, 2.8687, 131.413, -69.4746, 3.3687, 129.854, -83.2147, 0.3687, -30.17, -91.4647, 0.3687, -30.17, -99.9647, 0.8687, -20.42, -96.0993, 0.3687, -22.67, -99.0203, 0.3687, -21.5033, -33.4647, 0.3687, -30.17, -41.9647, 0.3687, -30.17, -99.9647, 0.8687, -20.42, -84.9486, 2.1187, -22.6216, -80.6583, 2.1187, -23.2506, -74.2228, 0.3687, -24.1942, -73.7712, 0.3687, -24.8232, -81.255, 2.1187, -23.5652, -128.465, 3.1187, 65.33, -113.715, 3.1187, 71.33, -108.965, 3.1187, 70.33, -131.965, 3.1187, 59.83, -99.4647, 2.8687, 82.08, -99.4647, 2.8687, 86.08, -98.9647, 3.1187, 103.33, -94.7147, 3.3687, 107.83, -90.4647, 3.3687, 112.33, -77.4647, 3.3687, 125.58, -99.9647, 0.8687, -20.42, -129.215, 0.8687, -3.67, -136.715, 0.8687, 2.08, -110.103, 2.6187, -14.2131, -110.139, 2.3687, -14.5939, -112.682, 2.3687, -13.1374, -115.226, 1.8687, -11.6809, -50.2147, 0.3687, -30.17, -58.4647, 0.3687, -30.17, -99.9647, 0.8687, -20.42, -80.7066, 1.6187, -24.1942, -75.8921, 0.3687, -25.1377, -77.0682, 0.3687, -25.7993, -81.3613, 1.3687, -24.7907, -106.465, 3.1187, 71.58, -99.4647, 2.8687, 82.08, -33.4647, 0.3687, 118.83, -33.4647, 0.3687, -30.17, -99.9647, 0.8687, -20.42, -136.715, 0.8687, 2.08, -134.763, 3.1187, 6.56387, -39.8518, 3.1187, 115.274, -33.4647, 2.6187, 109.217, -33.4647, 3.1187, 104.411, -33.4647, 3.1187, 46.7332, -33.4647, 2.8687, 37.1203, -33.4647, 2.1187, 32.3139, -33.4647, 0.6187, 27.5074, -33.4647, 0.3687, 22.701, -74.2228, 0.3687, -24.1942, -80.6583, 2.1187, -23.2506, -84.9486, 2.1187, -22.6216, -110.103, 2.6187, -14.2131, -64.9659, 3.1187, -14.167, -58.9571, 0.3687, -17.1498, -43.9701, 1.3687, 17.314, -46.9843, 3.1187, 18.8342, -58.9403, 2.3687, -12.6627, -54.4852, 0.3687, -12.6798, -81.4538, 3.1187, -21.6649, -42.4816, 0.3687, 14.3296, -109.981, 3.1187, -12.6863, -60.4697, 3.1187, -11.1914, -37.9535, 0.3687, 20.3313, -36.4864, 2.6187, 114.818, -34.9876, 2.8687, 32.321, -57.4409, 1.3687, -14.1621, -40.9735, 1.1187, 20.3093, -102.442, 3.1187, -15.6911, -42.4408, 0.3687, 15.8328, -48.4529, 0.3687, 2.31742, -55.9811, 2.8687, -3.69416, -99.4647, 2.8687, 82.08, -98.9647, 3.1187, 103.33, -94.7147, 3.3687, 107.83, -77.4647, 3.3687, 125.58, -52.2147, 0.8687, 128.33, -35.9647, 0.8687, 119.08, -40.0615, 2.6187, 116.693, -42.1099, 3.1187, 115.499, -62.6118, 3.3687, 127.198, -43.9498, 3.1187, 117.821, -45.4638, 1.3687, 122.311, -74.9647, 0.3687, -30.17, -83.2147, 0.3687, -30.17, -99.9647, 0.8687, -20.42, -93.0203, 0.3687, -23.1283, -96.0993, 0.3687, -22.67, -99.4647, 2.8687, 82.08, -35.9647, 0.8687, 119.08, -33.4647, 0.3687, 118.83, -39.8518, 3.1187, 115.274, -42.1099, 3.1187, 115.499, -40.0615, 2.6187, 116.693, -135.465, 3.1187, 54.33, -131.965, 3.1187, 59.83, -108.965, 3.1187, 70.33, -151.715, 0.8687, 13.33, -145.965, 3.1187, 37.83, -142.465, 3.1187, 43.33, -149.953, 3.1187, 19.0443, -150.393, 2.8687, 17.6157, -150.7, 2.8687, 17.6535, -150.362, 3.1187, 19.0947, -66.7147, 0.3687, -30.17, -74.9647, 0.3687, -30.17, -99.9647, 0.8687, -20.42, -80.5689, 0.8687, -26.1075, -79.1835, 0.3687, -26.5137, -93.0203, 0.3687, -23.1283, 99.5353, 0.3687, -20.92, 99.5353, 0.3687, -30.17, 91.0353, 0.3687, -30.17, 91.0353, 0.3687, 118.83, 99.5353, 0.3687, 118.83, 99.5353, 0.3687, 109.33, 99.5353, 0.3687, -20.92, 91.0353, 0.3687, -30.17, 82.7853, 0.3687, -30.17, 82.7853, 0.3687, 118.83, 91.0353, 0.3687, 118.83, 99.5353, 0.3687, 109.33, 99.5353, 0.3687, -11.67, 99.5353, 0.3687, -20.92, 82.7853, 0.3687, -30.17, 74.5353, 0.3687, -30.17, 82.7853, 0.3687, 118.83, 99.5353, 0.3687, 109.33, 99.5353, 0.3687, 100.08, 74.5353, 0.3687, 118.83, 24.5353, 0.3687, 118.83, 99.5353, 0.3687, 53.58, 99.5353, 0.3687, 44.33, 16.2853, 0.3687, 118.83, 99.5353, 0.3687, 44.33, -16.9647, 0.3687, -30.17, -25.2147, 0.3687, -30.17, 99.5353, 0.3687, -2.42, 99.5353, 0.3687, -11.67, 74.5353, 0.3687, -30.17, 66.2853, 0.3687, -30.17, 74.5353, 0.3687, 118.83, 99.5353, 0.3687, 100.08, 99.5353, 0.3687, 90.83, 66.2853, 0.3687, 118.83, 99.5353, 0.3687, 44.33, 99.5353, 0.3687, 34.83, 16.2853, 0.3687, -30.17, 8.03529, 0.3687, -30.17, 8.03529, 0.3687, 118.83, 16.2853, 0.3687, 118.83, 99.5353, 0.3687, 44.33, 66.2853, 0.3687, 118.83, 99.5353, 0.3687, 90.83, 99.5353, 0.3687, 81.58, 57.7853, 0.3687, 118.83, 99.5353, 0.3687, 7.08, 99.5353, 0.3687, -2.42, 66.2853, 0.3687, -30.17, 57.7853, 0.3687, -30.17, -0.214706, 0.3687, 118.83, 8.03529, 0.3687, 118.83, 99.5353, 0.3687, 44.33, -25.2147, 0.3687, 118.83, 99.5353, 0.3687, 44.33, -25.2147, 0.3687, -30.17, -33.4647, 0.3687, -30.17, -33.4647, 0.3687, 118.83, -33.4647, 0.3687, 22.701, -33.4647, 0.6187, 27.5074, -33.4647, 2.1187, 32.3139, -33.4647, 2.8687, 37.1203, -33.4647, 3.1187, 46.7332, -33.4647, 3.1187, 104.411, -33.4647, 2.6187, 109.217, -28.941, 3.1187, 39.8446, -21.466, 0.3687, 39.8496, -21.4648, 3.1187, 48.82, -13.9398, 0.3687, 48.825, -16.9593, 3.1187, 66.8057, -9.47499, 0.3687, 65.3075, -16.9777, 2.8687, 81.8437, -7.97879, 0.3687, 78.8548, -22.947, 0.3687, 102.813, -15.4651, 2.8687, 56.3319, -28.9406, 0.3687, 113.354, -12.4709, 1.3687, 54.8298, -9.45091, 0.3687, 54.8518, -10.97, 0.6187, 75.8122, -30.472, 3.1187, 102.808, -10.9858, 0.6187, 63.8323, -9.46381, 0.3687, 78.8438, -15.4883, 2.6187, 80.3383, -24.448, 3.1187, 44.3354, -10.9692, 0.6187, 66.8497, -10.9859, 0.6187, 54.8408, -12.4828, 0.8687, 51.8159, 49.5353, 0.3687, 118.83, 57.7853, 0.3687, 118.83, 99.5353, 0.3687, 81.58, 99.5353, 0.3687, 7.08, 57.7853, 0.3687, -30.17, 49.5353, 0.3687, -30.17, 99.5353, 0.3687, 16.33, 99.5353, 0.3687, 7.08, 49.5353, 0.3687, -30.17, 41.2853, 0.3687, -30.17, 49.5353, 0.3687, 118.83, 99.5353, 0.3687, 81.58, 99.5353, 0.3687, 72.08, 41.2853, 0.3687, 118.83, 99.5353, 0.3687, 44.33, 8.03529, 0.3687, -30.17, -0.214706, 0.3687, -30.17, -8.71471, 0.3687, 118.83, -0.214706, 0.3687, 118.83, 99.5353, 0.3687, 44.33, 99.5353, 0.3687, 25.58, 99.5353, 0.3687, 16.33, 41.2853, 0.3687, -30.17, 33.0353, 0.3687, -30.17, 41.2853, 0.3687, 118.83, 99.5353, 0.3687, 72.08, 99.5353, 0.3687, 62.83, 33.0353, 0.3687, 118.83, 99.5353, 0.3687, 44.33, -0.214706, 0.3687, -30.17, -8.71471, 0.3687, -30.17, -16.9647, 0.3687, 118.83, -8.71471, 0.3687, 118.83, 99.5353, 0.3687, 44.33, 99.5353, 0.3687, 34.83, 99.5353, 0.3687, 25.58, 33.0353, 0.3687, -30.17, 24.5353, 0.3687, -30.17, 33.0353, 0.3687, 118.83, 99.5353, 0.3687, 62.83, 99.5353, 0.3687, 53.58, 24.5353, 0.3687, 118.83, 99.5353, 0.3687, 44.33, -8.71471, 0.3687, -30.17, -16.9647, 0.3687, -30.17, -25.2147, 0.3687, 118.83, -16.9647, 0.3687, 118.83, 99.5353, 0.3687, 44.33, 99.5353, 0.3687, 34.83, 24.5353, 0.3687, -30.17, 16.2853, 0.3687, -30.17, -99.7147, 0.3687, 74.83, -99.7147, 0.3687, 81.08, -98.9647, 0.3687, 81.83, -80.7147, 0.3687, -22.92, -87.2147, 0.3687, -21.17, -87.4647, 0.3687, -20.42, -69.9647, 0.3687, -18.17, -98.9647, 0.3687, 86.58, -99.7147, 0.3687, 87.33, -99.7147, 0.3687, 94.83, -14.4647, 0.3687, 62.83, -14.4647, 0.3687, 55.33, -17.7147, 0.3687, 51.83, -33.4647, 0.3687, 33.33, -35.7147, 0.3687, 30.08, -40.7147, 0.3687, 24.33, -99.7147, 0.3687, 68.83, -99.7147, 0.3687, 74.83, -98.9647, 0.3687, 81.83, -88.9647, 0.6187, -19.92, -99.7147, 0.6187, -16.92, -99.7147, 0.6187, -10.92, -87.4647, 0.3687, -20.42, -88.9647, 0.6187, -19.92, -99.7147, 0.6187, -10.92, -99.7147, 0.6187, -4.67, -98.9647, 0.3687, 86.58, -99.7147, 0.3687, 94.83, -99.7147, 0.6187, 102.33, -92.2147, 0.6187, 110.58, -17.7147, 0.3687, 51.83, -21.9647, 0.3687, 45.08, -27.7147, 0.3687, 39.08, -33.4647, 0.3687, 33.33, -14.7147, 0.3687, 72.08, -14.4647, 0.3687, 62.83, -42.7147, 0.3687, 118.83, -36.2147, 0.3687, 115.33, -30.9647, 0.3687, 106.83, -52.4647, 0.3687, 2.58, -55.9647, 0.3687, -5.42, -59.4647, 0.3687, -13.17, -69.9647, 0.3687, -18.17, -45.7147, 0.3687, 18.58, -48.9647, 0.3687, 10.33, -52.4647, 0.3687, 2.58, -87.4647, 0.3687, -20.42, -99.7147, 0.6187, 7.58, -99.7147, 0.6187, 13.58, -20.2147, 0.3687, 90.08, -14.7147, 0.3687, 81.58, -14.7147, 0.3687, 72.08, -25.7147, 0.3687, 98.33, -33.4647, 0.3687, 33.33, -40.7147, 0.3687, 24.33, -45.7147, 0.3687, 18.58, -99.7147, 0.3687, 62.58, -99.7147, 0.3687, 68.83, -98.9647, 0.3687, 81.83, -92.2147, 0.6187, 110.58, -84.4647, 0.6187, 118.83, -74.2147, 0.6187, 118.83, -99.7147, 0.3687, 44.33, -99.7147, 0.3687, 50.33, -98.9647, 0.3687, 81.83, -52.4647, 0.3687, 2.58, -69.9647, 0.3687, -18.17, -87.4647, 0.3687, -20.42, -99.7147, 0.6187, 25.83, -99.7147, 0.6187, 32.08, -45.7147, 0.3687, 18.58, -99.7147, 0.3687, 38.08, -99.7147, 0.3687, 44.33, -98.9647, 0.3687, 81.83, -14.7147, 0.3687, 72.08, -33.4647, 0.3687, 33.33, -45.7147, 0.3687, 18.58, -99.7147, 0.6187, 32.08, -98.9647, 0.3687, 81.83, -53.2147, 0.3687, 118.83, -87.4647, 0.3687, -20.42, -99.7147, 0.6187, -4.67, -99.7147, 0.6187, 1.33, -99.7147, 0.3687, 56.58, -99.7147, 0.3687, 62.58, -98.9647, 0.3687, 81.83, -53.2147, 0.3687, 118.83, -42.7147, 0.3687, 118.83, -30.9647, 0.3687, 106.83, -25.7147, 0.3687, 98.33, -14.7147, 0.3687, 72.08, -87.4647, 0.3687, -20.42, -99.7147, 0.6187, 13.58, -99.7147, 0.6187, 19.83, -87.4647, 0.3687, -20.42, -99.7147, 0.6187, 19.83, -99.7147, 0.6187, 25.83, -98.9647, 0.3687, 81.83, -98.9647, 0.3687, 86.58, -92.2147, 0.6187, 110.58, -63.7147, 0.3687, 118.83, -53.2147, 0.3687, 118.83, -92.2147, 0.6187, 110.58, -74.2147, 0.6187, 118.83, -63.7147, 0.3687, 118.83, -87.4647, 0.3687, -20.42, -99.7147, 0.6187, 1.33, -99.7147, 0.6187, 7.58, -99.7147, 0.3687, 50.33, -99.7147, 0.3687, 56.58, -98.9647, 0.3687, 81.83, -99.7147, 0.6187, 32.08, -99.7147, 0.3687, 38.08, -98.9647, 0.3687, 81.83, -93.2147, 0.3687, 111.58, -99.7147, 0.3687, 104.58, -99.7147, 0.3687, 111.58, -93.2147, 0.3687, 118.83, -86.7147, 0.3687, 118.83, -93.2147, 0.3687, 111.58, -99.7147, 0.3687, 111.58, -99.7147, 0.3687, 118.83, -93.2147, 0.3687, 118.83, -93.2147, 0.3687, 111.58)
@@ -2764,12 +2766,12 @@ script = ExtResource("57_5jpaq")
 CommandType = 1
 ActorName = "vakthol"
 Destination = Vector3(6.80719, 0, -11.5249)
-RotateToFace = false
+RotateToFace = true
 
 [sub_resource type="Resource" id="Resource_ieyfw"]
 script = ExtResource("57_5jpaq")
 CommandType = 10
-Pause = 1.0
+WaitTime = 0.0
 
 [sub_resource type="Resource" id="Resource_jqxs5"]
 script = ExtResource("57_5jpaq")
@@ -2780,7 +2782,7 @@ YRotation = 45.0
 [sub_resource type="Resource" id="Resource_i1w15"]
 script = ExtResource("57_5jpaq")
 CommandType = 10
-Pause = 0.25
+WaitTime = 0.0
 
 [sub_resource type="Resource" id="Resource_p5kxu"]
 script = ExtResource("57_54ffb")
@@ -3204,7 +3206,412 @@ hideParty = false
 cameraPosition = Vector3(0, 0, 0)
 cameraRotation = Vector3(0, 0, 0)
 
+[sub_resource type="Resource" id="Resource_e3rqa"]
+script = ExtResource("57_5jpaq")
+CommandType = 11
+ActorName = "arlitha"
+Destination = Vector3(3.71093, 2.38419e-07, 71.659)
+
+[sub_resource type="Resource" id="Resource_mv340"]
+script = ExtResource("57_5jpaq")
+CommandType = 3
+ActorName = "arlitha"
+YRotation = -103.1
+
+[sub_resource type="Resource" id="Resource_1icna"]
+script = ExtResource("57_5jpaq")
+CommandType = 11
+ActorName = "vakthol"
+Destination = Vector3(0, 0.146996, 62.8988)
+
+[sub_resource type="Resource" id="Resource_ygs7j"]
+script = ExtResource("57_5jpaq")
+CommandType = 1
+ActorName = "vakthol"
+Destination = Vector3(0, 0.146996, 67.4297)
+RotateToFace = true
+
+[sub_resource type="Resource" id="Resource_py3wi"]
+script = ExtResource("57_5jpaq")
+CommandType = 10
+WaitTime = 3.0
+
+[sub_resource type="Resource" id="Resource_2fk0j"]
+script = ExtResource("57_54ffb")
+actorName = "arlitha"
+idleAnim = "cutscene_0"
+walkAnim = "Walk"
+moveSpeed = 2.0
+tiedMember = ""
+
+[sub_resource type="Resource" id="Resource_fwh6u"]
+script = ExtResource("57_54ffb")
+actorName = "vakthol"
+idleAnim = "Idle"
+walkAnim = "Walk"
+moveSpeed = 2.0
+tiedMember = ""
+
+[sub_resource type="Resource" id="Resource_47bta"]
+script = ExtResource("3_xigqe")
+speaker = "Arlitha"
+characterType = 0
+emotion = 0
+content = "And that’s a… “q”?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_xplqt"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_47bta")
+commands = Array[Object]([])
+
+[sub_resource type="Resource" id="Resource_3tue7"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "No, “q” has a little tail on the bottom. That’s an “o”."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_h1xkx"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_3tue7")
+commands = null
+
+[sub_resource type="Resource" id="Resource_mnmux"]
+script = ExtResource("3_xigqe")
+speaker = "Arlitha"
+characterType = 0
+emotion = 0
+content = "O-oh. I get it."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_2ivye"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_mnmux")
+commands = null
+
+[sub_resource type="Resource" id="Resource_erxj8"]
+script = ExtResource("3_xigqe")
+speaker = "Arlitha"
+characterType = 0
+emotion = 0
+content = "Is that a “u”?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_3d8hg"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_erxj8")
+commands = null
+
+[sub_resource type="Resource" id="Resource_44f43"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Now you’re getting it."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_3gdmy"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_44f43")
+commands = null
+
+[sub_resource type="Resource" id="Resource_530x4"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "Still going at it?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_byslp"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_530x4")
+commands = null
+
+[sub_resource type="Resource" id="Resource_fiwgu"]
+script = ExtResource("57_5jpaq")
+CommandType = 12
+ActorName = "arlitha"
+AnimationName = "cutscene_1"
+Blend = 0.5
+UseAnimationLength = false
+WaitTime = 1.0
+
+[sub_resource type="Resource" id="Resource_ywxg4"]
+script = ExtResource("57_5jpaq")
+CommandType = 8
+ActorName = "arlitha"
+AnimationName = "cutscene_1"
+
+[sub_resource type="Resource" id="Resource_0mefp"]
+script = ExtResource("3_xigqe")
+speaker = "Arlitha"
+characterType = 0
+emotion = 0
+content = "Oh. Hi, Vakthol."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_jk4hm"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_0mefp")
+commands = Array[Object]([SubResource("Resource_fiwgu"), SubResource("Resource_ywxg4")])
+
+[sub_resource type="Resource" id="Resource_3uaer"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Well, well. How nice of you to finally show up."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_nh84y"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_3uaer")
+commands = null
+
+[sub_resource type="Resource" id="Resource_0dunu"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "I… maybe slept in."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_4dkh1"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_0dunu")
+commands = null
+
+[sub_resource type="Resource" id="Resource_cts6e"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Uh huh."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_vtn82"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_cts6e")
+commands = null
+
+[sub_resource type="Resource" id="Resource_oatpr"]
+script = ExtResource("57_5jpaq")
+CommandType = 12
+ActorName = "arlitha"
+AnimationName = "cutscene_2"
+Blend = 0.5
+UseAnimationLength = false
+WaitTime = 1.0
+
+[sub_resource type="Resource" id="Resource_x35ge"]
+script = ExtResource("57_5jpaq")
+CommandType = 8
+ActorName = "arlitha"
+AnimationName = "cutscene_2"
+
+[sub_resource type="Resource" id="Resource_m5trq"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 0
+emotion = 0
+content = "…Should we continue this later?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_u12o2"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_m5trq")
+commands = Array[Object]([SubResource("Resource_oatpr"), SubResource("Resource_x35ge")])
+
+[sub_resource type="Resource" id="Resource_mqena"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "A break isn’t a bad idea."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_ayxcr"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_mqena")
+commands = null
+
+[sub_resource type="Resource" id="Resource_7bd3a"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 2
+emotion = 0
+content = "Just keep practicing with these letters."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_fitho"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_7bd3a")
+commands = null
+
+[sub_resource type="Resource" id="Resource_1forb"]
+script = ExtResource("3_xigqe")
+speaker = "Arlitha"
+characterType = 0
+emotion = 0
+content = "I will. Thanks, Thalria!"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_gkwtn"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_1forb")
+commands = null
+
+[sub_resource type="Resource" id="Resource_t0uk4"]
+script = ExtResource("57_5jpaq")
+CommandType = 4
+Hide = true
+
+[sub_resource type="Resource" id="Resource_rfmo1"]
+script = ExtResource("57_5jpaq")
+CommandType = 6
+MakeLocked = true
+
+[sub_resource type="Resource" id="Resource_ng35d"]
+script = ExtResource("57_5jpaq")
+CommandType = 8
+ActorName = "arlitha"
+AnimationName = "Idle"
+
+[sub_resource type="Resource" id="Resource_m4rbv"]
+script = ExtResource("57_5jpaq")
+CommandType = 12
+ActorName = "arlitha"
+AnimationName = "cutscene_3"
+Blend = 0.0
+UseAnimationLength = true
+
+[sub_resource type="Resource" id="Resource_t5j84"]
+script = ExtResource("57_5jpaq")
+CommandType = 10
+WaitTime = 1.0
+
+[sub_resource type="Resource" id="Resource_wpx8o"]
+script = ExtResource("57_5jpaq")
+CommandType = 2
+ActorName = "arlitha"
+YRotation = -166.4
+
+[sub_resource type="Resource" id="Resource_b45qx"]
+script = ExtResource("57_5jpaq")
+CommandType = 10
+WaitTime = 1.0
+
+[sub_resource type="Resource" id="Resource_congr"]
+script = ExtResource("57_5jpaq")
+CommandType = 1
+ActorName = "arlitha"
+Destination = Vector3(-0.914806, 0.146996, 46.6738)
+RotateToFace = false
+
+[sub_resource type="Resource" id="Resource_ssl63"]
+script = ExtResource("57_5jpaq")
+CommandType = 13
+ActorName = "vakthol"
+Target = "arlitha"
+
+[sub_resource type="Resource" id="Resource_n2vy2"]
+script = ExtResource("57_5jpaq")
+CommandType = 10
+WaitTime = 5.0
+
+[sub_resource type="Resource" id="Resource_8x7l6"]
+script = ExtResource("57_5jpaq")
+CommandType = 4
+Hide = false
+
+[sub_resource type="Resource" id="Resource_teaso"]
+script = ExtResource("57_5jpaq")
+CommandType = 6
+MakeLocked = false
+
+[sub_resource type="Resource" id="Resource_3824d"]
+script = ExtResource("57_5jpaq")
+CommandType = 7
+
+[sub_resource type="Resource" id="Resource_cwyxd"]
+script = ExtResource("57_5jpaq")
+CommandType = 14
+ActorName = "vakthol"
+
+[sub_resource type="Resource" id="Resource_iwxm4"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 0
+emotion = 0
+content = ""
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_h1pph"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_iwxm4")
+commands = Array[Object]([SubResource("Resource_t0uk4"), SubResource("Resource_rfmo1"), SubResource("Resource_ng35d"), SubResource("Resource_m4rbv"), SubResource("Resource_t5j84"), SubResource("Resource_wpx8o"), SubResource("Resource_b45qx"), SubResource("Resource_congr"), SubResource("Resource_ssl63"), SubResource("Resource_n2vy2"), SubResource("Resource_8x7l6"), SubResource("Resource_teaso"), SubResource("Resource_3824d"), SubResource("Resource_cwyxd")])
+
+[sub_resource type="Resource" id="Resource_x15bt"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 1
+emotion = 0
+content = "So, how many letters does she know now?"
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_2yg0u"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_x15bt")
+commands = null
+
+[sub_resource type="Resource" id="Resource_bhrcq"]
+script = ExtResource("57_wqgyi")
+items = [SubResource("Resource_xplqt"), SubResource("Resource_h1xkx"), SubResource("Resource_2ivye"), SubResource("Resource_3d8hg"), SubResource("Resource_3gdmy"), SubResource("Resource_byslp"), SubResource("Resource_jk4hm"), SubResource("Resource_nh84y"), SubResource("Resource_4dkh1"), SubResource("Resource_vtn82"), SubResource("Resource_u12o2"), SubResource("Resource_ayxcr"), SubResource("Resource_fitho"), SubResource("Resource_gkwtn"), SubResource("Resource_h1pph"), SubResource("Resource_2yg0u")]
+actors = [SubResource("Resource_2fk0j"), SubResource("Resource_fwh6u")]
+PreCutsceneCommands = [SubResource("Resource_e3rqa"), SubResource("Resource_mv340"), SubResource("Resource_1icna"), SubResource("Resource_ygs7j"), SubResource("Resource_py3wi")]
+hideParty = true
+cameraPosition = Vector3(-2.07983, 3.22567, 66.8876)
+cameraRotation = Vector3(-0.54136, -2.49521, 0.00364467)
+
 [node name="Theralin" type="Node3D"]
+
+[node name="ProgressionScript" type="Node3D" parent="."]
+script = ExtResource("1_6nlxi")
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_1mypl")
@@ -3658,10 +4065,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.20911, 0, 30.8834)
 [node name="Benches" type="Node3D" parent="."]
 
 [node name="bench_prefab" parent="Benches" instance=ExtResource("22_gpiuy")]
-transform = Transform3D(0.201671, 0, -0.857607, 0, 0.881, 0, 0.857607, 0, 0.201671, 8.67835, 0, 28.2759)
+transform = Transform3D(0.228911, 0, -0.973447, 0, 1, 0, 0.973447, 0, 0.228911, 8.67835, 0, 28.2759)
 
 [node name="bench_prefab2" parent="Benches" instance=ExtResource("22_gpiuy")]
 transform = Transform3D(0.226532, 0, 0.974004, 0, 1, 0, -0.974004, 0, 0.226532, 3.82077, 2.38419e-07, 72.132)
+
+[node name="StaticBody3D" parent="Benches/bench_prefab2" index="1"]
+transform = Transform3D(1, 0, 1.49012e-08, 0, 1, 0, -1.49012e-08, 0, 1, 0, 0, 0)
 
 [node name="chapel" parent="." instance=ExtResource("25_we1ux")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -4.22434e-08, 0, 85.24)
@@ -3925,6 +4335,14 @@ collision_layer = 5
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.841444, 0)
 shape = SubResource("BoxShape3D_xs3s6")
 
+[node name="arlitha" parent="People" instance=ExtResource("61_vbu55")]
+transform = Transform3D(-0.203078, 0, -0.979163, 0, 1, 0, 0.979163, 0, -0.203078, 3.71093, 2.38419e-07, 71.659)
+script = null
+
+[node name="Model" parent="People/arlitha" index="0"]
+script = ExtResource("14_qi11r")
+animationName = "cutscene_0"
+
 [node name="theralin_tavern" parent="." instance=ExtResource("43_lacv5")]
 transform = Transform3D(-0.391245, 0, -0.920286, 0, 1, 0, 0.920286, 0, -0.391245, 88.752, 0.001, 26.256)
 
@@ -4064,9 +4482,21 @@ upperRotation = Vector3(7, 360, 7)
 [node name="Path3D" type="Path3D" parent="Trees"]
 curve = SubResource("Curve3D_qujpy")
 
-[node name="CutsceneTrigger" parent="." groups=["cutscene"] instance=ExtResource("56_v03xf")]
+[node name="cutscene2" parent="." groups=["cutscene"] instance=ExtResource("56_v03xf")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.78156, 0.241217, -12.9844)
 cutsceneObject = SubResource("Resource_pceai")
+
+[node name="cutscene3" parent="." groups=["cutscene"] instance=ExtResource("56_v03xf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.146996, 71.9307)
+cutsceneObject = SubResource("Resource_bhrcq")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-0.797131, 0.313275, -0.516179, 0.00312351, 0.857003, 0.515302, 0.603798, 0.409151, -0.684123, -2.07983, 3.22567, 66.8876)
+
+[node name="placer" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.36947, 0, 71.5867)
+
+[connection signal="child_exiting_tree" from="cutscene3" to="ProgressionScript" method="CutsceneEnding"]
 
 [editable path="theralin_roads"]
 [editable path="consumable_stall"]
@@ -4075,9 +4505,12 @@ cutsceneObject = SubResource("Resource_pceai")
 [editable path="armor_stall"]
 [editable path="weapons_shopkeeper"]
 [editable path="consumable_shopkeeper"]
+[editable path="Benches/bench_prefab2"]
 [editable path="People/peasant_male2"]
 [editable path="People/peasant_male"]
 [editable path="People/peasant_female"]
+[editable path="People/arlitha"]
+[editable path="People/arlitha/Model"]
 [editable path="Hill2/shack_colliders"]
 [editable path="Hill2/shack_colliders/shack"]
 [editable path="Hill2/shack_colliders2"]

@@ -9,8 +9,6 @@ public partial class CutsceneObject : Resource
    public CutsceneItem[] items = new CutsceneItem[0];
    [Export]
    public ActorStatus[] actors = new ActorStatus[1];
-   //[Export]
-   //public InspectorDialogueInteraction dialogueInteraction;
    [Export]
    public ActorCommand[] PreCutsceneCommands { get; set; } = new ActorCommand[0];
    [Export]

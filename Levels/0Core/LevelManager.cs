@@ -5,6 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 public partial class LevelManager : Node
 {
+   /// <summary>
+   /// The index in the list of LocationDatas that matches the LocationData currently active.
+   /// </summary>
    public int ActiveLocationDataID { get; set; }
 
    public List<LocationData> LocationDatas { get; set; }
@@ -14,6 +17,11 @@ public partial class LevelManager : Node
 
    [Export]
    private ManagerReferenceHolder managers;
+
+   [Signal]
+   public delegate void SaveLevelProgressionEventHandler();
+   [Signal]
+   public delegate void LoadLevelProgressionEventHandler();
 
    Node3D baseNode;
 
@@ -26,6 +34,7 @@ public partial class LevelManager : Node
 
    public void OpenWorldMap(string map, Vector2 specificSpawnPoint, bool useSpecificSpawnPoint)
    {  
+      EmitSignal(SignalName.SaveLevelProgression);
       DiscardExistingLevel();
 
       managers.Controller.DisableMovement = true;
@@ -37,7 +46,7 @@ public partial class LevelManager : Node
       PackedScene worldMapPrefab = GD.Load<PackedScene>("res://WorldMap/0Core/world_map_prefab.tscn");
       Node2D worldMap = worldMapPrefab.Instantiate<Node2D>();
 
-      PackedScene specialMapPrefab = GD.Load<PackedScene>("res://WorldMap/Maps/" + map + "/" + map + "_map.tscn");
+      PackedScene specialMapPrefab = GD.Load<PackedScene>("res://WorldMap/Maps/" + map + "/" + map + ".tscn");
       Node2D specialMap = specialMapPrefab.Instantiate<Node2D>();
 
       baseNode.AddChild(worldMap);
@@ -59,6 +68,9 @@ public partial class LevelManager : Node
 
       location = "World Map";
       InternalLocation = map;
+
+      EmitSignal(SignalName.LoadLevelProgression);
+      //managers.LevelProgressTracker.ChangeLevelProgressScripts(InternalLocation);
 
       worldMap.GetNode<Camera2D>("Player/2DPlayerCamera").MakeCurrent();
 
@@ -115,6 +127,7 @@ public partial class LevelManager : Node
 
 	public void CreateLevel(string levelName, string internalLevelName, string entrancePointName, bool isLoaded, LocationData locationData = null)
    {
+      EmitSignal(SignalName.SaveLevelProgression);
       DiscardExistingLevel();
 
       managers.Controller.GlobalPosition = new Vector3(0f, 100f, 0f);
@@ -141,7 +154,7 @@ public partial class LevelManager : Node
       }
 
       LocationData currentLocationData = isLoaded ? locationData 
-                                         : new LocationData(internalLevelName, new Godot.Collections.Dictionary<string, bool>(), 
+                                         : new LocationData(internalLevelName, 0, new Godot.Collections.Dictionary<string, bool>(), 
                                                             new Godot.Collections.Dictionary<string, bool>(), new Godot.Collections.Dictionary<string, bool>(), 0);
 
       int enemyCounter = 0;
@@ -221,12 +234,15 @@ public partial class LevelManager : Node
 
       currentLocationData.timeOfLastVisit = Time.GetUnixTimeFromSystem();
       ActiveLocationDataID = GetLocationDataID(InternalLocation);
+
+      EmitSignal(SignalName.LoadLevelProgression);
    }
 }
 
 public partial class LocationData : Node
 {
    public string locationName;
+   public int levelProgress;
    public Godot.Collections.Dictionary<string, bool> defeatedEnemies = new Godot.Collections.Dictionary<string, bool>();
    public Godot.Collections.Dictionary<string, bool> pickedUpItems = new Godot.Collections.Dictionary<string, bool>();
    public Godot.Collections.Dictionary<string, bool> cutscenesSeen = new Godot.Collections.Dictionary<string, bool>();
@@ -235,10 +251,11 @@ public partial class LocationData : Node
 
    public LocationData() { }
 
-   public LocationData(string locationName, Godot.Collections.Dictionary<string, bool> defeatedEnemies, Godot.Collections.Dictionary<string, bool> pickedUpItems, 
-                       Godot.Collections.Dictionary<string, bool> cutscenesSeen, double timeSinceLastVisit)
+   public LocationData(string locationName, int levelProgress, Godot.Collections.Dictionary<string, bool> defeatedEnemies, 
+                       Godot.Collections.Dictionary<string, bool> pickedUpItems, Godot.Collections.Dictionary<string, bool> cutscenesSeen, double timeSinceLastVisit)
    {
       this.locationName = locationName;
+      this.levelProgress = levelProgress;
       this.defeatedEnemies = defeatedEnemies;
       this.pickedUpItems = pickedUpItems;
       this.cutscenesSeen = cutscenesSeen;
@@ -250,6 +267,7 @@ public partial class LocationData : Node
       return new Godot.Collections.Dictionary<string, Variant>()
       {
          { "LocationName", locationName },
+         { "LevelProgress", levelProgress },
          { "DefeatedEnemies", defeatedEnemies },
          { "PickedUpItems", pickedUpItems },
          { "CutscenesSeen", cutscenesSeen },

@@ -2,30 +2,6 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-/*
-Here is the cutscene language:
-skip : does nothing (used as filler in case that dialogue needs no action)
-actor_name-move-x,y,z : move actor_name to point x,y,z
-actor_name-rot-y : rotate y to match given rotation (in degrees)
-actor_name-quick_rot-y : rotate y to match given rotation immediately
-hide_speech : hides dialogue
-show_speech : shows dialogue
-lock_speech : prevent user from inputting dialogue
-unlock_speech : resume user control over speech
-speak_next : continue dialogue
-actor_name-set_idle-name : sets idle animation to given name
-actor_name-set_walk-name : sets walk animation to given name
-pause-# : pause for # seconds AT THAT POINT IN THE COMMANDS
-actor_name-place-x,y,z : place actor_name at point x,y,z
-actor_name-play_anim-anim_name : force actor to play animation; actor returns to idle afterward
-actor_name-hide_weapon : hides weapon of actor
-actor_name-show_weapon : shows weapon of actor
-
-The 0th actor behavior occurs BEFORE the cutscene loads, allowing for placements.
-Actor behaviors always execute BEFORE the corresponding dialogue of that index.
-So actor behavior 1 fires after dialogue 0, actor behavior 2 fires after dialogue 1, etc.
-*/
-
 /// <summary>
 /// Manages in-game cutscenes.
 /// </summary>
@@ -44,6 +20,9 @@ public partial class CutsceneManager : Node
    float totalWaitDuration = 0f;
 
    bool isCutsceneActive;
+
+   [Signal]
+   public delegate void CutsceneEndedEventHandler();
 
    public async void InitiateCutscene(CutsceneObject cutsceneObject, int id)
    {
@@ -176,7 +155,7 @@ public partial class CutsceneManager : Node
          actor.SetAnimation(false, GetActorStatus(command.ActorName), command.AnimationName);
          break;
       case CommandType.Pause:
-         totalWaitDuration += command.Pause;
+         totalWaitDuration += command.WaitTime;
          break;
       case CommandType.Place:
          actor = GetActor(command.ActorName);
@@ -184,7 +163,16 @@ public partial class CutsceneManager : Node
          break;
       case CommandType.PlayAnimation:
          actor = GetActor(command.ActorName);
-         actor.PlayAnimation(command.AnimationName, GetActorStatus(command.ActorName));
+         actor.PlayAnimation(command.AnimationName, GetActorStatus(command.ActorName), command.Blend, command.UseAnimationLength, command.WaitTime);
+         break;
+      case CommandType.Track:
+         actor = GetActor(command.ActorName);
+         Actor target = GetActor(command.Target);
+         actor.Track(target);
+         break;
+      case CommandType.StopTrack:
+         actor = GetActor(command.ActorName);
+         actor.StopTracking();
          break;
       default:
          GD.Print("Cutscene command invalid.");
@@ -241,6 +229,8 @@ public partial class CutsceneManager : Node
       {
          managers.SaveManager.FadeFromBlack();
       }
+
+      EmitSignal(SignalName.CutsceneEnded);
    }
 
    Actor GetActor(string actorName)

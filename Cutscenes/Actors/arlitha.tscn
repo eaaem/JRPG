@@ -1,0 +1,54 @@
+[gd_scene load_steps=9 format=3 uid="uid://cqprbsttd2w5l"]
+
+[ext_resource type="PackedScene" uid="uid://c4vhebv7ydujm" path="res://Levels/Theralin/arlitha.glb" id="1_kfwa2"]
+[ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_xlr0h"]
+[ext_resource type="Material" uid="uid://bxpgwna63imme" path="res://Levels/2Misc/Peasants/light_skin.tres" id="2_7m2xs"]
+[ext_resource type="Material" uid="uid://dn51mexlh8ker" path="res://Levels/2Misc/Peasants/green_eyes.tres" id="3_8pq3j"]
+[ext_resource type="Material" uid="uid://dhjx8br4ux31j" path="res://Levels/2Misc/Peasants/brown_peasant_cloth.tres" id="3_urc83"]
+[ext_resource type="Material" uid="uid://d1vdh6tsva1j4" path="res://Levels/2Misc/Peasants/light_lips.tres" id="4_2yyaa"]
+[ext_resource type="Material" uid="uid://cpy7axbfemjs4" path="res://Levels/2Misc/Peasants/red_hair.tres" id="5_cc6b2"]
+[ext_resource type="Material" uid="uid://bp3bf7sr1jhsr" path="res://Levels/2Misc/Peasants/black_peasant_clothes.tres" id="7_1ss0v"]
+
+[node name="arlitha" type="CharacterBody3D"]
+script = ExtResource("1_xlr0h")
+
+[node name="Model" parent="." instance=ExtResource("1_kfwa2")]
+
+[node name="Skeleton3D" parent="Model/arlitha2" index="0"]
+bones/10/rotation = Quaternion(0.70325, 0.0737608, -0.679928, -0.194158)
+bones/21/rotation = Quaternion(0.703248, 0.0737564, -0.679929, -0.194162)
+bones/22/rotation = Quaternion(-0.116399, -0.141976, 0.895428, 0.405589)
+bones/31/rotation = Quaternion(-0.116398, 0.141976, -0.895428, 0.405589)
+bones/40/rotation = Quaternion(0.010743, -0.214365, -0.976467, 0.0210823)
+bones/44/rotation = Quaternion(0.010743, 0.214365, 0.976467, 0.0210823)
+bones/56/rotation = Quaternion(0.0163298, 0, 0.999867, 0)
+bones/58/rotation = Quaternion(-0.0163296, 0, 0.999867, 0)
+
+[node name="Body_001" parent="Model/arlitha2/Skeleton3D" index="0"]
+surface_material_override/0 = ExtResource("2_7m2xs")
+
+[node name="Dress" parent="Model/arlitha2/Skeleton3D" index="1"]
+surface_material_override/0 = ExtResource("3_urc83")
+
+[node name="Eyebrows" parent="Model/arlitha2/Skeleton3D" index="2"]
+surface_material_override/0 = ExtResource("5_cc6b2")
+
+[node name="Eyes_001" parent="Model/arlitha2/Skeleton3D" index="3"]
+surface_material_override/0 = ExtResource("3_8pq3j")
+
+[node name="Gloves_001" parent="Model/arlitha2/Skeleton3D" index="4"]
+visible = false
+
+[node name="Lips_001" parent="Model/arlitha2/Skeleton3D" index="5"]
+surface_material_override/0 = ExtResource("4_2yyaa")
+
+[node name="Shoes_001" parent="Model/arlitha2/Skeleton3D" index="6"]
+surface_material_override/0 = ExtResource("3_urc83")
+
+[node name="ShortHair_001" parent="Model/arlitha2/Skeleton3D" index="7"]
+surface_material_override/0 = ExtResource("5_cc6b2")
+
+[node name="Trousers_001" parent="Model/arlitha2/Skeleton3D" index="8"]
+surface_material_override/0 = ExtResource("7_1ss0v")
+
+[editable path="Model"]

@@ -71,9 +71,9 @@ public enum CommandType
    /// </summary>
    SetWalkAnimation,
    /// <summary>
-   /// Pauses all commands for the given amount of seconds.
+   /// Pauses all command execution for the given amount of seconds.
    /// <br></br><br></br>
-   /// <c>Pause</c> (float) : the amount of time to wait
+   /// <c>WaitTime</c> (float) : the amount of time to pause
    /// </summary>
    Pause,
    /// <summary>
@@ -90,8 +90,28 @@ public enum CommandType
    /// <c>ActorName</c> (string) : the name of the actor
    /// <br></br>
    /// <c>AnimationName</c> (string) : the name of the animation
+   /// <br></br>
+   /// <c>Blend</c> (int) : the blend amount between the previous animation and this one (-1 is no blend, 1 is slowest possible blend)
+   /// <br></br>
+   /// <c>UseAnimationLength</c> (bool) : whether to wait the length of the animation before playing the idle animation again or not
+   /// <br></br>
+   /// <c>WaitTime</c> (float) : if UseAnimationLength is false, the amount of time to wait before playing the idle animation
    /// </summary>
-   PlayAnimation
+   PlayAnimation,
+   /// <summary>
+   /// Makes the actor track the movement of another actor.
+   /// <br></br><br></br>
+   /// <c>ActorName</c> (string) : the name of the actor that tracks
+   /// <br></br>
+   /// <c>Target</c> (string) : the name of the actor to target
+   /// </summary>
+   Track,
+   /// <summary>
+   /// Stops the actor's tracking.
+   /// <br></br><br></br>
+   /// <c>ActorName</c> (string) : the name of the actor to stop tracking
+   /// </summary>
+   StopTrack
 }
 
 /// <summary>
@@ -115,17 +135,21 @@ public partial class ActorCommand : Resource
    }
 
    public string ActorName { get; set; }
+   public string Target { get; set; }
    public Vector3 Destination { get; set; }
    public float YRotation { get; set; }
    public bool RotateToFace { get; set; }
 
-   public float Pause { get; set; }
+   public bool UseAnimationLength { get; set; }
+   public float WaitTime { get; set; }
 
    public bool Hide { get; set; }
    public bool MakeLocked { get; set; }
 
    public string AnimationName { get; set; }
    public string TargetAnimation { get; set; }
+
+   public float Blend { get; set; }
 
    public override Array<Dictionary> _GetPropertyList()
    {
@@ -137,7 +161,7 @@ public partial class ActorCommand : Resource
          { "type", (int)Variant.Type.Int },
          { "hint", (int)PropertyHint.Enum },
          { "hint_string", "None,Move,Rotate,QuickRotate,ChangeDialogueVisibility,ChangeWeaponVisibility,ChangeDialogueLock,SpeakNext,SetIdleAnimation," + 
-                          "SetWalkAnimation,Pause,Place,PlayAnimation" }
+                          "SetWalkAnimation,Pause,Place,PlayAnimation,Track,StopTrack" }
       });
 
       switch (commandType)
@@ -230,7 +254,7 @@ public partial class ActorCommand : Resource
          case CommandType.Pause:
             result.Add(new Dictionary()
             {
-               { "name", $"Pause" },
+               { "name", $"WaitTime" },
                { "type", (int)Variant.Type.Float }
             });
             break;
@@ -259,6 +283,28 @@ public partial class ActorCommand : Resource
                { "name", $"AnimationName" },
                { "type", (int)Variant.Type.String }
             });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"Blend" },
+               { "type", (int)Variant.Type.Float }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"UseAnimationLength" },
+               { "type", (int)Variant.Type.Bool }
+            });
+
+            if (!UseAnimationLength)
+            {
+               result.Add(new Dictionary()
+               {
+                  { "name", $"WaitTime" },
+                  { "type", (int)Variant.Type.Float }
+               });
+            }
+
             break;
          case CommandType.ChangeWeaponVisibility:
             result.Add(new Dictionary()
@@ -266,6 +312,28 @@ public partial class ActorCommand : Resource
                { "name", $"Hide" },
                { "type", (int)Variant.Type.Bool }
             });
+            break;
+         case CommandType.Track:
+            result.Add(new Dictionary()
+            {
+               { "name", $"ActorName" },
+               { "type", (int)Variant.Type.String }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"Target" },
+               { "type", (int)Variant.Type.String }
+            });
+
+            break;
+         case CommandType.StopTrack:
+            result.Add(new Dictionary()
+            {
+               { "name", $"ActorName" },
+               { "type", (int)Variant.Type.String }
+            });
+            
             break;
       }
 

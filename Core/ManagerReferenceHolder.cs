@@ -25,4 +25,6 @@ public partial class ManagerReferenceHolder : Node
    public ShopMenuManager ShopMenuManager { get; set; }
    [Export]
    public PartyMenuManager PartyMenuManager { get; set;}
+   [Export]
+   public LevelProgressTracker LevelProgressTracker { get; set;}
 }
