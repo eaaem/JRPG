@@ -27,4 +27,8 @@ public partial class ManagerReferenceHolder : Node
    public PartyMenuManager PartyMenuManager { get; set;}
    [Export]
    public LevelProgressTracker LevelProgressTracker { get; set;}
+   [Export]
+   public ItemMenuManager ItemMenuManager { get; set;}
+   [Export]
+   public MainMenuManager MainMenuManager { get; set;}
 }

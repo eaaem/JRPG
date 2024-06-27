@@ -15,6 +15,8 @@ public partial class LevelManager : Node
    public string location;
    public string InternalLocation { get; set; }
 
+   public string MainMenuScreenName { get; set;}
+
    [Export]
    private ManagerReferenceHolder managers;
 
@@ -25,11 +27,14 @@ public partial class LevelManager : Node
 
    Node3D baseNode;
 
+   private AudioStreamPlayer musicPlayer;
+
    public override void _Ready()
    {
       LocationDatas = new List<LocationData>();
 
       baseNode = GetNode<Node3D>("/root/BaseNode");
+      musicPlayer = baseNode.GetNode<AudioStreamPlayer>("MusicPlayer");
    }
 
    public void OpenWorldMap(string map, Vector2 specificSpawnPoint, bool useSpecificSpawnPoint)
@@ -39,6 +44,7 @@ public partial class LevelManager : Node
 
       managers.Controller.DisableMovement = true;
       managers.Controller.DisableCamera = true;
+      managers.Controller.IsSprinting = false;
       
       // We need to move the controller away so that it doesn't reactivate an exit point immediately upon exiting the world map
       managers.Controller.GlobalPosition = new Vector3(0f, 25f, 0f);
@@ -70,12 +76,13 @@ public partial class LevelManager : Node
       InternalLocation = map;
 
       EmitSignal(SignalName.LoadLevelProgression);
-      //managers.LevelProgressTracker.ChangeLevelProgressScripts(InternalLocation);
 
       worldMap.GetNode<Camera2D>("Player/2DPlayerCamera").MakeCurrent();
 
       baseNode.RemoveChild(specialMap);
       specialMap.QueueFree();
+
+      TransitionMusicTracks(worldMap);
    }
 
    public void DiscardExistingLevel()
@@ -235,7 +242,78 @@ public partial class LevelManager : Node
       currentLocationData.timeOfLastVisit = Time.GetUnixTimeFromSystem();
       ActiveLocationDataID = GetLocationDataID(InternalLocation);
 
+      TransitionMusicTracks(level);
+
       EmitSignal(SignalName.LoadLevelProgression);
+   }
+
+   public async void TransitionMusicTracks(Node source)
+   {
+      while (musicPlayer.VolumeDb > -80.1f)
+      {
+         musicPlayer.VolumeDb -= 8f;
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+      }
+
+      musicPlayer.Stream = GD.Load<AudioStreamMP3>(source.GetNode<MusicHolder>("MusicHolder").musicPath);
+      musicPlayer.Play();
+      
+      while (musicPlayer.VolumeDb < 0f)
+      {
+         musicPlayer.VolumeDb += 8f;
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+      }
+   }
+
+   public void ResetGameState()
+   {
+      Node3D baseNode = GetNode<Node3D>("/root/BaseNode");
+
+      for (int i = 1; i < 4; i++)
+      {
+         baseNode.GetNode<OverworldPartyController>("PartyMembers/Member" + (i + 1)).IsActive = false;
+         foreach (Node child in baseNode.GetNode<CharacterBody3D>("PartyMembers/Member" + (i + 1)).GetChildren())
+         {
+            child.QueueFree();
+         }
+      }
+
+      baseNode.GetNode<CharacterController>("PartyMembers/Member1").GlobalPosition = new Vector3(0.9f, 0.6f, -24.5f);
+
+      managers.PartyManager.Party.Clear();
+      managers.PartyManager.Items.Clear();
+
+      managers.MainMenuManager.CheckLoadGameButtonAvailability();
+      managers.MainMenuManager.CheckNewGameButtonAvailability();
+      managers.MainMenuManager.Visible = true;
+      managers.MainMenuManager.CreateMainMenuLevel();
+
+      Panel mainMenuBack = baseNode.GetNode<Panel>("MainMenu/Background");
+
+      baseNode.GetNode<Camera2D>("MainMenu/MenuCamera").MakeCurrent();
+
+      managers.LevelManager.TransitionMusicTracks(managers.MainMenuManager);
+
+      if (baseNode.HasNode("WorldMap"))
+      {
+         Node2D worldMap = baseNode.GetNode<Node2D>("WorldMap");
+         baseNode.RemoveChild(worldMap);
+         worldMap.QueueFree();
+      }
+
+      DiscardExistingLevel();
+
+      for (int i = 0; i < mainMenuBack.GetChildCount(); i++)
+      {
+         if (mainMenuBack.GetChild(i).Name == "Main")
+         {
+            mainMenuBack.GetChild<CanvasGroup>(i).Visible = true;
+         }
+         else
+         {
+            mainMenuBack.GetChild<CanvasGroup>(i).Visible = false;
+         }
+      }
    }
 }
 

@@ -30,8 +30,10 @@ public partial class SaveManager : Node
       return new Godot.Collections.Dictionary<string, Variant>()
       {
          { "TimeSpent", elapsedTime },
+         { "LastPlayed", startingTime },
          { "Location", managers.LevelManager.location },
          { "InternalLocation", managers.LevelManager.InternalLocation },
+         { "MainMenuScreen", managers.LevelManager.MainMenuScreenName },
          { "Gold", managers.PartyManager.Gold },
          { "PlayerPosX", managers.Controller.Position.X },
          { "PlayerPosY", managers.Controller.Position.Y },
@@ -62,6 +64,7 @@ public partial class SaveManager : Node
          managers.Controller.Position = new Vector3(0.922f, 0.603f, -24.508f);
          managers.PartyManager.Items.Clear();
          managers.LevelManager.CreateLevel("Dathrel's Cabin", "dathrel_cabin", "SpawnPoint", false);
+         managers.LevelManager.MainMenuScreenName = "theralin";
          managers.Controller.DisableMovement = false;
          managers.Controller.DisableCamera = false;
          managers.Controller.HideWeapon();
@@ -171,7 +174,9 @@ public partial class SaveManager : Node
                                         true, managers.LevelManager.LocationDatas[managers.LevelManager.GetLocationDataID((string)nodeData["InternalLocation"])]);
                managers.Controller.Position = new Vector3((float)nodeData["PlayerPosX"], (float)nodeData["PlayerPosY"], (float)nodeData["PlayerPosZ"]);
                managers.Controller.DisableMovement = false;
-               managers.Controller.DisableCamera = false;        
+               managers.Controller.DisableCamera = false;
+
+               managers.LevelManager.MainMenuScreenName = (string)nodeData["MainMenuScreen"];        
             }
             
             elapsedTime = (float)nodeData["TimeSpent"];
@@ -199,81 +204,9 @@ public partial class SaveManager : Node
       GetNode<ColorRect>("/root/BaseNode/UI/Overlay/BlackScreen").Color = new Color(0, 0, 0, 0);
       GetNode<Label>("/root/BaseNode/UI/Overlay/LoadingText").Visible = false;
    }
-
-   public void ResetGameState()
-   {
-      Node3D baseNode = GetNode<Node3D>("/root/BaseNode");
-
-      for (int i = 1; i < 4; i++)
-      {
-         baseNode.GetNode<OverworldPartyController>("PartyMembers/Member" + (i + 1)).IsActive = false;
-         foreach (Node child in baseNode.GetNode<CharacterBody3D>("PartyMembers/Member" + (i + 1)).GetChildren())
-         {
-            child.QueueFree();
-         }
-      }
-
-      managers.PartyManager.Party.Clear();
-      managers.PartyManager.Items.Clear();
-
-      baseNode.GetNode<MainMenuManager>("MainMenu").CheckLoadGameButtonAvailability();
-      baseNode.GetNode<MainMenuManager>("MainMenu").CheckNewGameButtonAvailability();
-      baseNode.GetNode<MainMenuManager>("MainMenu").Visible = true;
-
-      Panel mainMenuBack = baseNode.GetNode<Panel>("MainMenu/Background");
-
-      baseNode.GetNode<Camera2D>("MainMenu/MenuCamera").MakeCurrent();
-
-      if (baseNode.HasNode("WorldMap"))
-      {
-         Node2D worldMap = baseNode.GetNode<Node2D>("WorldMap");
-         baseNode.RemoveChild(worldMap);
-         worldMap.QueueFree();
-      }
-
-      for (int i = 0; i < mainMenuBack.GetChildCount(); i++)
-      {
-         if (mainMenuBack.GetChild(i).Name == "Main")
-         {
-            mainMenuBack.GetChild<CanvasGroup>(i).Visible = true;
-         }
-         else
-         {
-            mainMenuBack.GetChild<CanvasGroup>(i).Visible = false;
-         }
-      }
-   }
    
    void OnSaveButtonDown()
    {
       SaveGame(false, currentSaveIndex);
-   }
-
-   public async void FadeFromBlack()
-   {
-      blackScreen.Color = new Color(0, 0, 0, 1);
-
-      while (blackScreen.Color.A > 0)
-      {
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-
-         float alpha = blackScreen.Color.A;
-         alpha -= 0.05f;
-         blackScreen.Color = new Color(0, 0, 0, alpha);
-      }
-   }
-
-   public async void FadeToBlack()
-   {
-      blackScreen.Color = new Color(0, 0, 0, 0);
-
-      while (blackScreen.Color.A < 1)
-      {
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-
-         float alpha = blackScreen.Color.A;
-         alpha += 0.05f;
-         blackScreen.Color = new Color(0, 0, 0, alpha);
-      }
    }
 }

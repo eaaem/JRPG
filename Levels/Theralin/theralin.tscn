@@ -1,8 +1,9 @@
-[gd_scene load_steps=296 format=3 uid="uid://be52m7kr2a0hf"]
+[gd_scene load_steps=297 format=3 uid="uid://be52m7kr2a0hf"]
 
 [ext_resource type="Script" path="res://Levels/Theralin/TheralinProgress.cs" id="1_6nlxi"]
 [ext_resource type="Script" path="res://Levels/1Features/Shop/ShopItem.cs" id="1_yfmkp"]
 [ext_resource type="Script" path="res://Dialogue/0Core/DialogueInteraction.cs" id="2_0ejmu"]
+[ext_resource type="Script" path="res://Levels/0Core/MusicHolder.cs" id="2_684ck"]
 [ext_resource type="Script" path="res://Dialogue/0Core/DialogueObject.cs" id="3_xigqe"]
 [ext_resource type="Script" path="res://Dialogue/0Core/DialogueList.cs" id="4_n353b"]
 [ext_resource type="PackedScene" uid="uid://bit23f5om1su6" path="res://Levels/2Misc/Structures/wooden_fence.glb" id="9_3p1pj"]
@@ -3612,6 +3613,10 @@ cameraRotation = Vector3(-0.54136, -2.49521, 0.00364467)
 
 [node name="ProgressionScript" type="Node3D" parent="."]
 script = ExtResource("1_6nlxi")
+
+[node name="MusicHolder" type="Node3D" parent="."]
+script = ExtResource("2_684ck")
+musicPath = "res://Levels/Theralin/theralin.mp3"
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_1mypl")

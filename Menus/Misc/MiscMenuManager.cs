@@ -3,16 +3,14 @@ using System;
 
 public partial class MiscMenuManager : Node
 {
-   private SaveManager saveManager;
-   private CanvasGroup confirmationWindow;
+   [Export]
+   private ManagerReferenceHolder managers;
 
-   private MenuManager menuManager;
+   private CanvasGroup confirmationWindow;
 
    public override void _Ready()
    {
-      saveManager = GetNode<SaveManager>("/root/BaseNode/SaveManager");
       confirmationWindow = GetNode<CanvasGroup>("ConfirmationWindow");
-      menuManager = GetNode<MenuManager>("../../MenuManager");
    }
 
    public void LoadMainMenu()
@@ -22,28 +20,28 @@ public partial class MiscMenuManager : Node
 
    void OnSaveQuitButtonDown()
    {
-      saveManager.SaveGame(false, saveManager.currentSaveIndex);
-      saveManager.ResetGameState();
-      menuManager.menu.Visible = false;
+      managers.SaveManager.SaveGame(false, managers.SaveManager.currentSaveIndex);
+      managers.LevelManager.ResetGameState();
+      managers.MenuManager.menu.Visible = false;
    }
 
    void OnQuitNoSaveButtonDown()
    {
-      menuManager.DisableTabs();
+      managers.MenuManager.DisableTabs();
       confirmationWindow.Visible = true;
    }
 
    void OnConfirmButtonDown()
    {
       confirmationWindow.Visible = false;
-      saveManager.ResetGameState();
-      menuManager.menu.Visible = false;
-      menuManager.EnableTabs();
+      managers.LevelManager.ResetGameState();
+      managers.MenuManager.menu.Visible = false;
+      managers.MenuManager.EnableTabs();
    }
 
    void OnCancelButtonDown()
    {
-      menuManager.EnableTabs();
+      managers.MenuManager.EnableTabs();
       confirmationWindow.Visible = false;
    }
 }

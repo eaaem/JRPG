@@ -188,6 +188,6 @@ abilities = [ExtResource("1_n308e")]
 specialAbility = ExtResource("3_qxxta")
 affinity = 5
 passiveName = "Berserker"
-passiveDescription = "Vakthol’s damage scales up the more health he has, up to 100% more damage at maximum health. His physical and magical defense scale up the less health he has, up to 100% more defense at one health."
+passiveDescription = "Vakthol’s damage scales up the more health he has, up to 100% more damage at maximum health. His physical and magical defense scale up the less health he has, up to 100% more defense at 1 health."
 itemCategoryWorn = 3
 itemCategoryWielded = 6

@@ -12,7 +12,7 @@ public partial class PartyManager : Node
    [Export]
    ItemResource[] vaktholItems = new ItemResource[1];
    [Export]
-   ItemResource[] thalriaItems = new ItemResource[1];
+   public ItemResource[] ThalriaItems { get; set; } = new ItemResource[1];
    [Export]
    ItemResource[] athliaItems = new ItemResource[1];
    [Export]
@@ -89,7 +89,7 @@ public partial class PartyManager : Node
       }
    }
 
-   public void LoadPartyMember(int characterType, int currentHealth, int currentMana, string[] equipment, int experience, bool isInParty, int level, int partyIndex)
+   public Member LoadPartyMember(int characterType, int currentHealth, int currentMana, string[] equipment, int experience, bool isInParty, int level, int partyIndex)
    {
       Member newMember = new Member();
       string fileLocation = ((CharacterType)characterType).ToString().ToLower();
@@ -146,6 +146,7 @@ public partial class PartyManager : Node
       newMember.currentHealth = currentHealth;
       newMember.currentMana = currentMana;
 
+      // If there's already a party member at the index, add them to the end and replace the original with the new party member
       if (partyIndex < Party.Count)
       {
          Party.Add(Party[partyIndex]);
@@ -170,6 +171,8 @@ public partial class PartyManager : Node
          managers.PartyMenuManager.AddCharacterToParty(newMember);
          GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + (partyIndex + 1)).IsActive = true;
       }
+
+      return newMember;
    }
 
    public void LoadItem(string path, int quantity)

@@ -12,13 +12,20 @@ public partial class WorldMapExitPoint : Node
       managers = GetNode<ManagerReferenceHolder>("/root/BaseNode/ManagerReferenceHolder");
    }
 
-   public void OnBodyEntered(Node3D body)
+   public async void OnBodyEntered(Node3D body)
    {
       if (body.Name == "Member1")
       {
-         managers.SaveManager.FadeToBlack();
-         managers.SaveManager.FadeFromBlack();
+         managers.MenuManager.FadeToBlack();
+         managers.Controller.DisableMovement = true;
+
+         while (!managers.MenuManager.BlackScreenIsVisible)
+         {
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         }
+
          managers.LevelManager.CallDeferred(nameof(managers.LevelManager.OpenWorldMap), mapName, Vector2.Zero, false);
+         managers.MenuManager.FadeFromBlack();
       }
    }
 }

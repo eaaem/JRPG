@@ -148,8 +148,8 @@ public partial class OverworldPartyController : CharacterBody3D
 
          float speed = player.IsSprinting ? CharacterController.SprintSpeed : CharacterController.RegularSpeed;
 
-         velocity.X = currentAgentPosition.DirectionTo(nextPathPosition).X * 1.25f * speed;
-         velocity.Z = currentAgentPosition.DirectionTo(nextPathPosition).Z * 1.25f * speed;
+         velocity.X = currentAgentPosition.DirectionTo(nextPathPosition).X * speed;
+         velocity.Z = currentAgentPosition.DirectionTo(nextPathPosition).Z * speed;
 
          if (!player.IsSprinting)
          {

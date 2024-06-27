@@ -127,6 +127,13 @@ public partial class CombatManager : Node
    {
       ResetNodes();
 
+      managers.MenuManager.FadeToBlack();
+
+      while (!managers.MenuManager.BlackScreenIsVisible)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+      }
+
       managers.MenuManager.CloseMenu();
       managers.MenuManager.canTakeInput = false;
       managers.ItemPickupManager.itemPickupContainer.Visible = false;
@@ -149,8 +156,6 @@ public partial class CombatManager : Node
       }
 
       await ToSignal(GetTree().CreateTimer(0.75f), "timeout");
-      
-      managers.SaveManager.FadeToBlack();
 
       uiManager.HidePanels();
 
@@ -170,7 +175,8 @@ public partial class CombatManager : Node
       enemyScript.QueueFree();
 
       PointCameraAtEnemies();
-      managers.SaveManager.FadeFromBlack();
+
+      managers.MenuManager.FadeFromBlack();
 
       if (!enemyScript.isStaticEnemy)
       {
@@ -1265,9 +1271,16 @@ public partial class CombatManager : Node
       uiManager.SetVictoryScreenVisible(true);
    }
 
-   void OnExitButtonDown()
+   async void OnExitButtonDown()
    {
-      managers.SaveManager.FadeToBlack();
+      managers.MenuManager.FadeToBlack();
+
+      while (!managers.MenuManager.BlackScreenIsVisible)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+      }
+
+
       uiManager.ExitVictoryScreen();
       managers.PartyManager.Party[0].model.Position = returnPosition;
       managers.PartyManager.Party[0].model.GetNode<Node3D>("Model").GlobalRotation = returnRotation;
@@ -1294,8 +1307,8 @@ public partial class CombatManager : Node
       Input.MouseMode = Input.MouseModeEnum.Captured;
       managers.Controller.DisableMovement = false;
       managers.Controller.DisableCamera = false;
-
-      managers.SaveManager.FadeFromBlack();
+      
+      managers.MenuManager.FadeFromBlack();
 
       if (currentEnemyScript.postBattleCutsceneName.Length > 0)
       {
@@ -1305,17 +1318,17 @@ public partial class CombatManager : Node
 
    void Loss()
    {
-      managers.SaveManager.FadeToBlack();
+      managers.MenuManager.FadeToBlack();
       uiManager.SetDefeatScreenVisible(true);
       IsInCombat = false;
    }
 
    void OnReloadLastButtonDown()
    {
-      managers.SaveManager.ResetGameState();
+      managers.LevelManager.ResetGameState();
       managers.SaveManager.LoadGame(managers.SaveManager.currentSaveIndex);
       GetNode<Sprite2D>("/root/BaseNode/MainMenu/Background").Visible = false;
-      managers.SaveManager.FadeFromBlack();
+      managers.MenuManager.FadeFromBlack();
       uiManager.SetDefeatScreenVisible(false);
       Input.MouseMode = Input.MouseModeEnum.Captured;
       managers.Controller.DisableMovement = false;
@@ -1325,8 +1338,8 @@ public partial class CombatManager : Node
 
    void OnQuitToMenuButtonDown()
    {
-      managers.SaveManager.ResetGameState();
-      managers.SaveManager.FadeFromBlack();
+      managers.LevelManager.ResetGameState();
+      managers.MenuManager.FadeFromBlack();
       ResetCombat();
       uiManager.SetDefeatScreenVisible(false);
    }

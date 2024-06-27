@@ -3,6 +3,8 @@ using System;
 
 public partial class WorldMapController : CharacterBody2D
 {
+   private ManagerReferenceHolder managers;
+
 	public const float Speed = 300.0f;
 	public const float JumpVelocity = -400.0f;
 
@@ -10,7 +12,6 @@ public partial class WorldMapController : CharacterBody2D
 	public float gravity = ProjectSettings.GetSetting("physics/2d/default_gravity").AsSingle();
 
    private RichTextLabel locationInfo;
-   private LevelManager levelManager;
 
    private string targetLocationName;
    private string externalLocationName;
@@ -21,8 +22,8 @@ public partial class WorldMapController : CharacterBody2D
 
    public override void _Ready()
    {
+      managers = GetNode<ManagerReferenceHolder>("/root/BaseNode/ManagerReferenceHolder");
       locationInfo = GetNode<RichTextLabel>("LocationInfo");
-      levelManager = GetNode<LevelManager>("/root/BaseNode/LevelManager");
    }
 
    public override void _PhysicsProcess(double delta)
@@ -64,11 +65,20 @@ public partial class WorldMapController : CharacterBody2D
       locationInfo.Visible = false;
    }
 
-   public override void _Input(InputEvent @event)
+   public override async void _Input(InputEvent @event)
    {
       if (@event.IsActionPressed("interact") && locationInfo.Visible)
       {
-         levelManager.TransitionLevels(targetLocationName, externalLocationName, entrancePointName);
+         managers.MenuManager.FadeToBlack();
+
+         while (!managers.MenuManager.BlackScreenIsVisible)
+         {
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         }
+         
+         managers.LevelManager.TransitionLevels(targetLocationName, externalLocationName, entrancePointName);
+
+         managers.MenuManager.FadeFromBlack();
       }
    }
 }

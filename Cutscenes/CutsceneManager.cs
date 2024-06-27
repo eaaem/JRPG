@@ -1,6 +1,4 @@
 using Godot;
-using System;
-using System.Collections.Generic;
 
 /// <summary>
 /// Manages in-game cutscenes.
@@ -28,6 +26,11 @@ public partial class CutsceneManager : Node
    {
       if (!isCutsceneActive)
       {
+         for (int i = 2; i <= 4; i++)
+         {
+            GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + i).EnablePathfinding = false;
+         }
+
          isCutsceneActive = true;
 
          currentCutsceneObject = cutsceneObject;
@@ -38,6 +41,7 @@ public partial class CutsceneManager : Node
          GetActors(!cutsceneObject.hideParty);
          GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = false;
          managers.Controller.isInCutscene = true;
+         managers.Controller.IsSprinting = false;
 
          if (cutsceneObject.hideParty)
          {
@@ -48,9 +52,7 @@ public partial class CutsceneManager : Node
             managers.Controller.DisableCamera = true;
             Input.MouseMode = Input.MouseModeEnum.Visible;
 
-            managers.SaveManager.FadeToBlack();
-            await ToSignal(GetTree().CreateTimer(0.2f), "timeout");
-            managers.SaveManager.FadeFromBlack();
+            managers.MenuManager.FadeToBlack();
          }
 
          for (int i = 0; i < currentCutsceneObject.PreCutsceneCommands.Length; i++)
@@ -62,6 +64,16 @@ public partial class CutsceneManager : Node
                await ToSignal(GetTree().CreateTimer(totalWaitDuration), "timeout");
                totalWaitDuration = 0f;
             }
+         }
+
+         if (cutsceneObject.hideParty)
+         {
+            while (!managers.MenuManager.BlackScreenIsVisible)
+            {
+               await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+            }
+
+            managers.MenuManager.FadeFromBlack();
          }
 
          if (cutsceneObject.items.Length > 0)
@@ -180,11 +192,11 @@ public partial class CutsceneManager : Node
       }
    }
 
-   public void EndCutscene()
+   public async void EndCutscene()
    {
       if (currentCutsceneObject.hideParty)
       {
-         managers.SaveManager.FadeToBlack();
+         managers.MenuManager.FadeToBlack();
       }
       
       managers.LevelManager.LocationDatas[managers.LevelManager.ActiveLocationDataID].cutscenesSeen[currentID.ToString()] = true;
@@ -219,18 +231,26 @@ public partial class CutsceneManager : Node
 
          GetNode<Node3D>("/root/BaseNode/").RemoveChild(actor);
          actor.QueueFree();
+
+         if (currentCutsceneObject.hideParty)
+         {
+            while (!managers.MenuManager.BlackScreenIsVisible)
+            {
+               await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+            }
+
+            managers.MenuManager.FadeFromBlack();
+         }
       }
 
       GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = true;
       playerCamera.MakeCurrent();
       isCutsceneActive = false;
 
-      if (currentCutsceneObject.hideParty)
+      for (int i = 2; i <= 4; i++)
       {
-         managers.SaveManager.FadeFromBlack();
+         GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + i).EnablePathfinding = true;
       }
-
-      EmitSignal(SignalName.CutsceneEnded);
    }
 
    Actor GetActor(string actorName)

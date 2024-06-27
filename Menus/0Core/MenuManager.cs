@@ -3,43 +3,47 @@ using System;
 
 public partial class MenuManager : Node
 {
+   [Export]
+   private ManagerReferenceHolder managers;
+
    public CanvasGroup menu;
    public CharacterController controller;
    private AnimationPlayer animationPlayer;
    private TabContainer container;
    //public bool closeDisabled;
 
-   private PartyMenuManager partyMenuManager;
-   private ItemMenuManager itemMenuManager;
    SettingsMenuManager settingsMenuManager;
-   private MiscMenuManager mainMenuManager;
+   MiscMenuManager miscMenuManager;
 
    public bool canTakeInput = true;
 
    Node3D baseNode;
 
+   ColorRect blackScreen;
+   public bool BlackScreenIsVisible { get; set; }
+
    public override void _Ready()
    {
       menu = GetParent<CanvasGroup>();
       container = GetNode<TabContainer>("../TabContainer");
-      partyMenuManager = container.GetNode<PartyMenuManager>("Party");
-      itemMenuManager = container.GetNode<ItemMenuManager>("Items");
       settingsMenuManager = container.GetNode<SettingsMenuManager>("Settings");
-      mainMenuManager = container.GetNode<MiscMenuManager>("Menu");
       baseNode = GetNode<Node3D>("/root/BaseNode");
       controller = baseNode.GetNode<CharacterController>("PartyMembers/Member1");
+      miscMenuManager = container.GetNode<MiscMenuManager>("Menu");
+
+      blackScreen = GetNode<ColorRect>("/root/BaseNode/UI/Overlay/BlackScreen");
    }
 
    void OnTabPressed(int tabID)
    {
       if (tabID == 0) // Party menu
       {
-         partyMenuManager.LoadPartyMenu();
+         managers.PartyMenuManager.LoadPartyMenu();
       }
       else if (tabID == 1) // Item menu
       {
-         itemMenuManager.LoadItemMenu();
-         partyMenuManager.isActive = false;
+         managers.ItemMenuManager.LoadItemMenu();
+         managers.PartyMenuManager.isActive = false;
       }
       else if (tabID == 2) // Settings menu
       {
@@ -47,7 +51,7 @@ public partial class MenuManager : Node
       }
       else if (tabID == 3) // Main menu
       {
-         mainMenuManager.LoadMainMenu();
+         miscMenuManager.LoadMainMenu();
       }
    }
 
@@ -57,17 +61,17 @@ public partial class MenuManager : Node
       {
          if (menu.Visible)
          {
-            if (partyMenuManager.isReequipping)
+            if (managers.PartyMenuManager.isReequipping)
             {
-               partyMenuManager.CancelReequip();
+               managers.PartyMenuManager.CancelReequip();
             }
-            else if (partyMenuManager.isSwapping)
+            else if (managers.PartyMenuManager.isSwapping)
             {
-               partyMenuManager.CancelSwap();
+               managers.PartyMenuManager.CancelSwap();
             }
-            else if (itemMenuManager.isUsingItem)
+            else if (managers.ItemMenuManager.isUsingItem)
             {
-               itemMenuManager.CancelItemUsage();
+               managers.ItemMenuManager.CancelItemUsage();
             }
             else
             {
@@ -91,7 +95,7 @@ public partial class MenuManager : Node
       EnableTabs();
       Input.MouseMode = Input.MouseModeEnum.Visible;
       container.CurrentTab = 0;
-      partyMenuManager.LoadPartyMenu();
+      managers.PartyMenuManager.LoadPartyMenu();
 
       if (baseNode.HasNode("WorldMap"))
       {
@@ -126,5 +130,59 @@ public partial class MenuManager : Node
       {
          container.SetTabDisabled(i, false);
       }
+   }
+
+   public async void FadeBlack(float delay)
+   {
+
+      while (blackScreen.Color.A < 1)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+
+         float alpha = blackScreen.Color.A;
+         alpha += 0.05f;
+         blackScreen.Color = new Color(0, 0, 0, alpha);
+      }
+
+      await ToSignal(GetTree().CreateTimer(delay), "timeout");
+
+      while (blackScreen.Color.A > 0)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+
+         float alpha = blackScreen.Color.A;
+         alpha -= 0.05f;
+         blackScreen.Color = new Color(0, 0, 0, alpha);
+      }
+   }
+
+   public async void FadeFromBlack()
+   {
+      while (blackScreen.Color.A > 0)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+
+         float alpha = blackScreen.Color.A;
+         alpha -= 0.05f;
+         blackScreen.Color = new Color(0, 0, 0, alpha);
+      }
+
+      BlackScreenIsVisible = false;
+   }
+
+   public async void FadeToBlack()
+   {
+      blackScreen.Color = new Color(0, 0, 0, 0);
+
+      while (blackScreen.Color.A < 1)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+
+         float alpha = blackScreen.Color.A;
+         alpha += 0.05f;
+         blackScreen.Color = new Color(0, 0, 0, alpha);
+      }
+
+      BlackScreenIsVisible = true;
    }
 }

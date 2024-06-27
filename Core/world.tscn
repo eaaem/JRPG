@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=128 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -25,21 +25,24 @@
 [ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="15_86siq"]
 [ext_resource type="Script" path="res://Combat/0Core/ItemResource.cs" id="16_5bni6"]
 [ext_resource type="Resource" uid="uid://bos1dl2vq377j" path="res://Items/Thalria/heirloom_staff.tres" id="17_vxtna"]
-[ext_resource type="Resource" uid="uid://cbhi3btbfskrg" path="res://Items/Armor/Medium/leather_greaves.tres" id="18_ti5f1"]
 [ext_resource type="Resource" uid="uid://bt2f8yoo0nup8" path="res://Items/Olren/pine_bow.tres" id="19_4kg3f"]
 [ext_resource type="StyleBox" uid="uid://bc3272th8cw8m" path="res://Combat/ButtonThemes/base_party_highlight.tres" id="20_5bpft"]
 [ext_resource type="LabelSettings" uid="uid://d3mi4nujst60y" path="res://Combat/0Core/combat_ui_text.tres" id="21_u7sgt"]
 [ext_resource type="Script" path="res://Dialogue/0Core/DialogueManager.cs" id="22_argjw"]
 [ext_resource type="PackedScene" uid="uid://b1ub3e88mq513" path="res://Dialogue/0Core/branch_button.tscn" id="26_tb1nj"]
+[ext_resource type="Resource" uid="uid://dr8s71wh2p5yx" path="res://Items/Armor/Medium/worn_robe.tres" id="27_n8681"]
 [ext_resource type="Script" path="res://Menus/Party/PartyMenuManager.cs" id="27_o3g2u"]
 [ext_resource type="PackedScene" uid="uid://dl1uyhuu43vfo" path="res://Menus/Party/member_button.tscn" id="28_40bba"]
 [ext_resource type="PackedScene" uid="uid://cou82d6jx808b" path="res://Menus/Party/ability_label.tscn" id="29_jtio8"]
 [ext_resource type="PackedScene" uid="uid://d3kvmela4ory0" path="res://Menus/Party/reequip_button.tscn" id="30_bblpj"]
 [ext_resource type="Script" path="res://Core/CustomTooltipLabel.cs" id="31_g468s"]
 [ext_resource type="Script" path="res://Menus/Items/ItemMenuManager.cs" id="32_1h4ro"]
+[ext_resource type="FontFile" uid="uid://cu53hbuj171ub" path="res://Menus/0Core/Merriweather-Regular.ttf" id="33_dmyrj"]
 [ext_resource type="Script" path="res://Menus/Settings/SettingsMenuManager.cs" id="33_jvddv"]
+[ext_resource type="FontFile" uid="uid://ccrrftptiji35" path="res://Menus/0Core/Merriweather-Italic.ttf" id="34_0e0eh"]
 [ext_resource type="Script" path="res://Menus/Misc/MiscMenuManager.cs" id="34_bcm0h"]
 [ext_resource type="Script" path="res://Menus/0Core/MenuManager.cs" id="35_dwed3"]
+[ext_resource type="FontFile" uid="uid://b2twoq48myxmy" path="res://Menus/0Core/Merriweather-Bold.ttf" id="35_v46tb"]
 [ext_resource type="Script" path="res://Levels/1Features/ItemPickup/ItemPickupManager.cs" id="36_qnjxv"]
 [ext_resource type="Script" path="res://Levels/1Features/Shop/ShopMenuManager.cs" id="37_jygy0"]
 [ext_resource type="PackedScene" uid="uid://c08d1vnprgeay" path="res://Levels/1Features/Shop/item_button_prefab.tscn" id="38_xtl2k"]
@@ -52,6 +55,10 @@
 [ext_resource type="Script" path="res://Cutscenes/CutsceneManager.cs" id="45_2ss0b"]
 [ext_resource type="Script" path="res://Levels/0Core/DoorBehavior.cs" id="46_2mc4k"]
 [ext_resource type="Script" path="res://Menus/Main/MainMenuManager.cs" id="47_k3f71"]
+[ext_resource type="AudioStream" uid="uid://bh73sq4742dhj" path="res://Menus/Main/main_menu.mp3" id="53_icsar"]
+[ext_resource type="Script" path="res://Levels/0Core/MusicHolder.cs" id="54_gsvxg"]
+[ext_resource type="Theme" uid="uid://bv4egxy2hvmih" path="res://Menus/0Core/main_menu_button_theme.tres" id="54_o8lba"]
+[ext_resource type="FontFile" uid="uid://cg2kgq5pvsqi" path="res://Menus/0Core/Merriweather-BoldItalic.ttf" id="58_bw31p"]
 
 [sub_resource type="Resource" id="Resource_vsscq"]
 script = ExtResource("7_f260g")
@@ -291,39 +298,6 @@ price = 0
 affectedStats = SubResource("Resource_mokav")
 usableOutsideCombat = false
 
-[sub_resource type="Resource" id="Resource_wfh0i"]
-script = ExtResource("15_86siq")
-statType = 0
-value = 1
-baseValue = 0
-
-[sub_resource type="Resource" id="Resource_snx6f"]
-script = ExtResource("15_86siq")
-statType = 3
-value = 2
-baseValue = 0
-
-[sub_resource type="Resource" id="Resource_acqbc"]
-script = ExtResource("14_oxatk")
-stats = [SubResource("Resource_wfh0i"), SubResource("Resource_snx6f")]
-
-[sub_resource type="Resource" id="Resource_y8mwe"]
-script = ExtResource("16_5bni6")
-name = "Worn Robe"
-description = "Medium
-+2 intelligence, +1 constitution"
-scriptName = ""
-specialModifier = 0.0
-hitsAll = false
-hitsSurrounding = false
-hitsSelf = false
-hitsTeam = false
-itemType = 3
-itemCategory = 2
-price = 0
-affectedStats = SubResource("Resource_acqbc")
-usableOutsideCombat = false
-
 [sub_resource type="Resource" id="Resource_tvppx"]
 script = ExtResource("15_86siq")
 statType = 0
@@ -483,7 +457,15 @@ PopupMenu/font_sizes/font_size = 30
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_snhpk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjda6"]
-bg_color = Color(0.384314, 0.384314, 0.384314, 1)
+bg_color = Color(0.384314, 0.384314, 0.384314, 0)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_dadn2"]
+
+[sub_resource type="SystemFont" id="SystemFont_hlb0o"]
+font_names = PackedStringArray("Gabriola")
+
+[sub_resource type="Theme" id="Theme_0ac0l"]
+default_font = SubResource("SystemFont_hlb0o")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qwivw"]
 bg_color = Color(0.862745, 0.462745, 0.490196, 1)
@@ -491,7 +473,11 @@ bg_color = Color(0.862745, 0.462745, 0.490196, 1)
 [node name="BaseNode" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000612859, -3.72529e-09, 0.0018937)
 
-[node name="ManagerReferenceHolder" type="Node3D" parent="." node_paths=PackedStringArray("PartyManager", "Controller", "LevelManager", "SaveManager", "MenuManager", "ItemPickupManager", "DialogueManager", "CutsceneManager", "ShopMenuManager", "PartyMenuManager")]
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("53_icsar")
+autoplay = true
+
+[node name="ManagerReferenceHolder" type="Node3D" parent="." node_paths=PackedStringArray("PartyManager", "Controller", "LevelManager", "SaveManager", "MenuManager", "ItemPickupManager", "DialogueManager", "CutsceneManager", "ShopMenuManager", "PartyMenuManager", "ItemMenuManager", "MainMenuManager")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15193e-07, 3.72529e-09, 2.97208e-07)
 script = ExtResource("1_7hlfi")
 PartyManager = NodePath("../PartyManager")
@@ -504,6 +490,8 @@ DialogueManager = NodePath("../UI/DialogueScreen/Back")
 CutsceneManager = NodePath("../CutsceneManager")
 ShopMenuManager = NodePath("../UI/Shop/Background")
 PartyMenuManager = NodePath("../UI/PartyMenuLayer/PartyMenu/TabContainer/Party")
+ItemMenuManager = NodePath("../UI/PartyMenuLayer/PartyMenu/TabContainer/Items")
+MainMenuManager = NodePath("../MainMenu")
 
 [node name="CombatManager" type="Node3D" parent="." node_paths=PackedStringArray("managers", "uiManager", "abilityManager", "itemManager", "stacksAndStatusManager", "passiveManager", "playerCamera", "baseNode")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.36896, -1.7533, -8.04547)
@@ -573,7 +561,7 @@ uiManager = NodePath("../UIManager")
 script = ExtResource("9_ah2fn")
 baseMembers = [ExtResource("10_7pwb7"), ExtResource("11_wj8pa"), ExtResource("12_h78bi"), ExtResource("13_nnw16")]
 vaktholItems = [SubResource("Resource_gaxvb"), SubResource("Resource_cxsht"), SubResource("Resource_lxtj8")]
-thalriaItems = [ExtResource("17_vxtna"), ExtResource("18_ti5f1"), SubResource("Resource_y8mwe")]
+ThalriaItems = [ExtResource("17_vxtna"), ExtResource("27_n8681")]
 athliaItems = [SubResource("Resource_hb6rw"), SubResource("Resource_de2wb")]
 olrenItems = [ExtResource("19_4kg3f"), SubResource("Resource_rmxds"), SubResource("Resource_de2wb")]
 experienceThreshholds = PackedInt32Array(10, 20, 40, 99999, 160, 320, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -2311,6 +2299,8 @@ offset_left = 344.0
 offset_top = 64.0
 offset_right = 1760.0
 offset_bottom = 264.0
+theme_override_fonts/normal_font = ExtResource("33_dmyrj")
+theme_override_fonts/italics_font = ExtResource("34_0e0eh")
 theme_override_font_sizes/normal_font_size = 30
 theme_override_font_sizes/bold_font_size = 30
 theme_override_font_sizes/italics_font_size = 30
@@ -2324,6 +2314,7 @@ layout_mode = 0
 offset_left = 344.0
 offset_right = 1760.0
 offset_bottom = 64.0
+theme_override_fonts/normal_font = ExtResource("35_v46tb")
 theme_override_font_sizes/normal_font_size = 40
 bbcode_enabled = true
 text = "Vakthol"
@@ -2743,10 +2734,11 @@ max_value = 10.0
 step = 0.1
 value = 5.0
 
-[node name="Menu" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer"]
+[node name="Menu" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer" node_paths=PackedStringArray("managers")]
 visible = false
 layout_mode = 2
 script = ExtResource("34_bcm0h")
+managers = NodePath("../../../../../ManagerReferenceHolder")
 
 [node name="SaveAndQuit" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu"]
 layout_mode = 0
@@ -2808,8 +2800,9 @@ offset_right = 750.4
 offset_bottom = 293.6
 text = "Save Game"
 
-[node name="MenuManager" type="Node2D" parent="UI/PartyMenuLayer/PartyMenu"]
+[node name="MenuManager" type="Node2D" parent="UI/PartyMenuLayer/PartyMenu" node_paths=PackedStringArray("managers")]
 script = ExtResource("35_dwed3")
+managers = NodePath("../../../../ManagerReferenceHolder")
 
 [node name="ItemPickup" type="CanvasGroup" parent="UI"]
 visible = false
@@ -3074,36 +3067,64 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bjda6")
 [node name="Main" type="CanvasGroup" parent="MainMenu/Background"]
 position = Vector2(960, 540)
 
+[node name="Back" type="Sprite2D" parent="MainMenu/Background/Main"]
+modulate = Color(0, 0, 0, 0.247059)
+position = Vector2(696, -56.9058)
+rotation = -0.229239
+scale = Vector2(837, 1300)
+texture = SubResource("CanvasTexture_dadn2")
+
+[node name="Continue" type="Button" parent="MainMenu/Background/Main"]
+offset_left = 298.0
+offset_top = -249.906
+offset_right = 698.0
+offset_bottom = -159.906
+theme = ExtResource("54_o8lba")
+text = "Continue"
+
 [node name="NewGame" type="Button" parent="MainMenu/Background/Main"]
-offset_left = -150.0
-offset_top = -50.0
-offset_right = 150.0
-offset_bottom = -5.0
-theme_override_font_sizes/font_size = 25
+offset_left = 336.0
+offset_top = -111.906
+offset_right = 736.0
+offset_bottom = -21.9058
+theme = ExtResource("54_o8lba")
 text = "New Game"
 
 [node name="LoadGame" type="Button" parent="MainMenu/Background/Main"]
-offset_left = -150.0
-offset_right = 150.0
-offset_bottom = 45.0
-theme_override_font_sizes/font_size = 25
+offset_left = 375.0
+offset_top = 29.0942
+offset_right = 775.0
+offset_bottom = 119.094
+theme = ExtResource("54_o8lba")
 text = "Load Game"
 
 [node name="Settings" type="Button" parent="MainMenu/Background/Main"]
-offset_left = -150.0
-offset_top = 50.0
-offset_right = 150.0
-offset_bottom = 95.0
-theme_override_font_sizes/font_size = 25
+offset_left = 419.0
+offset_top = 171.094
+offset_right = 819.0
+offset_bottom = 261.094
+theme = ExtResource("54_o8lba")
 text = "Settings"
 
 [node name="QuitGame" type="Button" parent="MainMenu/Background/Main"]
-offset_left = -150.0
-offset_top = 100.0
-offset_right = 150.0
-offset_bottom = 145.0
-theme_override_font_sizes/font_size = 25
+offset_left = 457.0
+offset_top = 318.094
+offset_right = 857.0
+offset_bottom = 408.094
+theme = ExtResource("54_o8lba")
 text = "Quit Game"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MainMenu/Background/Main"]
+offset_left = 217.0
+offset_top = -492.0
+offset_right = 917.0
+offset_bottom = -292.0
+theme = SubResource("Theme_0ac0l")
+theme_override_fonts/italics_font = ExtResource("58_bw31p")
+theme_override_font_sizes/normal_font_size = 175
+theme_override_font_sizes/italics_font_size = 150
+bbcode_enabled = true
+text = "[i][center]Untitled[/center]"
 
 [node name="Settings" type="CanvasGroup" parent="MainMenu/Background"]
 visible = false
@@ -3309,6 +3330,10 @@ text = "Cancel"
 [node name="MenuCamera" type="Camera2D" parent="MainMenu"]
 position = Vector2(960, 540)
 
+[node name="MusicHolder" type="Node2D" parent="MainMenu"]
+script = ExtResource("54_gsvxg")
+musicPath = "res://Menus/Main/main_menu.mp3"
+
 [connection signal="button_down" from="UI/Overlay/DefeatScreen/LastSave" to="CombatManager" method="OnReloadLastButtonDown"]
 [connection signal="button_down" from="UI/Overlay/DefeatScreen/Quit" to="CombatManager" method="OnQuitToMenuButtonDown"]
 [connection signal="button_down" from="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [0, false]]
@@ -3367,6 +3392,7 @@ position = Vector2(960, 540)
 [connection signal="item_selected" from="UI/Shop/Background/Buttons/Bulk" to="UI/Shop/Background" method="OnSelectBulk"]
 [connection signal="button_down" from="UI/Shop/Background/Notification/YesButton" to="UI/Shop/Background" method="OnYesButtonDown"]
 [connection signal="button_down" from="UI/Shop/Background/Notification/NoButton" to="UI/Shop/Background" method="OnNoButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/Main/Continue" to="MainMenu" method="OnContinueButtonDown"]
 [connection signal="button_down" from="MainMenu/Background/Main/NewGame" to="MainMenu" method="OnNewGameButtonDown"]
 [connection signal="button_down" from="MainMenu/Background/Main/LoadGame" to="MainMenu" method="OnLoadButtonDown"]
 [connection signal="button_down" from="MainMenu/Background/Main/Settings" to="MainMenu" method="OnSettingsButtonDown"]

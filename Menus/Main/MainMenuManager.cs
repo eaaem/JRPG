@@ -26,13 +26,11 @@ public partial class MainMenuManager : Control
       loadGameSlots = GetNode<CanvasGroup>("Background/LoadGameSlots");
       deleteButton = loadGameSlots.GetNode<Button>("DeleteButton");
       deleteConfirmationWindow = loadGameSlots.GetNode<CanvasGroup>("ConfirmationWindow");
-      managers.LevelManager = GetNode<LevelManager>("/root/BaseNode/LevelManager");
 
       partyMenu = GetNode<CanvasGroup>("/root/BaseNode/UI/PartyMenuLayer/PartyMenu");
       partyTabContainer = partyMenu.GetNode<TabContainer>("TabContainer");
 
-      managers.SaveManager = GetNode<SaveManager>("/root/BaseNode/SaveManager");
-
+      CreateMainMenuLevel();
       CheckLoadGameButtonAvailability();
       CheckNewGameButtonAvailability();
    }
@@ -44,11 +42,13 @@ public partial class MainMenuManager : Control
          if (FileAccess.FileExists("user://savegame" + i + ".save"))
          {
             mainScreen.GetNode<Button>("LoadGame").Disabled = false;
+            mainScreen.GetNode<Button>("Continue").Disabled = false;
             return;
          }
       }
 
       mainScreen.GetNode<Button>("LoadGame").Disabled = true;
+      mainScreen.GetNode<Button>("Continue").Disabled = true;
    }
 
    public void CheckNewGameButtonAvailability()
@@ -93,6 +93,7 @@ public partial class MainMenuManager : Control
             managers.SaveManager.loadingLabel.Visible = false;
 
             Visible = false;
+            DestroyMainMenuLevel();
 
             return;
          }
@@ -133,9 +134,23 @@ public partial class MainMenuManager : Control
                if (nodeData.ContainsKey("TimeSpent"))
                {
                   Label timeLabel = slotButton.GetChild<Label>(0);
-                  int minutes = (int)nodeData["TimeSpent"] / 60;
+                  timeLabel.Text = string.Empty;
+                  int minutes = ((int)nodeData["TimeSpent"] / 60) % 60;
+                  int hours = (int)nodeData["TimeSpent"] / 360;
 
-                  timeLabel.Text = (minutes / 60) + ":" + (minutes % 60);
+                  if (hours < 10)
+                  {
+                     timeLabel.Text += "0";
+                  }
+
+                  timeLabel.Text += hours + ":";
+
+                  if (minutes < 10)
+                  {
+                     timeLabel.Text += "0";
+                  }
+
+                  timeLabel.Text += minutes;
 
                   slotButton.GetChild<Label>(1).Text = (string)nodeData["Location"];
                }
@@ -187,7 +202,7 @@ public partial class MainMenuManager : Control
    {
       if (isDeletingSaves)
       {
-         deleteConfirmationWindow.GetNode<Label>("Back/Title").Text = "Are you sure you want to delete Slot " + (index + 1) + "?";
+         deleteConfirmationWindow.GetNode<Label>("Back/Title").Text = "Are you sure you want to delete the save in Slot " + (index + 1) + "?\nThis cannot be reversed.";
          deleteConfirmationWindow.Visible = true;
          currentDeletingSlotIndex = index;
 
@@ -200,10 +215,56 @@ public partial class MainMenuManager : Control
       }
       else
       {
-         managers.SaveManager.currentSaveIndex = index;
-         managers.SaveManager.LoadGame(index);
-         Visible = false;
+         Load(index);
       }
+   }
+
+   void OnContinueButtonDown()
+   {
+      Load(GetMostRecentSave());
+   }
+
+   int GetMostRecentSave()
+   {
+      int index = -1;
+      double latestTime = 0;
+
+      for (int i = 0; i < 5; i++)
+      {
+         Button slotButton = loadGameSlots.GetNode<Button>("VBoxContainer/Slot" + (i + 1));
+         if (FileAccess.FileExists("user://savegame" + i + ".save"))
+         {
+            using var saveGame = FileAccess.Open("user://savegame" + i + ".save", FileAccess.ModeFlags.Read);
+
+            while (saveGame.GetPosition() < saveGame.GetLength())
+            {
+               string jsonString = saveGame.GetLine();
+               Json json = new Json();
+               Error parseResult = json.Parse(jsonString);
+               Godot.Collections.Dictionary<string, Variant> nodeData = new Godot.Collections.Dictionary<string, Variant>((Godot.Collections.Dictionary)json.Data);
+
+               // Time
+               if (nodeData.ContainsKey("LastPlayed"))
+               {
+                  if ((double)nodeData["LastPlayed"] > latestTime)
+                  {
+                     latestTime = (double)nodeData["LastPlayed"];
+                     index = i;
+                  }
+               }
+            }
+         }
+      }
+
+      return index;
+   }
+
+   void Load(int index)
+   {
+      managers.SaveManager.currentSaveIndex = index;
+      managers.SaveManager.LoadGame(index);
+      Visible = false;
+      DestroyMainMenuLevel();
    }
 
    void OnDeleteButtonDown()
@@ -247,8 +308,55 @@ public partial class MainMenuManager : Control
             slot.Disabled = false;
          }
       }
+
       loadGameSlots.GetNode<Button>("Back").Disabled = false;
       deleteButton.Disabled = false;
+   }
+
+   public void CreateMainMenuLevel()
+   {
+      int index = GetMostRecentSave();
+
+      PackedScene packedScene;
+
+      if (index == -1)
+      {
+         // No save exists, default to Theralin
+         packedScene = GD.Load<PackedScene>("res://Menus/0Core/theralin.tscn");
+      }
+      else
+      {
+         string location = string.Empty;
+         using var saveGame = FileAccess.Open("user://savegame" + index + ".save", FileAccess.ModeFlags.Read);
+
+         while (saveGame.GetPosition() < saveGame.GetLength())
+         {
+            string jsonString = saveGame.GetLine();
+            Json json = new Json();
+            Error parseResult = json.Parse(jsonString);
+            Godot.Collections.Dictionary<string, Variant> nodeData = new Godot.Collections.Dictionary<string, Variant>((Godot.Collections.Dictionary)json.Data);
+
+            if (nodeData.ContainsKey("MainMenuScreen"))
+            {
+               location = (string)nodeData["MainMenuScreen"];
+               break;
+            }
+         }
+
+         packedScene = GD.Load<PackedScene>("res://Menus/0Core/" + location + ".tscn");
+      }
+
+      Node3D level = packedScene.Instantiate<Node3D>();
+      level.Name = "MainMenuLevel";
+      level.GetNode<Camera3D>("Camera").MakeCurrent();
+      AddChild(level);
+   }
+
+   public void DestroyMainMenuLevel()
+   {
+      Node3D level = GetNode<Node3D>("MainMenuLevel");
+      RemoveChild(level);
+      level.QueueFree();
    }
 
    void OnQuitButtonDown()
