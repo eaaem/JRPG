@@ -82,6 +82,8 @@ public partial class SaveManager : Node
             managers.LevelManager.LocationDatas[i].timeSinceLastVisit += Time.GetUnixTimeFromSystem() -  managers.LevelManager.LocationDatas[i].timeOfLastVisit;
          }
 
+         managers.LevelManager.EmitSignal(LevelManager.SignalName.SaveLevelProgression);
+
          var nodeData = managers.LevelManager.LocationDatas[i].Call("SaveLocationData");
 
          jsonString = Json.Stringify(nodeData);

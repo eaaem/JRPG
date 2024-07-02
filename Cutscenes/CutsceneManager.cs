@@ -43,6 +43,8 @@ public partial class CutsceneManager : Node
          managers.Controller.isInCutscene = true;
          managers.Controller.IsSprinting = false;
 
+         
+
          if (cutsceneObject.hideParty)
          {
             cutsceneCamera.Position = cutsceneObject.cameraPosition;

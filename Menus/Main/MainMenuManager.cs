@@ -6,10 +6,10 @@ public partial class MainMenuManager : Control
    [Export]
    private ManagerReferenceHolder managers;
    
-	private CanvasGroup mainScreen;
-   private CanvasGroup settingsScreen;
-   private CanvasGroup loadGameSlots;
-   private CanvasGroup deleteConfirmationWindow;
+	private Control mainScreen;
+   private Control settingsScreen;
+   private Control loadGameSlots;
+   private Control deleteConfirmationWindow;
 
    private CanvasGroup partyMenu;
    private TabContainer partyTabContainer;
@@ -21,11 +21,11 @@ public partial class MainMenuManager : Control
 
    public override void _Ready()
    {
-      mainScreen = GetNode<CanvasGroup>("Background/Main");
-      settingsScreen = GetNode<CanvasGroup>("Background/Settings");
-      loadGameSlots = GetNode<CanvasGroup>("Background/LoadGameSlots");
+      mainScreen = GetNode<Control>("Background/Main");
+      settingsScreen = GetNode<Control>("Background/Settings");
+      loadGameSlots = GetNode<Control>("Background/LoadGameSlots");
       deleteButton = loadGameSlots.GetNode<Button>("DeleteButton");
-      deleteConfirmationWindow = loadGameSlots.GetNode<CanvasGroup>("ConfirmationWindow");
+      deleteConfirmationWindow = loadGameSlots.GetNode<Control>("ConfirmationWindow");
 
       partyMenu = GetNode<CanvasGroup>("/root/BaseNode/UI/PartyMenuLayer/PartyMenu");
       partyTabContainer = partyMenu.GetNode<TabContainer>("TabContainer");
@@ -175,10 +175,10 @@ public partial class MainMenuManager : Control
 
    void OnBackButtonDown(string originPath, string targetPath)
    {
-      GetNode<CanvasGroup>(originPath).Visible = false;
+      GetNode<Control>(originPath).Visible = false;
 
-      CanvasGroup targetCanvas = GetNode<CanvasGroup>(targetPath);
-      GetNode<CanvasGroup>(targetPath).Visible = true;
+      Control targetCanvas = GetNode<Control>(targetPath);
+      targetCanvas.Visible = true;
 
       isDeletingSaves = false;
 

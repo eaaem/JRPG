@@ -13,6 +13,7 @@ public partial class OverworldPartyController : CharacterBody3D
 
    private AnimationPlayer animationPlayer;
    private NavigationAgent3D navigationAgent;
+   private AnimationTree animationTree;
 
    private CharacterController player;
    private Node3D playerModel;
@@ -39,6 +40,8 @@ public partial class OverworldPartyController : CharacterBody3D
    public bool IsActive { get; set; }
 
    private Member assignedPartyMember;
+
+   private int movementBlend = 0;
 
    public Vector3 MovementTarget
    {
@@ -70,6 +73,7 @@ public partial class OverworldPartyController : CharacterBody3D
    {
       animationPlayer = GetNode<AnimationPlayer>("Model/AnimationPlayer");
       navigationAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
+      animationTree = GetNode<AnimationTree>("AnimationTree");
 
       model = GetNode<Node3D>("Model");
 
@@ -115,6 +119,8 @@ public partial class OverworldPartyController : CharacterBody3D
 	{
       if (EnablePathfinding && IsActive)
       {
+         animationTree.Set("parameters/BasicMovement/blend_position", movementBlend / 10f);
+
          Vector3 velocity = Velocity;
          distance = Position.DistanceTo(player.Position);
 
@@ -131,9 +137,9 @@ public partial class OverworldPartyController : CharacterBody3D
 
          if (navigationAgent.IsNavigationFinished())
          {
-            if (animationPlayer.CurrentAnimation != "Idle") 
+            if (movementBlend > -10)
             {
-               animationPlayer.Play("Idle");
+               movementBlend -= 1;
             }
 
             return;
@@ -151,19 +157,13 @@ public partial class OverworldPartyController : CharacterBody3D
          velocity.X = currentAgentPosition.DirectionTo(nextPathPosition).X * speed;
          velocity.Z = currentAgentPosition.DirectionTo(nextPathPosition).Z * speed;
 
-         if (!player.IsSprinting)
+         if ((player.IsSprinting && movementBlend < 10) || (!player.IsSprinting && movementBlend < 0)) 
          {
-            if (animationPlayer.CurrentAnimation != "Walk")
-            {
-               animationPlayer.Play("Walk");
-            }
+            movementBlend += 1;
          }
-         else
+         else if (!player.IsSprinting && movementBlend > 0)
          {
-            if (animationPlayer.CurrentAnimation != "Run")
-            {
-               animationPlayer.Play("Run");
-            }
+            movementBlend -= 1;
          }
 
          Velocity = velocity;

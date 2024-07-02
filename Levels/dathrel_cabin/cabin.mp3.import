@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/cabin.mp3-f73d8fb323e8a1021a8917fae5837d4b.mp
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

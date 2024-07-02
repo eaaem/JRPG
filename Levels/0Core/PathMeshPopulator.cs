@@ -14,6 +14,7 @@ public partial class PathMeshPopulator : MultiMeshInstance3D
    private bool populate = false;
    /// <summary>
    /// Used as a button to create the instances of the mesh. This value does not actually do anything.
+   /// Set to true to populate. Always return it to false to prevent errors with PathMeshPopulators from other scenes trying to populate (which throws an error).
    /// </summary>
    [Export]
    private bool Populate
@@ -24,7 +25,12 @@ public partial class PathMeshPopulator : MultiMeshInstance3D
       }
       set
       {
-         PopulateMeshes();
+         populate = value;
+
+         if (populate)
+         {
+            PopulateMeshes();
+         }
       }
    }
    /// <summary>
@@ -102,6 +108,7 @@ public partial class PathMeshPopulator : MultiMeshInstance3D
    {
       if (Engine.IsEditorHint())
       {
+         GD.Print(Name);
          Path3D path = GetNode<Path3D>("Path3D");
 
          Multimesh.InstanceCount = path.Curve.PointCount;

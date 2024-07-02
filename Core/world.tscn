@@ -1,4 +1,4 @@
-[gd_scene load_steps=128 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=129 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -58,6 +58,7 @@
 [ext_resource type="AudioStream" uid="uid://bh73sq4742dhj" path="res://Menus/Main/main_menu.mp3" id="53_icsar"]
 [ext_resource type="Script" path="res://Levels/0Core/MusicHolder.cs" id="54_gsvxg"]
 [ext_resource type="Theme" uid="uid://bv4egxy2hvmih" path="res://Menus/0Core/main_menu_button_theme.tres" id="54_o8lba"]
+[ext_resource type="Texture2D" uid="uid://bf6gem1qckp6h" path="res://Menus/0Core/main_menu_back.png" id="57_3sl1u"]
 [ext_resource type="FontFile" uid="uid://cg2kgq5pvsqi" path="res://Menus/0Core/Merriweather-BoldItalic.ttf" id="58_bw31p"]
 
 [sub_resource type="Resource" id="Resource_vsscq"]
@@ -459,8 +460,6 @@ PopupMenu/font_sizes/font_size = 30
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjda6"]
 bg_color = Color(0.384314, 0.384314, 0.384314, 0)
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_dadn2"]
-
 [sub_resource type="SystemFont" id="SystemFont_hlb0o"]
 font_names = PackedStringArray("Gabriola")
 
@@ -469,6 +468,8 @@ default_font = SubResource("SystemFont_hlb0o")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qwivw"]
 bg_color = Color(0.862745, 0.462745, 0.490196, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_dadn2"]
 
 [node name="BaseNode" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000612859, -3.72529e-09, 0.0018937)
@@ -3064,61 +3065,78 @@ grow_vertical = 2
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_bjda6")
 
-[node name="Main" type="CanvasGroup" parent="MainMenu/Background"]
-position = Vector2(960, 540)
+[node name="Main" type="Control" parent="MainMenu/Background"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -500.0
+offset_right = -500.0
+grow_horizontal = 0
 
-[node name="Back" type="Sprite2D" parent="MainMenu/Background/Main"]
-modulate = Color(0, 0, 0, 0.247059)
-position = Vector2(696, -56.9058)
-rotation = -0.229239
-scale = Vector2(837, 1300)
-texture = SubResource("CanvasTexture_dadn2")
+[node name="Control" type="Control" parent="MainMenu/Background/Main"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Sprite2D" parent="MainMenu/Background/Main/Control"]
+position = Vector2(0, 540)
+texture = ExtResource("57_3sl1u")
 
 [node name="Continue" type="Button" parent="MainMenu/Background/Main"]
-offset_left = 298.0
-offset_top = -249.906
-offset_right = 698.0
-offset_bottom = -159.906
+layout_mode = 0
+offset_left = -201.0
+offset_top = 293.094
+offset_right = 199.0
+offset_bottom = 383.094
 theme = ExtResource("54_o8lba")
 text = "Continue"
 
 [node name="NewGame" type="Button" parent="MainMenu/Background/Main"]
-offset_left = 336.0
-offset_top = -111.906
-offset_right = 736.0
-offset_bottom = -21.9058
+layout_mode = 0
+offset_left = -163.0
+offset_top = 431.094
+offset_right = 237.0
+offset_bottom = 521.094
 theme = ExtResource("54_o8lba")
 text = "New Game"
 
 [node name="LoadGame" type="Button" parent="MainMenu/Background/Main"]
-offset_left = 375.0
-offset_top = 29.0942
-offset_right = 775.0
-offset_bottom = 119.094
+layout_mode = 0
+offset_left = -124.0
+offset_top = 572.094
+offset_right = 276.0
+offset_bottom = 662.094
 theme = ExtResource("54_o8lba")
 text = "Load Game"
 
-[node name="Settings" type="Button" parent="MainMenu/Background/Main"]
-offset_left = 419.0
-offset_top = 171.094
-offset_right = 819.0
-offset_bottom = 261.094
+[node name="Settings2" type="Button" parent="MainMenu/Background/Main"]
+layout_mode = 0
+offset_left = -80.0
+offset_top = 714.094
+offset_right = 320.0
+offset_bottom = 804.094
 theme = ExtResource("54_o8lba")
 text = "Settings"
 
 [node name="QuitGame" type="Button" parent="MainMenu/Background/Main"]
-offset_left = 457.0
-offset_top = 318.094
-offset_right = 857.0
-offset_bottom = 408.094
+layout_mode = 0
+offset_left = -42.0
+offset_top = 861.094
+offset_right = 358.0
+offset_bottom = 951.094
 theme = ExtResource("54_o8lba")
 text = "Quit Game"
 
 [node name="RichTextLabel" type="RichTextLabel" parent="MainMenu/Background/Main"]
-offset_left = 217.0
-offset_top = -492.0
-offset_right = 917.0
-offset_bottom = -292.0
+layout_mode = 0
+offset_left = -282.0
+offset_top = 51.0
+offset_right = 418.0
+offset_bottom = 251.0
 theme = SubResource("Theme_0ac0l")
 theme_override_fonts/italics_font = ExtResource("58_bw31p")
 theme_override_font_sizes/normal_font_size = 175
@@ -3126,27 +3144,27 @@ theme_override_font_sizes/italics_font_size = 150
 bbcode_enabled = true
 text = "[i][center]Untitled[/center]"
 
-[node name="Settings" type="CanvasGroup" parent="MainMenu/Background"]
+[node name="LoadGameSlots" type="Control" parent="MainMenu/Background"]
 visible = false
-position = Vector2(960, 540)
-
-[node name="Back" type="Button" parent="MainMenu/Background/Settings"]
-offset_left = -38.0
-offset_top = 400.0
-offset_right = 39.0
-offset_bottom = 450.0
-theme_override_font_sizes/font_size = 30
-text = "Back"
-
-[node name="LoadGameSlots" type="CanvasGroup" parent="MainMenu/Background"]
-visible = false
-position = Vector2(960, 540)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -920.0
+offset_bottom = -500.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Background/LoadGameSlots"]
-offset_left = -150.0
-offset_top = -250.0
-offset_right = 150.0
-offset_bottom = 250.0
+layout_mode = 0
+offset_left = 810.0
+offset_top = 290.0
+offset_right = 1110.0
+offset_bottom = 806.0
 
 [node name="Slot1" type="Button" parent="MainMenu/Background/LoadGameSlots/VBoxContainer"]
 custom_minimum_size = Vector2(300, 100)
@@ -3274,29 +3292,44 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Back" type="Button" parent="MainMenu/Background/LoadGameSlots"]
-offset_left = -38.0
-offset_top = 400.0
-offset_right = 39.0
-offset_bottom = 450.0
+layout_mode = 0
+offset_left = 922.0
+offset_top = 940.0
+offset_right = 999.0
+offset_bottom = 990.0
 theme_override_font_sizes/font_size = 30
 text = "Back"
 
 [node name="DeleteButton" type="Button" parent="MainMenu/Background/LoadGameSlots"]
-offset_left = 175.0
-offset_right = 325.0
-offset_bottom = 50.0
+layout_mode = 0
+offset_left = 1135.0
+offset_top = 540.0
+offset_right = 1285.0
+offset_bottom = 590.0
 theme_override_font_sizes/font_size = 25
 text = "Delete Save"
 
-[node name="ConfirmationWindow" type="CanvasGroup" parent="MainMenu/Background/LoadGameSlots"]
+[node name="ConfirmationWindow" type="Control" parent="MainMenu/Background/LoadGameSlots"]
 visible = false
-z_index = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Back" type="Panel" parent="MainMenu/Background/LoadGameSlots/ConfirmationWindow"]
-offset_left = -200.0
-offset_top = -150.0
-offset_right = 200.0
-offset_bottom = 150.0
+layout_mode = 0
+offset_left = 760.0
+offset_top = 390.0
+offset_right = 1160.0
+offset_bottom = 690.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qwivw")
 
 [node name="Title" type="Label" parent="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back"]
@@ -3326,6 +3359,38 @@ offset_right = 160.0
 offset_bottom = 243.0
 theme_override_font_sizes/font_size = 25
 text = "Cancel"
+
+[node name="Settings" type="Control" parent="MainMenu/Background"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -920.0
+offset_bottom = -500.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Back" type="Button" parent="MainMenu/Background/Settings"]
+layout_mode = 0
+offset_left = 922.0
+offset_top = 940.0
+offset_right = 999.0
+offset_bottom = 990.0
+theme_override_font_sizes/font_size = 30
+text = "Back"
+
+[node name="Back" type="Sprite2D" parent="MainMenu/Background"]
+visible = false
+modulate = Color(0, 0, 0, 0.247059)
+position = Vector2(1656, 483.094)
+rotation = -0.229239
+scale = Vector2(837, 1300)
+texture = SubResource("CanvasTexture_dadn2")
 
 [node name="MenuCamera" type="Camera2D" parent="MainMenu"]
 position = Vector2(960, 540)
@@ -3395,9 +3460,8 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="button_down" from="MainMenu/Background/Main/Continue" to="MainMenu" method="OnContinueButtonDown"]
 [connection signal="button_down" from="MainMenu/Background/Main/NewGame" to="MainMenu" method="OnNewGameButtonDown"]
 [connection signal="button_down" from="MainMenu/Background/Main/LoadGame" to="MainMenu" method="OnLoadButtonDown"]
-[connection signal="button_down" from="MainMenu/Background/Main/Settings" to="MainMenu" method="OnSettingsButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/Main/Settings2" to="MainMenu" method="OnSettingsButtonDown"]
 [connection signal="button_down" from="MainMenu/Background/Main/QuitGame" to="MainMenu" method="OnQuitButtonDown"]
-[connection signal="button_down" from="MainMenu/Background/Settings/Back" to="MainMenu" method="OnBackButtonDown" binds= ["Background/Settings", "Background/Main"]]
 [connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot1" to="MainMenu" method="OnLoadGameButtonDown" binds= [0]]
 [connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot2" to="MainMenu" method="OnLoadGameButtonDown" binds= [1]]
 [connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot3" to="MainMenu" method="OnLoadGameButtonDown" binds= [2]]
@@ -3407,3 +3471,4 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="button_down" from="MainMenu/Background/LoadGameSlots/DeleteButton" to="MainMenu" method="OnDeleteButtonDown"]
 [connection signal="button_down" from="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back/ConfirmButton" to="MainMenu" method="OnConfirmDelete"]
 [connection signal="button_down" from="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back/BackButton" to="MainMenu" method="OnBackButtonDown" binds= ["Background/LoadGameSlots/ConfirmationWindow", "Background/LoadGameSlots"]]
+[connection signal="button_down" from="MainMenu/Background/Settings/Back" to="MainMenu" method="OnBackButtonDown" binds= ["Background/Settings", "Background/Main"]]

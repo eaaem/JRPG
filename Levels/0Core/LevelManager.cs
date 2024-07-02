@@ -307,11 +307,11 @@ public partial class LevelManager : Node
       {
          if (mainMenuBack.GetChild(i).Name == "Main")
          {
-            mainMenuBack.GetChild<CanvasGroup>(i).Visible = true;
+            mainMenuBack.GetChild<Control>(i).Visible = true;
          }
          else
          {
-            mainMenuBack.GetChild<CanvasGroup>(i).Visible = false;
+            mainMenuBack.GetChild<Control>(i).Visible = false;
          }
       }
    }

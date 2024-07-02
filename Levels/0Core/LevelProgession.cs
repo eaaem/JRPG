@@ -8,7 +8,7 @@ using System;
 /// <br></br>
 /// Each level progression script should be attached to a Node3D INSIDE THE LEVEL ITSELF.
 /// <br></br><br></br>
-/// To recognize when a cutscene has ended, subscribe to "tree_exited" on the cutscene trigger (since it's deleted when a cutscene is initialized).
+/// To recognize when a cutscene has ended, subscribe to "OnCutsceneInitiate" in the inspector.
 /// </summary>
 public abstract partial class LevelProgession : Node
 {
@@ -20,8 +20,6 @@ public abstract partial class LevelProgession : Node
       managers = GetNode<ManagerReferenceHolder>("/root/BaseNode/ManagerReferenceHolder");
       managers.LevelManager.SaveLevelProgression += SaveLevel;
       managers.LevelManager.LoadLevelProgression += LoadLevel;
-
-      //managers.CutsceneManager.CutsceneEnded += CutsceneEnded;
    }
 
    public void SaveLevel()
@@ -31,13 +29,9 @@ public abstract partial class LevelProgession : Node
 
    public abstract void LoadLevel();
 
-   //public abstract void CutsceneEnded();
-
    public override void _ExitTree()
    {
       managers.LevelManager.SaveLevelProgression -= SaveLevel;
       managers.LevelManager.LoadLevelProgression -= LoadLevel;
-
-      //managers.CutsceneManager.CutsceneEnded -= CutsceneEnded;
    }
 }

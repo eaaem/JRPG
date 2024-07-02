@@ -13,6 +13,9 @@ public partial class CutsceneTrigger : Node
 
    bool hasStartedCutscene = false;
 
+   [Signal]
+   public delegate void OnCutsceneInitiateEventHandler();
+
    public override void _Ready()
 	{
       cutsceneManager = GetNode<CutsceneManager>("/root/BaseNode/CutsceneManager");
@@ -24,6 +27,7 @@ public partial class CutsceneTrigger : Node
       {
          cutsceneManager.InitiateCutscene(cutsceneObject, id);
          hasStartedCutscene = true;
+         EmitSignal(SignalName.OnCutsceneInitiate);
       }
       
       QueueFree();

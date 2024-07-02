@@ -3,8 +3,7 @@ using System;
 
 enum TheralinProgressMarkers
 {
-   None,
-   RemoveArlitha
+   FirstTheralinCutscene
 }
 
 public partial class TheralinProgress : LevelProgession
@@ -17,12 +16,9 @@ public partial class TheralinProgress : LevelProgession
       }
    }
 
-   /// <summary>
-   /// Arlitha/Thalria cutscene (adds Thalria, moves Arlitha)
-   /// </summary>
-   public void CutsceneEnding(Node node)
+   public void FirstCutsceneInitiated()
    {
-      RemoveArlitha();
+      FirstTheralinCutscene();
 
       string[] thalriaEquipment = new string[6];
 
@@ -41,12 +37,24 @@ public partial class TheralinProgress : LevelProgession
       thalria.currentMana = thalria.GetMaxMana();
 
       thalria.model.GlobalPosition = new Vector3(3.179f, 0, 72.412f);
+
+      GetNode<CharacterController>("/root/BaseNode/PartyMembers/Member1").GlobalPosition = new Vector3(1.168f, 0, 68.9f);
       
       progress++;
    }
 
-   void RemoveArlitha()
+   /// <summary>
+   /// Arlitha/Thalria cutscene (adds Thalria, moves Arlitha, deletes the block preventing access to the Athlia cutscene)
+   /// </summary>
+   void FirstTheralinCutscene()
    {
       GetNode<CharacterBody3D>("/root/BaseNode/Level/People/arlitha").Visible = false;
+      GetNode<CharacterBody3D>("/root/BaseNode/Level/People/thalria").Visible = false;
+
+      Node3D block = GetNode<Node3D>("/root/BaseNode/Level/cow_block");
+      GetNode<Node3D>("/root/BaseNode/Level").CallDeferred(Node3D.MethodName.RemoveChild, block);
+      // If RemoveChild is being called through CallDeferred, QueueFree must also be called through CallDeferred, or else QueueFree will execute before
+      // RemoveChild, making the child null and thus causing an error
+      block.CallDeferred(Node3D.MethodName.QueueFree);
    }
 }
