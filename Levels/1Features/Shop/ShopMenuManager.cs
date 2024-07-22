@@ -11,7 +11,7 @@ public partial class ShopMenuManager : Node
    private ManagerReferenceHolder managers;
 
    private ShopItem currentShopItem;
-   private InventoryItem currentItemInTransaction;
+   public InventoryItem currentItemInTransaction;
 
    private VBoxContainer itemContainer;
    private OptionButton bulkButton;

@@ -126,6 +126,7 @@ public partial class CombatManager : Node
    public async void SetupCombat(List<Enemy> enemyDatas, Vector3 location, Vector3 rotation, WorldEnemy enemyScript) 
    {
       ResetNodes();
+      managers.LevelManager.MuteMusic();
 
       managers.MenuManager.FadeToBlack();
 
@@ -151,7 +152,7 @@ public partial class CombatManager : Node
       {
          if (managers.PartyManager.Party[i].isInParty)
          {
-            managers.PartyManager.Party[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Encounter");
+            //managers.PartyManager.Party[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Encounter");
          }
       }
 
@@ -198,6 +199,7 @@ public partial class CombatManager : Node
       await ToSignal(GetTree().CreateTimer(1f), "timeout");
 
       ResetCamera();
+      managers.LevelManager.TransitionMusicTracks(this);
 
 	   uiManager.ShowLists();
       SelectNextTurn();
@@ -317,7 +319,7 @@ public partial class CombatManager : Node
 
    void InitializeEnemies(List<Enemy> enemyDatas)
    {
-      // The reason this ends at 4 is a backup in case the randomizer tried to force more than 4 enemies into battle
+      // The reason this ends at 4 is a safety in case the randomizer tried to force more than 4 enemies into battle
       int enemyCount = enemyDatas.Count <= 4 ? enemyDatas.Count : 4;
 
       Node3D placementGroup = arena.GetNode<Node3D>("EnemyGroup" + enemyCount);
@@ -764,7 +766,7 @@ public partial class CombatManager : Node
       // Olren's attacks have special effects
       passiveManager.ApplyOlrenPassive();
       
-      player.Play("Attack");
+      player.Play("Attack", 0.5f);
       EmitSignal(SignalName.AttackAnimation);
 
       await ToSignal(GetTree().CreateTimer(player.CurrentAnimationLength + 0.35f), "timeout");

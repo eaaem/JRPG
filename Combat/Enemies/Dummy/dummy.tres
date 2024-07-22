@@ -1,0 +1,74 @@
+[gd_resource type="Resource" script_class="Enemy" load_steps=14 format=3 uid="uid://ce0tsdq6erl15"]
+
+[ext_resource type="PackedScene" uid="uid://dujjbf8g10f8l" path="res://Combat/Enemies/Dummy/dummy.tscn" id="1_fnxwu"]
+[ext_resource type="Script" path="res://Combat/0Core/Enemy.cs" id="1_wac1q"]
+[ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="2_2jnxr"]
+
+[sub_resource type="Resource" id="Resource_w6ju7"]
+script = ExtResource("2_2jnxr")
+statType = 0
+value = 5
+baseValue = 5
+
+[sub_resource type="Resource" id="Resource_twgtt"]
+script = ExtResource("2_2jnxr")
+statType = 1
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_b44t2"]
+script = ExtResource("2_2jnxr")
+statType = 2
+value = 1
+baseValue = 1
+
+[sub_resource type="Resource" id="Resource_rlxxm"]
+script = ExtResource("2_2jnxr")
+statType = 3
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_rc2te"]
+script = ExtResource("2_2jnxr")
+statType = 4
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_51126"]
+script = ExtResource("2_2jnxr")
+statType = 5
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_8axmd"]
+script = ExtResource("2_2jnxr")
+statType = 6
+value = 1000
+baseValue = 1000
+
+[sub_resource type="Resource" id="Resource_25cw4"]
+script = ExtResource("2_2jnxr")
+statType = 7
+value = 0
+baseValue = 0
+
+[sub_resource type="Resource" id="Resource_nlfdg"]
+script = ExtResource("2_2jnxr")
+statType = 8
+value = 3
+baseValue = 3
+
+[sub_resource type="Resource" id="Resource_ja8jr"]
+script = ExtResource("2_2jnxr")
+statType = 9
+value = 0
+baseValue = 0
+
+[resource]
+script = ExtResource("1_wac1q")
+enemyName = "Dummy"
+level = 1
+stats = [SubResource("Resource_w6ju7"), SubResource("Resource_twgtt"), SubResource("Resource_b44t2"), SubResource("Resource_rlxxm"), SubResource("Resource_rc2te"), SubResource("Resource_51126"), SubResource("Resource_8axmd"), SubResource("Resource_25cw4"), SubResource("Resource_nlfdg"), SubResource("Resource_ja8jr")]
+model = ExtResource("1_fnxwu")
+affinity = 0
+abilities = []

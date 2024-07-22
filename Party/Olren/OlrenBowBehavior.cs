@@ -19,7 +19,7 @@ public partial class OlrenBowBehavior : Node
 	public override void _Ready()
 	{
       bowPlayer = GetNode<AnimationPlayer>("../Weapon/AnimationPlayer");
-      combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManagerObj");
+      combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManager");
 
       skeleton = GetNode<Skeleton3D>("../Model/Armature/Skeleton3D");
 

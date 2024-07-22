@@ -269,7 +269,7 @@ public partial class CombatUIManager : Node
       List<AbilityResource> abilitiesToUse;
       int manaToUse;
 
-      string path = combatManager.IsCompanionTurn ? "Enemy" : "Player";
+      string path = combatManager.IsCompanionTurn ? "Enemy" : "Party";
 
       if (combatManager.IsCompanionTurn)
       {
@@ -314,7 +314,7 @@ public partial class CombatUIManager : Node
       button.GetNode<ResourceHolder>("ResourceHolder").abilityResource = ability;
 
       Node2D scriptHolder = button.GetNode<Node2D>("ScriptHolder");
-      scriptHolder.SetScript(GD.Load<CSharpScript>("res://Combat/Abilities/" + path + "/Behaviors/" + ability.scriptName + ".cs"));
+      scriptHolder.SetScript(GD.Load<CSharpScript>("res://Abilities/" + path + "/" + ability.scriptName + "/" + ability.scriptName + ".cs"));
 
       button.Text = ability.name;
       button.TooltipText = ability.description;
@@ -408,7 +408,7 @@ public partial class CombatUIManager : Node
 
       for (int i = 0; i < managers.PartyManager.Items.Count; i++)
       {
-         if (managers.PartyManager.Items[i].item.itemType == ItemType.None)
+         if (managers.PartyManager.Items[i].item.itemType == ItemType.None && managers.PartyManager.Items[i].item.itemType == ItemType.Consumable)
          {
             // This is much like GenerateAbilities (creates buttons that have scripts inside them), but with items instead
             InventoryItem thisItem = managers.PartyManager.Items[i];

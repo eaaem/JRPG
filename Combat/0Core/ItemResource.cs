@@ -9,7 +9,8 @@ public enum ItemType
    Chest,
    Legs,
    Arms,
-   Accessory
+   Accessory,
+   Consumable
 }
 
 public enum ItemCategory

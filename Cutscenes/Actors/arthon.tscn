@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://cgr13jqjnnn7v"]
+
+[ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_jb1ay"]
+[ext_resource type="PackedScene" uid="uid://dfmt4mad8r1bo" path="res://Cutscenes/Actors/arthon.glb" id="2_njijv"]
+
+[node name="arthon" type="CharacterBody3D"]
+script = ExtResource("1_jb1ay")
+
+[node name="Model" parent="." instance=ExtResource("2_njijv")]

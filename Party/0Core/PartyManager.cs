@@ -14,9 +14,9 @@ public partial class PartyManager : Node
    [Export]
    public ItemResource[] ThalriaItems { get; set; } = new ItemResource[1];
    [Export]
-   ItemResource[] athliaItems = new ItemResource[1];
+   public ItemResource[] AthliaItems { get; set; } = new ItemResource[1];
    [Export]
-   ItemResource[] olrenItems = new ItemResource[1];
+   public ItemResource[] OlrenItems { get; set; } = new ItemResource[1];
    [Export]
    private int[] experienceThreshholds = new int[50];
 

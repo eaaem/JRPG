@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://cnnbqshdbaks4"]
+[gd_scene load_steps=23 format=3 uid="uid://cnnbqshdbaks4"]
 
 [ext_resource type="PackedScene" uid="uid://c8sbeheqi10fl" path="res://Party/Vakthol/vakthol.glb" id="1_ypitp"]
 [ext_resource type="PackedScene" uid="uid://yhwlyfetwmre" path="res://Party/Vakthol/vakthol_axe.glb" id="2_nf168"]
@@ -24,12 +24,68 @@ blend_point_1/pos = 1.0
 blend_point_2/node = SubResource("AnimationNodeAnimation_jbo8h")
 blend_point_2/pos = 0.0
 
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w4spe"]
+animation = &"Hit"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_0b1px"]
+animation = &"Death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4pvdr"]
+animation = &"Attack"
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_4n146"]
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_joo1s"]
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_trhvt"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tpk76"]
+animation = &"CombatIdle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xmeum"]
+animation = &"CombatActive"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_7kcpt"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_tpk76")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_xmeum")
+blend_point_1/pos = 1.0
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_555df"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_aj0br"]
+graph_offset = Vector2(-159.132, 58.7947)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_4pvdr")
+nodes/Animation/position = Vector2(0, 80)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_w4spe")
+"nodes/Animation 2/position" = Vector2(180, 180)
+"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_0b1px")
+"nodes/Animation 3/position" = Vector2(500, 420)
+nodes/Attack/node = SubResource("AnimationNodeOneShot_4n146")
+nodes/Attack/position = Vector2(200, -80)
+nodes/BlendSpace1D/node = SubResource("AnimationNodeBlendSpace1D_joo1s")
+nodes/BlendSpace1D/position = Vector2(273.574, 323.382)
+nodes/Hit/node = SubResource("AnimationNodeOneShot_trhvt")
+nodes/Hit/position = Vector2(460, 40)
+nodes/IdleOrActive/node = SubResource("AnimationNodeBlendSpace1D_7kcpt")
+nodes/IdleOrActive/position = Vector2(-20, -60)
+nodes/TimeSeek/node = SubResource("AnimationNodeTimeSeek_555df")
+nodes/TimeSeek/position = Vector2(708.412, 223.53)
+nodes/output/position = Vector2(840, 120)
+node_connections = [&"output", 0, &"Hit", &"Attack", 0, &"IdleOrActive", &"Attack", 1, &"Animation", &"Hit", 0, &"Attack", &"Hit", 1, &"Animation 2"]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_wvbys"]
+
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_5c7fh"]
-graph_offset = Vector2(-174, 130)
+graph_offset = Vector2(-333.199, -49.5546)
 nodes/BasicMovement/node = SubResource("AnimationNodeBlendSpace1D_10gv5")
-nodes/BasicMovement/position = Vector2(100, 140)
-nodes/output/position = Vector2(320, 120)
-node_connections = [&"output", 0, &"BasicMovement"]
+nodes/BasicMovement/position = Vector2(40, -20)
+nodes/Combat/node = SubResource("AnimationNodeBlendTree_aj0br")
+nodes/Combat/position = Vector2(40, 140)
+nodes/CombatControl/node = SubResource("AnimationNodeBlend2_wvbys")
+nodes/CombatControl/position = Vector2(260, 60)
+nodes/output/position = Vector2(460, 100)
+node_connections = [&"output", 0, &"CombatControl", &"CombatControl", 0, &"BasicMovement", &"CombatControl", 1, &"Combat"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_q3a1p"]
 size = Vector3(1, 2, 1)
@@ -46,7 +102,17 @@ shape = SubResource("CapsuleShape3D_snhpk")
 tree_root = SubResource("AnimationNodeBlendTree_5c7fh")
 anim_player = NodePath("../Model/AnimationPlayer")
 active = true
-parameters/BasicMovement/blend_position = 0
+parameters/BasicMovement/blend_position = 0.0
+parameters/Combat/Attack/active = false
+parameters/Combat/Attack/internal_active = false
+parameters/Combat/Attack/request = 0
+parameters/Combat/BlendSpace1D/blend_position = 0
+parameters/Combat/Hit/active = false
+parameters/Combat/Hit/internal_active = false
+parameters/Combat/Hit/request = 0
+parameters/Combat/IdleOrActive/blend_position = -1.0
+parameters/Combat/TimeSeek/seek_request = -1.0
+parameters/CombatControl/blend_amount = 1.0
 
 [node name="BackAnchor" type="Node3D" parent="."]
 transform = Transform3D(0.87339, -0.487022, 0, 0.487022, 0.87339, 0, 0, 0, 1, 0.416, -0.5, -0.129)

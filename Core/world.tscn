@@ -1,4 +1,4 @@
-[gd_scene load_steps=129 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=122 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -33,10 +33,14 @@
 [ext_resource type="Resource" uid="uid://dr8s71wh2p5yx" path="res://Items/Armor/Medium/worn_robe.tres" id="27_n8681"]
 [ext_resource type="Script" path="res://Menus/Party/PartyMenuManager.cs" id="27_o3g2u"]
 [ext_resource type="PackedScene" uid="uid://dl1uyhuu43vfo" path="res://Menus/Party/member_button.tscn" id="28_40bba"]
+[ext_resource type="Resource" uid="uid://bi6wovgrhfd0i" path="res://Items/Armor/Light/simple_dress.tres" id="29_g6fdf"]
 [ext_resource type="PackedScene" uid="uid://cou82d6jx808b" path="res://Menus/Party/ability_label.tscn" id="29_jtio8"]
 [ext_resource type="PackedScene" uid="uid://d3kvmela4ory0" path="res://Menus/Party/reequip_button.tscn" id="30_bblpj"]
+[ext_resource type="Resource" uid="uid://hsxgmxmfi4ju" path="res://Items/Armor/Light/cloth_trousers.tres" id="30_r5v1q"]
+[ext_resource type="Resource" uid="uid://dlwmogbc2wb5y" path="res://Items/Armor/Light/leather_tunic.tres" id="31_1d5xq"]
 [ext_resource type="Script" path="res://Core/CustomTooltipLabel.cs" id="31_g468s"]
 [ext_resource type="Script" path="res://Menus/Items/ItemMenuManager.cs" id="32_1h4ro"]
+[ext_resource type="Resource" uid="uid://dj77mnpcky4si" path="res://Items/Armor/Light/leather_gloves.tres" id="32_m7fip"]
 [ext_resource type="FontFile" uid="uid://cu53hbuj171ub" path="res://Menus/0Core/Merriweather-Regular.ttf" id="33_dmyrj"]
 [ext_resource type="Script" path="res://Menus/Settings/SettingsMenuManager.cs" id="33_jvddv"]
 [ext_resource type="FontFile" uid="uid://ccrrftptiji35" path="res://Menus/0Core/Merriweather-Italic.ttf" id="34_0e0eh"]
@@ -55,6 +59,7 @@
 [ext_resource type="Script" path="res://Cutscenes/CutsceneManager.cs" id="45_2ss0b"]
 [ext_resource type="Script" path="res://Levels/0Core/DoorBehavior.cs" id="46_2mc4k"]
 [ext_resource type="Script" path="res://Menus/Main/MainMenuManager.cs" id="47_k3f71"]
+[ext_resource type="PackedScene" uid="uid://bnl6l7xqjdp2p" path="res://Menus/Other/tutorial_popup.tscn" id="48_a3c2t"]
 [ext_resource type="AudioStream" uid="uid://bh73sq4742dhj" path="res://Menus/Main/main_menu.mp3" id="53_icsar"]
 [ext_resource type="Script" path="res://Levels/0Core/MusicHolder.cs" id="54_gsvxg"]
 [ext_resource type="Theme" uid="uid://bv4egxy2hvmih" path="res://Menus/0Core/main_menu_button_theme.tres" id="54_o8lba"]
@@ -299,105 +304,6 @@ price = 0
 affectedStats = SubResource("Resource_mokav")
 usableOutsideCombat = false
 
-[sub_resource type="Resource" id="Resource_tvppx"]
-script = ExtResource("15_86siq")
-statType = 0
-value = 1
-baseValue = 0
-
-[sub_resource type="Resource" id="Resource_sf6qq"]
-script = ExtResource("15_86siq")
-statType = 5
-value = 1
-baseValue = 0
-
-[sub_resource type="Resource" id="Resource_aqtwx"]
-script = ExtResource("14_oxatk")
-stats = [SubResource("Resource_tvppx"), SubResource("Resource_sf6qq")]
-
-[sub_resource type="Resource" id="Resource_hb6rw"]
-script = ExtResource("16_5bni6")
-name = "Simple Dress"
-description = "Light
-+1 constitution, +1 willpower"
-scriptName = ""
-specialModifier = 0.0
-hitsAll = false
-hitsSurrounding = false
-hitsSelf = false
-hitsTeam = false
-itemType = 3
-itemCategory = 1
-price = 0
-affectedStats = SubResource("Resource_aqtwx")
-usableOutsideCombat = false
-
-[sub_resource type="Resource" id="Resource_acghi"]
-script = ExtResource("15_86siq")
-statType = 7
-value = 1
-baseValue = 0
-
-[sub_resource type="Resource" id="Resource_fp6dw"]
-script = ExtResource("15_86siq")
-statType = 8
-value = 1
-baseValue = 0
-
-[sub_resource type="Resource" id="Resource_nckpm"]
-script = ExtResource("14_oxatk")
-stats = [SubResource("Resource_acghi"), SubResource("Resource_fp6dw")]
-
-[sub_resource type="Resource" id="Resource_de2wb"]
-script = ExtResource("16_5bni6")
-name = "Cloth Trousers"
-description = "Light
-+1 speed, +1 evasion"
-scriptName = ""
-specialModifier = 0.0
-hitsAll = false
-hitsSurrounding = false
-hitsSelf = false
-hitsTeam = false
-itemType = 4
-itemCategory = 1
-price = 0
-affectedStats = SubResource("Resource_nckpm")
-usableOutsideCombat = false
-
-[sub_resource type="Resource" id="Resource_c3ip4"]
-script = ExtResource("15_86siq")
-statType = 0
-value = 1
-baseValue = 0
-
-[sub_resource type="Resource" id="Resource_m0kgq"]
-script = ExtResource("15_86siq")
-statType = 7
-value = 1
-baseValue = 0
-
-[sub_resource type="Resource" id="Resource_ptgw5"]
-script = ExtResource("14_oxatk")
-stats = [SubResource("Resource_c3ip4"), SubResource("Resource_m0kgq")]
-
-[sub_resource type="Resource" id="Resource_rmxds"]
-script = ExtResource("16_5bni6")
-name = "Leather Tunic"
-description = "Light
-+1 constitution, +1 evasion"
-scriptName = ""
-specialModifier = 0.0
-hitsAll = false
-hitsSurrounding = false
-hitsSelf = false
-hitsTeam = false
-itemType = 3
-itemCategory = 1
-price = 0
-affectedStats = SubResource("Resource_ptgw5")
-usableOutsideCombat = false
-
 [sub_resource type="CanvasTexture" id="CanvasTexture_fvio1"]
 
 [sub_resource type="Theme" id="Theme_3108v"]
@@ -558,13 +464,17 @@ script = ExtResource("9_1u2nm")
 combatManager = NodePath("..")
 uiManager = NodePath("../UIManager")
 
+[node name="MusicHolder" type="Node3D" parent="CombatManager"]
+script = ExtResource("54_gsvxg")
+musicPath = "res://Combat/0Core/battle.mp3"
+
 [node name="PartyManager" type="Node3D" parent="." node_paths=PackedStringArray("managers")]
 script = ExtResource("9_ah2fn")
 baseMembers = [ExtResource("10_7pwb7"), ExtResource("11_wj8pa"), ExtResource("12_h78bi"), ExtResource("13_nnw16")]
 vaktholItems = [SubResource("Resource_gaxvb"), SubResource("Resource_cxsht"), SubResource("Resource_lxtj8")]
 ThalriaItems = [ExtResource("17_vxtna"), ExtResource("27_n8681")]
-athliaItems = [SubResource("Resource_hb6rw"), SubResource("Resource_de2wb")]
-olrenItems = [ExtResource("19_4kg3f"), SubResource("Resource_rmxds"), SubResource("Resource_de2wb")]
+AthliaItems = [ExtResource("29_g6fdf"), ExtResource("30_r5v1q")]
+OlrenItems = [ExtResource("31_1d5xq"), ExtResource("30_r5v1q"), ExtResource("32_m7fip"), ExtResource("19_4kg3f")]
 experienceThreshholds = PackedInt32Array(10, 20, 40, 99999, 160, 320, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 managers = NodePath("../ManagerReferenceHolder")
 
@@ -2948,6 +2858,14 @@ offset_bottom = 225.0
 theme_override_font_sizes/font_size = 30
 text = "No"
 
+[node name="Back" parent="UI/Shop/Background" instance=ExtResource("48_a3c2t")]
+visible = false
+layout_mode = 0
+offset_left = 520.0
+offset_top = 348.0
+offset_right = 970.0
+offset_bottom = 498.0
+
 [node name="PartyMembers" type="Node3D" parent="."]
 
 [node name="Member1" type="CharacterBody3D" parent="PartyMembers"]
@@ -3414,17 +3332,17 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="mouse_entered" from="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [3, false]]
 [connection signal="mouse_exited" from="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [3, false]]
 [connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [0, true]]
-[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [0, true]]
-[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [0, true]]
+[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager/UIManager" method="OnHoverOverFighterPanel" binds= [0, true]]
+[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager/UIManager" method="OnStopHoverOverFighterPanel" binds= [0, true]]
 [connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [1, true]]
-[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [1, true]]
-[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [1, true]]
+[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager/UIManager" method="OnHoverOverFighterPanel" binds= [1, true]]
+[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager/UIManager" method="OnStopHoverOverFighterPanel" binds= [1, true]]
 [connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [2, true]]
-[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [2, true]]
-[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [2, true]]
+[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager/UIManager" method="OnHoverOverFighterPanel" binds= [2, true]]
+[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager/UIManager" method="OnStopHoverOverFighterPanel" binds= [2, true]]
 [connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [3, true]]
-[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [3, true]]
-[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [3, true]]
+[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager/UIManager" method="OnHoverOverFighterPanel" binds= [3, true]]
+[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager/UIManager" method="OnStopHoverOverFighterPanel" binds= [3, true]]
 [connection signal="button_down" from="UI/Options/Panel/AttackButton" to="CombatManager" method="OnAttackButtonDown"]
 [connection signal="button_down" from="UI/Options/Panel/CastButton" to="CombatManager" method="OnCastButtonDown"]
 [connection signal="button_down" from="UI/Options/Panel/ItemButton" to="CombatManager" method="OnItemButtonDown"]

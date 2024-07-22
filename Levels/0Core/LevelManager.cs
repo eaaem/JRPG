@@ -157,7 +157,7 @@ public partial class LevelManager : Node
       // Only combat levels have arenas
       if (level.HasNode("Arena"))
       {
-         GetNode<CombatManager>("/root/BaseNode/CombatManagerObj").ResetNodes();
+         GetNode<CombatManager>("/root/BaseNode/CombatManager").ResetNodes();
       }
 
       LocationData currentLocationData = isLoaded ? locationData 
@@ -195,7 +195,7 @@ public partial class LevelManager : Node
       {
          for (int j = 0; j < region.GetChild(i).GetChildCount(); j++)
          {
-            if (region.GetChild(i).GetChild(j).Name == "WorldEnemy")
+            if (region.GetChild(i).GetChild(j).IsInGroup("enemy"))
             {
                region.GetChild(i).GetChild<WorldEnemy>(j).id = enemyCounter;
                if (!isLoaded)
@@ -255,7 +255,7 @@ public partial class LevelManager : Node
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
       }
 
-      musicPlayer.Stream = GD.Load<AudioStreamMP3>(source.GetNode<MusicHolder>("MusicHolder").musicPath);
+      LoadNewMusic(source);
       musicPlayer.Play();
       
       while (musicPlayer.VolumeDb < 0f)
@@ -263,6 +263,20 @@ public partial class LevelManager : Node
          musicPlayer.VolumeDb += 8f;
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
       }
+   }
+
+   public async void MuteMusic()
+   {
+      while (musicPlayer.VolumeDb > -80.1f)
+      {
+         musicPlayer.VolumeDb -= 8f;
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+      }
+   }
+
+   public void LoadNewMusic(Node source)
+   {
+      musicPlayer.Stream = GD.Load<AudioStreamMP3>(source.GetNode<MusicHolder>("MusicHolder").musicPath);
    }
 
    public void ResetGameState()

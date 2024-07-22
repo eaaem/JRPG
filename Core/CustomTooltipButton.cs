@@ -7,7 +7,7 @@ public partial class CustomTooltipButton : Button
 
    public override void _Ready()
    {
-      customTooltipScene = GD.Load<PackedScene>("res://BasicUI/tooltip_scene.tscn");
+      customTooltipScene = GD.Load<PackedScene>("res://Core/tooltip_scene.tscn");
    }
 
    public override Control _MakeCustomTooltip(string forText)

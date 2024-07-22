@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://ctx6x6i2srelv"]
+[gd_scene load_steps=6 format=3 uid="uid://ctx6x6i2srelv"]
 
 [ext_resource type="PackedScene" uid="uid://b6ut8vyjhyc4x" path="res://Party/Olren/olren.glb" id="1_mf8gb"]
 [ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_vef2k"]
+[ext_resource type="PackedScene" uid="uid://48ss871jtuis" path="res://Party/Olren/olren_quiver.glb" id="3_dkcxd"]
+[ext_resource type="PackedScene" uid="uid://ca4cg8yfjvek3" path="res://Party/Olren/olren_bow.glb" id="3_txnns"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x2kqx"]
 
@@ -13,3 +15,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.974979, 0)
 shape = SubResource("CapsuleShape3D_x2kqx")
 
 [node name="Model" parent="." instance=ExtResource("1_mf8gb")]
+
+[node name="BackAnchor" type="Node3D" parent="."]
+transform = Transform3D(-0.158533, -0.487022, 0.858881, -0.0884017, 0.87339, 0.478932, -0.983389, 2.98023e-08, -0.181515, 0.303228, -0.2582, -0.144977)
+
+[node name="Weapon" parent="." instance=ExtResource("3_txnns")]
+transform = Transform3D(-0.158533, -0.487022, 0.858881, -0.0884016, 0.87339, 0.478932, -0.983388, 2.98023e-08, -0.181515, 0.424648, -0.471368, -0.0385999)
+visible = false
+
+[node name="SecondaryAnchor" type="Node3D" parent="."]
+transform = Transform3D(-0.158533, -0.487022, 0.858881, -0.0884016, 0.87339, 0.478932, -0.983388, 2.23517e-08, -0.181515, 0.103, 0, -0.145)
+
+[node name="SecondaryWeapon" parent="." instance=ExtResource("3_dkcxd")]
+
+[editable path="Model"]

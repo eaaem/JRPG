@@ -10,7 +10,7 @@ public partial class EnemyDataHolder : Node
 
    public override void _Ready()
    {
-      combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManagerObj");
+      combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManager");
       //CollisionObject3D collider = GetNode<CollisionObject3D>("StaticBody3D");
       //collider.InputEvent += ClickFighter;
    }

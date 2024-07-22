@@ -45,7 +45,6 @@ public partial class WorldEnemy : CharacterBody3D
 	{
       RandomizeEnemies();
 
-      //animationPlayer = GetNode<AnimationPlayer>("Model/AnimationPlayer");
       navigationAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
 
       player = GetNode<CharacterBody3D>("/root/BaseNode/PartyMembers/Member1");
@@ -53,18 +52,7 @@ public partial class WorldEnemy : CharacterBody3D
 
       model = GetNode<Node3D>("Model");
 
-      combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManagerObj");
-
-      if (isStaticEnemy)
-      {
-         animationPlayer = model.GetNode<AnimationPlayer>("AnimationPlayer");
-         animationPlayer.Play("OnHill");
-      }
-
-      /*if (animationPlayer.CurrentAnimation != "Idle")
-      {
-         animationPlayer.Play("Idle");
-      }*/
+      combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManager");
 
       originalPosition = GlobalPosition;
       originalRotation = GlobalRotation;

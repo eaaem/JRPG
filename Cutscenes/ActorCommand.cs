@@ -111,11 +111,38 @@ public enum CommandType
    /// <br></br><br></br>
    /// <c>ActorName</c> (string) : the name of the actor to stop tracking
    /// </summary>
-   StopTrack
+   StopTrack,
+   /// <summary>
+   /// Fades to or from black.
+   /// <br></br><br></br>
+   /// <c>Fade</c> (bool) : whether to fade to or from black
+   /// </summary>
+   FadeBlack,
+   /// <summary>
+   /// Immediately places the camera at the given location.
+   /// <br></br><br></br>
+   /// <c>Destination</c> (Vector3) : the new location of the camera
+   /// </summary>
+   PlaceCamera,
+   /// <summary>
+   /// Immediately rotates the camera to the given angles.
+   /// <br></br><br></br>
+   /// <c>Destination</c> (Vector3) : the new rotation of the camera, in radians
+   /// </summary>
+   QuickRotateCamera,
+   /// <summary>
+   /// Calls a method on the LEVEL PROGRESSION script attached to the object at the given path. This works only for methods with no parameters.
+   /// The script MUST inherit from the LevelProgression class.
+   /// <br></br><br></br>
+   /// <c>Method</c> (string) : the name of the method to call
+   /// <br></br>
+   /// <c>ObjectPath</c> (string) : the scene tree path that leads to the object with the script
+   /// </summary>
+   CallMethod
 }
 
 /// <summary>
-/// Represents a cutscene command to be given to an actor.
+/// Represents a single cutscene command.
 /// </summary>
 [GlobalClass, Tool]
 public partial class ActorCommand : Resource
@@ -145,11 +172,15 @@ public partial class ActorCommand : Resource
 
    public bool Hide { get; set; }
    public bool MakeLocked { get; set; }
+   public bool Fade { get; set; }
 
    public string AnimationName { get; set; }
    public string TargetAnimation { get; set; }
 
    public float Blend { get; set; }
+
+   public string Method { get; set;}
+   public string ObjectPath { get; set;}
 
    public override Array<Dictionary> _GetPropertyList()
    {
@@ -161,7 +192,7 @@ public partial class ActorCommand : Resource
          { "type", (int)Variant.Type.Int },
          { "hint", (int)PropertyHint.Enum },
          { "hint_string", "None,Move,Rotate,QuickRotate,ChangeDialogueVisibility,ChangeWeaponVisibility,ChangeDialogueLock,SpeakNext,SetIdleAnimation," + 
-                          "SetWalkAnimation,Pause,Place,PlayAnimation,Track,StopTrack" }
+                          "SetWalkAnimation,Pause,Place,PlayAnimation,Track,StopTrack,FadeBlack,PlaceCamera,QuickRotateCamera,CallMethod" }
       });
 
       switch (commandType)
@@ -333,6 +364,45 @@ public partial class ActorCommand : Resource
                { "name", $"ActorName" },
                { "type", (int)Variant.Type.String }
             });
+            
+            break;
+         case CommandType.FadeBlack:
+            result.Add(new Dictionary()
+            {
+               { "name", $"Fade" },
+               { "type", (int)Variant.Type.Bool }
+            });
+            
+            break;
+         case CommandType.PlaceCamera:
+            result.Add(new Dictionary()
+            {
+               { "name", $"Destination" },
+               { "type", (int)Variant.Type.Vector3 }
+            });
+            
+            break;
+         case CommandType.QuickRotateCamera:
+            result.Add(new Dictionary()
+            {
+               { "name", $"Destination" },
+               { "type", (int)Variant.Type.Vector3 }
+            });
+            
+            break;
+         case CommandType.CallMethod:
+            result.Add(new Dictionary()
+            {
+               { "name", $"Method" },
+               { "type", (int)Variant.Type.String }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"ObjectPath" },
+               { "type", (int)Variant.Type.String }
+            });
+            
             
             break;
       }

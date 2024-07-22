@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://7nrqikik8ftl"]
 
 [ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Levels/2Misc/Enemies/test.png" id="1_0wgwd"]
-[ext_resource type="Texture2D" uid="uid://d2n58dy4r63eg" path="res://selection_highlight_texture.png" id="2_ur28j"]
+[ext_resource type="Texture2D" uid="uid://d2n58dy4r63eg" path="res://Combat/Arena/selection_highlight_texture.png" id="2_ur28j"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3r3hm"]
 shading_mode = 0
@@ -41,7 +41,6 @@ radius = 2.0
 height = 4.0
 
 [node name="EnemyPlacement1" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.741, 0, 0.379)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false

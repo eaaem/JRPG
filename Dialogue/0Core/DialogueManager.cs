@@ -137,7 +137,7 @@ public partial class DialogueManager : Node
          }
       }
 
-      // Used to skip objects, in case of situations where a few playable characters may have dialogue options yet others don't
+      // Used to skip objects, in case of situations where a few playable characters may have dialogue options while others don't
       if (currentObject.content == "EMPTY")
       {
          NextDialogue(index + 1);
@@ -353,6 +353,17 @@ public partial class DialogueManager : Node
             }
          }
       }
+   }
+
+   /// <summary>
+   /// Replaces the current dialogue interaction.
+   /// <br></br><br></br>
+   /// <c>newInteraction</c> : the new dialogue interaction
+   /// </summary>
+   public void ReplaceDialogueInteraction(DialogueInteraction newInteraction)
+   {
+      CurrentInteraction = newInteraction;
+      currentDialogueList = CurrentInteraction.dialogueList;
    }
 
    void ExitDialogue()

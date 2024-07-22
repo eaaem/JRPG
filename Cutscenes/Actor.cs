@@ -101,7 +101,7 @@ public partial class Actor : CharacterBody3D
       AnimationPlayer player = GetNode<AnimationPlayer>("Model/AnimationPlayer");
       player.Play(actorStatus.walkAnim, 0.5f);
 
-      while (distance > 0.1f)
+      while (distance > 0.25f)
       {
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
 

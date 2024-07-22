@@ -1,0 +1,24 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=4 format=3 uid="uid://16pnaw3egarc"]
+
+[ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="1_wf2qo"]
+[ext_resource type="Script" path="res://Combat/0Core/ItemResource.cs" id="2_pfb34"]
+
+[sub_resource type="Resource" id="Resource_0kp3l"]
+script = ExtResource("1_wf2qo")
+stats = [null, null, null, null, null, null, null, null, null, null]
+
+[resource]
+script = ExtResource("2_pfb34")
+name = "Tertha Stathrin"
+description = "A carved wooden statue of Tertha, goddess of life and the earth."
+scriptName = ""
+specialModifier = 0.0
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+itemType = 0
+itemCategory = 0
+price = 3
+affectedStats = SubResource("Resource_0kp3l")
+usableOutsideCombat = false

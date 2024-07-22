@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 /// <summary>
@@ -42,8 +43,6 @@ public partial class CutsceneManager : Node
          GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = false;
          managers.Controller.isInCutscene = true;
          managers.Controller.IsSprinting = false;
-
-         
 
          if (cutsceneObject.hideParty)
          {
@@ -188,10 +187,60 @@ public partial class CutsceneManager : Node
          actor = GetActor(command.ActorName);
          actor.StopTracking();
          break;
+      case CommandType.FadeBlack:
+         if (command.Fade)
+         {
+            managers.MenuManager.FadeToBlack();
+         }
+         else
+         {
+            managers.MenuManager.FadeFromBlack();
+         }
+         
+         break;
+      case CommandType.PlaceCamera:
+         cutsceneCamera.Position = command.Destination;
+         break;
+      case CommandType.QuickRotateCamera:
+         cutsceneCamera.Rotation = command.Destination;
+         break;
+      case CommandType.CallMethod:
+         LevelProgession script = GetNode<LevelProgession>(command.ObjectPath);
+         script.Call(command.Method);
+         break;
       default:
          GD.Print("Cutscene command invalid.");
          break;
       }
+   }
+
+   /// <summary>
+   /// Inserts items from a cutscene object into the current cutscene object. This is useful for cutscenes that have different items depending on player decisions,
+   /// since it allows for changing the cutscene's content at runtime.
+   /// <br></br><br></br>
+   /// <c>cutsceneObject</c> : the cutscene object from which new items will be inserted
+   /// <br></br>
+   /// <c>index</c> : the starting index at which the new items will be inserted
+   /// </summary>
+   public void InsertCutsceneItems(CutsceneObject newCutsceneObject, int index)
+   {
+      // Resizes the array, moves over the existing items, and copies in the new items
+      Array.Resize(ref currentCutsceneObject.items, currentCutsceneObject.items.Length + newCutsceneObject.items.Length);
+      Array.Copy(currentCutsceneObject.items, index, currentCutsceneObject.items, index + newCutsceneObject.items.Length, 
+                 currentCutsceneObject.items.Length - index - newCutsceneObject.items.Length);
+      Array.Copy(newCutsceneObject.items, 0, currentCutsceneObject.items, index, newCutsceneObject.items.Length);
+
+      // Constructs a new dialogue interaction and replaces it in the dialogue manager (without this, the dialogue won't update properly)
+      DialogueInteraction newInteraction = new DialogueInteraction();
+      newInteraction.dialogueList = new DialogueList();
+      newInteraction.dialogueList.dialogues = new DialogueObject[currentCutsceneObject.items.Length];
+      
+      for (int i = 0; i < currentCutsceneObject.items.Length; i++)
+      {
+         newInteraction.dialogueList.dialogues[i] = currentCutsceneObject.items[i].dialogue;
+      }
+
+      managers.DialogueManager.ReplaceDialogueInteraction(newInteraction);
    }
 
    public async void EndCutscene()
@@ -231,7 +280,7 @@ public partial class CutsceneManager : Node
          managers.Controller.isInCutscene = false;
          managers.Controller.GetNode<Node3D>("CameraTarget").RotateY(-managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y);
 
-         GetNode<Node3D>("/root/BaseNode/").RemoveChild(actor);
+         GetNode<Node3D>("/root/BaseNode").RemoveChild(actor);
          actor.QueueFree();
 
          if (currentCutsceneObject.hideParty)

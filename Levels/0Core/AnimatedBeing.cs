@@ -4,7 +4,7 @@ using System;
 /// <summary>
 /// Controls beings with animations (people, animals, etc) that need to initialize an animation when the level loads.
 /// </summary>
-public partial class AnimatedBeing : Node
+public partial class AnimatedBeing : Node3D
 {
 	[Export]
    private string animationName;

@@ -1,0 +1,65 @@
+[gd_scene load_steps=9 format=3 uid="uid://dmljiy0iexq6p"]
+
+[ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_hh8ba"]
+[ext_resource type="PackedScene" uid="uid://fc771flpqrkl" path="res://Levels/2Misc/Peasants/peasant_male.glb" id="2_nyhe5"]
+[ext_resource type="Material" uid="uid://dhjx8br4ux31j" path="res://Levels/2Misc/Peasants/brown_peasant_cloth.tres" id="3_1rkk4"]
+[ext_resource type="Material" uid="uid://do7lsml0ai83t" path="res://Levels/2Misc/Peasants/mixed_skin.tres" id="4_j5iat"]
+[ext_resource type="Material" uid="uid://pq83id1h8vpu" path="res://Levels/2Misc/Peasants/white_hair.tres" id="5_4727j"]
+[ext_resource type="Material" uid="uid://drkudhfypq11q" path="res://Levels/2Misc/Peasants/brown_eyes.tres" id="6_w7e7r"]
+[ext_resource type="Material" uid="uid://cyxf7jvdetewr" path="res://Levels/2Misc/Peasants/dark_lips.tres" id="7_c232k"]
+[ext_resource type="Material" uid="uid://dwc841okcim5o" path="res://Levels/2Misc/Peasants/tan_peasant_clothes.tres" id="8_x3648"]
+
+[node name="alrith" type="CharacterBody3D"]
+script = ExtResource("1_hh8ba")
+
+[node name="Model" parent="." instance=ExtResource("2_nyhe5")]
+
+[node name="Beard_001" parent="Model/Skeleton_001/Skeleton3D" index="0"]
+visible = false
+
+[node name="Belt_001" parent="Model/Skeleton_001/Skeleton3D" index="1"]
+surface_material_override/0 = ExtResource("3_1rkk4")
+
+[node name="Body_001" parent="Model/Skeleton_001/Skeleton3D" index="2"]
+surface_material_override/0 = ExtResource("4_j5iat")
+
+[node name="Braid_001" parent="Model/Skeleton_001/Skeleton3D" index="3"]
+visible = false
+
+[node name="Buckle_001" parent="Model/Skeleton_001/Skeleton3D" index="4"]
+visible = false
+
+[node name="Bun_001" parent="Model/Skeleton_001/Skeleton3D" index="5"]
+visible = false
+
+[node name="Cap_001" parent="Model/Skeleton_001/Skeleton3D" index="6"]
+visible = false
+
+[node name="Eyebrows" parent="Model/Skeleton_001/Skeleton3D" index="7"]
+surface_material_override/0 = ExtResource("5_4727j")
+
+[node name="Eyes_001" parent="Model/Skeleton_001/Skeleton3D" index="8"]
+surface_material_override/0 = ExtResource("6_w7e7r")
+
+[node name="Gloves_001" parent="Model/Skeleton_001/Skeleton3D" index="9"]
+surface_material_override/0 = ExtResource("3_1rkk4")
+
+[node name="Lips_001" parent="Model/Skeleton_001/Skeleton3D" index="10"]
+surface_material_override/0 = ExtResource("7_c232k")
+
+[node name="Ponytail_001" parent="Model/Skeleton_001/Skeleton3D" index="11"]
+visible = false
+
+[node name="Shoes_001" parent="Model/Skeleton_001/Skeleton3D" index="12"]
+surface_material_override/0 = ExtResource("3_1rkk4")
+
+[node name="ShortHair_001" parent="Model/Skeleton_001/Skeleton3D" index="13"]
+visible = false
+
+[node name="Trousers_001" parent="Model/Skeleton_001/Skeleton3D" index="14"]
+surface_material_override/0 = ExtResource("8_x3648")
+
+[node name="Tunic_001" parent="Model/Skeleton_001/Skeleton3D" index="15"]
+surface_material_override/0 = ExtResource("8_x3648")
+
+[editable path="Model"]
