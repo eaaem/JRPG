@@ -101,6 +101,8 @@ public partial class CombatManager : Node
    public delegate void AttackAnimationEventHandler();
    [Signal]
    public delegate void AddBadgeEventHandler();
+   [Signal]
+   public delegate void BattleEndEventHandler();
 
    public bool IsInCombat { get; set; }
 
@@ -288,7 +290,9 @@ public partial class CombatManager : Node
             uiManager.InitializePartyPanel(newFighter, i);
 
             newFighter.model = managers.PartyManager.Party[i].model;
+            newFighter.model.GetNode<AnimationTree>("AnimationTree").Active = false;
             newFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
+
 
             BoneAttachment3D attachment = newFighter.model.GetNode<BoneAttachment3D>("Model/Armature/Skeleton3D/WeaponAttachment");
             attachment.BoneName = "hand.L";
@@ -712,6 +716,7 @@ public partial class CombatManager : Node
       isAttacking = false;
       uiManager.DisablePanels();
       uiManager.HideAll();
+      uiManager.ShowSelectionBox();
    }
 
    public Member GetCurrentMember()
@@ -766,7 +771,7 @@ public partial class CombatManager : Node
       // Olren's attacks have special effects
       passiveManager.ApplyOlrenPassive();
       
-      player.Play("Attack", 0.5f);
+      player.Play("Attack");
       EmitSignal(SignalName.AttackAnimation);
 
       await ToSignal(GetTree().CreateTimer(player.CurrentAnimationLength + 0.35f), "timeout");
@@ -1262,6 +1267,8 @@ public partial class CombatManager : Node
             int oldLevel = managers.PartyManager.Party[i].level;
             int oldAbilityCount = managers.PartyManager.Party[i].abilities.Count;
 
+            managers.PartyManager.Party[i].model.GetNode<AnimationTree>("AnimationTree").Active = true;
+
             Fighter fighter = GetFighterFromMember(managers.PartyManager.Party[i]);
             managers.PartyManager.Party[i].currentHealth = Mathf.Clamp(fighter.currentHealth, 1, 9999);
             managers.PartyManager.Party[i].currentMana = fighter.currentMana;
@@ -1281,7 +1288,6 @@ public partial class CombatManager : Node
       {
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
       }
-
 
       uiManager.ExitVictoryScreen();
       managers.PartyManager.Party[0].model.Position = returnPosition;
@@ -1316,6 +1322,8 @@ public partial class CombatManager : Node
       {
          GetNode<CutsceneManager>("/root/BaseNode/CutsceneManager").CutsceneSignalReceiver(currentEnemyScript.postBattleCutsceneName);
       }
+
+      EmitSignal(SignalName.BattleEnd);
    }
 
    void Loss()
@@ -1477,7 +1485,6 @@ public partial class CombatManager : Node
       affectedFighter.companion.model.Rotation = Vector3.Zero;
       affectedFighter.companion.model.GetNode<Node3D>("Model").Rotation = fighterModel.Rotation;
       affectedFighter.companion.model.GetNode<Node3D>("Model").Position = Vector3.Zero;
-
 
       affectedFighter.companion.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
       affectedFighter.companion.model.Visible = false;

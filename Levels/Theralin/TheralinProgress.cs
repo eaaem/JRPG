@@ -14,6 +14,8 @@ public partial class TheralinProgress : LevelProgession
 
    int dialogueIndex = 0;
 
+   System.Collections.Generic.List<Member> oldParty;
+
    public override void LoadLevel()
    {
       progress = managers.LevelManager.LocationDatas[managers.LevelManager.ActiveLocationDataID].levelProgress;
@@ -222,7 +224,7 @@ public partial class TheralinProgress : LevelProgession
    {
       WorldEnemy enemy = GetNode<WorldEnemy>("TutorialEnemyData");
 
-      System.Collections.Generic.List<Member> oldParty = new System.Collections.Generic.List<Member>(managers.PartyManager.Party);
+      oldParty = new System.Collections.Generic.List<Member>(managers.PartyManager.Party);
 
       Member vakthol = null;
 
@@ -240,5 +242,27 @@ public partial class TheralinProgress : LevelProgession
       GetNode<CombatManager>("/root/BaseNode/CombatManager").SetupCombat(enemy.enemies, Vector3.Zero, Vector3.Zero,
                                                                          enemy);
       GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = true;
+      GetNode<CombatManager>("/root/BaseNode/CombatManager").BattleEnd += EndOfTutorialBattle;
+   }
+
+   void EndOfTutorialBattle()
+   {
+      GetNode<CombatManager>("/root/BaseNode/CombatManager").BattleEnd -= EndOfTutorialBattle;
+
+      GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = false;
+      GetNode<Camera3D>("/root/BaseNode/CutsceneCamera").MakeCurrent();
+      managers.Controller.DisableMovement = true;
+      managers.Controller.DisableCamera = true;
+
+      managers.PartyManager.Party = new System.Collections.Generic.List<Member>(oldParty);
+      managers.DialogueManager.NextCutsceneDialogue();
+
+      for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+      {
+         if (managers.PartyManager.Party[i].characterType == CharacterType.Vakthol)
+         {
+            managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(49.43f, 3.24f, 53f);
+         }
+      }
    }
 }

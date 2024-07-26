@@ -668,6 +668,11 @@ public partial class CombatUIManager : Node
       secondaryOptions.Visible = false;
    }
 
+   public void ShowSelectionBox()
+   {
+      selectionBox.Visible = true;
+   }
+
 	public void MoveSecondaryOptionsToLeft()
    {
       secondaryOptions.Position = new Vector2(250, 500);
