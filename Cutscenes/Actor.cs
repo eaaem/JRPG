@@ -120,6 +120,13 @@ public partial class Actor : CharacterBody3D
       isRotating = true;
    }
 
+   public void TurnCharacterToLookAt(Vector3 targetPosition)
+   {
+      Basis lookAt = Basis.LookingAt(targetPosition - GlobalPosition, Vector3.Up, true);
+      currentTargetRotation = lookAt.GetEuler().Y;
+      isRotating = true;
+   }
+
    public async override void _PhysicsProcess(double delta)
    {
       if (isMoving)

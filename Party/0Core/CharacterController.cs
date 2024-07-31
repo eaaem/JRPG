@@ -2,8 +2,8 @@ using Godot;
 
 public partial class CharacterController : CharacterBody3D
 {
-   public const float RegularSpeed = 5.0f;
-   public const float SprintSpeed = 10.0f;
+   public float RegularSpeed = 5.0f;
+   public float SprintSpeed = 10.0f;
    public const float JumpVelocity = 4.5f;
    public float HorizontalSensitivity = 0.5f;
 

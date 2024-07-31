@@ -152,7 +152,7 @@ public partial class OverworldPartyController : CharacterBody3D
          modelRotation.Y = Mathf.LerpAngle(model.Rotation.Y, Mathf.Atan2(velocity.X, velocity.Z), 0.25f);
          model.Rotation = modelRotation;
 
-         float speed = player.IsSprinting ? CharacterController.SprintSpeed : CharacterController.RegularSpeed;
+         float speed = player.IsSprinting ? managers.Controller.SprintSpeed : managers.Controller.RegularSpeed;
 
          velocity.X = currentAgentPosition.DirectionTo(nextPathPosition).X * speed;
          velocity.Z = currentAgentPosition.DirectionTo(nextPathPosition).Z * speed;

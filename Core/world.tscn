@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=126 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -46,6 +46,7 @@
 [ext_resource type="FontFile" uid="uid://ccrrftptiji35" path="res://Menus/0Core/Merriweather-Italic.ttf" id="34_0e0eh"]
 [ext_resource type="Script" path="res://Menus/Misc/MiscMenuManager.cs" id="34_bcm0h"]
 [ext_resource type="Script" path="res://Menus/0Core/MenuManager.cs" id="35_dwed3"]
+[ext_resource type="Shader" path="res://Core/screen_distortion.gdshader" id="35_r7lu3"]
 [ext_resource type="FontFile" uid="uid://b2twoq48myxmy" path="res://Menus/0Core/Merriweather-Bold.ttf" id="35_v46tb"]
 [ext_resource type="Script" path="res://Levels/1Features/ItemPickup/ItemPickupManager.cs" id="36_qnjxv"]
 [ext_resource type="Script" path="res://Levels/1Features/Shop/ShopMenuManager.cs" id="37_jygy0"]
@@ -304,6 +305,18 @@ price = 0
 affectedStats = SubResource("Resource_mokav")
 usableOutsideCombat = false
 
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ufnw2"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2286b"]
+noise = SubResource("FastNoiseLite_ufnw2")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6oimm"]
+shader = ExtResource("35_r7lu3")
+shader_parameter/speed = 0.1
+shader_parameter/scale = 0.0
+shader_parameter/BIAS = 1.0
+shader_parameter/noise = SubResource("NoiseTexture2D_2286b")
+
 [sub_resource type="CanvasTexture" id="CanvasTexture_fvio1"]
 
 [sub_resource type="Theme" id="Theme_3108v"]
@@ -528,6 +541,15 @@ offset_right = 1212.0
 offset_bottom = 593.0
 theme_override_font_sizes/font_size = 25
 text = "Quit to Menu"
+
+[node name="Distortion" type="ColorRect" parent="UI/Overlay"]
+material = SubResource("ShaderMaterial_6oimm")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
 [node name="CombatPartyList" type="CanvasGroup" parent="UI"]
 visible = false

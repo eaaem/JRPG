@@ -208,6 +208,23 @@ public partial class CutsceneManager : Node
          LevelProgession script = GetNode<LevelProgession>(command.ObjectPath);
          script.Call(command.Method);
          break;
+      case CommandType.TurnToLookAt:
+         actor = GetActor(command.ActorName);
+
+         Vector3 targetPosition;
+
+         if (command.Target.StartsWith("/root/"))
+         {
+            targetPosition = GetNode<Node3D>(command.Target).GlobalPosition;
+         }
+         else
+         {
+            targetPosition = GetActor(command.Target).GlobalPosition;
+         }
+
+         actor.TurnCharacterToLookAt(targetPosition);
+
+         break;
       default:
          GD.Print("Cutscene command invalid.");
          break;
@@ -248,6 +265,11 @@ public partial class CutsceneManager : Node
       if (currentCutsceneObject.hideParty)
       {
          managers.MenuManager.FadeToBlack();
+
+         while (!managers.MenuManager.BlackScreenIsVisible)
+         {
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         }
       }
       
       managers.LevelManager.LocationDatas[managers.LevelManager.ActiveLocationDataID].cutscenesSeen[currentID.ToString()] = true;
@@ -260,16 +282,18 @@ public partial class CutsceneManager : Node
          {
             for (int j = 0; j < managers.PartyManager.Party.Count; j++)
             {
-               if (managers.PartyManager.Party[i].characterType.ToString() == currentCutsceneObject.actors[i].tiedMember)
+               if (managers.PartyManager.Party[j].characterType.ToString() == currentCutsceneObject.actors[i].tiedMember)
                {
                   managers.PartyManager.Party[j].model.GlobalPosition = actor.GlobalPosition;
-                  managers.PartyManager.Party[j].model.GlobalRotation = actor.GlobalRotation;
+                  managers.PartyManager.Party[j].model.GetNode<Node3D>("Model").Rotation = actor.GetNode<Node3D>("Model").Rotation;
 
                   if (j == 0)
                   {
                      Node3D cameraHolder = actor.GetNode<Node3D>("CameraTarget");
                      actor.RemoveChild(cameraHolder);
                      managers.PartyManager.Party[0].model.AddChild(cameraHolder);
+
+                     managers.PartyManager.Party[j].model.GetNode<Node3D>("Model").RotateY(-managers.Controller.Rotation.Y);
                   }
 
                   break;
@@ -277,21 +301,22 @@ public partial class CutsceneManager : Node
             }
          }
 
-         managers.Controller.isInCutscene = false;
-         managers.Controller.GetNode<Node3D>("CameraTarget").RotateY(-managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y);
-
          GetNode<Node3D>("/root/BaseNode").RemoveChild(actor);
          actor.QueueFree();
+      }
 
-         if (currentCutsceneObject.hideParty)
+      managers.Controller.isInCutscene = false;
+      managers.Controller.Rotation = new Vector3(0f, managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y, 0f);
+      managers.Controller.GetNode<Node3D>("CameraTarget").RotateY(-managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y);
+
+      if (currentCutsceneObject.hideParty)
+      {
+         while (!managers.MenuManager.BlackScreenIsVisible)
          {
-            while (!managers.MenuManager.BlackScreenIsVisible)
-            {
-               await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-            }
-
-            managers.MenuManager.FadeFromBlack();
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
          }
+
+         managers.MenuManager.FadeFromBlack();
       }
 
       GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = true;
@@ -350,7 +375,7 @@ public partial class CutsceneManager : Node
                if (managers.PartyManager.Party[j].characterType.ToString() == currentCutsceneObject.actors[i].tiedMember)
                {
                   actor.GlobalPosition = managers.PartyManager.Party[j].model.GlobalPosition;
-                  actor.GlobalRotation = managers.PartyManager.Party[j].model.GlobalRotation;
+                  actor.GetNode<Node3D>("Model").GlobalRotation = managers.PartyManager.Party[j].model.GetNode<Node3D>("Model").GlobalRotation;
 
                   if (j == 0)
                   {

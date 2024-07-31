@@ -12,16 +12,29 @@ public partial class TheralinProgress : LevelProgession
 {
    PackedScene tutorialPopupScene;
 
-   int dialogueIndex = 0;
-
    System.Collections.Generic.List<Member> oldParty;
 
    public override void LoadLevel()
    {
       progress = managers.LevelManager.LocationDatas[managers.LevelManager.ActiveLocationDataID].levelProgress;
-      for (int i = 0; i < progress; i++)
+      for (int i = 0; i < (progress < 4 ? progress : 4); i++)
       {
          Call(((TheralinProgressMarkers)i).ToString());
+      }
+
+      RandomDistortion();
+   }
+
+   async void RandomDistortion()
+   {
+      ShaderMaterial material = (ShaderMaterial)GetNode<ColorRect>("/root/BaseNode/UI/Overlay/Distortion").Material;
+
+      while (progress < 4)
+      {
+         await ToSignal(GetTree().CreateTimer(GD.RandRange(20, 60)), "timeout");
+         material.SetShaderParameter("scale", 0.0015);
+         await ToSignal(GetTree().CreateTimer(GD.RandRange(1, 5)), "timeout");
+         material.SetShaderParameter("scale", 0);
       }
    }
 
@@ -161,11 +174,12 @@ public partial class TheralinProgress : LevelProgession
       Node3D items = GetNode<Node3D>("/root/BaseNode/Level/cutscene5_items");
       GetNode<Node3D>("/root/BaseNode/Level").CallDeferred(Node3D.MethodName.RemoveChild, items);
       items.CallDeferred(Node3D.MethodName.QueueFree);
+
+      StartDistortionTimer();
    }
 
    public void ShopTutorial()
    {
-      dialogueIndex = managers.DialogueManager.CurrentIndex;
       tutorialPopupScene = GD.Load<PackedScene>("res://Menus/Other/tutorial_popup.tscn");
       managers.PartyManager.AddItem(new InventoryItem(GD.Load<ItemResource>("res://Items/Consumables/ManaPotion/small_mana_potion.tres"), 1));
 
@@ -263,6 +277,141 @@ public partial class TheralinProgress : LevelProgession
          {
             managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(49.43f, 3.24f, 53f);
          }
+         else if (managers.PartyManager.Party[i].characterType == CharacterType.Thalria)
+         {
+            managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(47f, 3.24f, 53f);
+         }
+         else if (managers.PartyManager.Party[i].characterType == CharacterType.Athlia)
+         {
+            managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(46.5f, 3.24f, 51.6f);
+         }
+         else
+         {
+            managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(48f, 3.24f, 50f);
+         }
       }
+   }
+
+   public async void StartDistortionTimer()
+   {
+      while (managers.Controller.isInCutscene)
+      {
+         await ToSignal(GetTree().CreateTimer(10f), "timeout");
+      }
+
+      ShaderMaterial material = (ShaderMaterial)GetNode<ColorRect>("/root/BaseNode/UI/Overlay/Distortion").Material;
+
+      while (progress < 63)
+      {
+         await ToSignal(GetTree().CreateTimer(1f), "timeout");
+         progress++;
+      }
+
+      if (progress <= 63)
+      {
+         material.SetShaderParameter("scale", 0.002);
+         await ToSignal(GetTree().CreateTimer(2f), "timeout");
+         material.SetShaderParameter("scale", 0);
+      }
+
+      while (progress < 123)
+      {
+         await ToSignal(GetTree().CreateTimer(1f), "timeout");
+         progress++;
+      }
+
+      if (progress <= 123)
+      {
+         material.SetShaderParameter("scale", 0.005);
+         managers.Controller.RegularSpeed = 3.5f;
+         managers.Controller.SprintSpeed = 7f;
+         await ToSignal(GetTree().CreateTimer(6f), "timeout");
+         material.SetShaderParameter("scale", 0);
+         managers.Controller.RegularSpeed = 5f;
+         managers.Controller.SprintSpeed = 10f;
+      }
+
+      while (progress < 153)
+      {
+         await ToSignal(GetTree().CreateTimer(1f), "timeout");
+         progress++;
+      }
+
+      if (progress <= 153)
+      {
+         material.SetShaderParameter("scale", 0.007);
+         managers.Controller.RegularSpeed = 1.5f;
+         managers.Controller.SprintSpeed = 3f;
+         await ToSignal(GetTree().CreateTimer(10f), "timeout");
+         material.SetShaderParameter("scale", 0);
+         managers.Controller.RegularSpeed = 5f;
+         managers.Controller.SprintSpeed = 10f;
+      }
+   
+      while (progress < 183)
+      {
+         await ToSignal(GetTree().CreateTimer(1f), "timeout");
+         progress++;
+      }
+
+      if (progress <= 183)
+      {
+         material.SetShaderParameter("scale", 0.01);
+         managers.Controller.RegularSpeed = 1f;
+         managers.Controller.SprintSpeed = 2f;
+         await ToSignal(GetTree().CreateTimer(10f), "timeout");
+
+         managers.Controller.DisableMovement = true;
+         managers.Controller.DisableCamera = true;
+         managers.MenuManager.FadeToBlack();
+
+         managers.Controller.RegularSpeed = 5f;
+         managers.Controller.SprintSpeed = 10f;
+
+         while (!managers.MenuManager.BlackScreenIsVisible)
+         {
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         }
+
+         material.SetShaderParameter("scale", 0);
+
+         for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+         {
+            if (managers.PartyManager.Party[i].characterType == CharacterType.Vakthol)
+            {
+               managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(-1.591f, 0, 71.755f);
+               managers.PartyManager.Party[i].model.GetNode<Node3D>("Model").GlobalRotation = new Vector3(0f, Mathf.DegToRad(-162.4f), 0f);
+            }
+            else if (managers.PartyManager.Party[i].characterType == CharacterType.Thalria)
+            {
+               managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(-0.152f, 0, 72.25f);
+               managers.PartyManager.Party[i].model.GetNode<Node3D>("Model").GlobalRotation = new Vector3(0f, Mathf.DegToRad(-94.6f), 0f);
+            }
+            else if (managers.PartyManager.Party[i].characterType == CharacterType.Athlia)
+            {
+               managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(-1.576f, 0f, 73.312f);
+               managers.PartyManager.Party[i].model.GetNode<Node3D>("Model").GlobalRotation = new Vector3(0f, Mathf.DegToRad(-63.6f), 0f);
+            }
+            else
+            {
+               managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(-3.144f, 0f, 72.6f);
+               managers.PartyManager.Party[i].model.GetNode<Node3D>("Model").GlobalRotation = new Vector3(0f, Mathf.DegToRad(-97f), 0f);
+            }
+         }
+
+         GetNode<Node3D>("/root/BaseNode/Level/cutscene6_objects").Visible = true;
+
+         await ToSignal(GetTree().CreateTimer(5f), "timeout");
+
+         managers.MenuManager.FadeFromBlack();
+         managers.Controller.DisableCamera = false;
+         CutsceneTrigger trigger = GetNode<CutsceneTrigger>("cutscene6");
+         managers.CutsceneManager.InitiateCutscene(trigger.cutsceneObject, trigger.id);
+      }
+   }
+
+   public void HideObjects()
+   {
+      GetNode<Node3D>("/root/BaseNode/Level/cutscene6_objects").Visible = false;
    }
 }

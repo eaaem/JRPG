@@ -138,7 +138,15 @@ public enum CommandType
    /// <br></br>
    /// <c>ObjectPath</c> (string) : the scene tree path that leads to the object with the script
    /// </summary>
-   CallMethod
+   CallMethod,
+   /// <summary>
+   /// Turns one actor to look at another actor or an object in the scene. Functions identically to rotate, but with a certain target.
+   /// <br></br><br></br>
+   /// <c>ActorName</c> (string) : the actor to rotate
+   /// <br></br>
+   /// <c>Target</c> (string) : the name of the target (an actor or a node path from the root to the object)
+   /// </summary>
+   TurnToLookAt
 }
 
 /// <summary>
@@ -192,7 +200,7 @@ public partial class ActorCommand : Resource
          { "type", (int)Variant.Type.Int },
          { "hint", (int)PropertyHint.Enum },
          { "hint_string", "None,Move,Rotate,QuickRotate,ChangeDialogueVisibility,ChangeWeaponVisibility,ChangeDialogueLock,SpeakNext,SetIdleAnimation," + 
-                          "SetWalkAnimation,Pause,Place,PlayAnimation,Track,StopTrack,FadeBlack,PlaceCamera,QuickRotateCamera,CallMethod" }
+                          "SetWalkAnimation,Pause,Place,PlayAnimation,Track,StopTrack,FadeBlack,PlaceCamera,QuickRotateCamera,CallMethod,TurnToLookAt" }
       });
 
       switch (commandType)
@@ -403,7 +411,20 @@ public partial class ActorCommand : Resource
                { "type", (int)Variant.Type.String }
             });
             
-            
+            break;
+         case CommandType.TurnToLookAt:
+            result.Add(new Dictionary()
+            {
+               { "name", $"ActorName" },
+               { "type", (int)Variant.Type.String }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"Target" },
+               { "type", (int)Variant.Type.String }
+            });
+
             break;
       }
 
