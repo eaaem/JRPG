@@ -65,20 +65,25 @@ public partial class WorldMapController : CharacterBody2D
       locationInfo.Visible = false;
    }
 
-   public override async void _Input(InputEvent @event)
+   public override void _Input(InputEvent @event)
    {
       if (@event.IsActionPressed("interact") && locationInfo.Visible)
       {
-         managers.MenuManager.FadeToBlack();
-
-         while (!managers.MenuManager.BlackScreenIsVisible)
-         {
-            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-         }
-         
-         managers.LevelManager.TransitionLevels(targetLocationName, externalLocationName, entrancePointName);
-
-         managers.MenuManager.FadeFromBlack();
+         ExitWorldMap(targetLocationName, externalLocationName, entrancePointName);
       }
+   }
+
+   public async void ExitWorldMap(string internalLocation, string externalLocation, string spawnPoint)
+   {
+      managers.MenuManager.FadeToBlack();
+
+      while (!managers.MenuManager.BlackScreenIsVisible)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+      }
+      
+      managers.LevelManager.TransitionLevels(internalLocation, externalLocation, spawnPoint);
+
+      managers.MenuManager.FadeFromBlack();
    }
 }

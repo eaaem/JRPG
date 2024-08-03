@@ -1,0 +1,61 @@
+[gd_scene load_steps=13 format=3 uid="uid://bfoj30231kr42"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3wyio"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j8aiv"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_rdg7k"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_x1bmn"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_w6c0x"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_taolo"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2n6ro"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_sa4f6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g6cq0"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mudmq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_tvt2a"]
+
+[sub_resource type="Theme" id="Theme_yuc0v"]
+Button/colors/font_focus_color = Color(0.580392, 0.792157, 0.94902, 1)
+Button/colors/font_hover_color = Color(1, 1, 1, 1)
+Button/styles/disabled = SubResource("StyleBoxEmpty_3wyio")
+Button/styles/focus = SubResource("StyleBoxEmpty_j8aiv")
+Button/styles/hover = SubResource("StyleBoxEmpty_rdg7k")
+Button/styles/normal = SubResource("StyleBoxEmpty_x1bmn")
+Button/styles/pressed = SubResource("StyleBoxEmpty_w6c0x")
+CheckButton/constants/h_separation = 0
+CheckButton/styles/disabled = SubResource("StyleBoxEmpty_taolo")
+CheckButton/styles/focus = SubResource("StyleBoxEmpty_2n6ro")
+CheckButton/styles/hover = SubResource("StyleBoxEmpty_sa4f6")
+CheckButton/styles/hover_pressed = SubResource("StyleBoxEmpty_g6cq0")
+CheckButton/styles/normal = SubResource("StyleBoxEmpty_mudmq")
+CheckButton/styles/pressed = SubResource("StyleBoxEmpty_tvt2a")
+
+[node name="ObjectSetContainer" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 500.0
+offset_bottom = 100.0
+
+[node name="PaintButton" type="CheckButton" parent="."]
+layout_mode = 0
+offset_left = 17.0
+offset_right = 90.0
+offset_bottom = 24.0
+theme = SubResource("Theme_yuc0v")
+text = "Paint"
+
+[node name="EraseButton" type="CheckButton" parent="."]
+layout_mode = 0
+offset_left = 97.0
+offset_right = 176.0
+offset_bottom = 24.0
+theme = SubResource("Theme_yuc0v")
+text = "Erase"

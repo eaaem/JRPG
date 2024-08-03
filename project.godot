@@ -37,7 +37,7 @@ version_control/autoload_on_startup=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/cutscenes/plugin.cfg")
+enabled=PackedStringArray("res://addons/ObjectBrush/plugin.cfg")
 
 [importer_defaults]
 
@@ -103,6 +103,7 @@ sprint={
 3d_physics/layer_4="party"
 3d_physics/layer_5="items"
 3d_physics/layer_6="doors"
+3d_physics/layer_7="terrain"
 
 [rendering]
 

@@ -84,8 +84,9 @@ public partial class PartyManager : Node
       CharacterController controller = GetNode<CharacterController>("/root/BaseNode/PartyMembers/Member1");
       for (int i = 1; i < 4; i++)
       {
-         CharacterBody3D memberNode = GetNode<CharacterBody3D>("/root/BaseNode/PartyMembers/Member" + (i + 1));
+         OverworldPartyController memberNode = GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + (i + 1));
          memberNode.Position = controller.Position - (controller.GlobalTransform.Basis.Z * i);
+         memberNode.ResetNavigation();
       }
    }
 

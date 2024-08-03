@@ -1,89 +1,7 @@
-[gd_resource type="Resource" script_class="CutsceneObject" load_steps=29 format=3 uid="uid://bdbikxfw64p7f"]
+[gd_resource type="Resource" script_class="CutsceneObject" load_steps=7 format=3 uid="uid://bdbikxfw64p7f"]
 
-[ext_resource type="Script" path="res://Cutscenes/ActorBehavior.cs" id="1_ht0ph"]
 [ext_resource type="Script" path="res://Cutscenes/ActorStatus.cs" id="2_kcmjx"]
-[ext_resource type="Resource" uid="uid://qj2h22d5qxc1" path="res://Cutscenes/athili_copse_intro_dialogue.tres" id="2_yn07o"]
 [ext_resource type="Script" path="res://Cutscenes/CutsceneObject.cs" id="3_sjn2w"]
-
-[sub_resource type="Resource" id="Resource_5rkl1"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray("vakthol-place--0.439,0.613,-29.49", "thalria-place-0.284,0.613,-29.49", "athlia-place-0.773,0.613,-29.49", "olren-place-1.779,0.613,-29.49", "thalria-move-0.284,0.613,-22", "athlia-move-0.773,0.613,-24", "olren-move-1.779,0.613,-23", "lock_speech", "pause-3.75", "unlock_speech")
-
-[sub_resource type="Resource" id="Resource_kkjxx"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray("lock_speech", "athlia-rot--180", "olren-rot--180", "pause-0.3", "thalria-rot--180", "unlock_speech")
-
-[sub_resource type="Resource" id="Resource_kkyfx"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray()
-
-[sub_resource type="Resource" id="Resource_dge57"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray()
-
-[sub_resource type="Resource" id="Resource_jnhu2"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray("vakthol-rot--180", "lock_speech", "pause-0.75", "unlock_speech")
-
-[sub_resource type="Resource" id="Resource_o0bao"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray("vakthol-rot-0", "lock_speech", "pause-0.5", "unlock_speech")
-
-[sub_resource type="Resource" id="Resource_4jwam"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray()
-
-[sub_resource type="Resource" id="Resource_7tkyo"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray()
-
-[sub_resource type="Resource" id="Resource_6rswk"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray("vakthol-move--0.439,0.613,-27", "lock_speech", "pause-1.5", "unlock_speech")
-
-[sub_resource type="Resource" id="Resource_4p7rd"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray()
-
-[sub_resource type="Resource" id="Resource_y408j"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray()
-
-[sub_resource type="Resource" id="Resource_6ffhw"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray()
-
-[sub_resource type="Resource" id="Resource_moi5h"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray("vakthol-rot--180", "lock_speech", "pause-1.5", "unlock_speech")
-
-[sub_resource type="Resource" id="Resource_7bros"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray("vakthol-rot--90", "lock_speech", "pause-1.5", "unlock_speech")
-
-[sub_resource type="Resource" id="Resource_50y6v"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray("vakthol-rot-0")
-
-[sub_resource type="Resource" id="Resource_mbtpn"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray()
-
-[sub_resource type="Resource" id="Resource_hlo2n"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray()
-
-[sub_resource type="Resource" id="Resource_uquy8"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray()
-
-[sub_resource type="Resource" id="Resource_yc0e0"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray()
-
-[sub_resource type="Resource" id="Resource_nvcai"]
-script = ExtResource("1_ht0ph")
-commands = PackedStringArray()
 
 [sub_resource type="Resource" id="Resource_1ljn3"]
 script = ExtResource("2_kcmjx")
@@ -119,9 +37,9 @@ tiedMember = ""
 
 [resource]
 script = ExtResource("3_sjn2w")
-actorBehaviors = [SubResource("Resource_5rkl1"), SubResource("Resource_kkjxx"), SubResource("Resource_kkyfx"), SubResource("Resource_dge57"), SubResource("Resource_jnhu2"), SubResource("Resource_o0bao"), SubResource("Resource_4jwam"), SubResource("Resource_7tkyo"), SubResource("Resource_6rswk"), SubResource("Resource_4p7rd"), SubResource("Resource_y408j"), SubResource("Resource_6ffhw"), SubResource("Resource_moi5h"), SubResource("Resource_7bros"), SubResource("Resource_50y6v"), SubResource("Resource_mbtpn"), SubResource("Resource_hlo2n"), SubResource("Resource_uquy8"), SubResource("Resource_yc0e0"), SubResource("Resource_nvcai")]
+items = []
 actors = [SubResource("Resource_1ljn3"), SubResource("Resource_ga3x1"), SubResource("Resource_r1i48"), SubResource("Resource_ps06s")]
-dialogueInteraction = ExtResource("2_yn07o")
+PreCutsceneCommands = []
 hideParty = true
 cameraPosition = Vector3(3.44523, 5.59844, -19.2761)
 cameraRotation = Vector3(-0.307701, 0.473997, -7.81776e-09)

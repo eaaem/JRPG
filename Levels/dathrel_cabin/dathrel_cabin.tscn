@@ -1,32 +1,31 @@
-[gd_scene load_steps=100 format=3 uid="uid://b5ywsy2do4mme"]
+[gd_scene load_steps=95 format=3 uid="uid://b5ywsy2do4mme"]
 
-[ext_resource type="Script" path="res://Levels/0Core/MusicHolder.cs" id="1_6k00s"]
-[ext_resource type="Texture2D" uid="uid://cmeyng8l7xdjn" path="res://Levels/dathrel_cabin/forest_back.png" id="1_itsjt"]
-[ext_resource type="Script" path="res://WorldMap/0Core/WorldMapExitPoint.cs" id="1_lsspd"]
-[ext_resource type="PackedScene" uid="uid://5e75gvplr40p" path="res://Levels/2Misc/Accessories/wooden_door_thick_colliders.tscn" id="3_vk03s"]
-[ext_resource type="PackedScene" uid="uid://bs3llr1ihtbc1" path="res://Levels/2Misc/Structures/peasant_bed.glb" id="5_1og2q"]
-[ext_resource type="PackedScene" uid="uid://cd7o63vriewkk" path="res://Levels/2Misc/Accessories/cooking_pot.glb" id="5_ws7ws"]
-[ext_resource type="PackedScene" uid="uid://qcpxgwbswoaw" path="res://Levels/2Misc/Accessories/hide.glb" id="6_15cmy"]
-[ext_resource type="PackedScene" uid="uid://m7y3oqcg4ef" path="res://Levels/2Misc/Structures/chimney.glb" id="7_e6lw1"]
-[ext_resource type="Script" path="res://Dialogue/0Core/DialogueInteraction.cs" id="8_bal65"]
-[ext_resource type="Script" path="res://Dialogue/0Core/DialogueObject.cs" id="9_bmc2b"]
-[ext_resource type="PackedScene" uid="uid://0bghlkvkgcip" path="res://Levels/dathrel_cabin/dathrel_cabin.glb" id="10_g30iv"]
-[ext_resource type="Script" path="res://Dialogue/0Core/DialogueList.cs" id="10_vi3o4"]
-[ext_resource type="PackedScene" uid="uid://jqvaa4y0dtvm" path="res://Cutscenes/cutscene_trigger.tscn" id="11_djngu"]
-[ext_resource type="PackedScene" uid="uid://dh1sy5ln73jf8" path="res://Levels/2Misc/Structures/wooden_table_colliders.tscn" id="11_xea78"]
-[ext_resource type="Script" path="res://Cutscenes/CutsceneObject.cs" id="12_e4xxe"]
-[ext_resource type="PackedScene" uid="uid://dv7dpb283oxp3" path="res://Levels/2Misc/Structures/wooden_chair_colliders.tscn" id="12_mvm0g"]
-[ext_resource type="Script" path="res://Cutscenes/ActorStatus.cs" id="12_wm0vm"]
-[ext_resource type="Script" path="res://Cutscenes/ActorCommand.cs" id="14_edtdp"]
-[ext_resource type="PackedScene" uid="uid://cxn2617gd032j" path="res://Cutscenes/Actors/vakthol.tscn" id="16_048qv"]
-[ext_resource type="Script" path="res://Cutscenes/CutsceneItem.cs" id="16_wi66o"]
-[ext_resource type="Shader" uid="uid://dn58dbmb2mxms" path="res://Levels/2Misc/Terrain/tree_shader.tres" id="18_qh7sd"]
-[ext_resource type="ArrayMesh" uid="uid://chonrfhlhwcnb" path="res://Levels/2Misc/Terrain/pine_tree.obj" id="19_iyrhb"]
-[ext_resource type="Script" path="res://Levels/0Core/PathMeshPopulator.cs" id="19_xlybk"]
-[ext_resource type="Material" uid="uid://es5vmlg1c36f" path="res://Levels/2Misc/Terrain/grass_material.tres" id="21_p8plr"]
-[ext_resource type="ArrayMesh" uid="uid://cnjd0att7b02p" path="res://Levels/2Misc/Terrain/grass.obj" id="21_rif7q"]
-[ext_resource type="ArrayMesh" uid="uid://dl2q7kvjyg0l6" path="res://Levels/dathrel_cabin/cabin_road.obj" id="24_s0fiw"]
-[ext_resource type="Texture2D" uid="uid://b3w6cdeb3l3p2" path="res://Levels/2Misc/Terrain/grass.png" id="27_m2xfd"]
+[ext_resource type="Script" path="res://Levels/0Core/MusicHolder.cs" id="1_tohmy"]
+[ext_resource type="PackedScene" uid="uid://ctjab1aj8p03c" path="res://WorldMap/0Core/exit_point.tscn" id="2_54kr2"]
+[ext_resource type="PackedScene" uid="uid://0bghlkvkgcip" path="res://Levels/Dathrel_Cabin/dathrel_cabin.glb" id="3_ae3wn"]
+[ext_resource type="PackedScene" uid="uid://5e75gvplr40p" path="res://Levels/2Misc/Accessories/wooden_door_thick_colliders.tscn" id="4_wfyeh"]
+[ext_resource type="PackedScene" uid="uid://bs3llr1ihtbc1" path="res://Levels/2Misc/Structures/peasant_bed.glb" id="5_nh0qu"]
+[ext_resource type="PackedScene" uid="uid://cd7o63vriewkk" path="res://Levels/2Misc/Accessories/cooking_pot.glb" id="6_xe7ng"]
+[ext_resource type="PackedScene" uid="uid://qcpxgwbswoaw" path="res://Levels/2Misc/Accessories/hide.glb" id="7_4nb0s"]
+[ext_resource type="PackedScene" uid="uid://m7y3oqcg4ef" path="res://Levels/2Misc/Structures/chimney.glb" id="8_ou5wa"]
+[ext_resource type="Script" path="res://Dialogue/0Core/DialogueInteraction.cs" id="9_wefrd"]
+[ext_resource type="Script" path="res://Dialogue/0Core/DialogueObject.cs" id="10_ftb8e"]
+[ext_resource type="Script" path="res://Dialogue/0Core/DialogueList.cs" id="11_xay70"]
+[ext_resource type="PackedScene" uid="uid://dh1sy5ln73jf8" path="res://Levels/2Misc/Structures/wooden_table_colliders.tscn" id="12_4u4xv"]
+[ext_resource type="PackedScene" uid="uid://dv7dpb283oxp3" path="res://Levels/2Misc/Structures/wooden_chair_colliders.tscn" id="13_ioh3r"]
+[ext_resource type="PackedScene" uid="uid://jqvaa4y0dtvm" path="res://Cutscenes/cutscene_trigger.tscn" id="14_qk27y"]
+[ext_resource type="Script" path="res://Cutscenes/ActorCommand.cs" id="15_m5xxr"]
+[ext_resource type="Script" path="res://Cutscenes/ActorStatus.cs" id="16_h1na5"]
+[ext_resource type="Script" path="res://Cutscenes/CutsceneItem.cs" id="17_3bi70"]
+[ext_resource type="Script" path="res://Cutscenes/CutsceneObject.cs" id="18_33bqp"]
+[ext_resource type="PackedScene" uid="uid://cxn2617gd032j" path="res://Cutscenes/Actors/vakthol.tscn" id="19_mrqw5"]
+[ext_resource type="Shader" uid="uid://dn58dbmb2mxms" path="res://Levels/2Misc/Terrain/tree_shader.tres" id="20_njht6"]
+[ext_resource type="ArrayMesh" uid="uid://chonrfhlhwcnb" path="res://Levels/2Misc/Terrain/pine_tree.obj" id="21_s0dmp"]
+[ext_resource type="Script" path="res://Levels/0Core/PathMeshPopulator.cs" id="22_t6yae"]
+[ext_resource type="Material" uid="uid://es5vmlg1c36f" path="res://Levels/2Misc/Terrain/grass_material.tres" id="23_fuyx5"]
+[ext_resource type="ArrayMesh" uid="uid://cnjd0att7b02p" path="res://Levels/2Misc/Terrain/grass.obj" id="24_guvq3"]
+[ext_resource type="ArrayMesh" uid="uid://dl2q7kvjyg0l6" path="res://Levels/Dathrel_Cabin/cabin_road.obj" id="25_m7sq3"]
+[ext_resource type="Texture2D" uid="uid://cmeyng8l7xdjn" path="res://Levels/Dathrel_Cabin/forest_back.png" id="26_mq3bv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_aqvys"]
 albedo_color = Color(0.25098, 0.352941, 0.192157, 1)
@@ -43,14 +42,11 @@ geometry_parsed_geometry_type = 1
 [sub_resource type="BoxShape3D" id="BoxShape3D_ppm5s"]
 size = Vector3(20, 0.01, 20)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_0cols"]
-size = Vector3(1, 5, 5)
-
 [sub_resource type="BoxShape3D" id="BoxShape3D_uerou"]
 size = Vector3(3, 3, 4)
 
 [sub_resource type="Resource" id="Resource_8bugr"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 9
@@ -60,7 +56,7 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_3t8fj"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 13
@@ -70,7 +66,7 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_p7hpj"]
-script = ExtResource("10_vi3o4")
+script = ExtResource("11_xay70")
 dialogues = [SubResource("Resource_8bugr"), SubResource("Resource_3t8fj")]
 branchName = ""
 branchingDialogues = []
@@ -132,38 +128,38 @@ adjustment_enabled = true
 adjustment_color_correction = SubResource("GradientTexture1D_myccr")
 
 [sub_resource type="Resource" id="Resource_e1dhy"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 6
 MakeLocked = true
 
 [sub_resource type="Resource" id="Resource_wxjv7"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 11
 ActorName = "vakthol"
 Destination = Vector3(-17.5447, -0.00346023, 4.70016)
 
 [sub_resource type="Resource" id="Resource_ceh4v"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 4
 Hide = true
 
 [sub_resource type="Resource" id="Resource_blbsa"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 10
 WaitTime = 1.0
 
 [sub_resource type="Resource" id="Resource_unymb"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 4
 Hide = false
 
 [sub_resource type="Resource" id="Resource_rqfpp"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 6
 MakeLocked = false
 
 [sub_resource type="Resource" id="Resource_a64co"]
-script = ExtResource("12_wm0vm")
+script = ExtResource("16_h1na5")
 actorName = "vakthol"
 idleAnim = "Idle"
 walkAnim = "Walk"
@@ -171,7 +167,7 @@ moveSpeed = 1.0
 tiedMember = ""
 
 [sub_resource type="Resource" id="Resource_gpfdv"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 0
@@ -181,12 +177,12 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_wghy5"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_gpfdv")
 commands = Array[Object]([])
 
 [sub_resource type="Resource" id="Resource_w0k2v"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 0
@@ -196,41 +192,41 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_5vhkt"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_w0k2v")
 commands = Array[Object]([])
 
 [sub_resource type="Resource" id="Resource_lj4p5"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 4
 Hide = true
 
 [sub_resource type="Resource" id="Resource_sg1bd"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 6
 MakeLocked = true
 
 [sub_resource type="Resource" id="Resource_qqm27"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 10
 WaitTime = 1.0
 
 [sub_resource type="Resource" id="Resource_k2mbw"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 4
 Hide = false
 
 [sub_resource type="Resource" id="Resource_7x3dw"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 6
 MakeLocked = false
 
 [sub_resource type="Resource" id="Resource_5whbn"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 7
 
 [sub_resource type="Resource" id="Resource_vqd3k"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 0
 emotion = 0
@@ -240,12 +236,12 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_7g5ra"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_vqd3k")
 commands = Array[Object]([SubResource("Resource_lj4p5"), SubResource("Resource_sg1bd"), SubResource("Resource_qqm27"), SubResource("Resource_k2mbw"), SubResource("Resource_7x3dw"), SubResource("Resource_5whbn")])
 
 [sub_resource type="Resource" id="Resource_aorwx"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 0
@@ -255,41 +251,41 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_nv4gs"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_aorwx")
 commands = Array[Object]([])
 
 [sub_resource type="Resource" id="Resource_be5js"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 6
 MakeLocked = true
 
 [sub_resource type="Resource" id="Resource_5e8tp"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 4
 Hide = true
 
 [sub_resource type="Resource" id="Resource_vyv88"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 10
 WaitTime = 1.0
 
 [sub_resource type="Resource" id="Resource_1c6nv"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 4
 Hide = false
 
 [sub_resource type="Resource" id="Resource_budi4"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 6
 MakeLocked = false
 
 [sub_resource type="Resource" id="Resource_cjkd3"]
-script = ExtResource("14_edtdp")
+script = ExtResource("15_m5xxr")
 CommandType = 7
 
 [sub_resource type="Resource" id="Resource_cfoct"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 0
 emotion = 0
@@ -299,12 +295,12 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_rkhjl"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_cfoct")
 commands = Array[Object]([SubResource("Resource_be5js"), SubResource("Resource_5e8tp"), SubResource("Resource_vyv88"), SubResource("Resource_1c6nv"), SubResource("Resource_budi4"), SubResource("Resource_cjkd3")])
 
 [sub_resource type="Resource" id="Resource_1u4vk"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 0
@@ -314,12 +310,12 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_38dvq"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_1u4vk")
 commands = Array[Object]([])
 
 [sub_resource type="Resource" id="Resource_osgft"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 0
@@ -329,12 +325,12 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_5cis3"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_osgft")
 commands = Array[Object]([])
 
 [sub_resource type="Resource" id="Resource_abksg"]
-script = ExtResource("12_e4xxe")
+script = ExtResource("18_33bqp")
 items = [SubResource("Resource_wghy5"), SubResource("Resource_5vhkt"), SubResource("Resource_7g5ra"), SubResource("Resource_nv4gs"), SubResource("Resource_rkhjl"), SubResource("Resource_38dvq"), SubResource("Resource_5cis3")]
 actors = [SubResource("Resource_a64co")]
 PreCutsceneCommands = [SubResource("Resource_e1dhy"), SubResource("Resource_wxjv7"), SubResource("Resource_ceh4v"), SubResource("Resource_blbsa"), SubResource("Resource_unymb"), SubResource("Resource_rqfpp")]
@@ -343,7 +339,7 @@ cameraPosition = Vector3(-20.4143, 3.16863, 6.31042)
 cameraRotation = Vector3(-0.395509, -0.951187, 1.61478e-08)
 
 [sub_resource type="Resource" id="Resource_parue"]
-script = ExtResource("12_wm0vm")
+script = ExtResource("16_h1na5")
 actorName = "vakthol"
 idleAnim = "Idle"
 walkAnim = "Walk"
@@ -351,7 +347,7 @@ moveSpeed = 0.0
 tiedMember = "Vakthol"
 
 [sub_resource type="Resource" id="Resource_nvi2l"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 0
@@ -361,12 +357,12 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_wtqn1"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_nvi2l")
 commands = Array[Object]([])
 
 [sub_resource type="Resource" id="Resource_58i2m"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 0
@@ -376,12 +372,12 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_gl2su"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_58i2m")
 commands = Array[Object]([])
 
 [sub_resource type="Resource" id="Resource_7quax"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 0
@@ -391,12 +387,12 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_2n0c2"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_7quax")
 commands = null
 
 [sub_resource type="Resource" id="Resource_0y1cu"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 0
@@ -406,12 +402,12 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_sqxoo"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_0y1cu")
 commands = null
 
 [sub_resource type="Resource" id="Resource_p4gar"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 0
@@ -421,12 +417,12 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_vwmv2"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_p4gar")
 commands = null
 
 [sub_resource type="Resource" id="Resource_hyg46"]
-script = ExtResource("9_bmc2b")
+script = ExtResource("10_ftb8e")
 speaker = ""
 characterType = 1
 emotion = 0
@@ -436,12 +432,12 @@ Initiator = 0
 SubstituteDialogues = []
 
 [sub_resource type="Resource" id="Resource_310tj"]
-script = ExtResource("16_wi66o")
+script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_hyg46")
 commands = null
 
 [sub_resource type="Resource" id="Resource_fmg35"]
-script = ExtResource("12_e4xxe")
+script = ExtResource("18_33bqp")
 items = [SubResource("Resource_wtqn1"), SubResource("Resource_gl2su"), SubResource("Resource_2n0c2"), SubResource("Resource_sqxoo"), SubResource("Resource_vwmv2"), SubResource("Resource_310tj")]
 actors = [SubResource("Resource_parue")]
 PreCutsceneCommands = []
@@ -451,12 +447,12 @@ cameraRotation = Vector3(0, 0, 0)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ekax"]
 render_priority = 0
-shader = ExtResource("18_qh7sd")
+shader = ExtResource("20_njht6")
 
 [sub_resource type="MultiMesh" id="MultiMesh_f5itm"]
 transform_format = 1
 instance_count = 155
-mesh = ExtResource("19_iyrhb")
+mesh = ExtResource("21_s0dmp")
 buffer = PackedFloat32Array(1, 0, 0, -14.5445, 0, 1, 0, 0, 0, 0, 1, 11.6077, 1, 0, 0, -10.4034, 0, 1, 0, 0, 0, 0, 1, 14.2231, 1, 0, 0, -7.1341, 0, 1, 0, 0, 0, 0, 1, 18.4732, 1, 0, 0, -1.90326, 0, 1, 0, 0, 0, 0, 1, 20.7617, 1, 0, 0, 3.76348, 0, 1, 0, 0, 0, 0, 1, 23.922, 1, 0, 0, 11.8277, 0, 1, 0, 0, 0, 0, 1, 25.8835, 1, 0, 0, 16.6226, 0, 1, 0, 0, 0, 0, 1, 21.8514, 1, 0, 0, 23.3791, 0, 1, 0, 0, 0, 0, 1, 19.6719, 1, 0, 0, 21.5265, 0, 1, 0, 0, 0, 0, 1, 14.659, 1, 0, 0, 17.6034, 0, 1, 0, 0, 0, 0, 1, 17.9283, 1, 0, 0, 26.4305, 0, 1, 0, 0, 0, 0, 1, 10.9538, 1, 0, 0, 26.1035, 0, 1, 0, 0, 0, 0, 1, 5.83197, 1, 0, 0, 25.0138, 0, 1, 0, 0, 0, 0, 1, -3.64892, 1, 0, 0, 22.8343, 0, 1, 0, 0, 0, 0, 1, -9.75157, 1, 0, 0, 17.0585, 0, 1, 0, 0, 0, 0, 1, -12.6939, 1, 0, 0, 12.0456, 0, 1, 0, 0, 0, 0, 1, -15.3093, 1, 0, 0, 7.90456, 0, 1, 0, 0, 0, 0, 1, -13.0208, 1, 0, 0, 2.7827, 0, 1, 0, 0, 0, 0, 1, -14.6555, 1, 0, 0, -2.55711, 0, 1, 0, 0, 0, 0, 1, -12.8029, 1, 0, 0, -10.2944, 0, 1, 0, 0, 0, 0, 1, -14.0016, 1, 0, 0, -14.5445, 0, 1, 0, 0, 0, 0, 1, -11.4952, 1, 0, 0, -19.5573, 0, 1, 0, 0, 0, 0, 1, -9.96952, 1, 0, 0, -24.7882, 0, 1, 0, 0, 0, 0, 1, -7.02717, 1, 0, 0, -25.2241, 0, 1, 0, 0, 0, 0, 1, -1.79633, 1, 0, 0, -23.9164, 0, 1, 0, 0, 0, 0, 1, 5.2871, 1, 0, 0, -19.2304, 0, 1, 0, 0, 0, 0, 1, 9.64613, 1, 0, 0, -25.2241, 0, 1, 0, 0, 0, 0, 1, 9.97305, 1, 0, 0, -27.7305, 0, 1, 0, 0, 0, 0, 1, 4.19734, 1, 0, 0, -29.6921, 0, 1, 0, 0, 0, 0, 1, -2.99507, 1, 0, 0, -25.9869, 0, 1, 0, 0, 0, 0, 1, -11.0593, 1, 0, 0, -20.4292, 0, 1, 0, 0, 0, 0, 1, -14.9824, 1, 0, 0, -14.2175, 0, 1, 0, 0, 0, 0, 1, -17.1619, 1, 0, 0, -6.58922, 0, 1, 0, 0, 0, 0, 1, -17.7068, 1, 0, 0, -0.486577, 0, 1, 0, 0, 0, 0, 1, -17.1619, 1, 0, 0, 6.3789, 0, 1, 0, 0, 0, 0, 1, -18.7966, 1, 0, 0, 14.988, 0, 1, 0, 0, 0, 0, 1, -18.1427, 1, 0, 0, 21.5265, 0, 1, 0, 0, 0, 0, 1, -14.5465, 1, 0, 0, 26.3215, 0, 1, 0, 0, 0, 0, 1, -14.9824, 1, 0, 0, 26.7574, 0, 1, 0, 0, 0, 0, 1, -8.44386, 1, 0, 0, 29.9177, 0, 1, 0, 0, 0, 0, 1, -2.66814, 1, 0, 0, 30.3536, 0, 1, 0, 0, 0, 0, 1, 9.3192, 1, 0, 0, 25.7766, 0, 1, 0, 0, 0, 0, 1, 16.1847, 1, 0, 0, 28.0651, 0, 1, 0, 0, 0, 0, 1, 21.4155, 1, 0, 0, 21.1996, 0, 1, 0, 0, 0, 0, 1, 24.3579, 1, 0, 0, 16.8406, 0, 1, 0, 0, 0, 0, 1, 27.6271, 1, 0, 0, 7.90456, 0, 1, 0, 0, 0, 0, 1, 29.2618, 1, 0, 0, 0.167281, 0, 1, 0, 0, 0, 0, 1, 26.4284, 1, 0, 0, -5.49946, 0, 1, 0, 0, 0, 0, 1, 23.3771, 1, 0, 0, -11.8201, 0, 1, 0, 0, 0, 0, 1, 19.236, 1, 0, 0, -16.397, 0, 1, 0, 0, 0, 0, 1, 17.0565, 1, 0, 0, -20.6471, 0, 1, 0, 0, 0, 0, 1, 14.1141, 1, 0, 0, -20.6471, 0, 1, 0, 0, 0, 0, 1, 19.345, 1, 0, 0, -15.8522, 0, 1, 0, 0, 0, 0, 1, 22.0694, 1, 0, 0, -10.8393, 0, 1, 0, 0, 0, 0, 1, 26.7553, 1, 0, 0, -3.5379, 0, 1, 0, 0, 0, 0, 1, 28.281, 1, 0, 0, 3.2186, 0, 1, 0, 0, 0, 0, 1, 32.2041, 1, 0, 0, 13.1354, 0, 1, 0, 0, 0, 0, 1, 32.2041, 1, 0, 0, 21.1996, 0, 1, 0, 0, 0, 0, 1, 29.5887, 1, 0, 0, 26.2125, 0, 1, 0, 0, 0, 0, 1, 25.9925, 1, 0, 0, 31.6613, 0, 1, 0, 0, 0, 0, 1, 18.9091, 1, 0, 0, 31.0074, 0, 1, 0, 0, 0, 0, 1, 13.8962, 1, 0, 0, 37.1101, 0, 1, 0, 0, 0, 0, 1, -1.14248, 1, 0, 0, 32.6421, 0, 1, 0, 0, 0, 0, 1, -6.26434, 1, 0, 0, 31.4433, 0, 1, 0, 0, 0, 0, 1, -11.9311, 1, 0, 0, 28.61, 0, 1, 0, 0, 0, 0, 1, -19.5594, 1, 0, 0, 23.1612, 0, 1, 0, 0, 0, 0, 1, -17.9248, 1, 0, 0, 19.238, 0, 1, 0, 0, 0, 0, 1, -20.4312, 1, 0, 0, 11.9367, 0, 1, 0, 0, 0, 0, 1, -22.8287, 1, 0, 0, 2.3468, 0, 1, 0, 0, 0, 0, 1, -21.8479, 1, 0, 0, -4.51868, 0, 1, 0, 0, 0, 0, 1, -20.8671, 1, 0, 0, -11.7111, 0, 1, 0, 0, 0, 0, 1, -22.6107, 1, 0, 0, -18.3586, 0, 1, 0, 0, 0, 0, 1, -20.3222, 1, 0, 0, -25.66, 0, 1, 0, 0, 0, 0, 1, -17.1619, 1, 0, 0, -30.8908, 0, 1, 0, 0, 0, 0, 1, -10.4054, 1, 0, 0, -35.0319, 0, 1, 0, 0, 0, 0, 1, -3.64892, 1, 0, 0, -32.4165, 0, 1, 0, 0, 0, 0, 1, 1.69089, 1, 0, 0, -30.7819, 0, 1, 0, 0, 0, 0, 1, 8.33842, 1, 0, 0, -25.8779, 0, 1, 0, 0, 0, 0, 1, 15.2039, 1, 0, 0, -25.8779, 0, 1, 0, 0, 0, 0, 1, 22.0694, 1, 0, 0, -19.2304, 0, 1, 0, 0, 0, 0, 1, 24.5758, 1, 0, 0, -15.9281, 0, 1, 0, 0, 0, 0, 1, 33.8459, 1, 0, 0, -7.53717, 0, 1, 0, 0, 0, 0, 1, 32.8656, 1, 0, 0, -1.76145, 0, 1, 0, 0, 0, 0, 1, 37.5516, 1, 0, 0, 8.3733, 0, 1, 0, 0, 0, 0, 1, 36.4618, 1, 0, 0, 18.944, 0, 1, 0, 0, 0, 0, 1, 35.1541, 1, 0, 0, 26.7902, 0, 1, 0, 0, 0, 0, 1, 30.3592, 1, 0, 0, 32.0211, 0, 1, 0, 0, 0, 0, 1, 25.0194, 1, 0, 0, 38.0147, 0, 1, 0, 0, 0, 0, 1, 18.3718, 1, 0, 0, 35.8352, 0, 1, 0, 0, 0, 0, 1, 13.4679, 1, 0, 0, 39.396, 0, 1, 0, 0, 0, 0, 1, -4.12727, 1, 0, 0, 35.9087, 0, 1, 0, 0, 0, 0, 1, -9.90385, 1, 0, 0, 34.0561, 0, 1, 0, 0, 0, 0, 1, -16.9873, 1, 0, 0, 28.866, 0, 1, 0, 0, 0, 0, 1, -24.8212, 1, 0, 0, 24.9429, 0, 1, 0, 0, 0, 0, 1, -22.7507, 1, 0, 0, 17.5325, 0, 1, 0, 0, 0, 0, 1, -25.911, 1, 0, 0, 7.61571, 0, 1, 0, 0, 0, 0, 1, -26.8917, 1, 0, 0, -0.666453, 0, 1, 0, 0, 0, 0, 1, -27.5456, 1, 0, 0, -7.85886, 0, 1, 0, 0, 0, 0, 1, -25.693, 1, 0, 0, -16.7949, 0, 1, 0, 0, 0, 0, 1, -28.1995, 1, 0, 0, -22.4616, 0, 1, 0, 0, 0, 0, 1, -24.0584, 1, 0, 0, -32.2694, 0, 1, 0, 0, 0, 0, 1, -18.6096, 1, 0, 0, 38.9336, 0, 1, 0, 2.44156e-05, 0, 0, 1, 25.4299, 1, 0, 0, 36.2643, 0, 1, 0, 2.44156e-05, 0, 0, 1, 32.5481, 1, 0, 0, 26.2226, 0, 1, 0, 2.44156e-05, 0, 0, 1, 36.4885, 1, 0, 0, 14.9098, 0, 1, 0, 2.44156e-05, 0, 0, 1, 40.1747, 1, 0, 0, 3.59708, 0, 1, 0, 2.44156e-05, 0, 0, 1, 41.0644, 1, 0, 0, -8.98678, 0, 1, 0, 2.44156e-05, 0, 0, 1, 39.2849, 1, 0, 0, -21.952, 0, 1, 0, 2.44156e-05, 0, 0, 1, 29.2432, 1, 0, 0, -32.5021, 0, 1, 0, 2.44156e-05, 0, 0, 1, 26.0655, 1, 0, 0, -31.8665, 0, 1, 0, 2.44156e-05, 0, 0, 1, 16.9136, 1, 0, 0, 41.4638, 0, 1, 0, 2.44156e-05, 0, 0, 1, 13.3125, 1, 0, 0, 41.4638, 0, 1, 0, 2.44156e-05, 0, 0, 1, 3.44559, 1, 0, 0, 41.4638, 0, 1, 0, 2.44156e-05, 0, 0, 1, -8.9957, 1, 0, 0, 39.9118, 0, 1, 0, 2.44156e-05, 0, 0, 1, -15.5933, 1, 0, 0, 34.354, 0, 1, 0, 2.44156e-05, 0, 0, 1, -23.2217, 1, 0, 0, 22.9115, 0, 1, 0, 2.44156e-05, 0, 0, 1, -30.5231, 1, 0, 0, 11.7959, 0, 1, 0, 2.44156e-05, 0, 0, 1, -30.5231, 1, 0, 0, 2.52709, 0, 1, 0, 2.44156e-05, 0, 0, 1, -32.9992, 1, 0, 0, -6.36857, 0, 1, 0, 2.44156e-05, 0, 0, 1, -32.7027, 1, 0, 0, -12.1507, 0, 1, 0, 2.44156e-05, 0, 0, 1, -30.7753, 1, 0, 0, -24.1599, 0, 1, 0, 2.44156e-05, 0, 0, 1, -31.2201, 1, 0, 0, -30.3868, 0, 1, 0, 2.44156e-05, 0, 0, 1, -24.9931, 1, 0, 0, 16.6119, 0, 1, 0, 2.44156e-05, 0, 0, 1, -34.7783, 1, 0, 0, 7.27143, 0, 1, 0, 2.44156e-05, 0, 0, 1, -36.5574, 1, 0, 0, -2.81031, 0, 1, 0, 2.44156e-05, 0, 0, 1, -37.2988, 1, 0, 0, -10.5199, 0, 1, 0, 2.44156e-05, 0, 0, 1, -37.7435, 1, 0, 0, -19.119, 0, 1, 0, 2.44156e-05, 0, 0, 1, -35.8161, 1, 0, 0, 31.4379, 0, 1, 0, 2.44156e-05, 0, 0, 1, -30.627, 1, 0, 0, 40.3336, 0, 1, 0, 2.44156e-05, 0, 0, 1, -22.9175, 1, 0, 0, 46.1158, 0, 1, 0, 2.44156e-05, 0, 0, 1, -13.8735, 1, 0, 0, 47.0053, 0, 1, 0, 2.44156e-05, 0, 0, 1, -2.75398, 1, 0, 0, 47.5984, 0, 1, 0, 2.44156e-05, 0, 0, 1, 7.9208, 1, 0, 0, 45.671, 0, 1, 0, 2.44156e-05, 0, 0, 1, 20.6712, 1, 0, 0, 43.2952, 0, 1, 0, 2.44156e-05, 0, 0, 1, 31.0042, 1, 0, 0, 50.2635, 0, 1, 0, 2.44156e-05, 0, 0, 1, 14.8438, 1, 0, 0, 31.4344, 0, 1, 0, 2.44156e-05, 0, 0, 1, 36.9347, 1, 0, 0, 22.2422, 0, 1, 0, 2.44156e-05, 0, 0, 1, 40.9377, 1, 0, 0, 9.7883, 0, 1, 0, 2.44156e-05, 0, 0, 1, 44.1994, 1, 0, 0, -2.66561, 0, 1, 0, 2.44156e-05, 0, 0, 1, 43.3099, 1, 0, 0, -16.1573, 0, 1, 0, 2.44156e-05, 0, 0, 1, 40.4929, 1, 0, 0, -22.9773, 0, 1, 0, 2.44156e-05, 0, 0, 1, 35.6003, 1, 0, 0, -28.463, 0, 1, 0, 2.44156e-05, 0, 0, 1, 31.5973, 1, 0, 0, 32.9136, 0, 1, 0, 2.44156e-05, 0, 0, 1, 1.94503, 1, 0, 0, 44.807, 0, 1, 0, 2.44156e-05, 0, 0, 1, 1.55599, 1, 0, 0, 54.1994, 0, 1, 0, 2.44156e-05, 0, 0, 1, 9.44784, 1, 0, 0, 52.2119, 0, 1, 0, 2.44156e-05, 0, 0, 1, 1.97324, 1, 0, 0, 52.2958, 0, 1, 0, 2.44156e-05, 0, 0, 1, -6.2201, 1, 0, 0, 47.4452, 0, 1, 0, 2.44156e-05, 0, 0, 1, -8.68986, 1, 0, 0, 53.0895, 0, 1, 0, 2.44156e-05, 0, 0, 1, -14.5988, 1, 0, 0, 58.5575, 0, 1, 0, 2.44156e-05, 0, 0, 1, -6.22046, 1, 0, 0, 57.411, 0, 1, 0, 2.44156e-05, 0, 0, 1, -0.664316, 1, 0, 0, 58.9102, 0, 1, 0, 2.44156e-05, 0, 0, 1, 5.59737, 1, 0, 0, 57.8519, 0, 1, 0, 2.44156e-05, 0, 0, 1, 16.4451, 1, 0, 0, 51.8288, 0, 1, 0, 2.44156e-05, 0, 0, 1, 21.6609, 1, 0, 0, 48.4774, 0, 1, 0, 2.44156e-05, 0, 0, 1, 27.8354)
 
 [sub_resource type="Curve3D" id="Curve3D_du2ab"]
@@ -469,7 +465,7 @@ point_count = 155
 [sub_resource type="MultiMesh" id="MultiMesh_ifprj"]
 transform_format = 1
 instance_count = 211
-mesh = ExtResource("21_rif7q")
+mesh = ExtResource("24_guvq3")
 buffer = PackedFloat32Array(1, 0, 0, 8.67532, 0, 1, 0, 0, 0, 0, 1, 21.2219, 1, 0, 0, 4.76271, 0, 1, 0, 0, 0, 0, 1, 19.7454, 1, 0, 0, -0.478708, 0, 1, 0, 0, 0, 0, 1, 16.8664, 1, 0, 0, 2.40038, 0, 1, 0, 0, 0, 0, 1, 15.759, 1, 0, 0, 6.60828, 0, 1, 0, 0, 0, 0, 1, 16.0543, 1, 0, 0, 11.1853, 0, 1, 0, 0, 0, 0, 1, 17.7522, 1, 0, 0, 13.6121, 0, 1, 0, -3.90634e-05, 0, 0, 1, 12.7846, 1, 0, 0, 9.2659, 0, 1, 0, 0, 0, 0, 1, 12.2893, 1, 0, 0, 7.57543, 0, 1, 0, 0, 0, 0, 1, 12.2348, 1, 0, 0, 5.03514, 0, 1, 0, 0, 0, 0, 1, 12.1529, 1, 0, 0, 4.68889, 0, 1, 0, 0, 0, 0, 1, 12.1417, 1, 0, 0, 1.16238, 0, 1, 0, 0, 0, 0, 1, 12.2321, 1, 0, 0, 0.268428, 0, 1, 0, 0, 0, 0, 1, 12.255, 1, 0, 0, -1.06929, 0, 1, 0, 0, 0, 0, 1, 12.2893, 1, 0, 0, -2.68124, 0, 1, 0, 0, 0, 0, 1, 11.8863, 1, 0, 0, -6.67983, 0, 1, 0, 0, 0, 0, 1, 10.8867, 1, 0, 0, 0.185696, 0, 1, 0, 0, 0, 0, 1, 8.89349, 1, 0, 0, 5.35329, 0, 1, 0, 0, 0, 0, 1, 8.89349, 1, 0, 0, 9.48737, 0, 1, 0, 0, 0, 0, 1, 7.19556, 1, 0, 0, 12.0712, 0, 1, 0, 0, 0, 0, 1, 9.77936, 1, 0, 0, 16.0576, 0, 1, 0, 0, 0, 0, 1, 8.74584, 1, 0, 0, 16.8697, 0, 1, 0, 0, 0, 0, 1, 11.1082, 1, 0, 0, 16.1314, 0, 1, 0, 0, 0, 0, 1, 16.0543, 1, 0, 0, 20.5608, 0, 1, 0, 0, 0, 0, 1, 10.8129, 1, 0, 0, 22.3325, 0, 1, 0, 0, 0, 0, 1, 6.60498, 1, 0, 0, 18.5676, 0, 1, 0, 0, 0, 0, 1, 6.90027, 1, 0, 0, 14.8764, 0, 1, 0, 0, 0, 0, 1, 5.79293, 1, 0, 0, 10.6685, 0, 1, 0, 0, 0, 0, 1, 2.69237, 1, 0, 0, 7.27269, 0, 1, 0, 0, 0, 0, 1, 4.68559, 1, 0, 0, 12.3665, 0, 1, 0, 0, 0, 0, 1, -0.186719, 1, 0, 0, 16.3529, 0, 1, 0, 0, 0, 0, 1, 2.24943, 1, 0, 0, 17.7814, 0, 1, 0, 0, 0, 0, 1, -2.95029, 1, 0, 0, 18.1985, 0, 1, 0, 0, 0, 0, 1, -4.46844, 1, 0, 0, 17.8072, 0, 1, 0, 0, 0, 0, 1, -5.04756, 1, 0, 0, 15.6849, 0, 1, 0, 0, 0, 0, 1, -8.18847, 1, 0, 0, 14.5073, 0, 1, 0, 0, 0, 0, 1, -9.93133, 1, 0, 0, 15.3793, 0, 1, 0, 0, 0, 0, 1, -6.13813, 1, 0, 0, 15.6672, 0, 1, 0, 0, 0, 0, 1, -4.88605, 1, 0, 0, 15.9838, 0, 1, 0, 0, 0, 0, 1, -3.50875, 1, 0, 0, 13.8167, 0, 1, 0, 0, 0, 0, 1, -4.75084, 1, 0, 0, 9.93031, 0, 1, 0, 0, 0, 0, 1, -6.97842, 1, 0, 0, 11.2591, 0, 1, 0, 0, 0, 0, 1, -4.3208, 1, 0, 0, 7.05122, 0, 1, 0, 0, 0, 0, 1, -5.13285, 1, 0, 0, 7.22373, 0, 1, 0, 0, 0, 0, 1, 0.962443, 1, 0, 0, 7.27269, 0, 1, 0, 0, 0, 0, 1, 2.69237, 1, 0, 0, 4.17383, 0, 1, 0, 0, 0, 0, 1, 3.81437, 1, 0, 0, 2.99096, 0, 1, 0, 0, 0, 0, 1, 4.24265, 1, 0, 0, 3.61592, 0, 1, 0, 0, 0, 0, 1, 0.93403, 1, 0, 0, 4.24595, 0, 1, 0, 0, 0, 0, 1, -2.4014, 1, 0, 0, 1.51451, 0, 1, 0, 0, 0, 0, 1, -4.68991, 1, 0, 0, 2.00557, 0, 1, 0, 0, 0, 0, 1, -5.40854, 1, 0, 0, 4.54124, 0, 1, 0, 0, 0, 0, 1, -9.11928, 1, 0, 0, 20.7048, 0, 1, 0, -3.90634e-05, 0, 0, 1, -3.68736, 1, 0, 0, 23.1954, 0, 1, 0, -3.90634e-05, 0, 0, 1, 4.5709, 1, 0, 0, 20.3353, 0, 1, 0, -3.90634e-05, 0, 0, 1, -5.10141, 1, 0, 0, 19.5906, 0, 1, 0, -3.90634e-05, 0, 0, 1, -7.61987, 1, 0, 0, 13.2986, 0, 1, 0, -3.90634e-05, 0, 0, 1, -2.44207, 1, 0, 0, 12.7743, 0, 1, 0, -3.90634e-05, 0, 0, 1, -10.5693, 1, 0, 0, 6.80999, 0, 1, 0, -3.90634e-05, 0, 0, 1, -7.16108, 1, 0, 0, 3.33628, 0, 1, 0, -3.90634e-05, 0, 0, 1, -10.9625, 1, 0, 0, 1.59253, 0, 1, 0, -3.90634e-05, 0, 0, 1, -10.4302, 1, 0, 0, -2.8902, 0, 1, 0, -3.90634e-05, 0, 0, 1, -9.06179, 1, 0, 0, -6.8227, 0, 1, 0, -3.90634e-05, 0, 0, 1, -10.7003, 1, 0, 0, -13.3113, 0, 1, 0, -3.90634e-05, 0, 0, 1, -8.53746, 1, 0, 0, 22.965, 0, 1, 0, -3.90634e-05, 0, 0, 1, -6.23512, 1, 0, 0, 28.7138, 0, 1, 0, -3.90634e-05, 0, 0, 1, -5.87026, 1, 0, 0, 27.2613, 0, 1, 0, -3.90634e-05, 0, 0, 1, -11.3745, 1, 0, 0, 18.7148, 0, 1, 0, -3.90634e-05, 0, 0, 1, -16.8915, 1, 0, 0, 12.7864, 0, 1, 0, -3.90634e-05, 0, 0, 1, -14.0834, 1, 0, 0, 9.04217, 0, 1, 0, -3.90634e-05, 0, 0, 1, -20.1157, 1, 0, 0, 5.60995, 0, 1, 0, -3.90634e-05, 0, 0, 1, -16.9955, 1, 0, 0, -1.25448, 0, 1, 0, -3.90634e-05, 0, 0, 1, -21.0518, 1, 0, 0, -5.93478, 0, 1, 0, -3.90634e-05, 0, 0, 1, -15.1234, 1, 0, 0, -5.38056, 0, 1, 0, -3.90634e-05, 0, 0, 1, 13.7799, 1, 0, 0, -2.96824, 0, 1, 0, -3.90634e-05, 0, 0, 1, 14.9495, 1, 0, 0, -1.94834, 0, 1, 0, -3.90634e-05, 0, 0, 1, 15.444, 1, 0, 0, 8.55633, 0, 1, 0, -3.90634e-05, 0, 0, 1, 22.9325, 1, 0, 0, 10.8052, 0, 1, 0, -3.90634e-05, 0, 0, 1, 20.8612, 1, 0, 0, 12.5086, 0, 1, 0, -3.90634e-05, 0, 0, 1, 19.2923, 1, 0, 0, 14.6927, 0, 1, 0, -3.90634e-05, 0, 0, 1, 24.2846, 1, 0, 0, 6.16418, 0, 1, 0, -3.90634e-05, 0, 0, 1, 18.2522, 1, 0, 0, 7.41677, 0, 1, 0, -3.90634e-05, 0, 0, 1, 23.6801, 1, 0, 0, 7.72428, 0, 1, 0, -3.90634e-05, 0, 0, 1, 25.0126, 1, 0, 0, -1.4283, 0, 1, 0, -3.90634e-05, 0, 0, 1, 23.2445, 1, 0, 0, -4.65251, 0, 1, 0, -3.90634e-05, 0, 0, 1, 16.2761, 1, 0, 0, -5.29453, 0, 1, 0, -3.90634e-05, 0, 0, 1, 17.3147, 1, 0, 0, -8.18873, 0, 1, 0, -3.90634e-05, 0, 0, 1, 21.9965, 1, 0, 0, 3.12967, 0, 1, 0, -3.90634e-05, 0, 0, 1, 20.9225, 1, 0, 0, 20.3091, 0, 1, 0, -3.90634e-05, 0, 0, 1, 19.2923, 1, 0, 0, 28.5256, 0, 1, 0, -3.90634e-05, 0, 0, 1, 12.0118, 1, 0, 0, 26.5495, 0, 1, 0, -3.90634e-05, 0, 0, 1, 8.68361, 1, 0, 0, 33.4139, 0, 1, 0, -3.90634e-05, 0, 0, 1, -2.02907, 1, 0, 0, 29.7737, 0, 1, 0, -3.90634e-05, 0, 0, 1, -9.10152, 1, 0, 0, 9.5964, 0, 1, 0, -3.90634e-05, 0, 0, 1, -10.9736, 1, 0, 0, 11.1584, 0, 1, 0, -3.90634e-05, 0, 0, 1, 6.71725, 1, 0, 0, 13.1213, 0, 1, 0, -3.90634e-05, 0, 0, 1, 8.23408, 1, 0, 0, 13.1213, 0, 1, 0, -3.90634e-05, 0, 0, 1, 5.5127, 1, 0, 0, 14.0582, 0, 1, 0, -3.90634e-05, 0, 0, 1, 7.07415, 1, 0, 0, 16.155, 0, 1, 0, -3.90634e-05, 0, 0, 1, 7.02954, 1, 0, 0, 16.6011, 0, 1, 0, -3.90634e-05, 0, 0, 1, 3.90664, 1, 0, 0, 13.8351, 0, 1, 0, -3.90634e-05, 0, 0, 1, 3.10361, 1, 0, 0, 17.538, 0, 1, 0, -3.90634e-05, 0, 0, 1, 5.11119, 1, 0, 0, 17.2257, 0, 1, 0, -3.90634e-05, 0, 0, 1, 2.96977, 1, 0, 0, 11.7383, 0, 1, 0, -3.90634e-05, 0, 0, 1, 2.21135, 1, 0, 0, 14.9058, 0, 1, 0, -3.90634e-05, 0, 0, 1, -1.17922, 1, 0, 0, 14.9058, 0, 1, 0, -3.90634e-05, 0, 0, 1, 0.560681, 1, 0, 0, 16.4227, 0, 1, 0, -3.90634e-05, 0, 0, 1, -1.84841, 1, 0, 0, 17.8949, 0, 1, 0, -3.90634e-05, 0, 0, 1, -0.956154, 1, 0, 0, 18.7293, 0, 1, 0, -3.90634e-05, 0, 0, 1, -1.81314, 1, 0, 0, 19.5456, 0, 1, 0, -3.90634e-05, 0, 0, 1, -2.65144, 1, 0, 0, 20.4824, 0, 1, 0, -3.90634e-05, 0, 0, 1, -1.75918, 1, 0, 0, 11.2476, 0, 1, 0, -3.90634e-05, 0, 0, 1, -1.93763, 1, 0, 0, 11.8722, 0, 1, 0, -3.90634e-05, 0, 0, 1, -3.40986, 1, 0, 0, 13.1213, 0, 1, 0, -3.90634e-05, 0, 0, 1, -1.17922, 1, 0, 0, 9.55231, 0, 1, 0, -3.90634e-05, 0, 0, 1, -1.62535, 1, 0, 0, 8.70467, 0, 1, 0, -3.90634e-05, 0, 0, 1, -3.18679, 1, 0, 0, 9.55231, 0, 1, 0, -3.90634e-05, 0, 0, 1, 0.248391, 1, 0, 0, 5.98329, 0, 1, 0, -3.90634e-05, 0, 0, 1, 1.89906, 1, 0, 0, 5.09104, 0, 1, 0, -3.90634e-05, 0, 0, 1, -1.71457, 1, 0, 0, 6.0279, 0, 1, 0, -3.90634e-05, 0, 0, 1, 4.97735, 1, 0, 0, 6.0279, 0, 1, 0, -3.90634e-05, 0, 0, 1, 7.2526, 1, 0, 0, 8.30316, 0, 1, 0, -3.90634e-05, 0, 0, 1, 5.60193, 1, 0, 0, 8.57083, 0, 1, 0, -3.90634e-05, 0, 0, 1, 9.26018, 1, 0, 0, 10.5784, 0, 1, 0, -3.90634e-05, 0, 0, 1, 9.97398, 1, 0, 0, 9.95383, 0, 1, 0, -3.90634e-05, 0, 0, 1, 8.9925, 1, 0, 0, 11.3814, 0, 1, 0, -3.90634e-05, 0, 0, 1, 11.9816, 1, 0, 0, 14.2813, 0, 1, 0, -3.90634e-05, 0, 0, 1, 10.2863, 1, 0, 0, 15.352, 0, 1, 0, -3.90634e-05, 0, 0, 1, 12.5615, 1, 0, 0, 14.5936, 0, 1, 0, -3.90634e-05, 0, 0, 1, 15.3275, 1, 0, 0, 13.0321, 0, 1, 0, -3.90634e-05, 0, 0, 1, 18.272, 1, 0, 0, 11.1584, 0, 1, 0, -3.90634e-05, 0, 0, 1, 13.6768, 1, 0, 0, 13.2552, 0, 1, 0, -3.90634e-05, 0, 0, 1, 15.8629, 1, 0, 0, 9.5077, 0, 1, 0, -3.90634e-05, 0, 0, 1, 16.2198, 1, 0, 0, 10.0431, 0, 1, 0, -3.90634e-05, 0, 0, 1, 13.2307, 1, 0, 0, 10.1769, 0, 1, 0, -3.90634e-05, 0, 0, 1, 15.2829, 1, 0, 0, 7.32167, 0, 1, 0, -3.90634e-05, 0, 0, 1, 14.5245, 1, 0, 0, 8.8717, 0, 1, 0, -3.90634e-05, 0, 0, 1, 11.8631, 1, 0, 0, 9.68615, 0, 1, 0, -3.90634e-05, 0, 0, 1, 10.4647, 1, 0, 0, 6.11713, 0, 1, 0, -3.90634e-05, 0, 0, 1, 9.66169, 1, 0, 0, 6.96477, 0, 1, 0, -3.90634e-05, 0, 0, 1, 10.5986, 1, 0, 0, 3.67515, 0, 1, 0, -3.90634e-05, 0, 0, 1, 10.2026, 1, 0, 0, 2.14659, 0, 1, 0, -3.90634e-05, 0, 0, 1, 10.0186, 1, 0, 0, 5.80484, 0, 1, 0, -3.90634e-05, 0, 0, 1, 11.1339, 1, 0, 0, 2.01275, 0, 1, 0, -3.90634e-05, 0, 0, 1, 11.4462, 1, 0, 0, 3.30652, 0, 1, 0, -3.90634e-05, 0, 0, 1, 14.0784, 1, 0, 0, 5.98329, 0, 1, 0, -3.90634e-05, 0, 0, 1, 13.8999, 1, 0, 0, 1.20972, 0, 1, 0, -3.90634e-05, 0, 0, 1, 14.7475, 1, 0, 0, -0.12866, 0, 1, 0, -3.90634e-05, 0, 0, 1, 10.5986, 1, 0, 0, -4.72378, 0, 1, 0, -3.90634e-05, 0, 0, 1, 12.74, 1, 0, 0, -2.76081, 0, 1, 0, -3.90634e-05, 0, 0, 1, 10.3755, 1, 0, 0, -3.87613, 0, 1, 0, -3.90634e-05, 0, 0, 1, 8.72482, 1, 0, 0, -7.31132, 0, 1, 0, -3.90634e-05, 0, 0, 1, 8.6356, 1, 0, 0, -8.91738, 0, 1, 0, -3.90634e-05, 0, 0, 1, 11.2678, 1, 0, 0, -7.44516, 0, 1, 0, -3.90634e-05, 0, 0, 1, 13.4538, 1, 0, 0, -6.68674, 0, 1, 0, -3.90634e-05, 0, 0, 1, 12.0708, 1, 0, 0, -2.98388, 0, 1, 0, -3.90634e-05, 0, 0, 1, 14.346, 1, 0, 0, -2.49314, 0, 1, 0, -3.90634e-05, 0, 0, 1, 12.9184, 1, 0, 0, -1.19937, 0, 1, 0, -3.90634e-05, 0, 0, 1, 14.0784, 1, 0, 0, -3.38539, 0, 1, 0, -3.90634e-05, 0, 0, 1, 16.7551, 1, 0, 0, -1.06553, 0, 1, 0, -3.90634e-05, 0, 0, 1, 17.5582, 1, 0, 0, 0.451305, 0, 1, 0, -3.90634e-05, 0, 0, 1, 18.8073, 1, 0, 0, 2.72656, 0, 1, 0, -3.90634e-05, 0, 0, 1, 16.6213, 1, 0, 0, 7.82128, 0, 1, 0, -3.90634e-05, 0, 0, 1, 18.0753, 1, 0, 0, 10.7211, 0, 1, 0, -3.90634e-05, 0, 0, 1, 19.2799, 1, 0, 0, 11.6134, 0, 1, 0, -3.90634e-05, 0, 0, 1, 18.5214, 1, 0, 0, 13.7102, 0, 1, 0, -3.90634e-05, 0, 0, 1, 19.2352, 1, 0, 0, 14.6024, 0, 1, 0, -3.90634e-05, 0, 0, 1, 16.8262, 1, 0, 0, 15.9408, 0, 1, 0, -3.90634e-05, 0, 0, 1, 18.8337, 1, 0, 0, 18.9299, 0, 1, 0, -3.90634e-05, 0, 0, 1, 14.8632, 1, 0, 0, 20.4021, 0, 1, 0, -3.90634e-05, 0, 0, 1, 17.4061, 1, 0, 0, 22.3204, 0, 1, 0, -3.90634e-05, 0, 0, 1, 10.7588, 1, 0, 0, 24.4172, 0, 1, 0, -3.90634e-05, 0, 0, 1, 13.0341, 1, 0, 0, 24.2834, 0, 1, 0, -3.90634e-05, 0, 0, 1, 7.50208, 1, 0, 0, 23.3465, 0, 1, 0, -3.90634e-05, 0, 0, 1, 9.10814, 1, 0, 0, 20.4341, 0, 1, 0, -3.90634e-05, 0, 0, 1, 8.35922, 1, 0, 0, 18.6622, 0, 1, 0, -3.90634e-05, 0, 0, 1, 7.90359, 1, 0, 0, 18.2161, 0, 1, 0, -3.90634e-05, 0, 0, 1, 11.1603, 1, 0, 0, 17.5915, 0, 1, 0, -3.90634e-05, 0, 0, 1, 8.70662, 1, 0, 0, 16.9669, 0, 1, 0, -3.90634e-05, 0, 0, 1, 7.2344, 1, 0, 0, 15.3608, 0, 1, 0, -3.90634e-05, 0, 0, 1, 11.1157, 1, 0, 0, 8.71354, 0, 1, 0, -3.90634e-05, 0, 0, 1, 14.2832, 1, 0, 0, 1.53088, 0, 1, 0, -3.90634e-05, 0, 0, 1, 22.0905, 1, 0, 0, 1.48627, 0, 1, 0, -3.90634e-05, 0, 0, 1, 19.6814, 1, 0, 0, 4.34149, 0, 1, 0, -3.90634e-05, 0, 0, 1, 17.763, 1, 0, 0, -1.5474, 0, 1, 0, -3.90634e-05, 0, 0, 1, 18.4768, 1, 0, 0, -4.89336, 0, 1, 0, -3.90634e-05, 0, 0, 1, 14.5955, 1, 0, 0, -7.52551, 0, 1, 0, -3.90634e-05, 0, 0, 1, 15.8893, 1, 0, 0, -6.36558, 0, 1, 0, -3.90634e-05, 0, 0, 1, 13.7479, 1, 0, 0, -9.2208, 0, 1, 0, -3.90634e-05, 0, 0, 1, 12.0526, 1, 0, 0, -10.2637, 0, 1, 0, -3.90634e-05, 0, 0, 1, 10.9038, 1, 0, 0, -12.2991, 0, 1, 0, -3.90634e-05, 0, 0, 1, 8.66201, 1, 0, 0, -9.75615, 0, 1, 0, -3.90634e-05, 0, 0, 1, 8.79585, 1, 0, 0, -8.68545, 0, 1, 0, -3.90634e-05, 0, 0, 1, 8.30511, 1, 0, 0, 6.0561, 0, 1, 0, -3.90634e-05, 0, 0, 1, -3.18812, 1, 0, 0, 7.97552, 0, 1, 0, -3.90634e-05, 0, 0, 1, -4.6846, 1, 0, 0, 12.0942, 0, 1, 0, -3.90634e-05, 0, 0, 1, -7.89575, 1, 0, 0, 16.461, 0, 1, 0, -3.90634e-05, 0, 0, 1, -6.4092, 1, 0, 0, 22.0763, 0, 1, 0, -3.90634e-05, 0, 0, 1, -4.49759, 1, 0, 0, 19.5277, 0, 1, 0, -3.90634e-05, 0, 0, 1, -8.5329, 1, 0, 0, 4.3068, 0, 1, 0, -3.90634e-05, 0, 0, 1, -3.86044, 1, 0, 0, 3.81123, 0, 1, 0, -3.90634e-05, 0, 0, 1, -6.62144, 1, 0, 0, 3.24487, 0, 1, 0, -3.90634e-05, 0, 0, 1, -2.23215, 1, 0, 0, 0.90864, 0, 1, 0, -3.90634e-05, 0, 0, 1, -2.01977, 1, 0, 0, 0.979437, 0, 1, 0, -3.90634e-05, 0, 0, 1, 2.5819, 1, 0, 0, 2.32454, 0, 1, 0, -3.90634e-05, 0, 0, 1, 4.91813, 1, 0, 0, 2.11215, 0, 1, 0, -3.90634e-05, 0, 0, 1, 7.60834, 1, 0, 0, 3.31567, 0, 1, 0, -3.90634e-05, 0, 0, 1, 7.89152, 1, 0, 0, 4.16521, 0, 1, 0, -3.90634e-05, 0, 0, 1, 6.40482, 1, 0, 0, 5.22438, 0, 1, 0, -3.90634e-05, 0, 0, 1, -5.98617, 1, 0, 0, 7.45502, 0, 1, 0, -3.90634e-05, 0, 0, 1, -10.849, 1, 0, 0, 0.941554, 0, 1, 0, -3.90634e-05, 0, 0, 1, -8.12758)
 
 [sub_resource type="Curve3D" id="Curve3D_owwab"]
@@ -484,22 +480,10 @@ diffuse_mode = 3
 specular_mode = 1
 albedo_color = Color(0.368627, 0.305882, 0.219608, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_awc1h"]
-transparency = 1
-albedo_texture = ExtResource("27_m2xfd")
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_p6x4r"]
-material = SubResource("StandardMaterial3D_awc1h")
-orientation = 0
-
-[sub_resource type="MultiMesh" id="MultiMesh_agimj"]
-transform_format = 1
-mesh = SubResource("PlaneMesh_p6x4r")
-
 [node name="DathrelCabin" type="Node3D"]
 
 [node name="MusicHolder" type="Node3D" parent="."]
-script = ExtResource("1_6k00s")
+script = ExtResource("1_tohmy")
 musicPath = "res://Levels/dathrel_cabin/cabin.mp3"
 
 [node name="SpawnPoint" type="Node3D" parent="."]
@@ -520,15 +504,9 @@ navigation_mesh = SubResource("NavigationMesh_v4d0d")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavigationRegion3D/Floor"]
 shape = SubResource("BoxShape3D_ppm5s")
 
-[node name="ExitPoint" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.6989, 2.01104, 0.627549)
-collision_mask = 2
-script = ExtResource("1_lsspd")
+[node name="ExitPoint" parent="." instance=ExtResource("2_54kr2")]
 mapName = "theralin_map"
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ExitPoint"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.525186, 0, 0)
-shape = SubResource("BoxShape3D_0cols")
+spawnLocation = "SpawnPoint"
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.579694, 0.734438, -0.352925, -5.96046e-08, 0.433125, 0.901334, 0.814835, 0.522498, -0.25108, 3.02713, 9.41458, 0)
@@ -537,46 +515,46 @@ light_energy = 2.4
 light_bake_mode = 1
 shadow_enabled = true
 
-[node name="Cabin" parent="." instance=ExtResource("10_g30iv")]
+[node name="Cabin" parent="." instance=ExtResource("3_ae3wn")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10.6338, -0.00835896, 0.0618238)
 
-[node name="wooden_door_thick" parent="Cabin" instance=ExtResource("3_vk03s")]
+[node name="wooden_door_thick" parent="Cabin" instance=ExtResource("4_wfyeh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.54485e-07, 0.00511563, 10.3616)
 
-[node name="wooden_door_thick2" parent="Cabin" instance=ExtResource("3_vk03s")]
+[node name="wooden_door_thick2" parent="Cabin" instance=ExtResource("4_wfyeh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.90796, 0.00511563, -2.15867)
 
-[node name="wooden_door_thick3" parent="Cabin" instance=ExtResource("3_vk03s")]
+[node name="wooden_door_thick3" parent="Cabin" instance=ExtResource("4_wfyeh")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.80941, 0.00511563, -2.15867)
 
-[node name="peasant_bed" parent="Cabin" instance=ExtResource("5_1og2q")]
+[node name="peasant_bed" parent="Cabin" instance=ExtResource("5_nh0qu")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.82591, 0, -7.85876)
 
-[node name="peasant_bed3" parent="Cabin" instance=ExtResource("5_1og2q")]
+[node name="peasant_bed3" parent="Cabin" instance=ExtResource("5_nh0qu")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.745934, 0, -7.85876)
 
-[node name="peasant_bed4" parent="Cabin" instance=ExtResource("5_1og2q")]
+[node name="peasant_bed4" parent="Cabin" instance=ExtResource("5_nh0qu")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.745935, 0, -4.95077)
 
-[node name="peasant_bed2" parent="Cabin" instance=ExtResource("5_1og2q")]
+[node name="peasant_bed2" parent="Cabin" instance=ExtResource("5_nh0qu")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.98353, 0, -4.50016)
 
-[node name="cooking_pot" parent="Cabin" instance=ExtResource("5_ws7ws")]
+[node name="cooking_pot" parent="Cabin" instance=ExtResource("6_xe7ng")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.12434, 0, 6.11521)
 
-[node name="hide" parent="Cabin" instance=ExtResource("6_15cmy")]
+[node name="hide" parent="Cabin" instance=ExtResource("7_4nb0s")]
 transform = Transform3D(-0.16865, 0, 0.782021, 0, 0.8, 0, -0.782021, 0, -0.16865, -4.63585, 0.309385, -7.85986)
 
-[node name="hide2" parent="Cabin" instance=ExtResource("6_15cmy")]
+[node name="hide2" parent="Cabin" instance=ExtResource("7_4nb0s")]
 transform = Transform3D(0.119048, 0, 0.791093, 0, 0.8, 0, -0.791093, 0, 0.119048, -4.63585, 0.309385, -4.53035)
 
-[node name="hide3" parent="Cabin" instance=ExtResource("6_15cmy")]
+[node name="hide3" parent="Cabin" instance=ExtResource("7_4nb0s")]
 transform = Transform3D(-0.652862, 0, -0.462355, 0, 0.8, 0, 0.462355, 0, -0.652862, -0.89855, 0.309385, -4.91969)
 
-[node name="hide4" parent="Cabin" instance=ExtResource("6_15cmy")]
+[node name="hide4" parent="Cabin" instance=ExtResource("7_4nb0s")]
 transform = Transform3D(0.120912, 0, -0.79081, 0, 0.8, 0, 0.79081, 0, 0.120912, -0.89855, 0.309385, -7.85378)
 
-[node name="hide5" parent="Cabin" instance=ExtResource("6_15cmy")]
+[node name="hide5" parent="Cabin" instance=ExtResource("7_4nb0s")]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -0.0603406, -0.000255342, 4.92437)
 
 [node name="Lights" type="Node3D" parent="Cabin"]
@@ -619,10 +597,10 @@ interior = true
 enable_shadows = true
 ambient_mode = 2
 
-[node name="peasant_bed5" parent="Cabin" instance=ExtResource("5_1og2q")]
+[node name="peasant_bed5" parent="Cabin" instance=ExtResource("5_nh0qu")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.51707, 0, -8.27763)
 
-[node name="chimney" parent="Cabin" instance=ExtResource("7_e6lw1")]
+[node name="chimney" parent="Cabin" instance=ExtResource("8_ou5wa")]
 transform = Transform3D(0.6, 0, 0, 0, 0.6, 0, 0, 0, 0.6, -4.12434, 5.05621, 6.11521)
 
 [node name="Dialogues" type="Node3D" parent="Cabin"]
@@ -637,28 +615,28 @@ collision_layer = 4
 shape = SubResource("BoxShape3D_uerou")
 
 [node name="DialogueHolder" type="Node3D" parent="Cabin/Dialogues/Dialogue"]
-script = ExtResource("8_bal65")
+script = ExtResource("9_wefrd")
 dialogueList = SubResource("Resource_p7hpj")
 
-[node name="wooden_table_colliders" parent="Cabin" instance=ExtResource("11_xea78")]
+[node name="wooden_table_colliders" parent="Cabin" instance=ExtResource("12_4u4xv")]
 transform = Transform3D(-6.55671e-08, 0, -1.5, 0, 1, 0, 1.5, 0, -6.55671e-08, 3.82506, 0.00835896, 4.47874)
 
-[node name="wooden_chair_colliders" parent="Cabin" instance=ExtResource("12_mvm0g")]
+[node name="wooden_chair_colliders" parent="Cabin" instance=ExtResource("13_ioh3r")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.75242, 0, 3.10096)
 
-[node name="wooden_chair_colliders2" parent="Cabin" instance=ExtResource("12_mvm0g")]
+[node name="wooden_chair_colliders2" parent="Cabin" instance=ExtResource("13_ioh3r")]
 transform = Transform3D(-0.999391, 0, -0.0348995, 0, 1, 0, 0.0348995, 0, -0.999391, 3.75242, 0, 5.86696)
 
-[node name="wooden_chair_colliders3" parent="Cabin" instance=ExtResource("12_mvm0g")]
+[node name="wooden_chair_colliders3" parent="Cabin" instance=ExtResource("13_ioh3r")]
 transform = Transform3D(-0.215536, 0, 0.976496, 0, 1, 0, -0.976496, 0, -0.215536, 3.15649, 0, 5.05438)
 
-[node name="wooden_chair_colliders4" parent="Cabin" instance=ExtResource("12_mvm0g")]
+[node name="wooden_chair_colliders4" parent="Cabin" instance=ExtResource("13_ioh3r")]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 3.08638, 0, 3.90864)
 
-[node name="wooden_chair_colliders5" parent="Cabin" instance=ExtResource("12_mvm0g")]
+[node name="wooden_chair_colliders5" parent="Cabin" instance=ExtResource("13_ioh3r")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.34695, 0, 3.90864)
 
-[node name="wooden_chair_colliders6" parent="Cabin" instance=ExtResource("12_mvm0g")]
+[node name="wooden_chair_colliders6" parent="Cabin" instance=ExtResource("13_ioh3r")]
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 4.54699, 0, 5.01349)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
@@ -678,25 +656,25 @@ light_bake_mode = 1
 omni_range = 13.099
 omni_attenuation = 0.0220971
 
-[node name="cutscene0" parent="." groups=["cutscene"] instance=ExtResource("11_djngu")]
+[node name="cutscene0" parent="." groups=["cutscene"] instance=ExtResource("14_qk27y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.933, -0.01013, 4.30291)
 cutsceneObject = SubResource("Resource_abksg")
 
-[node name="cutscene1" parent="." groups=["cutscene"] instance=ExtResource("11_djngu")]
+[node name="cutscene1" parent="." groups=["cutscene"] instance=ExtResource("14_qk27y")]
 transform = Transform3D(1.61503, 0, 0, 0, 1, 0, 0, 0, 1.40816, -6.15502, 0.122084, 0.82083)
 cutsceneObject = SubResource("Resource_fmg35")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(0.580717, 0.313657, -0.751257, 1.49012e-08, 0.922801, 0.385278, 0.814105, -0.223738, 0.535886, -20.4143, 3.16863, 6.31042)
 
-[node name="vakthol_placer" parent="." instance=ExtResource("16_048qv")]
+[node name="vakthol_placer" parent="." instance=ExtResource("19_mrqw5")]
 transform = Transform3D(-0.822013, 0.00346181, 0.569458, 0.0051657, 0.999986, 0.00137766, -0.569445, 0.00407411, -0.82202, -17.5447, -0.00346023, 4.70016)
 visible = false
 
 [node name="Trees2" type="MultiMeshInstance3D" parent="."]
 material_override = SubResource("ShaderMaterial_8ekax")
 multimesh = SubResource("MultiMesh_f5itm")
-script = ExtResource("19_xlybk")
+script = ExtResource("22_t6yae")
 Collisions = false
 RandomizeScale = false
 RandomizeRotation = false
@@ -706,9 +684,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 curve = SubResource("Curve3D_du2ab")
 
 [node name="Grass2" type="MultiMeshInstance3D" parent="."]
-material_override = ExtResource("21_p8plr")
+material_override = ExtResource("23_fuyx5")
 multimesh = SubResource("MultiMesh_ifprj")
-script = ExtResource("19_xlybk")
+script = ExtResource("22_t6yae")
 Collisions = false
 RandomizeScale = false
 RandomizeRotation = true
@@ -722,81 +700,76 @@ curve = SubResource("Curve3D_owwab")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 33.049, -0.455, 6.524)
 material_override = SubResource("StandardMaterial3D_anxhc")
-mesh = ExtResource("24_s0fiw")
+mesh = ExtResource("25_m7sq3")
 
 [node name="TreeSprites" type="Node3D" parent="."]
 
 [node name="Sprite3D" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 4.37918, -43.0806)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D9" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 54.0185, 4.37918, -31.651)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D10" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 54.0185, 4.37918, -9.92155)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D11" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 54.0185, 4.37918, 11.6492)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D12" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 54.0185, 4.37918, 33.3786)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D13" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 54.0185, 4.37918, 55.0584)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D14" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(-8.74228e-08, 0, -2, 0, 2, 0, 2, 0, -8.74228e-08, 54.0185, 4.37918, 76.7878)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D2" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 21.7422, 4.37918, -43.0806)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D3" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 43.6154, 4.37918, -43.0806)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D4" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -20.7322, 4.37918, -43.0806)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D5" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, -5.37589e-08, 4.37918, 48.5221)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D6" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 21.7422, 4.37918, 48.5221)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D7" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, 43.6154, 4.37918, 48.5221)
 double_sided = false
-texture = ExtResource("1_itsjt")
+texture = ExtResource("26_mq3bv")
 
 [node name="Sprite3D8" type="Sprite3D" parent="TreeSprites"]
 transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, -20.7322, 4.37918, 48.5221)
 double_sided = false
-texture = ExtResource("1_itsjt")
-
-[node name="MultiMeshInstance3D" type="MultiMeshInstance3D" parent="."]
-multimesh = SubResource("MultiMesh_agimj")
-
-[connection signal="body_entered" from="ExitPoint" to="ExitPoint" method="OnBodyEntered"]
+texture = ExtResource("26_mq3bv")

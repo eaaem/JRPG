@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://clt1gr5v5240o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2d5ws"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 0, 0.286275)
+
+[sub_resource type="SphereMesh" id="SphereMesh_uph8y"]
+material = SubResource("StandardMaterial3D_2d5ws")
+
+[node name="BrushOutline" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_uph8y")

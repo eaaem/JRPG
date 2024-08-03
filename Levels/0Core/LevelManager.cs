@@ -37,7 +37,7 @@ public partial class LevelManager : Node
       musicPlayer = baseNode.GetNode<AudioStreamPlayer>("MusicPlayer");
    }
 
-   public void OpenWorldMap(string map, Vector2 specificSpawnPoint, bool useSpecificSpawnPoint)
+   public void OpenWorldMap(string map, Vector2 spawnLocation, bool useSpawnLocation, string spawnPointName = "")
    {  
       EmitSignal(SignalName.SaveLevelProgression);
       DiscardExistingLevel();
@@ -63,13 +63,13 @@ public partial class LevelManager : Node
       worldMap.AddChild(colliderHolder);
       worldMap.GetNode<Sprite2D>("Map").Texture = specialMap.GetNode<Sprite2D>("Map").Texture;
 
-      if (!useSpecificSpawnPoint)
+      if (!useSpawnLocation)
       {
-         worldMap.GetNode<CharacterBody2D>("Player").GlobalPosition = specialMap.GetNode<Node2D>("SpawnPoint").GlobalPosition;
+         worldMap.GetNode<CharacterBody2D>("Player").GlobalPosition = specialMap.GetNode<Node2D>(spawnPointName).GlobalPosition;
       }
       else
       {
-         worldMap.GetNode<CharacterBody2D>("Player").GlobalPosition = specificSpawnPoint;
+         worldMap.GetNode<CharacterBody2D>("Player").GlobalPosition = spawnLocation;
       }
 
       location = "World Map";

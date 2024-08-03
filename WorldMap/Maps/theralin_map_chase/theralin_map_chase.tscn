@@ -1,0 +1,66 @@
+[gd_scene load_steps=6 format=3 uid="uid://qnde88s4uwxd"]
+
+[ext_resource type="Texture2D" uid="uid://d1ndqs0sb3llj" path="res://WorldMap/Maps/theralin_map/theralin.png" id="1_nro04"]
+[ext_resource type="Script" path="res://WorldMap/0Core/WorldMapLocation.cs" id="2_qfa4t"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_elgrc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkvh2"]
+size = Vector2(83, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y10jd"]
+size = Vector2(100, 20)
+
+[node name="WorldMap" type="Node2D"]
+position = Vector2(40, 768)
+
+[node name="MapBackground" type="Sprite2D" parent="."]
+position = Vector2(960, -400)
+scale = Vector2(4000, 4000)
+texture = SubResource("CanvasTexture_elgrc")
+
+[node name="Map" type="Sprite2D" parent="."]
+position = Vector2(920, -228)
+texture = ExtResource("1_nro04")
+
+[node name="Colliders" type="Node2D" parent="."]
+
+[node name="FirstPath" type="StaticBody2D" parent="Colliders"]
+visible = false
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Colliders/FirstPath"]
+build_mode = 1
+polygon = PackedVector2Array(574, 164, 717, 50, 812, -118, 909, -312, 801, -318, 693, -256, 658, -143, 587, 7, 533, 112)
+disabled = true
+
+[node name="Theralin" type="Area2D" parent="Colliders"]
+position = Vector2(415, -442)
+script = ExtResource("2_qfa4t")
+textLabelName = "Theralin"
+locationName = "theralin"
+entrancePointName = "FrontEntrance"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/Theralin"]
+position = Vector2(468, 101)
+rotation = -0.503969
+shape = SubResource("RectangleShape2D_vkvh2")
+
+[node name="ChaseExit" type="Area2D" parent="Colliders"]
+position = Vector2(907, -243)
+rotation = -0.351092
+script = ExtResource("2_qfa4t")
+textLabelName = "Lost"
+locationName = "copse_chase"
+entrancePointName = "SpawnPoint"
+forceOpens = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/ChaseExit"]
+shape = SubResource("RectangleShape2D_y10jd")
+
+[node name="SpawnPoint" type="Node2D" parent="."]
+position = Vector2(889, -336)
+
+[connection signal="body_entered" from="Colliders/Theralin" to="Colliders/Theralin" method="OnBodyEntered" flags=18]
+[connection signal="body_exited" from="Colliders/Theralin" to="Colliders/Theralin" method="OnBodyExited" flags=18]
+[connection signal="body_entered" from="Colliders/ChaseExit" to="Colliders/ChaseExit" method="OnBodyEntered"]
+[connection signal="body_exited" from="Colliders/ChaseExit" to="Colliders/ChaseExit" method="OnBodyExited"]

@@ -111,7 +111,7 @@ public partial class OverworldPartyController : CharacterBody3D
          assignedPartyMember = member;
       }
 
-      Callable.From(ActorSetup).CallDeferred();
+      ResetNavigation();
    }
 
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -170,6 +170,11 @@ public partial class OverworldPartyController : CharacterBody3D
          MoveAndSlide();
       }
 	}
+
+   public void ResetNavigation()
+   {
+      Callable.From(ActorSetup).CallDeferred();
+   }
 
    private async void ActorSetup()
    {

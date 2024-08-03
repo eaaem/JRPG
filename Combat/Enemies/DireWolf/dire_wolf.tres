@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=15 format=3 uid="uid://wma4eu88wtvt"]
+[gd_resource type="Resource" script_class="Enemy" load_steps=15 format=3 uid="uid://wma4eu88wtvt"]
 
 [ext_resource type="Script" path="res://Combat/0Core/Enemy.cs" id="1_1thpf"]
 [ext_resource type="PackedScene" uid="uid://blvh7ndsywplh" path="res://Combat/Enemies/DireWolf/dire_wolf.tscn" id="1_c620i"]

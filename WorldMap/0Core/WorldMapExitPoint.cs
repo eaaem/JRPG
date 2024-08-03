@@ -5,6 +5,9 @@ public partial class WorldMapExitPoint : Node
 {
    [Export]
    private string mapName;
+   [Export]
+   private string spawnLocation;
+
    private ManagerReferenceHolder managers;
 
    public override void _Ready()
@@ -24,7 +27,7 @@ public partial class WorldMapExitPoint : Node
             await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
          }
 
-         managers.LevelManager.CallDeferred(nameof(managers.LevelManager.OpenWorldMap), mapName, Vector2.Zero, false);
+         managers.LevelManager.CallDeferred(nameof(managers.LevelManager.OpenWorldMap), mapName, Vector2.Zero, false, spawnLocation);
          managers.MenuManager.FadeFromBlack();
       }
    }

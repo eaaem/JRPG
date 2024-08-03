@@ -9,6 +9,8 @@ public partial class WorldMapLocation : Node
    private string locationName;
    [Export]
    private string entrancePointName;
+   [Export]
+   private bool forceOpens;
 
    private WorldMapController worldMapController;
 
@@ -21,7 +23,15 @@ public partial class WorldMapLocation : Node
    {
       if (body.Name == "Player")
       {
-         worldMapController.ReceiveIntersectionData(textLabelName, locationName, entrancePointName);
+         GD.Print(textLabelName);
+         if (!forceOpens)
+         {
+            worldMapController.ReceiveIntersectionData(textLabelName, locationName, entrancePointName);
+         }
+         else
+         {
+            worldMapController.ExitWorldMap(locationName, textLabelName, entrancePointName);
+         }
       }
    }
 

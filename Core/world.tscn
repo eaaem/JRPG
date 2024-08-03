@@ -2940,7 +2940,8 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 [node name="Member2" type="CharacterBody3D" parent="PartyMembers" node_paths=PackedStringArray("managers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13414, 0.320904, 0)
 collision_layer = 8
-floor_max_angle = 1.48353
+floor_max_angle = 3.14159
+floor_snap_length = 0.0
 script = ExtResource("42_pt17i")
 index = 1
 managers = NodePath("../../ManagerReferenceHolder")
@@ -2948,7 +2949,8 @@ managers = NodePath("../../ManagerReferenceHolder")
 [node name="Member3" type="CharacterBody3D" parent="PartyMembers" node_paths=PackedStringArray("managers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13414, 0.320904, 0)
 collision_layer = 8
-floor_max_angle = 1.48353
+floor_max_angle = 3.14159
+floor_snap_length = 0.0
 script = ExtResource("42_pt17i")
 index = 2
 managers = NodePath("../../ManagerReferenceHolder")
@@ -2956,7 +2958,8 @@ managers = NodePath("../../ManagerReferenceHolder")
 [node name="Member4" type="CharacterBody3D" parent="PartyMembers" node_paths=PackedStringArray("managers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13414, 0.320904, 0)
 collision_layer = 8
-floor_max_angle = 1.48353
+floor_max_angle = 3.14159
+floor_snap_length = 0.0
 script = ExtResource("42_pt17i")
 index = 3
 managers = NodePath("../../ManagerReferenceHolder")
