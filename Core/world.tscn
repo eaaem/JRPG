@@ -2940,6 +2940,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 [node name="Member2" type="CharacterBody3D" parent="PartyMembers" node_paths=PackedStringArray("managers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13414, 0.320904, 0)
 collision_layer = 8
+collision_mask = 257
 floor_max_angle = 3.14159
 floor_snap_length = 0.0
 script = ExtResource("42_pt17i")

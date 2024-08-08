@@ -80,6 +80,7 @@ public partial class ObjectSet : MultiMeshInstance3D
    private Vector3 lowerRotation;
    private Vector3 upperRotation;
 
+   [Export]
    private int instanceCounter;
 
    private float brushRadius = 1f;
@@ -193,7 +194,7 @@ public partial class ObjectSet : MultiMeshInstance3D
       List<StaticBody3D> collidersToRemove = new List<StaticBody3D>();
       for (int i = 0; i < instanceCounter; i++)
       {
-         if (Multimesh.GetInstanceTransform(i).Origin.DistanceSquaredTo(position) < brushRadius * 3f)
+         if (Multimesh.GetInstanceTransform(i).Origin.DistanceSquaredTo(position - GlobalPosition) < brushRadius * 3f)
          {
             Multimesh.SetInstanceTransform(i, Multimesh.GetInstanceTransform(instanceCounter - 1));
             Multimesh.SetInstanceTransform(instanceCounter - 1, new Transform3D());

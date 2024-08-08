@@ -46,7 +46,7 @@ public partial class OverworldPartyController : CharacterBody3D
    public Vector3 MovementTarget
    {
       get { return navigationAgent.TargetPosition; }
-      set { navigationAgent.TargetPosition = value; }
+      set { if (navigationAgent != null) { navigationAgent.TargetPosition = value; } }
    }
 
 	// Called when the node enters the scene tree for the first time.
@@ -146,7 +146,15 @@ public partial class OverworldPartyController : CharacterBody3D
          }
 
          Vector3 currentAgentPosition = GlobalTransform.Origin;
+
+         // This offset is necessary because the navmeshes don't actually match the ground collisions. This results in the path being generated at a Y level
+         // that the agent can't possibly reach, making them lock in place because they can't get close enough to the next point. By altering the Y offset,
+         // the next path target is always close enough to the agent for them to arrive at it and prevent getting stuck.
+         navigationAgent.PathHeightOffset = -currentAgentPosition.Y;
+
          Vector3 nextPathPosition = navigationAgent.GetNextPathPosition();
+         
+         // Alter next path position's Y!
 
          Vector3 modelRotation = model.Rotation;
          modelRotation.Y = Mathf.LerpAngle(model.Rotation.Y, Mathf.Atan2(velocity.X, velocity.Z), 0.25f);
