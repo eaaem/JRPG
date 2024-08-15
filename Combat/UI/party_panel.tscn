@@ -1,0 +1,99 @@
+[gd_scene load_steps=11 format=3 uid="uid://ciwtr8njhvtgm"]
+
+[ext_resource type="Texture2D" uid="uid://cx25eavncp1xo" path="res://Combat/UI/enemy_highlight.png" id="1_t2xh1"]
+[ext_resource type="FontFile" uid="uid://b2twoq48myxmy" path="res://Menus/0Core/Merriweather-Bold.ttf" id="2_n53n3"]
+[ext_resource type="Texture2D" uid="uid://cv0de4u7rtfp6" path="res://Combat/UI/healthbar_background.png" id="3_87bri"]
+[ext_resource type="Texture2D" uid="uid://duabvj6fit1lk" path="res://Combat/UI/healthbar_over.png" id="4_yq2jp"]
+[ext_resource type="Texture2D" uid="uid://b5t2kudic3q6t" path="res://Combat/UI/healthbar_fill.png" id="5_p1dpg"]
+[ext_resource type="FontFile" uid="uid://cg2kgq5pvsqi" path="res://Menus/0Core/Merriweather-BoldItalic.ttf" id="6_c54df"]
+[ext_resource type="Texture2D" uid="uid://bmjq6sgsbrc50" path="res://Combat/UI/manabar_background.png" id="7_o5m0a"]
+[ext_resource type="Texture2D" uid="uid://nqshtk3u7f1p" path="res://Combat/UI/manabar_over.png" id="8_fgg1v"]
+[ext_resource type="Texture2D" uid="uid://dn610vc74k5f8" path="res://Combat/UI/manabar_fill.png" id="9_2w22v"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mbqhj"]
+texture = ExtResource("1_t2xh1")
+modulate_color = Color(1, 1, 1, 0.666667)
+
+[node name="PartyPanel" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Highlight" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 700.0
+offset_right = 1400.0
+offset_bottom = 125.0
+scale = Vector2(-1, 1)
+theme_override_styles/panel = SubResource("StyleBoxTexture_mbqhj")
+
+[node name="NameLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 337.0
+offset_top = 3.0
+offset_right = 637.0
+offset_bottom = 43.0
+theme_override_colors/default_color = Color(0.992157, 1, 0.870588, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.168627, 0.113725, 0.0235294, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 5
+theme_override_fonts/normal_font = ExtResource("2_n53n3")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "Character Name"
+text_direction = 2
+
+[node name="HealthBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 45.0
+offset_top = 31.0
+offset_right = 645.0
+offset_bottom = 61.0
+value = 100.0
+texture_under = ExtResource("3_87bri")
+texture_over = ExtResource("4_yq2jp")
+texture_progress = ExtResource("5_p1dpg")
+
+[node name="HealthLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 43.0
+offset_right = 620.0
+offset_bottom = 78.0
+theme_override_colors/default_color = Color(0.858824, 0.858824, 0.858824, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 6
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("6_c54df")
+theme_override_font_sizes/normal_font_size = 25
+text = "50/50"
+text_direction = 2
+
+[node name="ManaBar" type="TextureProgressBar" parent="."]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 73.0
+offset_right = 645.0
+offset_bottom = 103.0
+value = 100.0
+texture_under = ExtResource("7_o5m0a")
+texture_over = ExtResource("8_fgg1v")
+texture_progress = ExtResource("9_2w22v")
+
+[node name="ManaLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 120.0
+offset_top = 84.0
+offset_right = 620.0
+offset_bottom = 119.0
+theme_override_colors/default_color = Color(0.858824, 0.858824, 0.858824, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 6
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("6_c54df")
+theme_override_font_sizes/normal_font_size = 25
+text = "50/50"
+text_direction = 2

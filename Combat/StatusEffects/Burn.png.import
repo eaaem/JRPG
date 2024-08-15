@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cbsxxlpsfgfp0"
-path="res://.godot/imported/Poison.png-ecaa0d46f6c1e48174719332d745cacf.ctex"
+uid="uid://cmhujtshgi8ki"
+path="res://.godot/imported/Burn.png-0f1eb1b1b826884e2ce50000fc71110c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Combat/UI/StatusEffects/Poison.png"
-dest_files=["res://.godot/imported/Poison.png-ecaa0d46f6c1e48174719332d745cacf.ctex"]
+source_file="res://Combat/StatusEffects/Burn.png"
+dest_files=["res://.godot/imported/Burn.png-0f1eb1b1b826884e2ce50000fc71110c.ctex"]
 
 [params]
 

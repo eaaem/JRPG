@@ -81,9 +81,7 @@ public partial class WorldMapController : CharacterBody2D
       {
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
       }
-      
+ 
       managers.LevelManager.TransitionLevels(internalLocation, externalLocation, spawnPoint);
-
-      managers.MenuManager.FadeFromBlack();
    }
 }

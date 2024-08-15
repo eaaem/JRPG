@@ -64,7 +64,8 @@ public partial class CombatAbilityManager : Node
       Node3D holder = packedSceneHolder.Instantiate<Node3D>();
       Node3D scriptHolder = holder.GetNode<Node3D>("Holder");
 
-      scriptHolder.SetScript(GD.Load<CSharpScript>("res://Combat/Abilities/Enemy/Behaviors/" + combatManager.CurrentAbility.scriptName + ".cs"));
+      scriptHolder.SetScript(GD.Load<CSharpScript>("res://Abilities/Enemy/" + combatManager.CurrentAbility.scriptName + "/" 
+                                                   + combatManager.CurrentAbility.scriptName + ".cs"));
       combatManager.CurrentFighter.model.GetNode<EnemyDataHolder>("ScriptHolder").AddChild(holder);
 
       EmitSignal(SignalName.EnemyAbilityCast);
@@ -77,9 +78,9 @@ public partial class CombatAbilityManager : Node
       combatManager.CurrentAbility = null;
    }
 
-   public AbilityGraphic GenerateTargetAbilityGraphic(string abilityName)
+   public AbilityGraphic GenerateTargetAbilityGraphic(string graphicPath)
    {
-      PackedScene targetGraphicsScene = GD.Load<PackedScene>("res://Combat/Abilities/Graphics/" + abilityName + ".tscn");
+      PackedScene targetGraphicsScene = GD.Load<PackedScene>(graphicPath);
       Node3D targetGraphics = targetGraphicsScene.Instantiate<Node3D>();
       AbilityGraphic abilityGraphicScript = targetGraphics.GetNode<AbilityGraphic>("ScriptHolder");
 

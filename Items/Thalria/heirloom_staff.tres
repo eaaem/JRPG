@@ -19,7 +19,7 @@ script = ExtResource("3_fpjt0")
 name = "Heirloom Staff"
 description = "Staff
 +2 intelligence"
-scriptName = ""
+scriptPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false

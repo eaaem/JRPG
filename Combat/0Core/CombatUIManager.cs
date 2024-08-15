@@ -1,6 +1,7 @@
 using Godot;
 using System.Collections.Generic;
 using System;
+using System.Security.Cryptography;
 
 public partial class CombatUIManager : Node
 {
@@ -19,23 +20,23 @@ public partial class CombatUIManager : Node
    private PackedScene stackPrefab;
 
    [Export]
-   private Node2D UI;
+   private CanvasLayer UI;
    [Export]
-   private CanvasGroup partyList;
+   private Control partyList;
    [Export]
-   private CanvasGroup enemyList;
+   private Control enemyList;
    [Export]
-   private CanvasGroup selectionBox;
+   private Control options;
    [Export]
-   private Panel abilityContainer;
+   private ScrollContainer abilityContainer;
    [Export]
-   private VBoxContainer abilityButtonContainer;
+   private GridContainer abilityButtonContainer;
    [Export]
    private Panel secondaryOptions;
    [Export]
    private VBoxContainer secondaryOptionsContainer;
    [Export]
-   private Label messageText;
+   private RichTextLabel messageText;
    [Export]
    private Button cancelButton;
    [Export]
@@ -52,12 +53,12 @@ public partial class CombatUIManager : Node
    [Export]
    private StyleBoxFlat alteredHighlight;
 
-   private List<Node2D> partyPanels = new List<Node2D>();
-   private List<Node2D> enemyPanels = new List<Node2D>();
+   private List<Control> partyPanels = new List<Control>();
+   private List<Control> enemyPanels = new List<Control>();
 	
 	public override void _Ready()
 	{
-      for (int i = 0; i < 4; i++)
+      /*for (int i = 0; i < 4; i++)
       {
          partyPanels.Add(UI.GetNode<Node2D>("CombatPartyList/HBoxContainer/Panel" + (i + 1) + "/Holder"));
       }
@@ -65,7 +66,7 @@ public partial class CombatUIManager : Node
       for (int i = 0; i < 4; i++)
       {
          enemyPanels.Add(UI.GetNode<Node2D>("CombatEnemyList/HBoxContainer/Panel" + (i + 1) + "/Holder"));
-      }
+      }*/
 	}
    
    public void HidePanels() 
@@ -87,51 +88,64 @@ public partial class CombatUIManager : Node
    {
       partyList.Visible = true;
       enemyList.Visible = true;
+      messageText.GetParent<Control>().Visible = true;
    }
 
    public void InitializePartyPanel(Fighter fighter, int index) 
    {
-      fighter.UIPanel = partyPanels[index];
-      fighter.UIPanel.Visible = true;
-      fighter.UIPanel.GetNode<Label>("Title").Text = fighter.fighterName;
+      fighter.UIPanel = GD.Load<PackedScene>("res://Combat/UI/party_panel.tscn").Instantiate<Control>();
 
-      fighter.UIPanel.GetNode<Label>("HealthDescription").Text = fighter.currentHealth + "/" + fighter.maxHealth;
-      fighter.UIPanel.GetNode<Label>("ManaDescription").Text = fighter.currentMana + "/" + fighter.maxMana;
+      fighter.UIPanel.GetNode<RichTextLabel>("NameLabel").Text = fighter.fighterName;
 
-      fighter.UIPanel.GetNode<ProgressBar>("HealthBar").Value = (fighter.currentHealth * 1f / fighter.maxHealth) * 100f;
-      fighter.UIPanel.GetNode<ProgressBar>("ManaBar").Value = (fighter.currentMana * 1f / fighter.maxMana) * 100f;
+      fighter.UIPanel.GetNode<RichTextLabel>("HealthLabel").Text = fighter.currentHealth + "/" + fighter.maxHealth;
+      fighter.UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = fighter.currentMana + "/" + fighter.maxMana;
+
+      fighter.UIPanel.GetNode<TextureProgressBar>("HealthBar").Value = (fighter.currentHealth * 1f / fighter.maxHealth) * 100f;
+      fighter.UIPanel.GetNode<TextureProgressBar>("ManaBar").Value = (fighter.currentMana * 1f / fighter.maxMana) * 100f;
+
+      UI.GetNode<VBoxContainer>("CombatPartyList/VBoxContainer").AddChild(fighter.UIPanel);
    }
 
    public void InitializeEnemyPanel(Fighter fighter, int index) 
    {
-      fighter.UIPanel = enemyPanels[index];
-      fighter.UIPanel.Visible = true;
+      fighter.UIPanel = GD.Load<PackedScene>("res://Combat/UI/enemy_panel.tscn").Instantiate<Control>();
 
-      fighter.UIPanel.GetNode<Label>("Title").Text = fighter.fighterName;
-      fighter.UIPanel.GetNode<Label>("HealthDescription").Text = fighter.currentHealth + "/" + fighter.maxHealth;
+      fighter.UIPanel.GetNode<RichTextLabel>("NameLabel").Text = fighter.fighterName;
+      fighter.UIPanel.GetNode<RichTextLabel>("HealthLabel").Text = fighter.currentHealth + "/" + fighter.maxHealth;
+
+      UI.GetNode<VBoxContainer>("CombatEnemyList/VBoxContainer").AddChild(fighter.UIPanel);
    }
 
    public void SetHightlightVisibility(Fighter fighter, bool visible, bool isCompanion) 
    {
-      if (!isCompanion) {
+      if (!isCompanion) 
+      {
          fighter.UIPanel.GetNode<Panel>("Highlight").Visible = visible;
-      } else {
+      } 
+      else 
+      {
          fighter.UIPanel.GetNode<Panel>("CompanionHolder/Highlight").Visible = visible;
       }
    }
 
-   void OnHoverOverFighterPanel(int index, bool isEnemy)
+   void OnHoverOverFighterPanel(Fighter fighter)
    {
-      Panel highlight = GetPanelFromIndex(index, isEnemy).GetNode<Panel>("Highlight");
-      Fighter fighter = combatManager.GetFighterFromIndex(index, isEnemy);
+      Panel highlight = fighter.UIPanel.GetNode<Panel>("Highlight");
+      //Fighter fighter = combatManager.GetFighterFromIndex(index, isEnemy);
 
       if (combatManager.CurrentAbility != null)
       {
          ExtraHoverOverBehavior(combatManager.CurrentAbility.hitsSurrounding, combatManager.CurrentAbility.hitsAll, fighter);
+         messageText.Text = "Cast " + combatManager.CurrentAbility.name + " on " + fighter.fighterName + ".";
       }
       else if (combatManager.CurrentItem != null)
       {
          ExtraHoverOverBehavior(combatManager.CurrentItem.item.hitsSurrounding, combatManager.CurrentItem.item.hitsAll, fighter);
+         messageText.Text = "Use " + combatManager.CurrentItem.item.name + " on " + fighter.fighterName + ".";
+      }
+      else
+      {
+         messageText.Text = "Attack " + fighter.fighterName + ".";
       }
 
       if (fighter == combatManager.CurrentFighter)
@@ -140,16 +154,17 @@ public partial class CombatUIManager : Node
       }
       else
       {
+         //combatManager.CurrentFighter.model.GetNode<Node3D>("Model").LookAt(fighter.model.GlobalPosition, Vector3.Up, true);
          highlight.Visible = true;
       }
 
       fighter.placementNode.GetNode<Decal>("SelectionHighlight").Visible = true;
    }
 
-   void OnStopHoverOverFighterPanel(int index, bool isEnemy)
+   void OnStopHoverOverFighterPanel(Fighter fighter)
    {
-      Panel highlight = GetPanelFromIndex(index, isEnemy).GetNode<Panel>("Highlight");
-      Fighter fighter = combatManager.GetFighterFromIndex(index, isEnemy);
+      Panel highlight = fighter.UIPanel.GetNode<Panel>("Highlight");
+      //Fighter fighter = combatManager.GetFighterFromIndex(index, isEnemy);
 
       if (combatManager.CurrentAbility != null)
       {
@@ -159,6 +174,8 @@ public partial class CombatUIManager : Node
       {
          ExtraStopHoverOverBehavior(combatManager.CurrentItem.item.hitsSurrounding, combatManager.CurrentItem.item.hitsAll, fighter);
       }
+
+      StopHoveringOverInformation();
 
       if (fighter == combatManager.CurrentFighter)
       {
@@ -217,15 +234,15 @@ public partial class CombatUIManager : Node
       }
    }
 
-   public Node2D GetPanelFromIndex(int index, bool isEnemy)
+   public Control GetPanelFromIndex(int index, bool isEnemy)
    {
       string root = isEnemy ? "Enemy" : "Party";
-      return UI.GetNode<Node2D>("Combat" + root + "List/HBoxContainer/Panel" + (index + 1) + "/Holder");
+      return UI.GetNode<Control>("Combat" + root + "List/HBoxContainer/Panel" + (index + 1) + "/Holder");
    }
 
    public void EnablePanels()
    {
-      if (combatManager.CurrentAbility != null && combatManager.CurrentAbility.onlyHitsSelf)
+      /*if (combatManager.CurrentAbility != null && combatManager.CurrentAbility.onlyHitsSelf)
       {
          combatManager.CurrentFighter.UIPanel.GetNode<Button>("Selection").Disabled = false;
          combatManager.CurrentFighter.UIPanel.GetNode<Button>("Selection").MouseFilter = Control.MouseFilterEnum.Stop;
@@ -249,15 +266,15 @@ public partial class CombatUIManager : Node
       {
          combatManager.CurrentFighter.UIPanel.GetNode<Button>("Selection").Disabled = false;
          combatManager.CurrentFighter.UIPanel.GetNode<Button>("Selection").MouseFilter = Control.MouseFilterEnum.Stop;
-      }
+      }*/
    }
 
    public void DisablePanels()
    {
       for (int i = 0; i < combatManager.Fighters.Count; i++)
       {
-         combatManager.Fighters[i].UIPanel.GetNode<Button>("Selection").Disabled = true;
-         combatManager.Fighters[i].UIPanel.GetNode<Button>("Selection").MouseFilter = Control.MouseFilterEnum.Ignore;
+         //combatManager.Fighters[i].UIPanel.GetNode<Button>("Selection").Disabled = true;
+        // combatManager.Fighters[i].UIPanel.GetNode<Button>("Selection").MouseFilter = Control.MouseFilterEnum.Ignore;
       }
    }
 
@@ -290,7 +307,7 @@ public partial class CombatUIManager : Node
          abilityButtonContainer.AddChild(currentButton);
       }
 
-      if (!combatManager.IsCompanionTurn)
+      if (!combatManager.IsCompanionTurn && combatManager.CurrentFighter.level >= 3)
       {
          Button specialButton = GenerateAbilityButton(packedSceneButton, member.specialAbility, manaToUse, path);
 
@@ -306,7 +323,8 @@ public partial class CombatUIManager : Node
       }
    }
 
-   Button GenerateAbilityButton(PackedScene packedSceneButton, AbilityResource ability, int mana, string path) {
+   Button GenerateAbilityButton(PackedScene packedSceneButton, AbilityResource ability, int mana, string path) 
+   {
       // Here, a button is created from the prefab, then the corresponding script is loaded in and attached to the ScriptHolder (a child of the button)
       // Each ability has its own script, which has special behavior, including what happens upon pressing the button
       Button button = packedSceneButton.Instantiate<Button>();
@@ -316,8 +334,9 @@ public partial class CombatUIManager : Node
       Node2D scriptHolder = button.GetNode<Node2D>("ScriptHolder");
       scriptHolder.SetScript(GD.Load<CSharpScript>("res://Abilities/" + path + "/" + ability.scriptName + "/" + ability.scriptName + ".cs"));
 
-      button.Text = ability.name;
-      button.TooltipText = ability.description;
+      button.GetNode<Label>("Label").Text = ability.name;
+      button.MouseEntered += () => HoverOverInformation(ability.description);
+      button.MouseExited += StopHoveringOverInformation;
 
       if (mana < ability.manaCost)
       {
@@ -332,8 +351,10 @@ public partial class CombatUIManager : Node
       int size = abilityButtonContainer.GetChildCount();
       for (int i = 0; i < size; i++)
       {
-         Control button = abilityButtonContainer.GetNode<Control>("AbilityButton" + (i + 1));
+         Button button = abilityButtonContainer.GetNode<Button>("AbilityButton" + (i + 1));
          abilityButtonContainer.RemoveChild(button);
+         //button.MouseEntered -= () => HoverOverInformation;
+         //button.MouseExited -= StopHoveringOverInformation;
          button.QueueFree();
       }
 
@@ -417,7 +438,7 @@ public partial class CombatUIManager : Node
             currentButton.GetNode<ItemResourceHolder>("ResourceHolder").itemResource = thisItem;
 
             Node2D scriptHolder = currentButton.GetNode<Node2D>("ScriptHolder");
-            scriptHolder.SetScript(GD.Load<CSharpScript>("res://Combat/Items/Behaviors/" + thisItem.item.scriptName + ".cs"));
+            scriptHolder.SetScript(GD.Load<CSharpScript>(thisItem.item.scriptPath));
 
             currentButton.Text = thisItem.item.name + " (" + thisItem.quantity + "x)";
             currentButton.TooltipText = thisItem.item.description;
@@ -622,7 +643,8 @@ public partial class CombatUIManager : Node
       }
    }
 
-   public void AddStackUI(Fighter target, Stack stack) {
+   public void AddStackUI(Fighter target, Stack stack) 
+   {
       HBoxContainer stacksContainer = target.UIPanel.GetNode<HBoxContainer>("Effects/Stacks");
       stacksContainer.Visible = true;
       Panel stackButton = stackPrefab.Instantiate<Panel>();
@@ -660,17 +682,19 @@ public partial class CombatUIManager : Node
       rowToUse.AddChild(effectBack);
    }
 
-   public void HideAll() {
-      selectionBox.Visible = false;
+   public void HideAll() 
+   {
+      options.Visible = false;
       cancelButton.Visible = false;
       abilityContainer.Visible = false;
       cancelButton.Visible = false;
       secondaryOptions.Visible = false;
+      messageText.GetParent<Control>().Visible = false;
    }
 
    public void ShowSelectionBox()
    {
-      selectionBox.Visible = true;
+      options.Visible = true;
    }
 
 	public void MoveSecondaryOptionsToLeft()
@@ -693,11 +717,13 @@ public partial class CombatUIManager : Node
       }
    }
 
-   public void SetDefeatScreenVisible(bool visible) {
+   public void SetDefeatScreenVisible(bool visible) 
+   {
       UI.GetNode<Node2D>("Overlay/DefeatScreen").Visible = false;
    }
 
-   public void ExitVictoryScreen() {
+   public void ExitVictoryScreen() 
+   {
       victoryScreen.Visible = false;
 
       for (int i = 0; i < 4; i++)
@@ -706,7 +732,8 @@ public partial class CombatUIManager : Node
       }
    }
 
-   public void UpdateVictoryExp(Member partyMember, int index, int oldLevel, int oldAbilityCount) {
+   public void UpdateVictoryExp(Member partyMember, int index, int oldLevel, int oldAbilityCount) 
+   {
       if (oldLevel != partyMember.level)
       {
          victoryScreen.GetNode<Label>("Back/ExpNotif" + (index + 1)).Text += "; level up to soul grade " + partyMember.level + "!";
@@ -726,13 +753,13 @@ public partial class CombatUIManager : Node
       {
          Fighter fighter = combatManager.Fighters[i];
          fighter.UIPanel.GetNode<Panel>("Highlight").Visible = false;
-         fighter.UIPanel.GetNode<Label>("HealthDescription").Text = fighter.currentHealth + "/" + fighter.maxHealth;
-         fighter.UIPanel.GetNode<ProgressBar>("HealthBar").Value = (fighter.currentHealth * 1f / fighter.maxHealth) * 100f;
+         fighter.UIPanel.GetNode<RichTextLabel>("HealthLabel").Text = fighter.currentHealth + "/" + fighter.maxHealth;
+         fighter.UIPanel.GetNode<TextureProgressBar>("HealthBar").Value = (fighter.currentHealth * 1f / fighter.maxHealth) * 100f;
 
          if (!fighter.isEnemy)
          {
-            fighter.UIPanel.GetNode<Label>("ManaDescription").Text = fighter.currentMana + "/" + fighter.maxMana;
-            fighter.UIPanel.GetNode<ProgressBar>("ManaBar").Value = (fighter.currentMana * 1f / fighter.maxMana) * 100f;
+            fighter.UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = fighter.currentMana + "/" + fighter.maxMana;
+            fighter.UIPanel.GetNode<TextureProgressBar>("ManaBar").Value = (fighter.currentMana * 1f / fighter.maxMana) * 100f;
          }
       }
    }
@@ -776,7 +803,7 @@ public partial class CombatUIManager : Node
 
    public void EnableOptions()
    {
-      Panel panel = selectionBox.GetNode<Panel>("Panel");
+      VBoxContainer panel = options.GetNode<VBoxContainer>("Choices");
       panel.GetNode<Button>("AttackButton").Disabled = false;
       panel.GetNode<Button>("CastButton").Disabled = false;
 
@@ -788,7 +815,7 @@ public partial class CombatUIManager : Node
 
    public void DisableOptions()
    {
-      Panel panel = selectionBox.GetNode<Panel>("Panel");
+      VBoxContainer panel = options.GetNode<VBoxContainer>("Choices");
       panel.GetNode<Button>("AttackButton").Disabled = true;
       panel.GetNode<Button>("CastButton").Disabled = true;
       panel.GetNode<Button>("ItemButton").Disabled = true;
@@ -796,27 +823,19 @@ public partial class CombatUIManager : Node
 
    public void CastButton()
    {
-      if (!abilityContainer.Visible)
-      {
-         UpdateAbilities();
-         SetAbilityContainerVisible(true);
-         DisableOptions();
-         SetCastButtonVisible(false);
-      }
-      else
-      {
-         SetAbilityContainerVisible(false);
-         EnableOptions();
-      }
+      UpdateAbilities();
+      StopHoveringOverInformation();
+      SetAbilityContainerVisible(true);
+      SetChoicesVisible(false);
    }
 
    public void ItemButton()
    {
       if (itemsList.Visible == false)
       {
+         StopHoveringOverInformation();
          itemsList.Visible = true;
-         DisableOptions();
-         SetItemButtonVisible(false);
+         SetChoicesVisible(false);
       }
       else
       {
@@ -825,11 +844,195 @@ public partial class CombatUIManager : Node
       }
    }
 
+   public void GenerateTargets()
+   {
+      VBoxContainer targetsHolder = options.GetNode<VBoxContainer>("Targets/VBoxContainer");
+      foreach (Node child in targetsHolder.GetChildren())
+      {
+         targetsHolder.RemoveChild(child);
+         child.QueueFree();
+      }
+
+      for (int i = 0; i < combatManager.Fighters.Count; i++)
+      {
+         combatManager.Fighters[i].targetButton = null;
+      }
+
+      List<Fighter> targets = GetPossibleTargets();
+      PackedScene scene = GD.Load<PackedScene>("res://Combat/UI/target_button.tscn");
+
+      for (int i = 0; i < targets.Count; i++)
+      {
+         Button button = scene.Instantiate<Button>();
+
+         button.GetNode<Label>("FighterName").Text = targets[i].fighterName;
+
+         if (targets[i].isEnemy)
+         {
+            button.GetNode<Label>("FighterName").AddThemeColorOverride("font_color", new Color(1, 0.16f, 0.16f));
+         }
+
+         targetsHolder.AddChild(button);
+
+         for (int j = 0; j < combatManager.Fighters.Count; j++)
+         {
+            if (combatManager.Fighters[j] == targets[i])
+            {
+               button.MouseEntered += () => OnHoverOverFighterPanel(combatManager.Fighters[j]);
+               button.MouseExited += () => OnStopHoverOverFighterPanel(combatManager.Fighters[j]);
+               button.ButtonDown += () => combatManager.OnFighterPanelDown(combatManager.Fighters[i]);
+               break;
+            }
+         }
+      }
+
+      options.GetNode<ScrollContainer>("Targets").Visible = true;
+   }
+
+   List<Fighter> GetPossibleTargets()
+   {
+      List<Fighter> possibleTargets = new List<Fighter>();
+
+      if (combatManager.CurrentAbility != null)
+      {
+         if (combatManager.CurrentAbility.onlyHitsSelf || combatManager.CurrentAbility.hitsSelf)
+         {
+            possibleTargets.Add(combatManager.CurrentFighter);
+         }
+         
+         if (combatManager.CurrentAbility.onlyHitsTeam || combatManager.CurrentAbility.hitsTeam)
+         {
+            possibleTargets.AddRange(GetTeam(combatManager.CurrentAbility.bypassesDeaths));
+         }
+
+         if (combatManager.CurrentAbility.onlyHitsSelf || combatManager.CurrentAbility.onlyHitsTeam)
+         {
+            return possibleTargets;
+         }
+      }
+      else if (combatManager.CurrentItem != null)
+      {
+         if (combatManager.CurrentItem.item.hitsSelf)
+         {
+            possibleTargets.Add(combatManager.CurrentFighter);
+         }
+         
+         if (combatManager.CurrentItem.item.hitsTeam)
+         {
+            possibleTargets.AddRange(GetTeam(false));
+         }
+      }
+      else
+      {
+         possibleTargets.AddRange(GetEnemies());
+      }
+
+      for (int i = 0; i < combatManager.Fighters.Count; i++)
+      {
+         if (!possibleTargets.Contains(combatManager.Fighters[i]) && combatManager.Fighters[i] != combatManager.CurrentFighter && !combatManager.Fighters[i].isDead)
+         {
+            possibleTargets.Add(combatManager.Fighters[i]);
+         }
+      }
+
+      return possibleTargets;
+   }
+
+   List<Fighter> GetEnemies()
+   {
+      List<Fighter> enemies = new List<Fighter>();
+
+      for (int i = 0; i < combatManager.Fighters.Count; i++)
+      {
+         if (combatManager.Fighters[i].isEnemy)
+         {
+            enemies.Add(combatManager.Fighters[i]);
+         }
+      }
+
+      return enemies;
+   }
+
+   List<Fighter> GetTeam(bool includeDead)
+   {
+      List<Fighter> team = new List<Fighter>();
+
+      for (int i = 0; i < combatManager.Fighters.Count; i++)
+      {
+         if (!combatManager.Fighters[i].isEnemy && combatManager.Fighters[i] != combatManager.CurrentFighter && (!combatManager.Fighters[i].isDead || includeDead))
+         {
+            team.Add(combatManager.Fighters[i]);
+         }
+      }
+
+      return team;
+   }
+
+   public void SetChoicesVisible(bool visible)
+   {
+      options.GetNode<VBoxContainer>("Choices").Visible = visible;
+   }
+
+   public void HoverOverInformation(string information)
+   {
+      messageText.Text = information;
+   }
+
+   public void StopHoveringOverInformation()
+   {
+      if (abilityContainer.Visible)
+      {
+         messageText.Text = "Select an ability to cast.";
+
+         if (combatManager.CurrentAbility != null)
+         {
+            messageText.Text = "Select a target to cast " + combatManager.CurrentAbility.name + " on.";
+         }
+      }
+      else if (itemsList.Visible)
+      {
+         messageText.Text = "Select an item to use.";
+
+         if (combatManager.CurrentItem != null)
+         {
+            messageText.Text = "Select a target to use " + combatManager.CurrentItem.item.name + " on.";
+         }
+      }
+      else if (combatManager.IsAttacking)
+      {
+         messageText.Text = "Select a target to attack.";
+      }
+      else
+      {
+         messageText.Text = "Select an option.";
+      }
+   }
+
    public void EndOfCombatHiding()
    {
       HideAll();
       partyList.Visible = false;
       enemyList.Visible = false;
+      partyPanels.Clear();
+      enemyPanels.Clear();
+
+      for (int i = 0; i < combatManager.Fighters.Count; i++)
+      {
+         Control panel = combatManager.Fighters[i].UIPanel;
+         VBoxContainer container = null;
+         
+         if (combatManager.Fighters[i].isEnemy)
+         {
+            container = UI.GetNode<VBoxContainer>("CombatEnemyList/VBoxContainer");
+         }
+         else
+         {
+            container = UI.GetNode<VBoxContainer>("CombatPartyList/VBoxContainer");
+         }
+         
+         container.RemoveChild(panel);
+         panel.QueueFree();
+      }
    }
 
    public void ResetStacksAndStatuses(Fighter fighter)
@@ -890,12 +1093,12 @@ public partial class CombatUIManager : Node
 
    public void SetSelectionBoxVisible(bool visible) 
    {
-      selectionBox.Visible = visible;
+      options.Visible = visible;
    }
 
    public void SetItemButtonVisible(bool visible) 
    {
-      selectionBox.GetNode<Panel>("Panel").GetNode<Button>("ItemButton").Disabled = visible;
+      options.GetNode<VBoxContainer>("Choices").GetNode<Button>("ItemButton").Disabled = visible;
    }
 
    public void SetCancelButtonVisible(bool visible) 
@@ -905,12 +1108,17 @@ public partial class CombatUIManager : Node
 
    public void SetCastButtonVisible(bool visible) 
    {
-      selectionBox.GetNode<Panel>("Panel").GetNode<Button>("CastButton").Disabled = visible;
+      options.GetNode<VBoxContainer>("Choices").GetNode<Button>("CastButton").Disabled = visible;
    }
 
    public void SetActionBar(Fighter fighter, int value)
    {
-      fighter.UIPanel.GetNode<ProgressBar>("ActionBar").Value = value;
+      //fighter.UIPanel.GetNode<ProgressBar>("ActionBar").Value = value;
+   }
+
+   public void SetTargetsVisible(bool visible)
+   {
+      options.GetNode<ScrollContainer>("Targets").Visible = visible;
    }
 
    public void SetAbilityContainerVisible(bool visible)
@@ -926,5 +1134,10 @@ public partial class CombatUIManager : Node
    public bool GetAbilityContainerVisible()
    {
       return abilityContainer.Visible;
+   }
+
+   public bool GetItemListVisible()
+   {
+      return itemsList.Visible;
    }
 }

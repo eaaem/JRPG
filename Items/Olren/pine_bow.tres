@@ -19,7 +19,7 @@ script = ExtResource("3_xu6d2")
 name = "Pine Bow"
 description = "Bow
 +2 strength"
-scriptName = ""
+scriptPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false

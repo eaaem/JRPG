@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cixq4hpp7hgrg"]
+[gd_scene load_steps=33 format=3 uid="uid://cixq4hpp7hgrg"]
 
 [ext_resource type="Script" path="res://Combat/0Core/WorldEnemy.cs" id="1_wd6ct"]
 [ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Levels/2Misc/Enemies/test.png" id="2_f5mfs"]
@@ -11,16 +11,20 @@ radius = 1.5
 height = 3.0
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_glhak"]
-lifetime_randomness = 1.0
 emission_shape = 1
 emission_sphere_radius = 1.5
-spread = 90.0
-gravity = Vector3(0, -2, 0)
-radial_accel_min = 0.5
-radial_accel_max = 1.0
+gravity = Vector3(0, 5, 0)
+tangential_accel_min = 2.01
+tangential_accel_max = 7.03
+scale_min = 0.1
+scale_max = 0.2
+color = Color(0.407843, 0.203922, 0.0470588, 1)
+turbulence_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lcl2e"]
 transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.435294, 0.435294, 0.435294, 1)
 albedo_texture = ExtResource("2_f5mfs")
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
@@ -31,8 +35,203 @@ particles_anim_loop = false
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_kmxd5"]
 material = SubResource("StandardMaterial3D_lcl2e")
-size = Vector2(1, 1)
+size = Vector2(0.2, 0.2)
 orientation = 2
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_yhjry"]
+
+[sub_resource type="Gradient" id="Gradient_0t5mr"]
+offsets = PackedFloat32Array(0, 0.18314, 0.781977, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.745098, 0, 0, 1, 0, 0, 0, 0.788235, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hmmwv"]
+gradient = SubResource("Gradient_0t5mr")
+
+[sub_resource type="Curve" id="Curve_i6jgd"]
+min_value = -1.0
+_data = [Vector2(0.0106667, 0.957895), 0.0, 0.0, 0, 0, Vector2(0.488, 0.0105263), 0.0, 0.0, 0, 0, Vector2(0.992, -0.789474), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_138gy"]
+curve = SubResource("Curve_i6jgd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b4aym"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.01
+emission_ring_radius = 0.2
+emission_ring_inner_radius = 0.0
+direction = Vector3(0, 1, 0)
+spread = 180.0
+gravity = Vector3(0, 13, 0)
+initial_velocity_min = 1.5
+initial_velocity_max = 1.5
+linear_accel_min = 7.04
+linear_accel_max = 9.05
+radial_accel_min = -13.07
+radial_accel_max = -10.05
+tangential_accel_min = 7.23
+tangential_accel_max = 11.25
+damping_min = 6.533
+damping_max = 8.543
+color_ramp = SubResource("GradientTexture1D_hmmwv")
+hue_variation_curve = SubResource("CurveTexture_138gy")
+
+[sub_resource type="Curve" id="Curve_s4p2g"]
+_data = [Vector2(0.0506329, 0), 0.0, 0.0, 0, 0, Vector2(0.496202, 0.968421), 0.0, 0.0, 0, 0, Vector2(0.95443, 0.768421), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w5sco"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+emission = Color(0.376471, 0.184314, 0.176471, 1)
+emission_energy_multiplier = 0.43
+billboard_mode = 2
+grow_amount = -7.877
+use_particle_trails = true
+distance_fade_min_distance = 25.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_40ygu"]
+material = SubResource("StandardMaterial3D_w5sco")
+shape = 0
+size = 0.25
+section_segments = 5
+curve = SubResource("Curve_s4p2g")
+
+[sub_resource type="Gradient" id="Gradient_sk80y"]
+colors = PackedColorArray(1, 0.0431373, 0.160784, 1, 0.639216, 0, 0.0470588, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_3q3pc"]
+gradient = SubResource("Gradient_sk80y")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vmx7g"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 1.2
+emission_ring_inner_radius = 0.7
+particle_flag_align_y = true
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -9.05
+linear_accel_max = -9.05
+radial_accel_min = -14.07
+radial_accel_max = -13.07
+tangential_accel_min = 13.07
+tangential_accel_max = 13.07
+color_ramp = SubResource("GradientTexture1D_3q3pc")
+
+[sub_resource type="Curve" id="Curve_nb0mq"]
+_data = [Vector2(0.0126582, 0.452632), 0.0, 0.0, 0, 0, Vector2(0.501266, 0.968421), 0.0, 0.0, 0, 0, Vector2(1, 0.421053), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_y5say"]
+cull_mode = 2
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 6.33
+disable_receive_shadows = true
+use_particle_trails = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_vils6"]
+material = SubResource("StandardMaterial3D_y5say")
+shape = 0
+size = 0.1
+curve = SubResource("Curve_nb0mq")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gdmr2"]
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(0.72549, 0, 0.0901961, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_jssax"]
+material = SubResource("StandardMaterial3D_gdmr2")
+radius = 0.02
+height = 0.04
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mxf8k"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.01
+emission_ring_radius = 0.2
+emission_ring_inner_radius = 0.0
+direction = Vector3(0, 1, 0)
+spread = 180.0
+gravity = Vector3(0, 17, 0)
+initial_velocity_min = 1.5
+initial_velocity_max = 1.5
+linear_accel_min = 7.04
+linear_accel_max = 9.05
+radial_accel_min = -13.07
+radial_accel_max = -10.05
+tangential_accel_min = 7.23
+tangential_accel_max = 11.25
+damping_min = 6.533
+damping_max = 8.543
+color = Color(0, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_hmmwv")
+hue_variation_curve = SubResource("CurveTexture_138gy")
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_4nwp6"]
+material = SubResource("StandardMaterial3D_w5sco")
+shape = 0
+size = 0.25
+section_segments = 5
+curve = SubResource("Curve_s4p2g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c22c1"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 1.2
+emission_ring_inner_radius = 0.7
+particle_flag_align_y = true
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -9.05
+linear_accel_max = -9.05
+radial_accel_min = -14.07
+radial_accel_max = -13.07
+tangential_accel_min = 13.07
+tangential_accel_max = 13.07
+color_ramp = SubResource("GradientTexture1D_3q3pc")
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_2yosf"]
+material = SubResource("StandardMaterial3D_y5say")
+shape = 0
+size = 0.1
+curve = SubResource("Curve_nb0mq")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lk0t6"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 1.2
+emission_ring_inner_radius = 0.7
+particle_flag_align_y = true
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -9.05
+linear_accel_max = -9.05
+radial_accel_min = -14.07
+radial_accel_max = -13.07
+tangential_accel_min = 13.07
+tangential_accel_max = 13.07
+color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mb4cb"]
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(0.72549, 0, 0.0901961, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_ea1ij"]
+material = SubResource("StandardMaterial3D_mb4cb")
+radius = 0.03
+height = 0.06
+radial_segments = 4
+rings = 2
 
 [node name="WorldEnemy" type="CharacterBody3D"]
 script = ExtResource("1_wd6ct")
@@ -40,6 +239,7 @@ script = ExtResource("1_wd6ct")
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 
 [node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.445583, 0)
 collision_layer = 2
 collision_mask = 2
 
@@ -48,11 +248,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.10367, -0.0186451)
 shape = SubResource("SphereShape3D_e35sy")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06431, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.50989, 0)
 shape = SubResource("CapsuleShape3D_le48y")
 
 [node name="Model" type="GPUParticles3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.39637, 0)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.578522, 0)
+visible = false
 visibility_range_end = 45.0
 amount = 200
 speed_scale = 0.75
@@ -62,7 +263,58 @@ draw_pass_1 = SubResource("PlaneMesh_kmxd5")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Model"]
 transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 1, -1.19209e-07, -0.298719, 0.901913)
+visible = false
 visibility_range_end = 45.0
 mesh = ExtResource("3_yy4wi")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Model"]
+visible = false
+mesh = SubResource("RibbonTrailMesh_yhjry")
+
+[node name="Base" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0388035, 0)
+visible = false
+amount = 100
+trail_enabled = true
+trail_lifetime = 1.06
+process_material = SubResource("ParticleProcessMaterial_b4aym")
+draw_pass_1 = SubResource("RibbonTrailMesh_40ygu")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.500068, 0)
+visible = false
+amount = 30
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_vmx7g")
+draw_pass_1 = SubResource("RibbonTrailMesh_vils6")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="Base"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.500068, 0)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_vmx7g")
+draw_pass_1 = SubResource("SphereMesh_jssax")
+
+[node name="Base2" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0613413, 0)
+amount = 100
+trail_enabled = true
+trail_lifetime = 1.06
+process_material = SubResource("ParticleProcessMaterial_mxf8k")
+draw_pass_1 = SubResource("RibbonTrailMesh_4nwp6")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Base2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.500068, 0)
+visible = false
+amount = 30
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_c22c1")
+draw_pass_1 = SubResource("RibbonTrailMesh_2yosf")
+
+[node name="GPUParticles3D2" type="GPUParticles3D" parent="Base2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.500068, 0)
+amount = 65
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_lk0t6")
+draw_pass_1 = SubResource("SphereMesh_ea1ij")
 
 [connection signal="body_entered" from="Area3D" to="." method="OnBodyEntered"]

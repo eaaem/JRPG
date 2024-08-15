@@ -284,19 +284,22 @@ public partial class CutsceneManager : Node
             {
                if (managers.PartyManager.Party[j].characterType.ToString() == currentCutsceneObject.actors[i].tiedMember)
                {
-                  managers.PartyManager.Party[j].model.GlobalPosition = actor.GlobalPosition;
-                  managers.PartyManager.Party[j].model.GetNode<Node3D>("Model").Rotation = actor.GetNode<Node3D>("Model").Rotation;
-
-                  if (j == 0)
+                  if (managers.PartyManager.Party[j].model != null)
                   {
-                     Node3D cameraHolder = actor.GetNode<Node3D>("CameraTarget");
-                     actor.RemoveChild(cameraHolder);
-                     managers.PartyManager.Party[0].model.AddChild(cameraHolder);
+                     managers.PartyManager.Party[j].model.GlobalPosition = actor.GlobalPosition;
+                     managers.PartyManager.Party[j].model.GetNode<Node3D>("Model").Rotation = actor.GetNode<Node3D>("Model").Rotation;
 
-                     managers.PartyManager.Party[j].model.GetNode<Node3D>("Model").RotateY(-managers.Controller.Rotation.Y);
+                     if (j == 0)
+                     {
+                        Node3D cameraHolder = actor.GetNode<Node3D>("CameraTarget");
+                        actor.RemoveChild(cameraHolder);
+                        managers.PartyManager.Party[0].model.AddChild(cameraHolder);
+
+                        managers.PartyManager.Party[j].model.GetNode<Node3D>("Model").RotateY(-managers.Controller.Rotation.Y);
+                     }
+
+                     break;
                   }
-
-                  break;
                }
             }
          }
@@ -374,14 +377,18 @@ public partial class CutsceneManager : Node
             {
                if (managers.PartyManager.Party[j].characterType.ToString() == currentCutsceneObject.actors[i].tiedMember)
                {
-                  actor.GlobalPosition = managers.PartyManager.Party[j].model.GlobalPosition;
-                  actor.GetNode<Node3D>("Model").GlobalRotation = managers.PartyManager.Party[j].model.GetNode<Node3D>("Model").GlobalRotation;
-
-                  if (j == 0)
+                  if (managers.PartyManager.Party[j].model != null)
                   {
-                     Node3D cameraHolder = managers.PartyManager.Party[0].model.GetNode<Node3D>("CameraTarget");
-                     managers.PartyManager.Party[0].model.RemoveChild(cameraHolder);
-                     actor.AddChild(cameraHolder);
+                     actor.GlobalPosition = managers.PartyManager.Party[j].model.GlobalPosition;
+                     actor.GetNode<Node3D>("Model").GlobalRotation = managers.PartyManager.Party[j].model.GetNode<Node3D>("Model").GlobalRotation;
+
+                     if (j == 0)
+                     {
+                        Node3D cameraHolder = managers.PartyManager.Party[0].model.GetNode<Node3D>("CameraTarget");
+                        managers.PartyManager.Party[0].model.RemoveChild(cameraHolder);
+                        actor.AddChild(cameraHolder);
+                        cameraHolder.RotateY(managers.PartyManager.Party[j].model.Rotation.Y);
+                     }
                   }
 
                   break;

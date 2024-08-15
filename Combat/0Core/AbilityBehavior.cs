@@ -35,6 +35,7 @@ public abstract partial class AbilityBehavior : Node
    public void PlayerAbilityReadySetup()
    {
       combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManager");
+      abilityManager = combatManager.GetNode<CombatAbilityManager>("AbilityManager");
 
       cancelButton = GetNode<Button>("/root/BaseNode/UI/Options/CancelButton");
       button = GetParent<Button>();
@@ -51,7 +52,7 @@ public abstract partial class AbilityBehavior : Node
    public void SetTeamOnCast(Button buttonToDisable)
    {
       InitializeOnCast(buttonToDisable);
-      combatManager.PointCameraAtParty();
+      //combatManager.PointCameraAtParty();
    }
 
    public void SetEnemyTeamOnCast(Button buttonToDisable)
@@ -62,9 +63,11 @@ public abstract partial class AbilityBehavior : Node
    void InitializeOnCast(Button buttonToDisable)
    {
       combatManager.CurrentAbility = resource;
-      uiManager.DisableOtherAbilities();
+      //uiManager.DisableOtherAbilities();
+      uiManager.GenerateTargets();
+      uiManager.SetAbilityContainerVisible(false);
       cancelButton.Visible = true;
-      uiManager.EnablePanels();
+      //uiManager.EnablePanels();
       buttonToDisable.Disabled = true;
    }
 

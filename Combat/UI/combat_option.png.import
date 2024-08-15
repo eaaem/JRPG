@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ecludvtcxrpg"
-path="res://.godot/imported/Birdseye.png-a22c15fcc849a5034adaa914a7d5c540.ctex"
+uid="uid://dgmw2jk42cbj1"
+path="res://.godot/imported/combat_option.png-7db9b141ec39cff32493e054344e6e7e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Combat/UI/StatusEffects/Birdseye.png"
-dest_files=["res://.godot/imported/Birdseye.png-a22c15fcc849a5034adaa914a7d5c540.ctex"]
+source_file="res://Combat/UI/combat_option.png"
+dest_files=["res://.godot/imported/combat_option.png-7db9b141ec39cff32493e054344e6e7e.ctex"]
 
 [params]
 

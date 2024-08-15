@@ -37,14 +37,14 @@ public partial class ItemMenuManager : Node
       for (int i = 0; i < managers.PartyManager.Items.Count; i++)
       {
          InventoryItem currentItem = managers.PartyManager.Items[i];
-         if (currentItem.item.scriptName != "")
+         if (currentItem.item.scriptPath != "")
          {
             Button currentButton = itemButtonPrefab.Instantiate<Button>();
 
             currentButton.GetNode<ItemResourceHolder>("ResourceHolder").itemResource = currentItem;
 
             Node2D scriptHolder = currentButton.GetNode<Node2D>("ScriptHolder");
-            scriptHolder.SetScript(GD.Load<CSharpScript>("res://Combat/Items/Behaviors/" + currentItem.item.scriptName + ".cs"));
+            scriptHolder.SetScript(GD.Load<CSharpScript>(currentItem.item.scriptPath));
 
             currentButton.Text = currentItem.item.name + " (" + currentItem.quantity + "x)";
             currentButton.TooltipText = currentItem.item.description;

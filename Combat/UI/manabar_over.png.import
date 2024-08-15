@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cmhujtshgi8ki"
-path="res://.godot/imported/Burn.png-5e635464dd70e5006183d9e46dc84e38.ctex"
+uid="uid://nqshtk3u7f1p"
+path="res://.godot/imported/manabar_over.png-337448df1540b07af05085f3809ce1f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Combat/UI/StatusEffects/Burn.png"
-dest_files=["res://.godot/imported/Burn.png-5e635464dd70e5006183d9e46dc84e38.ctex"]
+source_file="res://Combat/UI/manabar_over.png"
+dest_files=["res://.godot/imported/manabar_over.png-337448df1540b07af05085f3809ce1f5.ctex"]
 
 [params]
 

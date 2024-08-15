@@ -1,6 +1,5 @@
-[gd_scene load_steps=10 format=3 uid="uid://7nrqikik8ftl"]
+[gd_scene load_steps=20 format=3 uid="uid://7nrqikik8ftl"]
 
-[ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Levels/2Misc/Enemies/test.png" id="1_0wgwd"]
 [ext_resource type="Texture2D" uid="uid://d2n58dy4r63eg" path="res://Combat/Arena/selection_highlight_texture.png" id="2_ur28j"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3r3hm"]
@@ -9,29 +8,6 @@ shading_mode = 0
 [sub_resource type="CylinderMesh" id="CylinderMesh_qlp6l"]
 material = SubResource("StandardMaterial3D_3r3hm")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_dkrli"]
-emission_shape = 1
-emission_sphere_radius = 5.0
-spread = 180.0
-gravity = Vector3(0, 0, 0)
-radial_accel_min = -4.35
-radial_accel_max = -4.35
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5o18m"]
-transparency = 1
-albedo_texture = ExtResource("1_0wgwd")
-emission_enabled = true
-emission = Color(1, 1, 1, 1)
-billboard_mode = 3
-particles_anim_h_frames = 1
-particles_anim_v_frames = 1
-particles_anim_loop = false
-
-[sub_resource type="PlaneMesh" id="PlaneMesh_116hg"]
-material = SubResource("StandardMaterial3D_5o18m")
-size = Vector2(1, 1)
-orientation = 2
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iv7p0"]
 shading_mode = 0
 
@@ -39,6 +15,128 @@ shading_mode = 0
 material = SubResource("StandardMaterial3D_iv7p0")
 radius = 2.0
 height = 4.0
+
+[sub_resource type="Gradient" id="Gradient_0t5mr"]
+offsets = PackedFloat32Array(0, 0.18314, 0.781977, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.745098, 0, 0, 1, 0, 0, 0, 0.788235, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hmmwv"]
+gradient = SubResource("Gradient_0t5mr")
+
+[sub_resource type="Curve" id="Curve_i6jgd"]
+min_value = -1.0
+_data = [Vector2(0.0106667, 0.957895), 0.0, 0.0, 0, 0, Vector2(0.488, 0.0105263), 0.0, 0.0, 0, 0, Vector2(0.992, -0.789474), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_138gy"]
+curve = SubResource("Curve_i6jgd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_tos87"]
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector3(0, 1, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.5
+initial_velocity_max = 1.5
+radial_accel_min = -24.12
+radial_accel_max = -24.12
+tangential_accel_max = 15.08
+damping_min = 6.533
+damping_max = 8.543
+color = Color(0, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_hmmwv")
+hue_variation_curve = SubResource("CurveTexture_138gy")
+
+[sub_resource type="Curve" id="Curve_s4p2g"]
+_data = [Vector2(0.0506329, 0), 0.0, 0.0, 0, 0, Vector2(0.496202, 0.968421), 0.0, 0.0, 0, 0, Vector2(0.95443, 0.768421), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w5sco"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+emission = Color(0.376471, 0.184314, 0.176471, 1)
+emission_energy_multiplier = 0.43
+billboard_mode = 2
+grow_amount = -7.877
+use_particle_trails = true
+distance_fade_min_distance = 25.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_rrd8u"]
+material = SubResource("StandardMaterial3D_w5sco")
+shape = 0
+size = 0.25
+section_segments = 5
+curve = SubResource("Curve_s4p2g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_arp7g"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+direction = Vector3(0, 1, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.5
+initial_velocity_max = 1.5
+radial_accel_min = -11.06
+radial_accel_max = -11.06
+tangential_accel_max = 15.08
+damping_min = 6.031
+damping_max = 7.036
+color = Color(0, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_hmmwv")
+hue_variation_curve = SubResource("CurveTexture_138gy")
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_x8oa4"]
+material = SubResource("StandardMaterial3D_w5sco")
+shape = 0
+size = 0.25
+section_segments = 5
+curve = SubResource("Curve_s4p2g")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a1vre"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 2.0
+emission_ring_inner_radius = 1.0
+particle_flag_align_y = true
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -9.05
+linear_accel_max = -9.05
+radial_accel_min = -14.07
+radial_accel_max = -13.07
+tangential_accel_min = 13.07
+tangential_accel_max = 13.07
+color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gdmr2"]
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(0.72549, 0, 0.0901961, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_yatc4"]
+material = SubResource("StandardMaterial3D_gdmr2")
+radius = 0.03
+height = 0.06
+radial_segments = 4
+rings = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_1i1dk"]
+direction = Vector3(0, 1, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 1.5
+initial_velocity_max = 1.5
+radial_accel_min = 14.07
+radial_accel_max = 14.07
+damping_min = 6.533
+damping_max = 8.543
+color = Color(0, 0, 0, 1)
+color_ramp = SubResource("GradientTexture1D_hmmwv")
+hue_variation_curve = SubResource("CurveTexture_138gy")
 
 [node name="EnemyPlacement1" type="Node3D"]
 
@@ -54,24 +152,57 @@ no_depth_test = true
 text = "CRIT"
 font_size = 100
 
-[node name="SpawnParticles" type="GPUParticles3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.212524, 0)
-visible = false
-visibility_range_end = 45.0
-amount = 300
-randomness = 1.0
-process_material = SubResource("ParticleProcessMaterial_dkrli")
-draw_pass_1 = SubResource("PlaneMesh_116hg")
-
 [node name="SpawnMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.212524, 0)
 visible = false
 cast_shadow = 0
 mesh = SubResource("SphereMesh_h3mbi")
-skeleton = NodePath("../SpawnParticles")
+skeleton = NodePath("../SpawnParticles1")
 
 [node name="SelectionHighlight" type="Decal" parent="."]
 visible = false
 texture_albedo = ExtResource("2_ur28j")
 texture_emission = ExtResource("2_ur28j")
 cull_mask = 32
+
+[node name="SpawnParticles1" type="GPUParticles3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.105817, 0)
+visible = false
+visibility_range_end = 45.0
+amount = 300
+randomness = 1.0
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_tos87")
+draw_pass_1 = SubResource("RibbonTrailMesh_rrd8u")
+
+[node name="SpawnParticles2" type="GPUParticles3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.30856, 0)
+visible = false
+visibility_range_end = 45.0
+amount = 300
+randomness = 1.0
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_arp7g")
+draw_pass_1 = SubResource("RibbonTrailMesh_x8oa4")
+
+[node name="SpawnParticles2-2" type="GPUParticles3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.560409, 0)
+visible = false
+amount = 65
+process_material = SubResource("ParticleProcessMaterial_a1vre")
+draw_pass_1 = SubResource("SphereMesh_yatc4")
+
+[node name="SpawnParticles3" type="GPUParticles3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -0.105817, 0)
+visible = false
+visibility_range_end = 45.0
+emitting = false
+amount = 300
+lifetime = 2.0
+one_shot = true
+speed_scale = 2.45
+explosiveness = 1.0
+trail_enabled = true
+trail_lifetime = 0.1
+process_material = SubResource("ParticleProcessMaterial_1i1dk")
+draw_pass_1 = SubResource("RibbonTrailMesh_rrd8u")

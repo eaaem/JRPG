@@ -20,7 +20,7 @@ public partial class MenuManager : Node
    Node3D baseNode;
 
    ColorRect blackScreen;
-   public bool BlackScreenIsVisible { get; set; }
+   public bool BlackScreenIsVisible { get; set; } = false;
 
    public override void _Ready()
    {
@@ -158,7 +158,7 @@ public partial class MenuManager : Node
 
    public async void FadeFromBlack()
    {
-      while (blackScreen.Color.A > 0)
+      while (blackScreen.Color.A >= 0)
       {
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
 
@@ -174,7 +174,7 @@ public partial class MenuManager : Node
    {
       blackScreen.Color = new Color(0, 0, 0, 0);
 
-      while (blackScreen.Color.A < 1)
+      while (blackScreen.Color.A <= 1)
       {
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
 
@@ -184,5 +184,10 @@ public partial class MenuManager : Node
       }
 
       BlackScreenIsVisible = true;
+   }
+
+   public void SetBlackScreenAlpha(float alpha)
+   {
+      blackScreen.Color = new Color(0, 0, 0, alpha);
    }
 }

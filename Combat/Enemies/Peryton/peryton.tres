@@ -1,9 +1,9 @@
-[gd_resource type="Resource" load_steps=15 format=3 uid="uid://bswxdeoulfiay"]
+[gd_resource type="Resource" script_class="Enemy" load_steps=15 format=3 uid="uid://bswxdeoulfiay"]
 
 [ext_resource type="Resource" uid="uid://cq0hkypmj7l5r" path="res://Abilities/Enemy/Gust/gust.tres" id="1_0of77"]
 [ext_resource type="PackedScene" uid="uid://b4csy4d0ygagk" path="res://Combat/Enemies/Peryton/peryton.tscn" id="1_fu4kr"]
-[ext_resource type="Script" path="res://Combat/Core/Enemy.cs" id="1_yq1k2"]
-[ext_resource type="Script" path="res://Combat/Core/Stat.cs" id="3_6jsbq"]
+[ext_resource type="Script" path="res://Combat/0Core/Enemy.cs" id="1_yq1k2"]
+[ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="3_6jsbq"]
 
 [sub_resource type="Resource" id="Resource_8ghu8"]
 script = ExtResource("3_6jsbq")

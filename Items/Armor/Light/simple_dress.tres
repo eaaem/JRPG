@@ -25,7 +25,7 @@ script = ExtResource("3_b51bh")
 name = "Simple Dress"
 description = "Light
 +1 constitution, +1 willpower"
-scriptName = ""
+scriptPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false

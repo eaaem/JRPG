@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cqj04lgjo63ts"
-path="res://.godot/imported/MegaBuff.png-0d8313bb0479552ed6d492df06713d47.ctex"
+uid="uid://k5v2inb4jpw4"
+path="res://.godot/imported/Bleed.png-f17420c7d56becc920b87f9911107587.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Combat/UI/StatusEffects/MegaBuff.png"
-dest_files=["res://.godot/imported/MegaBuff.png-0d8313bb0479552ed6d492df06713d47.ctex"]
+source_file="res://Combat/StatusEffects/Bleed.png"
+dest_files=["res://.godot/imported/Bleed.png-f17420c7d56becc920b87f9911107587.ctex"]
 
 [params]
 

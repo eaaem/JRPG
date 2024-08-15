@@ -19,7 +19,7 @@ script = ExtResource("2_pem7t")
 name = "Speed Ring"
 description = "Accessory
 +2 speed"
-scriptName = ""
+scriptPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false

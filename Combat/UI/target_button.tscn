@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://x3lptq4ur4qe"]
+
+[ext_resource type="Theme" uid="uid://rhfvy1fs423s" path="res://Combat/UI/combat_text.tres" id="1_qantv"]
+[ext_resource type="Theme" uid="uid://dxlsms8vreux4" path="res://Combat/UI/combat_button_theme.tres" id="1_xgywm"]
+
+[node name="target_button" type="Button"]
+custom_minimum_size = Vector2(600, 70)
+theme = ExtResource("1_xgywm")
+
+[node name="FighterName" type="Label" parent="."]
+layout_mode = 0
+offset_right = 600.0
+offset_bottom = 70.0
+theme = ExtResource("1_qantv")
+text = "Target Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IndexHolder" type="Node2D" parent="."]
+position = Vector2(1, 0)

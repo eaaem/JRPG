@@ -60,7 +60,7 @@ public partial class CombatManager : Node
    [Export]
    private AffinityStrengths[] affinityTable = new AffinityStrengths[9];
    [Export]
-   public StatusData[] StatusDatas { get; set; }
+   public StatusData[] StatusDatas { get; set; } = new StatusData[0];
    [Export]
    private ManagerReferenceHolder managers;
    [Export]
@@ -73,6 +73,8 @@ public partial class CombatManager : Node
    private CombatStackStatusManager stacksAndStatusManager;
    [Export]
    private CombatPassiveManager passiveManager;
+   [Export]
+   private Material transitionMaterial;
 
    [Export]
    private Camera3D playerCamera;
@@ -84,7 +86,7 @@ public partial class CombatManager : Node
 
    public List<Fighter> Fighters { get; set; }
 
-   private bool isAttacking;
+   public bool IsAttacking { get; set; }
    private bool isCasting;
    public bool IsCompanionTurn { get; set; }
    public Fighter CurrentFighter { get; set; }
@@ -106,8 +108,8 @@ public partial class CombatManager : Node
 
    public bool IsInCombat { get; set; }
 
-   private Vector3 returnPosition;
-   private Vector3 returnRotation;
+   //private Vector3 returnPosition;
+   //private Vector3 returnRotation;
 
    private WorldEnemy currentEnemyScript;
 
@@ -115,7 +117,7 @@ public partial class CombatManager : Node
 	public override void _Ready()
 	{
       Fighters = new List<Fighter>();
-      StatusDatas = new StatusData[0];
+      //StatusDatas = new StatusData[0];
       AbilityTargetGraphic = string.Empty;
 	}
 
@@ -127,84 +129,122 @@ public partial class CombatManager : Node
 
    public async void SetupCombat(List<Enemy> enemyDatas, Vector3 location, Vector3 rotation, WorldEnemy enemyScript) 
    {
-      ResetNodes();
-      managers.LevelManager.MuteMusic();
-
-      managers.MenuManager.FadeToBlack();
-
-      while (!managers.MenuManager.BlackScreenIsVisible)
+      if (!IsInCombat)
       {
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-      }
+         IsInCombat = true;
+         ResetNodes();
+         managers.LevelManager.MuteMusic();
 
-      managers.MenuManager.CloseMenu();
-      managers.MenuManager.canTakeInput = false;
-      managers.ItemPickupManager.itemPickupContainer.Visible = false;
+         //managers.MenuManager.FadeToBlack();
 
-      returnPosition = location;
-      returnRotation = rotation;
-      Fighters.Clear();
-      IsInCombat = true;
-      managers.Controller.DisableMovement = true;
-      managers.Controller.DisableCamera = true;
-      managers.Controller.IsSprinting = false;
-      currentEnemyScript = enemyScript;
+         managers.MenuManager.CloseMenu();
+         managers.MenuManager.canTakeInput = false;
+         managers.ItemPickupManager.itemPickupContainer.Visible = false;
 
-      for (int i = 0; i < managers.PartyManager.Party.Count; i++)
-      {
-         if (managers.PartyManager.Party[i].isInParty)
+         managers.Controller.DisableMovement = true;
+         managers.Controller.DisableCamera = true;
+         managers.Controller.IsSprinting = false;
+
+         for (int i = 0; i < Fighters.Count; i++)
          {
-            //managers.PartyManager.Party[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Encounter");
+            if (!Fighters[i].isEnemy)
+            {
+               baseNode.RemoveChild(Fighters[i].model);
+               Fighters[i].model.QueueFree();
+            }
          }
-      }
 
-      await ToSignal(GetTree().CreateTimer(0.75f), "timeout");
+         if (!enemyScript.isStaticEnemy)
+         {
+            GpuParticles2D particleTransition = GetNode<GpuParticles2D>("/root/BaseNode/UI/Overlay/CombatTransitionHolder/CombatTransition");
+            Sprite2D sprite = particleTransition.GetNode<Sprite2D>("Sprite2D");
+            sprite.Scale = Vector2.Zero;
 
-      uiManager.HidePanels();
+            particleTransition.Visible = true;
+            particleTransition.Restart();
 
-      InitializeParty();
-      InitializeEnemies(enemyDatas);
-      uiManager.ClearItemUI();
-      uiManager.GenerateItemUI();
-      uiManager.EnableOptions();
-      uiManager.DisablePanels();
+            while (sprite.Scale < new Vector2(20, 20))
+            {
+               await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+               sprite.Scale = new Vector2(sprite.Scale.X + 0.25f, sprite.Scale.Y + 0.25f);
+            }
 
-      Input.MouseMode = Input.MouseModeEnum.Visible;
-      MovePartyToArena();
-      uiManager.UpdateUI();
-      playerCamera.Current = false;
-      arenaCamera.MakeCurrent();
+            managers.MenuManager.SetBlackScreenAlpha(1f);
+            particleTransition.Visible = false;
+         }
+         else
+         {
+            managers.MenuManager.FadeToBlack();
 
-      enemyScript.QueueFree();
+            while (!managers.MenuManager.BlackScreenIsVisible)
+            {
+               await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+            }
+         }
 
-      PointCameraAtEnemies();
-
-      managers.MenuManager.FadeFromBlack();
-
-      if (!enemyScript.isStaticEnemy)
-      {
-         CreateEnemySpawnEffects();
-         await ToSignal(GetTree().CreateTimer(2.75f), "timeout");
-      }
-      else
-      {
          await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
-      }
-      
-      PanCameraOutward();
 
-      while (!cameraPanCompleted)
-      {
+         //returnPosition = location;
+         //returnRotation = rotation;
+         Fighters.Clear();
+         currentEnemyScript = enemyScript;
+
+         for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+         {
+            if (managers.PartyManager.Party[i].isInParty)
+            {
+               //managers.PartyManager.Party[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Encounter");
+            }
+         }
+
+         await ToSignal(GetTree().CreateTimer(0.75f), "timeout");
+
+         uiManager.HidePanels();
+
+         InitializeParty();
+         InitializeEnemies(enemyDatas);
+         uiManager.ClearItemUI();
+         uiManager.GenerateItemUI();
+         uiManager.EnableOptions();
+         uiManager.DisablePanels();
+
+         Input.MouseMode = Input.MouseModeEnum.Visible;
+         MovePartyToArena();
+         uiManager.UpdateUI();
+         playerCamera.Current = false;
+         arenaCamera.MakeCurrent();
+
+         enemyScript.QueueFree();
+
+         PointCameraAtEnemies();
+
+         managers.MenuManager.FadeFromBlack();
+
+         if (!enemyScript.isStaticEnemy)
+         {
+            CreateEnemySpawnEffects();
+            await ToSignal(GetTree().CreateTimer(5.75f), "timeout");
+         }
+         else
+         {
+            await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
+         }
+         
+         PanCameraOutward();
+
+         while (!cameraPanCompleted)
+         {
+            await ToSignal(GetTree().CreateTimer(1f), "timeout");
+         }
+
          await ToSignal(GetTree().CreateTimer(1f), "timeout");
+
+         ResetCamera();
+         managers.LevelManager.TransitionMusicTracks(this);
+
+         uiManager.ShowLists();
+         SelectNextTurn();
       }
-
-      await ToSignal(GetTree().CreateTimer(1f), "timeout");
-
-      ResetCamera();
-      managers.LevelManager.TransitionMusicTracks(this);
-
-	   uiManager.ShowLists();
-      SelectNextTurn();
    }
 
    async void CreateEnemySpawnEffects()
@@ -216,7 +256,8 @@ public partial class CombatManager : Node
          if (Fighters[i].isEnemy)
          {
             enemies.Add(Fighters[i]);
-            Fighters[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles").Visible = true;
+            Fighters[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles1").Restart();
+            Fighters[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles1").Visible = true;
          }
       }
 
@@ -224,21 +265,129 @@ public partial class CombatManager : Node
 
       for (int i = 0; i < enemies.Count; i++)
       {
-         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles").Emitting = false;
-         enemies[i].placementNode.GetNode<MeshInstance3D>("SpawnMesh").Visible = true;
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles1").Emitting = false;
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles2").Restart();
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles2").Visible = true;
+
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles2-2").Restart();
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles2-2").Visible = true;
       }
 
-      await ToSignal(GetTree().CreateTimer(1.25f), "timeout");
+      await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
+
+      ApplyEnemyTransitionMaterials(enemies);
 
       for (int i = 0; i < enemies.Count; i++)
       {
-         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles").Visible = false;
-         enemies[i].placementNode.GetNode<MeshInstance3D>("SpawnMesh").Visible = false;
          enemies[i].model.Visible = true;
-
-         // Reset for next battle
-         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles").Emitting = true;
       }
+
+      await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
+
+      for (int i = 0; i < enemies.Count; i++)
+      {
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles2").Emitting = false;
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles2-2").Emitting = false;
+         enemies[i].model.Visible = true;
+      }
+
+      await ToSignal(GetTree().CreateTimer(0.35f), "timeout");
+
+      for (int i = 0; i < enemies.Count; i++)
+      {
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles3").Restart();
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles3").Visible = true;
+      }
+
+      await ToSignal(GetTree().CreateTimer(1f), "timeout");
+
+      for (int i = 0; i < enemies.Count; i++)
+      {
+         // Reset for next battle
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles1").Emitting = true;
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles2").Emitting = true;
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles2-2").Emitting = true;
+
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles1").Visible = false;
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles2").Visible = false;
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles2-2").Visible = false;
+         enemies[i].placementNode.GetNode<GpuParticles3D>("SpawnParticles3").Visible = false;
+      }
+   }
+
+   async void ApplyEnemyTransitionMaterials(List<Fighter> enemies)
+   {
+      List<MeshInstance3D> enemyMeshes = new List<MeshInstance3D>();
+
+      for (int i = 0; i < enemies.Count; i++)
+      {
+         enemyMeshes.AddRange(GetMeshes(enemies[i].model));
+      }
+
+      StandardMaterial3D currentTransition = (StandardMaterial3D)transitionMaterial;
+
+      for (int i = 0; i < enemyMeshes.Count; i++)
+      {
+         enemyMeshes[i].MaterialOverride = currentTransition;
+      }
+
+      while (currentTransition.AlbedoColor.A < 1f)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         Color color = currentTransition.AlbedoColor;
+         color.A += 0.1f;
+         currentTransition.AlbedoColor = color;
+      }
+
+      for (int i = 0; i < enemyMeshes.Count; i++)
+      {
+         enemyMeshes[i].MaterialOverride = null;
+         enemyMeshes[i].MaterialOverlay = currentTransition;
+      }
+
+      await ToSignal(GetTree().CreateTimer(1.75f), "timeout");
+
+      while (currentTransition.AlbedoColor.A > 0f)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         Color color = currentTransition.AlbedoColor;
+         color.A -= 0.1f;
+         currentTransition.AlbedoColor = color;
+      }
+
+      for (int i = 0; i < enemyMeshes.Count; i++)
+      {
+         enemyMeshes[i].MaterialOverlay = null;
+      }
+   }
+
+   /// <summary>
+   /// Uses breadth-first search to get all child meshes of a skeleton.
+   /// </summary>
+   /// <returns>All meshes in a model</returns>
+   List<MeshInstance3D> GetMeshes(Node3D root)
+   {
+      List<MeshInstance3D> meshes = new List<MeshInstance3D>();
+      Queue<Node> visited = new Queue<Node>();
+
+      visited.Enqueue(root);
+
+      while (visited.Count > 0)
+      {
+         Node current = visited.Dequeue();
+
+         if (current.GetType() == typeof(MeshInstance3D))
+         {
+            meshes.Add((MeshInstance3D)current);
+         }
+
+         foreach (Node child in current.GetChildren())
+         {
+            visited.Enqueue(child);
+         }
+      }
+
+      return meshes;
    }
 
    async void PanCameraOutward()
@@ -246,7 +395,7 @@ public partial class CombatManager : Node
       cameraPanCompleted = false;
       int timer = 0;
 
-      while (timer < 70)
+      while (timer < 30)
       {
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
          arenaCamera.GlobalPosition += (Vector3.Left * 0.25f);
@@ -289,20 +438,21 @@ public partial class CombatManager : Node
          
             uiManager.InitializePartyPanel(newFighter, i);
 
-            newFighter.model = managers.PartyManager.Party[i].model;
-            newFighter.model.GetNode<AnimationTree>("AnimationTree").Active = false;
+            newFighter.model = GD.Load<PackedScene>("res://Party/" + managers.PartyManager.Party[i].characterType + "/combat_actor.tscn").Instantiate<Node3D>();
+            baseNode.AddChild(newFighter.model);
+            //newFighter.model.GetNode<AnimationTree>("AnimationTree").Active = false;
             newFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
 
-
-            BoneAttachment3D attachment = newFighter.model.GetNode<BoneAttachment3D>("Model/Armature/Skeleton3D/WeaponAttachment");
+            BoneAttachment3D attachment = new BoneAttachment3D();
+            newFighter.model.GetNode<Skeleton3D>("Model/Armature/Skeleton3D").AddChild(attachment);
+            attachment.Name = "WeaponAttachment";
             attachment.BoneName = "hand.L";
 
-            SetWeaponAttachmentToIdle(newFighter);
+            Node3D weapon = newFighter.model.GetNode<Node3D>("Weapon");
+            newFighter.model.RemoveChild(weapon);
+            attachment.AddChild(weapon);
 
-            if (newFighter.model.Name != "Member1")
-            {
-               newFighter.model.GetParent().GetNode<OverworldPartyController>("" + newFighter.model.Name).EnablePathfinding = false;
-            }
+            SetWeaponAttachmentToIdle(newFighter);
 
             passiveManager.ApplyPassives(newFighter);
 
@@ -377,13 +527,13 @@ public partial class CombatManager : Node
 
    void MovePartyToArena()
    {
-      List<Member> inParty = new List<Member>();
+      List<Fighter> inParty = new List<Fighter>();
 
-      for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+      for (int i = 0; i < Fighters.Count; i++)
       {
-         if (managers.PartyManager.Party[i].isInParty)
+         if (!Fighters[i].isEnemy)
          {
-            inParty.Add(managers.PartyManager.Party[i]);
+            inParty.Add(Fighters[i]);
          }
       }
    
@@ -391,10 +541,8 @@ public partial class CombatManager : Node
       for (int i = 0; i < inParty.Count; i++)
       {
          inParty[i].model.GlobalPosition = placementGroup.GetNode<Node3D>("PartyPlacement" + (i + 1)).GlobalPosition;
-         Fighters[i].placementNode = placementGroup.GetNode<Node3D>("PartyPlacement" + (i + 1));
-         inParty[i].model.GetNode<Node3D>("Model").LookAt(arena.GlobalPosition);
-         inParty[i].model.GetNode<Node3D>("Model").RotateY(Mathf.DegToRad(-180));
-         inParty[i].model.GetNode<Node3D>("Model").Position = Vector3.Zero;
+         inParty[i].placementNode = placementGroup.GetNode<Node3D>("PartyPlacement" + (i + 1));
+         inParty[i].model.GetNode<Node3D>("Model").RotateY(Mathf.DegToRad(90f));
       }       
    }
 
@@ -403,8 +551,8 @@ public partial class CombatManager : Node
    /// </summary>
    private void ResetCamera() 
    {
-      arenaCamera.Position = new Vector3(-25.82f, 7.33f, 14.64f);
-      arenaCamera.Rotation = new Vector3(Mathf.DegToRad(-13f), Mathf.DegToRad(-60.6f), Mathf.DegToRad(0.4f));
+      arenaCamera.Position = new Vector3(-9.529f, 3.486f, 3.529f);
+      arenaCamera.Rotation = new Vector3(Mathf.DegToRad(-13f), Mathf.DegToRad(-73.4f), Mathf.DegToRad(0.4f));
    }
 
    public void PointCameraAtParty()
@@ -423,7 +571,7 @@ public partial class CombatManager : Node
    {
       Basis basis = target.GetNode<Node3D>("Model").GlobalTransform.Basis;
       // Places the camera behind the current player fighter. Note that basis.Z is forward, -basis.X is right
-      arenaCamera.GlobalPosition = target.GlobalPosition - (basis.Z * 2f) + (Vector3.Up * 2f) - (basis.X * 1.25f);
+      arenaCamera.GlobalPosition = target.GlobalPosition - (basis.Z * 2f) + (Vector3.Up * 2f) - (basis.X);
       arenaCamera.LookAt(target.GlobalPosition + (basis.Z * 2f) + Vector3.Up - basis.X);
    }
 
@@ -434,7 +582,7 @@ public partial class CombatManager : Node
       arenaCamera.LookAt(target.Position);
    }
 
-   async void SelectNextTurn() 
+   void SelectNextTurn() 
    {
       if (CurrentFighter != null)
       {
@@ -470,7 +618,7 @@ public partial class CombatManager : Node
       
       while (true) 
       {
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         //await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
          for (int i = 0; i < Fighters.Count; i++) 
          {
             if (!Fighters[i].isDead)
@@ -480,12 +628,12 @@ public partial class CombatManager : Node
                // Update action bar BEFORE increasing the action level so that it doesn't stop before reaching 100
                if (!Fighters[i].isEnemy)
                {
-                  uiManager.SetActionBar(Fighters[i], Fighters[i].actionLevel);
+                  //uiManager.SetActionBar(Fighters[i], Fighters[i].actionLevel);
                }
 
                if (Fighters[i].actionLevel >= 100) 
                {
-                  await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
+                  //await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
 
                   CurrentFighter = Fighters[i];
                   stacksAndStatusManager.IncrementAppliedStatuses();
@@ -574,7 +722,7 @@ public partial class CombatManager : Node
       uiManager.EnableOptions();
 
       uiManager.HideAll();
-      isAttacking = false;
+      IsAttacking = false;
 
       IsCompanionTurn = false;
 
@@ -593,7 +741,20 @@ public partial class CombatManager : Node
 
       if (IsInCombat)
       {
-         ResetCamera();
+         //ResetCamera();
+
+         for (int i = 0; i < Fighters.Count; i++)
+         {
+            if (Fighters[i].isEnemy)
+            {
+               Fighters[i].model.GetNode<Node3D>("Model").Rotation = new Vector3(0f, Mathf.DegToRad(-90f), 0f);
+            }
+            else
+            {
+               Fighters[i].model.GetNode<Node3D>("Model").Rotation = new Vector3(0f, Mathf.DegToRad(90f), 0f);
+            }
+         }
+
          await ToSignal(GetTree().CreateTimer(0.15f), "timeout");
          SelectNextTurn();
       }
@@ -606,15 +767,16 @@ public partial class CombatManager : Node
       if (IsCompanionTurn)
       {
          uiManager.SetItemButtonVisible(true);
-         FocusCameraOnFighter(CurrentFighter.companion.model);
+         //FocusCameraOnFighter(CurrentFighter.companion.model);
       }
       else
       {
          uiManager.SetItemButtonVisible(false);
-         FocusCameraOnFighter(CurrentFighter.model);
+         //FocusCameraOnFighter(CurrentFighter.model);
       }
 
       CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatActive");
+      uiManager.SetChoicesVisible(true);
 
       if (CurrentFighter.model.HasNode("ActiveCombatAnchor"))
       {
@@ -625,9 +787,9 @@ public partial class CombatManager : Node
       }
    }
 
-   public void OnFighterPanelDown(int index, bool isEnemy)
+   public void OnFighterPanelDown(Fighter target)
    {
-      Fighter target = GetFighterFromIndex(index, isEnemy);
+      /*Fighter target = GetFighterFromIndex(index, isEnemy);
 
       if (target.isDead)
       {
@@ -642,9 +804,9 @@ public partial class CombatManager : Node
          {
             return;
          }
-      }
+      }*/
 
-      if (isAttacking)
+      if (IsAttacking)
       {
          CompleteAttack(target);
          target.placementNode.GetNode<Decal>("SelectionHighlight").Visible = false;
@@ -658,15 +820,20 @@ public partial class CombatManager : Node
          itemManager.UseItem(target);
       }
 
-      uiManager.DisablePanels();
+      uiManager.SetCancelButtonVisible(false);
+      uiManager.SetChoicesVisible(false);
+      uiManager.SetItemListVisible(false);
+      uiManager.SetAbilityContainerVisible(false);
+      uiManager.SetTargetsVisible(false);
    }
 
    void OnAttackButtonDown()
    {
-      uiManager.DisableOptions();
-      uiManager.EnablePanels();
-      isAttacking = true;
+      IsAttacking = true;
+      uiManager.StopHoveringOverInformation();
       uiManager.SetCancelButtonVisible(true);
+      uiManager.SetChoicesVisible(false);
+      uiManager.GenerateTargets();
 
       // Olren's arrows get special effects
       passiveManager.OlrenPassive();
@@ -684,13 +851,31 @@ public partial class CombatManager : Node
 
    void OnCancelButtonDown()
    {
-      if (isAttacking)
+      uiManager.StopHoveringOverInformation();
+
+      if (IsAttacking)
       {
-         uiManager.EnableOptions();
+         uiManager.SetChoicesVisible(true);
+         uiManager.SetTargetsVisible(false);
+         uiManager.SetCancelButtonVisible(false);
+      }
+      else if (uiManager.GetAbilityContainerVisible())
+      {
+         uiManager.SetAbilityContainerVisible(false);
+         uiManager.SetChoicesVisible(true);
+         uiManager.SetCancelButtonVisible(false);
+      }
+      else if (uiManager.GetItemListVisible())
+      {
+         uiManager.SetItemListVisible(false);
+         uiManager.SetChoicesVisible(true);
+         uiManager.SetCancelButtonVisible(false);
       }
       else if (CurrentAbility != null)
       {
          uiManager.UpdateAbilities();
+         uiManager.SetTargetsVisible(false);
+         uiManager.SetAbilityContainerVisible(true);
          CurrentAbility = null;
 
          for (int i = 0; i < Fighters.Count; i++)
@@ -701,22 +886,43 @@ public partial class CombatManager : Node
       else if (CurrentItem != null)
       {
          uiManager.EnableItems();
+         uiManager.SetTargetsVisible(false);
+         uiManager.SetItemListVisible(true);
+
          CurrentItem = null;
       }
 
       if (IsCompanionTurn)
       {
-         FocusCameraOnFighter(CurrentFighter.companion.model);
+        // FocusCameraOnFighter(CurrentFighter.companion.model);
       }
       else
       {
-         FocusCameraOnFighter(CurrentFighter.model);
+        // FocusCameraOnFighter(CurrentFighter.model);
+      }
+
+      for (int i = 0; i < Fighters.Count; i++)
+      {
+         if (Fighters[i] != CurrentFighter)
+         {
+            Fighters[i].UIPanel.GetNode<Panel>("Highlight").Visible = false;
+         }
+
+         Fighters[i].placementNode.GetNode<Decal>("SelectionHighlight").Visible = false;
       }
       
-      isAttacking = false;
-      uiManager.DisablePanels();
-      uiManager.HideAll();
-      uiManager.ShowSelectionBox();
+      IsAttacking = false;
+      //uiManager.DisablePanels();
+      //uiManager.HideAll();
+      //uiManager.ShowSelectionBox();
+   }
+
+   public override void _Input(InputEvent @event)
+   {
+      if (@event.IsActionPressed("menu") && !CurrentFighter.isEnemy)
+      {
+         OnCancelButtonDown();
+      }
    }
 
    public Member GetCurrentMember()
@@ -746,17 +952,24 @@ public partial class CombatManager : Node
       // Athlia's attacks deal 10% damage
       damage.baseDamage = passiveManager.AthliaPassive(damage.baseDamage);
 
+      if (CurrentFighter.isEnemy)
+      {
+         CurrentFighter.model.GetNode<Node3D>("Model").LookAt(target.model.GlobalPosition, Vector3.Up, true);
+         target.model.GetNode<Node3D>("Model").LookAt(CurrentFighter.model.GlobalPosition, Vector3.Up, true);
+        // FocusCameraOnFighter(target.model);
+      }
+
       AnimationPlayer player;
 
       if (IsCompanionTurn)
       {
          player = CurrentFighter.companion.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-         ReverseFocusOnTarget(CurrentFighter.companion.model);
+         //ReverseFocusOnTarget(CurrentFighter.companion.model);
       }
       else
       {
          player = CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-         ReverseFocusOnTarget(CurrentFighter.model);
+         //ReverseFocusOnTarget(CurrentFighter.model);
       }
 
       bool crit = RollForCrit();
@@ -827,22 +1040,6 @@ public partial class CombatManager : Node
 
    double FocusOnTargets(List<Fighter> targets, bool playHitAnimation)
    {
-      if (targets.Count == 1)
-      {
-         ReverseFocusOnTarget(targets[0].model);
-      }
-      else
-      {
-         if (targets[0].isEnemy)
-         {
-            PointCameraAtEnemies();
-         }
-         else
-         {
-            PointCameraAtParty();
-         }
-      }
-
       double longestDuration = 0;
 
       if (playHitAnimation)
@@ -892,7 +1089,7 @@ public partial class CombatManager : Node
 
       if (AbilityTargetGraphic.Length > 0)
       {
-        AbilityGraphic abilityGraphic = abilityManager.GenerateTargetAbilityGraphic(AbilityTargetGraphic);
+         AbilityGraphic abilityGraphic = abilityManager.GenerateTargetAbilityGraphic(AbilityTargetGraphic);
 
          if (abilityGraphic.GenerateOnlyOnce)
          {
@@ -1267,7 +1464,7 @@ public partial class CombatManager : Node
             int oldLevel = managers.PartyManager.Party[i].level;
             int oldAbilityCount = managers.PartyManager.Party[i].abilities.Count;
 
-            managers.PartyManager.Party[i].model.GetNode<AnimationTree>("AnimationTree").Active = true;
+            //managers.PartyManager.Party[i].model.GetNode<AnimationTree>("AnimationTree").Active = true;
 
             Fighter fighter = GetFighterFromMember(managers.PartyManager.Party[i]);
             managers.PartyManager.Party[i].currentHealth = Mathf.Clamp(fighter.currentHealth, 1, 9999);
@@ -1290,24 +1487,15 @@ public partial class CombatManager : Node
       }
 
       uiManager.ExitVictoryScreen();
-      managers.PartyManager.Party[0].model.Position = returnPosition;
-      managers.PartyManager.Party[0].model.GetNode<Node3D>("Model").GlobalRotation = returnRotation;
       managers.Controller.PlaceWeaponOnBack();
       managers.Controller.PlaceSecondaryWeaponOnBack();
-
-      Vector3 currentReturnPosition = returnPosition;
-      currentReturnPosition -= managers.PartyManager.Party[0].model.GlobalTransform.Basis.Z;
 
       for (int i = 1; i < managers.PartyManager.Party.Count; i++)
       {
          if (managers.PartyManager.Party[i].isInParty)
          {
-            managers.PartyManager.Party[i].model.Position = currentReturnPosition;
-            currentReturnPosition -= managers.PartyManager.Party[0].model.GlobalTransform.Basis.Z;
             OverworldPartyController overworldController = managers.PartyManager.Party[i].model.GetNode<OverworldPartyController>("../Member" + (i + 1));
             overworldController.EnablePathfinding = true;
-            overworldController.PlaceWeaponOnBack();
-            overworldController.PlaceSecondaryWeaponOnBack();
          }
       }
 
@@ -1382,7 +1570,7 @@ public partial class CombatManager : Node
 
       CurrentItem = null;
       CurrentAbility = null;
-      isAttacking = false;
+      IsAttacking = false;
 
       managers.MenuManager.canTakeInput = true;
    }
@@ -1394,12 +1582,40 @@ public partial class CombatManager : Node
       if (IsCompanionTurn)
       {
          player = CurrentFighter.companion.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-         ReverseFocusOnTarget(CurrentFighter.companion.model);
+         //ReverseFocusOnTarget(CurrentFighter.companion.model);
       }
       else
       {
          player = CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-         ReverseFocusOnTarget(CurrentFighter.model);
+         //ReverseFocusOnTarget(CurrentFighter.model);
+      }
+
+      if (targets.Count == 1)
+      {
+         //ReverseFocusOnTarget(targets[0].model);
+         if (CurrentFighter.isEnemy)
+         {
+            CurrentFighter.model.GetNode<Node3D>("Model").LookAt(targets[0].model.GlobalPosition, Vector3.Up, true);
+            targets[0].model.GetNode<Node3D>("Model").LookAt(CurrentFighter.model.GlobalPosition, Vector3.Up, true);
+            //FocusCameraOnFighter(targets[0].model);
+         }
+      }
+      else
+      {
+         if (targets[0].isEnemy)
+         {
+            //PointCameraAtEnemies();
+            //ResetCamera();
+
+            for (int i = 0; i < targets.Count; i++)
+            {
+               targets[i].model.GetNode<Node3D>("Model").LookAt(CurrentFighter.model.GlobalPosition, Vector3.Up, true);
+            }
+         }
+         else
+         {
+            //PointCameraAtParty();
+         }
       }
 
       player.Play("Cast");
@@ -1492,7 +1708,7 @@ public partial class CombatManager : Node
 
    public Fighter GetFighterFromIndex(int index, bool isEnemy)
    {
-      Node2D UIPanel = uiManager.GetPanelFromIndex(index, isEnemy);
+      Control UIPanel = uiManager.GetPanelFromIndex(index, isEnemy);
 
       for (int i = 0; i < Fighters.Count; i++)
       {

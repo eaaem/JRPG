@@ -16,5 +16,5 @@ onlyHitsTeam = false
 onlyHitsSelf = false
 bypassesDeaths = false
 casterGraphic = ""
-targetGraphic = "bite_target"
+targetGraphic = "res://Abilities/Enemy/Bite/bite_target.tscn"
 requiredLevel = 1

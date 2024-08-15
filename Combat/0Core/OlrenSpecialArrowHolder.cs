@@ -11,7 +11,7 @@ public partial class OlrenSpecialArrowHolder : Node
 	{
       button = GetParent<Button>();
       button.ButtonDown += OnButtonDown;
-      passiveManager = GetNode<CombatPassiveManager>("/root/BaseNode/CombatManagerObj/PassiveManager");
+      passiveManager = GetNode<CombatPassiveManager>("/root/BaseNode/CombatManager/PassiveManager");
 	}
 
    void OnButtonDown()

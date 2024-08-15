@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://cm85wp3wpxuti"]
+
+[ext_resource type="Texture2D" uid="uid://daux0fgadjc4s" path="res://Combat/UI/circle.png" id="1_r3lg6"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hrdxc"]
+particle_flag_disable_z = true
+direction = Vector3(0, 1, 0)
+spread = 180.0
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 142.96
+initial_velocity_max = 142.96
+orbit_velocity_min = 0.0
+orbit_velocity_max = 0.0
+linear_accel_min = 22.44
+linear_accel_max = 25.37
+tangential_accel_min = 42.93
+tangential_accel_max = 42.93
+scale_min = 15.0
+scale_max = 15.0
+color = Color(0, 0, 0, 1)
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+amount = 200
+process_material = SubResource("ParticleProcessMaterial_hrdxc")
+lifetime = 6.0
+preprocess = 0.1
+speed_scale = 12.94
+trail_enabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+texture = ExtResource("1_r3lg6")

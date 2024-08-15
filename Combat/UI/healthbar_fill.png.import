@@ -2,26 +2,27 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://k5v2inb4jpw4"
-path="res://.godot/imported/Bleed.png-731822a771c459da6d0743725a56d678.ctex"
+uid="uid://b5t2kudic3q6t"
+path.s3tc="res://.godot/imported/healthbar_fill.png-0add971e7c16a18312c7af3ff3020c3c.s3tc.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc"],
+"vram_texture": true
 }
 
 [deps]
 
-source_file="res://Combat/UI/StatusEffects/Bleed.png"
-dest_files=["res://.godot/imported/Bleed.png-731822a771c459da6d0743725a56d678.ctex"]
+source_file="res://Combat/UI/healthbar_fill.png"
+dest_files=["res://.godot/imported/healthbar_fill.png-0add971e7c16a18312c7af3ff3020c3c.s3tc.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""
@@ -31,4 +32,4 @@ process/normal_map_invert_y=false
 process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
-detect_3d/compress_to=1
+detect_3d/compress_to=0

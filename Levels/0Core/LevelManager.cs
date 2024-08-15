@@ -37,7 +37,7 @@ public partial class LevelManager : Node
       musicPlayer = baseNode.GetNode<AudioStreamPlayer>("MusicPlayer");
    }
 
-   public void OpenWorldMap(string map, Vector2 spawnLocation, bool useSpawnLocation, string spawnPointName = "")
+   public async void OpenWorldMap(string map, Vector2 spawnLocation, bool useSpawnLocation, string spawnPointName = "")
    {  
       EmitSignal(SignalName.SaveLevelProgression);
       DiscardExistingLevel();
@@ -78,11 +78,21 @@ public partial class LevelManager : Node
       EmitSignal(SignalName.LoadLevelProgression);
 
       worldMap.GetNode<Camera2D>("Player/2DPlayerCamera").MakeCurrent();
+      worldMap.GetNode<WorldMapController>("Player").DisableMovement = true;
 
       baseNode.RemoveChild(specialMap);
       specialMap.QueueFree();
 
       TransitionMusicTracks(worldMap);
+
+      managers.MenuManager.FadeFromBlack();
+
+      while (managers.MenuManager.BlackScreenIsVisible)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+      }
+
+      worldMap.GetNode<WorldMapController>("Player").DisableMovement = false;
    }
 
    public void DiscardExistingLevel()
@@ -189,15 +199,15 @@ public partial class LevelManager : Node
          }
       }
 
-      NavigationRegion3D region = level.GetNode<NavigationRegion3D>("NavigationRegion3D");
+      Node3D chunks = level.GetNode<Node3D>("Chunks");
 
-      for (int i = 0; i < region.GetChildCount(); i++)
+      for (int i = 0; i < chunks.GetChildCount(); i++)
       {
-         for (int j = 0; j < region.GetChild(i).GetChildCount(); j++)
+         for (int j = 0; j < chunks.GetChild(i).GetChildCount(); j++)
          {
-            if (region.GetChild(i).GetChild(j).IsInGroup("enemy"))
+            if (chunks.GetChild(i).GetChild(j).IsInGroup("enemy"))
             {
-               region.GetChild(i).GetChild<WorldEnemy>(j).id = enemyCounter;
+               chunks.GetChild(i).GetChild<WorldEnemy>(j).id = enemyCounter;
                if (!isLoaded)
                {
                   // We're creating the defeatedEnemies dictionary for the first time
@@ -208,15 +218,15 @@ public partial class LevelManager : Node
                   // We're loading the defeatedEnemies dictionary from save data; any defeated enemy needs to be deleted
                   if (currentLocationData.defeatedEnemies[enemyCounter.ToString()] == true)
                   {
-                     region.GetChild(i).GetChild(j).QueueFree();
+                     chunks.GetChild(i).GetChild(j).QueueFree();
                   }
                }
                
                enemyCounter++;
             }
-            else if (region.GetChild(i).GetChild(j).IsInGroup("item"))
+            else if (chunks.GetChild(i).GetChild(j).IsInGroup("item"))
             {
-               region.GetChild(i).GetChild<ItemHolder>(j).GetNode<ItemHolder>("ItemHolder").id = itemCounter;
+               chunks.GetChild(i).GetChild<ItemHolder>(j).GetNode<ItemHolder>("ItemHolder").id = itemCounter;
                if (!isLoaded)
                {
                   currentLocationData.pickedUpItems.Add(itemCounter.ToString(), false);
@@ -225,7 +235,7 @@ public partial class LevelManager : Node
                {
                   if (currentLocationData.pickedUpItems[itemCounter.ToString()] == true)
                   {
-                     region.GetChild(i).GetChild(j).QueueFree();
+                     chunks.GetChild(i).GetChild(j).QueueFree();
                   }
                }
 
@@ -243,6 +253,8 @@ public partial class LevelManager : Node
       ActiveLocationDataID = GetLocationDataID(InternalLocation);
 
       TransitionMusicTracks(level);
+
+      managers.MenuManager.FadeFromBlack();
 
       EmitSignal(SignalName.LoadLevelProgression);
    }

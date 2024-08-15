@@ -19,7 +19,7 @@ script = ExtResource("3_tsbxk")
 name = "Leather Greaves"
 description = "Light
 +1 accuracy"
-scriptName = ""
+scriptPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false

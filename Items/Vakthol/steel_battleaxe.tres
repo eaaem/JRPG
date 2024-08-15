@@ -19,7 +19,7 @@ script = ExtResource("3_ue806")
 name = "Steel Battleaxe"
 description = "Battleaxe
 +2 strength"
-scriptName = ""
+scriptPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false

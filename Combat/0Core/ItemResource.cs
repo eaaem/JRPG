@@ -32,7 +32,7 @@ public partial class ItemResource : Resource
    [Export(PropertyHint.MultilineText)]
    public string description;
    [Export]
-   public string scriptName;
+   public string scriptPath;
    [Export]
    public float specialModifier;
    [Export]

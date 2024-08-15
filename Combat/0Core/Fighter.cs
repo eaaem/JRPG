@@ -40,9 +40,10 @@ public partial class Fighter : Node
    public bool isDead;
    public bool isEnemy;
 
-   public Node2D UIPanel;
+   public Control UIPanel;
    public Node3D model;
    public Node3D placementNode;
+   public Button targetButton;
 
    public Companion companion;
 

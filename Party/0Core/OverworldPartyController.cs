@@ -153,8 +153,6 @@ public partial class OverworldPartyController : CharacterBody3D
          navigationAgent.PathHeightOffset = -currentAgentPosition.Y;
 
          Vector3 nextPathPosition = navigationAgent.GetNextPathPosition();
-         
-         // Alter next path position's Y!
 
          Vector3 modelRotation = model.Rotation;
          modelRotation.Y = Mathf.LerpAngle(model.Rotation.Y, Mathf.Atan2(velocity.X, velocity.Z), 0.25f);

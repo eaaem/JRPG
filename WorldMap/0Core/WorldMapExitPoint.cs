@@ -28,7 +28,6 @@ public partial class WorldMapExitPoint : Node
          }
 
          managers.LevelManager.CallDeferred(nameof(managers.LevelManager.OpenWorldMap), mapName, Vector2.Zero, false, spawnLocation);
-         managers.MenuManager.FadeFromBlack();
       }
    }
 }

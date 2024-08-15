@@ -1,4 +1,4 @@
-[gd_scene load_steps=126 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=135 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -7,14 +7,15 @@
 [ext_resource type="Script" path="res://Combat/0Core/CombatAbilityManager.cs" id="5_ejkmm"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatUIManager.cs" id="6_143na"]
 [ext_resource type="PackedScene" uid="uid://cwee74btvhq8k" path="res://Combat/0Core/holder_parent.tscn" id="6_gn3sp"]
+[ext_resource type="Material" uid="uid://b2ect0s7kbk77" path="res://Combat/0Core/enemy_transition.tres" id="6_xxlrs"]
 [ext_resource type="Script" path="res://Combat/0Core/AffinityStrengths.cs" id="7_f260g"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatPassiveManager.cs" id="7_x03at"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatItemManager.cs" id="8_hnce1"]
-[ext_resource type="PackedScene" uid="uid://c5yikq1y5un0d" path="res://Combat/0Core/ability_button.tscn" id="8_o4pbx"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatStackStatusManager.cs" id="9_1u2nm"]
 [ext_resource type="PackedScene" uid="uid://cdlo1pemj7l26" path="res://Combat/0Core/effect.tscn" id="9_67pu3"]
 [ext_resource type="Script" path="res://Party/0Core/PartyManager.cs" id="9_ah2fn"]
 [ext_resource type="Resource" uid="uid://b6424vyj7dspo" path="res://Party/Vakthol/vakthol.tres" id="10_7pwb7"]
+[ext_resource type="PackedScene" uid="uid://c5yikq1y5un0d" path="res://Combat/UI/ability_button.tscn" id="10_w4nkx"]
 [ext_resource type="PackedScene" uid="uid://bn35oip147owg" path="res://Combat/0Core/stack_prefab.tscn" id="11_qyibu"]
 [ext_resource type="Resource" uid="uid://ck7wy6s7wajxw" path="res://Party/Thalria/thalria.tres" id="11_wj8pa"]
 [ext_resource type="Resource" uid="uid://0y8iemdigx00" path="res://Party/Athlia/athlia.tres" id="12_h78bi"]
@@ -53,7 +54,10 @@
 [ext_resource type="PackedScene" uid="uid://c08d1vnprgeay" path="res://Levels/1Features/Shop/item_button_prefab.tscn" id="38_xtl2k"]
 [ext_resource type="Script" path="res://Party/0Core/CharacterController.cs" id="39_q0foa"]
 [ext_resource type="PackedScene" uid="uid://c8sbeheqi10fl" path="res://Party/Vakthol/vakthol.glb" id="40_va38g"]
+[ext_resource type="Theme" uid="uid://dxlsms8vreux4" path="res://Combat/UI/combat_button_theme.tres" id="41_7gkvb"]
 [ext_resource type="PackedScene" uid="uid://yhwlyfetwmre" path="res://Party/Vakthol/vakthol_axe.glb" id="41_8y4r5"]
+[ext_resource type="PackedScene" uid="uid://x3lptq4ur4qe" path="res://Combat/UI/target_button.tscn" id="41_51p5x"]
+[ext_resource type="Theme" uid="uid://rhfvy1fs423s" path="res://Combat/UI/combat_text.tres" id="42_jpbmj"]
 [ext_resource type="Script" path="res://Party/0Core/OverworldPartyController.cs" id="42_pt17i"]
 [ext_resource type="Script" path="res://Core/SaveManager.cs" id="43_n85qj"]
 [ext_resource type="Script" path="res://Levels/0Core/LevelManager.cs" id="44_yvp60"]
@@ -64,6 +68,7 @@
 [ext_resource type="AudioStream" uid="uid://bh73sq4742dhj" path="res://Menus/Main/main_menu.mp3" id="53_icsar"]
 [ext_resource type="Script" path="res://Levels/0Core/MusicHolder.cs" id="54_gsvxg"]
 [ext_resource type="Theme" uid="uid://bv4egxy2hvmih" path="res://Menus/0Core/main_menu_button_theme.tres" id="54_o8lba"]
+[ext_resource type="PackedScene" uid="uid://cm85wp3wpxuti" path="res://Combat/UI/transition_particles.tscn" id="55_rp0yf"]
 [ext_resource type="Texture2D" uid="uid://bf6gem1qckp6h" path="res://Menus/0Core/main_menu_back.png" id="57_3sl1u"]
 [ext_resource type="FontFile" uid="uid://cg2kgq5pvsqi" path="res://Menus/0Core/Merriweather-BoldItalic.ttf" id="58_bw31p"]
 
@@ -233,7 +238,7 @@ script = ExtResource("16_5bni6")
 name = "Plain Battleaxe"
 description = "Battleaxe
 +1 strength"
-scriptName = ""
+scriptPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false
@@ -260,7 +265,7 @@ script = ExtResource("16_5bni6")
 name = "Leather Cuirass"
 description = "Heavy
 +3 constitution"
-scriptName = ""
+scriptPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false
@@ -293,7 +298,7 @@ script = ExtResource("16_5bni6")
 name = "Rusty Greaves"
 description = "Heavy
 +2 fortitude, +1 willpower"
-scriptName = ""
+scriptPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false
@@ -319,7 +324,8 @@ shader_parameter/noise = SubResource("NoiseTexture2D_2286b")
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_fvio1"]
 
-[sub_resource type="Theme" id="Theme_3108v"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kg4xf"]
+bg_color = Color(0.94902, 0.333333, 0.266667, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hsqgl"]
 bg_color = Color(0.0117647, 0.109804, 0, 1)
@@ -333,14 +339,22 @@ bg_color = Color(0, 0, 0.184314, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7n1xf"]
 bg_color = Color(0, 0.6, 1, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l7mf"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hl231"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_18icv"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Theme" id="Theme_3108v"]
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fpoax"]
 bg_color = Color(0.203922, 0.203922, 0.203922, 1)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1mn27"]
 bg_color = Color(1, 1, 1, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l7mf"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6snfy"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -351,14 +365,21 @@ bg_color = Color(0.6, 0.6, 0.6, 0)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xkk30"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kg4xf"]
-bg_color = Color(0.94902, 0.333333, 0.266667, 1)
+[sub_resource type="Gradient" id="Gradient_wltp8"]
+colors = PackedColorArray(0.678431, 0.572549, 0.254902, 0.627451, 0, 0, 0, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hl231"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s5ge8"]
+gradient = SubResource("Gradient_wltp8")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_18icv"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_nse4t"]
+texture = SubResource("GradientTexture2D_s5ge8")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_02jnk"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 5
+border_width_top = 5
+border_color = Color(0.968627, 1, 0.639216, 1)
+border_blend = true
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_bnc6q"]
 
@@ -417,13 +438,14 @@ MainMenuManager = NodePath("../MainMenu")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.36896, -1.7533, -8.04547)
 script = ExtResource("1_821s7")
 affinityTable = [SubResource("Resource_vsscq"), SubResource("Resource_fk2ok"), SubResource("Resource_b1i57"), SubResource("Resource_i7a2u"), SubResource("Resource_hqnmo"), SubResource("Resource_lojwi"), SubResource("Resource_8rq4s"), SubResource("Resource_f5wbw"), SubResource("Resource_bih4v"), SubResource("Resource_0qamu")]
-StatusDatas = Array[Object]([SubResource("Resource_xl1dm"), SubResource("Resource_igf5a"), SubResource("Resource_vj0lt"), SubResource("Resource_h6dwx"), SubResource("Resource_5kq13"), SubResource("Resource_mftyv"), SubResource("Resource_e01c7"), SubResource("Resource_au516"), SubResource("Resource_1u3ta"), SubResource("Resource_1rshu")])
+StatusDatas = [SubResource("Resource_xl1dm"), SubResource("Resource_igf5a"), SubResource("Resource_vj0lt"), SubResource("Resource_h6dwx"), SubResource("Resource_5kq13"), SubResource("Resource_mftyv"), SubResource("Resource_e01c7"), SubResource("Resource_au516"), SubResource("Resource_1u3ta"), SubResource("Resource_1rshu")]
 managers = NodePath("../ManagerReferenceHolder")
 uiManager = NodePath("UIManager")
 abilityManager = NodePath("AbilityManager")
 itemManager = NodePath("ItemManager")
 stacksAndStatusManager = NodePath("StacksStatusManager")
 passiveManager = NodePath("PassiveManager")
+transitionMaterial = ExtResource("6_xxlrs")
 playerCamera = NodePath("../PartyMembers/Member1/CameraTarget/SpringArm3D/PlayerCamera")
 baseNode = NodePath("..")
 
@@ -435,20 +457,20 @@ combatManager = NodePath("..")
 uiManager = NodePath("../UIManager")
 enemyAbilityUseHolder = ExtResource("6_gn3sp")
 
-[node name="UIManager" type="Node3D" parent="CombatManager" node_paths=PackedStringArray("managers", "combatManager", "UI", "partyList", "enemyList", "selectionBox", "abilityContainer", "abilityButtonContainer", "secondaryOptions", "secondaryOptionsContainer", "messageText", "cancelButton", "finalizeButton", "itemsList", "itemsContainer", "victoryScreen")]
+[node name="UIManager" type="Node3D" parent="CombatManager" node_paths=PackedStringArray("managers", "combatManager", "UI", "partyList", "enemyList", "options", "abilityContainer", "abilityButtonContainer", "secondaryOptions", "secondaryOptionsContainer", "messageText", "cancelButton", "finalizeButton", "itemsList", "itemsContainer", "victoryScreen")]
 script = ExtResource("6_143na")
 managers = NodePath("../../ManagerReferenceHolder")
 combatManager = NodePath("..")
-abilityButton = ExtResource("8_o4pbx")
+abilityButton = ExtResource("10_w4nkx")
 effectPrefab = ExtResource("9_67pu3")
 itemPrefab = ExtResource("5_2svhw")
 stackPrefab = ExtResource("11_qyibu")
 UI = NodePath("../../UI")
 partyList = NodePath("../../UI/CombatPartyList")
 enemyList = NodePath("../../UI/CombatEnemyList")
-selectionBox = NodePath("../../UI/Options")
-abilityContainer = NodePath("../../UI/Options/Abilities")
-abilityButtonContainer = NodePath("../../UI/Options/Abilities/ScrollContainer/VBoxContainer")
+options = NodePath("../../UI/Options")
+abilityContainer = NodePath("../../UI/Options/AbilityContainer")
+abilityButtonContainer = NodePath("../../UI/Options/AbilityContainer/GridContainer")
 secondaryOptions = NodePath("../../UI/Options/SecondaryOptions")
 secondaryOptionsContainer = NodePath("../../UI/Options/SecondaryOptions/ScrollContainer/VBoxContainer")
 messageText = NodePath("../../UI/Message/Text")
@@ -491,7 +513,7 @@ OlrenItems = [ExtResource("31_1d5xq"), ExtResource("30_r5v1q"), ExtResource("32_
 experienceThreshholds = PackedInt32Array(10, 20, 40, 99999, 160, 320, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 managers = NodePath("../ManagerReferenceHolder")
 
-[node name="UI" type="Node2D" parent="."]
+[node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Overlay" type="CanvasLayer" parent="UI"]
 
@@ -551,850 +573,57 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="CombatPartyList" type="CanvasGroup" parent="UI"]
-visible = false
-
-[node name="Back" type="Sprite2D" parent="UI/CombatPartyList"]
-position = Vector2(920, 912)
-scale = Vector2(1760, 200)
-texture = SubResource("CanvasTexture_fvio1")
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/CombatPartyList"]
-custom_minimum_size = Vector2(440, 0)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 40.0
-offset_top = 811.2
-offset_right = 1800.0
-offset_bottom = 1011.2
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_stretch_ratio = 0.0
-mouse_filter = 2
-alignment = 1
-
-[node name="Panel1" type="Panel" parent="UI/CombatPartyList/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Holder" type="Node2D" parent="UI/CombatPartyList/HBoxContainer/Panel1"]
-
-[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
-visible = false
-offset_right = 435.2
-offset_bottom = 200.0
-theme = SubResource("Theme_3108v")
-theme_override_styles/panel = ExtResource("20_5bpft")
-
-[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
-offset_right = 440.0
-offset_bottom = 41.6
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 25
-text = "NAME"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HealthTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
-offset_top = 40.0
-offset_right = 440.0
-offset_bottom = 81.6
-text = "Health"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="HealthBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
-offset_left = 16.0
-offset_top = 64.0
-offset_right = 416.0
-offset_bottom = 88.0
-theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="HealthDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
-offset_left = 16.0
-offset_top = 64.0
-offset_right = 416.0
-offset_bottom = 105.6
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
-text = "#/#"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
-offset_top = 92.8
-offset_right = 440.0
-offset_bottom = 134.4
-text = "Mana"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
-offset_left = 16.0
-offset_top = 116.8
-offset_right = 416.0
-offset_bottom = 140.8
-theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
-offset_left = 16.0
-offset_top = 116.8
-offset_right = 416.0
-offset_bottom = 158.4
-theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
-text = "#/#"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ActionTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
-offset_top = 144.0
-offset_right = 440.0
-offset_bottom = 185.6
-text = "Action"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ActionBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
-offset_left = 16.0
-offset_top = 168.0
-offset_right = 416.0
-offset_bottom = 192.0
-theme_override_styles/background = SubResource("StyleBoxFlat_fpoax")
-theme_override_styles/fill = SubResource("StyleBoxFlat_1mn27")
-rounded = true
-show_percentage = false
-
-[node name="Effects" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
-offset_top = -104.0
-offset_right = 440.0
-theme_override_constants/separation = 1
-alignment = 2
-
-[node name="Stacks" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Effects"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="StatusRows" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Effects"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Row1" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Effects/StatusRows"]
-visible = false
-custom_minimum_size = Vector2(440, 0)
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="Row2" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Effects/StatusRows"]
-visible = false
-custom_minimum_size = Vector2(440, 0)
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="CompanionHolder" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
-visible = false
-offset_top = 200.0
-offset_right = 437.0
-offset_bottom = 260.0
-
-[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
-visible = false
-layout_mode = 0
-offset_right = 437.0
-offset_bottom = 60.0
-theme_override_styles/panel = ExtResource("20_5bpft")
-
-[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
-layout_mode = 0
-offset_top = 15.0
-offset_right = 150.0
-offset_bottom = 41.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "NAME"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Duration" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 26.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 15
-text = "# turns"
-horizontal_alignment = 1
-
-[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
-layout_mode = 0
-offset_left = 145.0
-offset_top = 5.0
-offset_right = 435.0
-offset_bottom = 31.0
-text = "Mana"
-horizontal_alignment = 1
-
-[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
-layout_mode = 0
-offset_left = 145.0
-offset_top = 25.0
-offset_right = 435.0
-offset_bottom = 49.0
-theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
-layout_mode = 0
-offset_left = 145.0
-offset_top = 25.0
-offset_right = 435.0
-offset_bottom = 51.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "#/#"
-horizontal_alignment = 1
-
-[node name="Selection" type="Button" parent="UI/CombatPartyList/HBoxContainer/Panel1/Holder"]
+[node name="CombatTransitionHolder" type="Control" parent="UI/Overlay"]
+layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_right = 437.0
-offset_bottom = 200.0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
-theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_tt0fo")
 
-[node name="Panel2" type="Panel" parent="UI/CombatPartyList/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Holder" type="Node2D" parent="UI/CombatPartyList/HBoxContainer/Panel2"]
-
-[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+[node name="CombatTransition" parent="UI/Overlay/CombatTransitionHolder" instance=ExtResource("55_rp0yf")]
 visible = false
-offset_right = 435.2
-offset_bottom = 200.0
-theme = SubResource("Theme_3108v")
-theme_override_styles/panel = ExtResource("20_5bpft")
 
-[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
-offset_right = 440.0
-offset_bottom = 41.6
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 25
-text = "NAME"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HealthTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
-offset_top = 40.0
-offset_right = 440.0
-offset_bottom = 81.6
-text = "Health"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="HealthBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
-offset_left = 16.0
-offset_top = 64.0
-offset_right = 416.0
-offset_bottom = 88.0
-theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="HealthDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
-offset_left = 16.0
-offset_top = 64.0
-offset_right = 416.0
-offset_bottom = 105.6
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
-text = "#/#"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
-offset_top = 92.8
-offset_right = 440.0
-offset_bottom = 134.4
-text = "Mana"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
-offset_left = 16.0
-offset_top = 116.8
-offset_right = 416.0
-offset_bottom = 140.8
-theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
-offset_left = 16.0
-offset_top = 116.8
-offset_right = 416.0
-offset_bottom = 158.4
-theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
-text = "#/#"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ActionTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
-offset_top = 144.0
-offset_right = 440.0
-offset_bottom = 185.6
-text = "Action"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ActionBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
-offset_left = 16.0
-offset_top = 168.0
-offset_right = 416.0
-offset_bottom = 192.0
-theme_override_styles/background = SubResource("StyleBoxFlat_fpoax")
-theme_override_styles/fill = SubResource("StyleBoxFlat_1mn27")
-rounded = true
-show_percentage = false
-
-[node name="Effects" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
-offset_top = -104.0
-offset_right = 440.0
-theme_override_constants/separation = 1
-alignment = 2
-
-[node name="Stacks" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Effects"]
+[node name="CombatEnemyList" type="Control" parent="UI"]
 visible = false
-layout_mode = 2
-theme_override_constants/separation = 1
+layout_mode = 3
+anchors_preset = 0
+offset_left = 935.0
+offset_top = 527.0
+offset_right = 975.0
+offset_bottom = 567.0
+pivot_offset = Vector2(1920, 1080)
 
-[node name="StatusRows" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Effects"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Row1" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Effects/StatusRows"]
-visible = false
-custom_minimum_size = Vector2(440, 0)
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="Row2" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Effects/StatusRows"]
-visible = false
-custom_minimum_size = Vector2(440, 0)
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="CompanionHolder" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
-visible = false
-offset_top = 200.0
-offset_right = 437.0
-offset_bottom = 260.0
-
-[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
-visible = false
-layout_mode = 0
-offset_right = 437.0
-offset_bottom = 60.0
-theme_override_styles/panel = ExtResource("20_5bpft")
-
-[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
-layout_mode = 0
-offset_top = 15.0
-offset_right = 150.0
-offset_bottom = 41.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "NAME"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Duration" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 26.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 15
-text = "# turns"
-horizontal_alignment = 1
-
-[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
-layout_mode = 0
-offset_left = 145.0
-offset_top = 5.0
-offset_right = 435.0
-offset_bottom = 31.0
-text = "Mana"
-horizontal_alignment = 1
-
-[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
-layout_mode = 0
-offset_left = 145.0
-offset_top = 25.0
-offset_right = 435.0
-offset_bottom = 49.0
-theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
-layout_mode = 0
-offset_left = 145.0
-offset_top = 25.0
-offset_right = 435.0
-offset_bottom = 51.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "#/#"
-horizontal_alignment = 1
-
-[node name="Selection" type="Button" parent="UI/CombatPartyList/HBoxContainer/Panel2/Holder"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CombatEnemyList"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_right = 437.0
-offset_bottom = 200.0
+offset_left = -993.0
+offset_top = -541.0
+offset_right = -993.0
+offset_bottom = -316.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
-theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_xkk30")
-
-[node name="Panel3" type="Panel" parent="UI/CombatPartyList/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Holder" type="Node2D" parent="UI/CombatPartyList/HBoxContainer/Panel3"]
-
-[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-visible = false
-offset_right = 435.2
-offset_bottom = 200.0
-theme = SubResource("Theme_3108v")
-theme_override_styles/panel = ExtResource("20_5bpft")
-
-[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-offset_right = 440.0
-offset_bottom = 41.6
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 25
-text = "NAME"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HealthTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-offset_top = 40.0
-offset_right = 440.0
-offset_bottom = 81.6
-text = "Health"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="HealthBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-offset_left = 16.0
-offset_top = 64.0
-offset_right = 416.0
-offset_bottom = 88.0
-theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="HealthDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-offset_left = 16.0
-offset_top = 64.0
-offset_right = 416.0
-offset_bottom = 105.6
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
-text = "#/#"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-offset_top = 92.8
-offset_right = 440.0
-offset_bottom = 134.4
-text = "Mana"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-offset_left = 16.0
-offset_top = 116.8
-offset_right = 416.0
-offset_bottom = 140.8
-theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-offset_left = 16.0
-offset_top = 116.8
-offset_right = 416.0
-offset_bottom = 158.4
-theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
-text = "#/#"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ActionTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-offset_top = 144.0
-offset_right = 440.0
-offset_bottom = 185.6
-text = "Action"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ActionBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-offset_left = 16.0
-offset_top = 168.0
-offset_right = 416.0
-offset_bottom = 192.0
-theme_override_styles/background = SubResource("StyleBoxFlat_fpoax")
-theme_override_styles/fill = SubResource("StyleBoxFlat_1mn27")
-rounded = true
-show_percentage = false
-
-[node name="Effects" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-offset_top = -104.0
-offset_right = 440.0
-theme_override_constants/separation = 1
-alignment = 2
-
-[node name="Stacks" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Effects"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="StatusRows" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Effects"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Row1" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Effects/StatusRows"]
-visible = false
-custom_minimum_size = Vector2(440, 0)
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="Row2" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Effects/StatusRows"]
-visible = false
-custom_minimum_size = Vector2(440, 0)
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="CompanionHolder" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-visible = false
-offset_top = 200.0
-offset_right = 437.0
-offset_bottom = 260.0
-
-[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
-visible = false
-layout_mode = 0
-offset_right = 437.0
-offset_bottom = 60.0
-theme_override_styles/panel = ExtResource("20_5bpft")
-
-[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
-layout_mode = 0
-offset_top = 15.0
-offset_right = 150.0
-offset_bottom = 41.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "NAME"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Duration" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 26.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 15
-text = "# turns"
-horizontal_alignment = 1
-
-[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
-layout_mode = 0
-offset_left = 145.0
-offset_top = 5.0
-offset_right = 435.0
-offset_bottom = 31.0
-text = "Mana"
-horizontal_alignment = 1
-
-[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
-layout_mode = 0
-offset_left = 145.0
-offset_top = 25.0
-offset_right = 435.0
-offset_bottom = 49.0
-theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
-layout_mode = 0
-offset_left = 145.0
-offset_top = 25.0
-offset_right = 435.0
-offset_bottom = 51.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "#/#"
-horizontal_alignment = 1
-
-[node name="Selection" type="Button" parent="UI/CombatPartyList/HBoxContainer/Panel3/Holder"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_right = 437.0
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
-theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_xkk30")
-
-[node name="Panel4" type="Panel" parent="UI/CombatPartyList/HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-
-[node name="Holder" type="Node2D" parent="UI/CombatPartyList/HBoxContainer/Panel4"]
-
-[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-visible = false
-offset_right = 435.2
-offset_bottom = 200.0
-theme = SubResource("Theme_3108v")
-theme_override_styles/panel = ExtResource("20_5bpft")
-
-[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-offset_right = 440.0
-offset_bottom = 41.6
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 25
-text = "NAME"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="HealthTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-offset_top = 40.0
-offset_right = 440.0
-offset_bottom = 81.6
-text = "Health"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="HealthBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-offset_left = 16.0
-offset_top = 64.0
-offset_right = 416.0
-offset_bottom = 88.0
-theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="HealthDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-offset_left = 16.0
-offset_top = 64.0
-offset_right = 416.0
-offset_bottom = 105.6
-size_flags_vertical = 0
-theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
-text = "#/#"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-offset_top = 92.8
-offset_right = 440.0
-offset_bottom = 134.4
-text = "Mana"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-offset_left = 16.0
-offset_top = 116.8
-offset_right = 416.0
-offset_bottom = 140.8
-theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-offset_left = 16.0
-offset_top = 116.8
-offset_right = 416.0
-offset_bottom = 158.4
-theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
-text = "#/#"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ActionTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-offset_top = 144.0
-offset_right = 440.0
-offset_bottom = 185.6
-text = "Action"
-label_settings = ExtResource("21_u7sgt")
-horizontal_alignment = 1
-
-[node name="ActionBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-offset_left = 16.0
-offset_top = 168.0
-offset_right = 416.0
-offset_bottom = 192.0
-theme_override_styles/background = SubResource("StyleBoxFlat_fpoax")
-theme_override_styles/fill = SubResource("StyleBoxFlat_1mn27")
-rounded = true
-show_percentage = false
-
-[node name="Effects" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-offset_top = -104.0
-offset_right = 440.0
-theme_override_constants/separation = 1
-alignment = 2
-
-[node name="Stacks" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Effects"]
-visible = false
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="StatusRows" type="VBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Effects"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="Row1" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Effects/StatusRows"]
-visible = false
-custom_minimum_size = Vector2(440, 0)
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="Row2" type="HBoxContainer" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Effects/StatusRows"]
-visible = false
-custom_minimum_size = Vector2(440, 0)
-layout_mode = 2
-theme_override_constants/separation = 1
-
-[node name="CompanionHolder" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-visible = false
-offset_top = 200.0
-offset_right = 437.0
-offset_bottom = 260.0
-
-[node name="Highlight" type="Panel" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
-visible = false
-layout_mode = 0
-offset_right = 437.0
-offset_bottom = 60.0
-theme_override_styles/panel = ExtResource("20_5bpft")
-
-[node name="Title" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
-layout_mode = 0
-offset_top = 15.0
-offset_right = 150.0
-offset_bottom = 41.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "NAME"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Duration" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
-layout_mode = 0
-offset_right = 150.0
-offset_bottom = 26.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-theme_override_font_sizes/font_size = 15
-text = "# turns"
-horizontal_alignment = 1
-
-[node name="ManaTitle" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
-layout_mode = 0
-offset_left = 145.0
-offset_top = 5.0
-offset_right = 435.0
-offset_bottom = 31.0
-text = "Mana"
-horizontal_alignment = 1
-
-[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
-layout_mode = 0
-offset_left = 145.0
-offset_top = 25.0
-offset_right = 435.0
-offset_bottom = 49.0
-theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
-theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
-value = 100.0
-rounded = true
-show_percentage = false
-
-[node name="ManaDescription" type="Label" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
-layout_mode = 0
-offset_left = 145.0
-offset_top = 25.0
-offset_right = 435.0
-offset_bottom = 51.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "#/#"
-horizontal_alignment = 1
-
-[node name="Selection" type="Button" parent="UI/CombatPartyList/HBoxContainer/Panel4/Holder"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_right = 437.0
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
-theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_xkk30")
-
-[node name="CombatEnemyList" type="CanvasGroup" parent="UI"]
-visible = false
+theme_override_constants/separation = 75
 
 [node name="Back" type="Sprite2D" parent="UI/CombatEnemyList"]
+visible = false
 position = Vector2(920, 125)
 scale = Vector2(1760, 112)
 texture = SubResource("CanvasTexture_fvio1")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UI/CombatEnemyList"]
+visible = false
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -2030,66 +1259,980 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
 theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_18icv")
 
-[node name="Options" type="CanvasGroup" parent="UI"]
+[node name="CombatPartyList" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -969.0
+offset_top = -552.0
+offset_right = -929.0
+offset_bottom = -512.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/CombatPartyList"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 288.0
+offset_top = 72.0
+offset_right = 988.0
+offset_bottom = 532.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 110
+
+[node name="CombatPartyListOLD" type="CanvasGroup" parent="UI"]
 visible = false
 
-[node name="Panel" type="Panel" parent="UI/Options"]
-offset_left = 48.0
-offset_top = 504.0
-offset_right = 208.0
-offset_bottom = 704.0
-mouse_filter = 1
+[node name="Back" type="Sprite2D" parent="UI/CombatPartyListOLD"]
+visible = false
+position = Vector2(920, 912)
+scale = Vector2(1760, 200)
+texture = SubResource("CanvasTexture_fvio1")
 
-[node name="AttackButton" type="Button" parent="UI/Options/Panel"]
-layout_mode = 0
-offset_right = 160.0
-offset_bottom = 67.2
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/CombatPartyListOLD"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 40.0
+offset_top = 811.2
+offset_right = 1800.0
+offset_bottom = 1011.2
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_stretch_ratio = 0.0
+mouse_filter = 2
+alignment = 1
+
+[node name="Panel1" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Holder" type="Node2D" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1"]
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+visible = false
+offset_right = 435.2
+offset_bottom = 200.0
+theme = SubResource("Theme_3108v")
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+offset_right = 440.0
+offset_bottom = 41.6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 25
-text = "Attack"
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="CastButton" type="Button" parent="UI/Options/Panel"]
-layout_mode = 0
-offset_top = 67.2
-offset_right = 160.0
+[node name="HealthTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 81.6
+text = "Health"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 88.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="HealthDescription" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 105.6
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+offset_top = 92.8
+offset_right = 440.0
 offset_bottom = 134.4
-theme_override_font_sizes/font_size = 25
-text = "Cast"
+text = "Mana"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
 
-[node name="ItemButton" type="Button" parent="UI/Options/Panel"]
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 140.8
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 158.4
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+offset_top = 144.0
+offset_right = 440.0
+offset_bottom = 185.6
+text = "Action"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+offset_left = 16.0
+offset_top = 168.0
+offset_right = 416.0
+offset_bottom = 192.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fpoax")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1mn27")
+rounded = true
+show_percentage = false
+
+[node name="Effects" type="VBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+offset_top = -104.0
+offset_right = 440.0
+theme_override_constants/separation = 1
+alignment = 2
+
+[node name="Stacks" type="HBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/Effects"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="StatusRows" type="VBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row1" type="HBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Row2" type="HBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="CompanionHolder" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+visible = false
+offset_top = 200.0
+offset_right = 437.0
+offset_bottom = 260.0
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/CompanionHolder"]
+visible = false
 layout_mode = 0
-offset_top = 134.4
-offset_right = 160.0
-offset_bottom = 201.6
+offset_right = 437.0
+offset_bottom = 60.0
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Duration" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "# turns"
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 435.0
+offset_bottom = 31.0
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "#/#"
+horizontal_alignment = 1
+
+[node name="Selection" type="Button" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 437.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_tt0fo")
+
+[node name="Panel2" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Holder" type="Node2D" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2"]
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+visible = false
+offset_right = 435.2
+offset_bottom = 200.0
+theme = SubResource("Theme_3108v")
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+offset_right = 440.0
+offset_bottom = 41.6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 25
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 81.6
+text = "Health"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 88.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="HealthDescription" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 105.6
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+offset_top = 92.8
+offset_right = 440.0
+offset_bottom = 134.4
+text = "Mana"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 140.8
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 158.4
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+offset_top = 144.0
+offset_right = 440.0
+offset_bottom = 185.6
+text = "Action"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+offset_left = 16.0
+offset_top = 168.0
+offset_right = 416.0
+offset_bottom = 192.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fpoax")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1mn27")
+rounded = true
+show_percentage = false
+
+[node name="Effects" type="VBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+offset_top = -104.0
+offset_right = 440.0
+theme_override_constants/separation = 1
+alignment = 2
+
+[node name="Stacks" type="HBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/Effects"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="StatusRows" type="VBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row1" type="HBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Row2" type="HBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="CompanionHolder" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+visible = false
+offset_top = 200.0
+offset_right = 437.0
+offset_bottom = 260.0
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/CompanionHolder"]
+visible = false
+layout_mode = 0
+offset_right = 437.0
+offset_bottom = 60.0
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Duration" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "# turns"
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 435.0
+offset_bottom = 31.0
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "#/#"
+horizontal_alignment = 1
+
+[node name="Selection" type="Button" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 437.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_xkk30")
+
+[node name="Panel3" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Holder" type="Node2D" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3"]
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+visible = false
+offset_right = 435.2
+offset_bottom = 200.0
+theme = SubResource("Theme_3108v")
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+offset_right = 440.0
+offset_bottom = 41.6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 81.6
+text = "Health"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 88.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="HealthDescription" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 105.6
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+offset_top = 92.8
+offset_right = 440.0
+offset_bottom = 134.4
+text = "Mana"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 140.8
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 158.4
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+offset_top = 144.0
+offset_right = 440.0
+offset_bottom = 185.6
+text = "Action"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+offset_left = 16.0
+offset_top = 168.0
+offset_right = 416.0
+offset_bottom = 192.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fpoax")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1mn27")
+rounded = true
+show_percentage = false
+
+[node name="Effects" type="VBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+offset_top = -104.0
+offset_right = 440.0
+theme_override_constants/separation = 1
+alignment = 2
+
+[node name="Stacks" type="HBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/Effects"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="StatusRows" type="VBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row1" type="HBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Row2" type="HBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="CompanionHolder" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+visible = false
+offset_top = 200.0
+offset_right = 437.0
+offset_bottom = 260.0
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/CompanionHolder"]
+visible = false
+layout_mode = 0
+offset_right = 437.0
+offset_bottom = 60.0
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Duration" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "# turns"
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 435.0
+offset_bottom = 31.0
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "#/#"
+horizontal_alignment = 1
+
+[node name="Selection" type="Button" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 437.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_xkk30")
+
+[node name="Panel4" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Holder" type="Node2D" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4"]
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+visible = false
+offset_right = 435.2
+offset_bottom = 200.0
+theme = SubResource("Theme_3108v")
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+offset_right = 440.0
+offset_bottom = 41.6
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 25
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+offset_top = 40.0
+offset_right = 440.0
+offset_bottom = 81.6
+text = "Health"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 88.0
+theme_override_styles/background = SubResource("StyleBoxFlat_hsqgl")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7kkw0")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="HealthDescription" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+offset_left = 16.0
+offset_top = 64.0
+offset_right = 416.0
+offset_bottom = 105.6
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.415686, 0.415686, 0.415686, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+offset_top = 92.8
+offset_right = 440.0
+offset_bottom = 134.4
+text = "Mana"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 140.8
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+offset_left = 16.0
+offset_top = 116.8
+offset_right = 416.0
+offset_bottom = 158.4
+theme_override_colors/font_color = Color(0.4, 0.4, 0.4, 1)
+text = "#/#"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+offset_top = 144.0
+offset_right = 440.0
+offset_bottom = 185.6
+text = "Action"
+label_settings = ExtResource("21_u7sgt")
+horizontal_alignment = 1
+
+[node name="ActionBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+offset_left = 16.0
+offset_top = 168.0
+offset_right = 416.0
+offset_bottom = 192.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fpoax")
+theme_override_styles/fill = SubResource("StyleBoxFlat_1mn27")
+rounded = true
+show_percentage = false
+
+[node name="Effects" type="VBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+offset_top = -104.0
+offset_right = 440.0
+theme_override_constants/separation = 1
+alignment = 2
+
+[node name="Stacks" type="HBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/Effects"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="StatusRows" type="VBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/Effects"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Row1" type="HBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Row2" type="HBoxContainer" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/Effects/StatusRows"]
+visible = false
+custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="CompanionHolder" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+visible = false
+offset_top = 200.0
+offset_right = 437.0
+offset_bottom = 260.0
+
+[node name="Highlight" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/CompanionHolder"]
+visible = false
+layout_mode = 0
+offset_right = 437.0
+offset_bottom = 60.0
+theme_override_styles/panel = ExtResource("20_5bpft")
+
+[node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_top = 15.0
+offset_right = 150.0
+offset_bottom = 41.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "NAME"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Duration" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "# turns"
+horizontal_alignment = 1
+
+[node name="ManaTitle" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 5.0
+offset_right = 435.0
+offset_bottom = 31.0
+text = "Mana"
+horizontal_alignment = 1
+
+[node name="ManaBar" type="ProgressBar" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 49.0
+theme_override_styles/background = SubResource("StyleBoxFlat_pvgnr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_7n1xf")
+value = 100.0
+rounded = true
+show_percentage = false
+
+[node name="ManaDescription" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/CompanionHolder"]
+layout_mode = 0
+offset_left = 145.0
+offset_top = 25.0
+offset_right = 435.0
+offset_bottom = 51.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+text = "#/#"
+horizontal_alignment = 1
+
+[node name="Selection" type="Button" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_right = 437.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_xkk30")
+
+[node name="Options" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 945.0
+offset_top = -537.0
+offset_right = 945.0
+offset_bottom = -537.0
+grow_vertical = 0
+
+[node name="Choices" type="VBoxContainer" parent="UI/Options"]
+visible = false
+layout_mode = 0
+offset_left = -894.0
+offset_top = 149.0
+offset_right = -594.0
+offset_bottom = 349.0
+theme_override_constants/separation = 0
+
+[node name="AttackButton" type="Button" parent="UI/Options/Choices"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("41_7gkvb")
+
+[node name="Label" type="Label" parent="UI/Options/Choices/AttackButton"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 60.0
+theme = ExtResource("42_jpbmj")
+text = "Attack"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CastButton" type="Button" parent="UI/Options/Choices"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("41_7gkvb")
+theme_override_font_sizes/font_size = 25
+
+[node name="Label" type="Label" parent="UI/Options/Choices/CastButton"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 60.0
+theme = ExtResource("42_jpbmj")
+text = "Cast"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ItemButton" type="Button" parent="UI/Options/Choices"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = ExtResource("41_7gkvb")
+theme_override_font_sizes/font_size = 25
+
+[node name="Label" type="Label" parent="UI/Options/Choices/ItemButton"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 60.0
+theme = ExtResource("42_jpbmj")
 text = "Item"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AbilityContainer" type="ScrollContainer" parent="UI/Options"]
+visible = false
+layout_mode = 2
+offset_left = -890.0
+offset_top = 150.0
+offset_right = -240.0
+offset_bottom = 350.0
+
+[node name="GridContainer" type="GridContainer" parent="UI/Options/AbilityContainer"]
+custom_minimum_size = Vector2(650, 200)
+layout_mode = 2
+columns = 2
 
 [node name="Abilities" type="Panel" parent="UI/Options"]
 visible = false
-offset_left = 224.0
-offset_top = 504.0
-offset_right = 424.0
-offset_bottom = 744.0
-mouse_filter = 1
-
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/Options/Abilities"]
 layout_mode = 0
-offset_right = 200.0
-offset_bottom = 240.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/Options/Abilities/ScrollContainer"]
-custom_minimum_size = Vector2(125, 0)
-layout_mode = 2
+offset_left = -557.0
+offset_top = 224.0
+offset_right = -257.0
+offset_bottom = 424.0
+mouse_filter = 1
 
 [node name="CancelButton" type="Button" parent="UI/Options"]
 visible = false
-offset_left = 48.0
-offset_top = 445.0
-offset_right = 208.0
-offset_bottom = 494.6
+layout_mode = 0
+offset_left = -871.0
+offset_top = 70.0
+offset_right = -691.0
+offset_bottom = 120.0
+theme = ExtResource("41_7gkvb")
+
+[node name="Label" type="Label" parent="UI/Options/CancelButton"]
+layout_mode = 0
+offset_right = 180.0
+offset_bottom = 50.0
+theme = ExtResource("42_jpbmj")
 text = "Cancel"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="FinalizeButton" type="Button" parent="UI/Options"]
 visible = false
+layout_mode = 0
 offset_left = 48.0
 offset_top = 380.0
 offset_right = 208.0
@@ -2098,6 +2241,7 @@ text = "Cast"
 
 [node name="Items" type="Panel" parent="UI/Options"]
 visible = false
+layout_mode = 0
 offset_left = 240.0
 offset_top = 504.0
 offset_right = 560.0
@@ -2116,6 +2260,7 @@ theme_override_constants/separation = 0
 
 [node name="SecondaryOptions" type="Panel" parent="UI/Options"]
 visible = false
+layout_mode = 0
 offset_left = 450.0
 offset_top = 500.0
 offset_right = 600.0
@@ -2129,21 +2274,78 @@ offset_bottom = 200.0
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/Options/SecondaryOptions/ScrollContainer"]
 layout_mode = 2
 
-[node name="Message" type="CanvasGroup" parent="UI"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Options"]
+custom_minimum_size = Vector2(325, 200)
+layout_mode = 2
+offset_left = -576.0
+offset_top = 224.0
+offset_right = -251.0
+offset_bottom = 424.0
+
+[node name="Targets" type="ScrollContainer" parent="UI/Options"]
 visible = false
+layout_mode = 0
+offset_left = -888.0
+offset_top = 145.0
+offset_right = -288.0
+offset_bottom = 425.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/Options/Targets"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="target_button" parent="UI/Options/Targets/VBoxContainer" instance=ExtResource("41_51p5x")]
+layout_mode = 2
+
+[node name="target_button2" parent="UI/Options/Targets/VBoxContainer" instance=ExtResource("41_51p5x")]
+layout_mode = 2
+
+[node name="target_button3" parent="UI/Options/Targets/VBoxContainer" instance=ExtResource("41_51p5x")]
+layout_mode = 2
+
+[node name="target_button4" parent="UI/Options/Targets/VBoxContainer" instance=ExtResource("41_51p5x")]
+layout_mode = 2
+
+[node name="Message" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 31.0
+offset_top = -506.0
+offset_right = 31.0
+offset_bottom = -506.0
+grow_vertical = 0
 
 [node name="Back" type="Panel" parent="UI/Message"]
+layout_mode = 0
 offset_left = 25.0
 offset_top = 400.0
 offset_right = 1125.0
-offset_bottom = 426.0
+offset_bottom = 475.0
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_nse4t")
 
-[node name="Text" type="Label" parent="UI/Message"]
-offset_left = 25.0
+[node name="Panel" type="Panel" parent="UI/Message/Back"]
+layout_mode = 0
+offset_right = 1100.0
+offset_bottom = 75.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_02jnk")
+
+[node name="Text" type="RichTextLabel" parent="UI/Message"]
+layout_mode = 0
+offset_left = 29.0
 offset_top = 400.0
-offset_right = 1125.0
-offset_bottom = 426.0
+offset_right = 1129.0
+offset_bottom = 475.0
+theme_override_colors/default_color = Color(1, 1, 1, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
+theme_override_constants/shadow_outline_size = 3
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("35_v46tb")
+theme_override_font_sizes/normal_font_size = 25
+text = "Select an option."
 
 [node name="VictoryScreen" type="CanvasGroup" parent="UI"]
 visible = false
@@ -3345,18 +3547,6 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 
 [connection signal="button_down" from="UI/Overlay/DefeatScreen/LastSave" to="CombatManager" method="OnReloadLastButtonDown"]
 [connection signal="button_down" from="UI/Overlay/DefeatScreen/Quit" to="CombatManager" method="OnQuitToMenuButtonDown"]
-[connection signal="button_down" from="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [0, false]]
-[connection signal="mouse_entered" from="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [0, false]]
-[connection signal="mouse_exited" from="UI/CombatPartyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [0, false]]
-[connection signal="button_down" from="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [1, false]]
-[connection signal="mouse_entered" from="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [1, false]]
-[connection signal="mouse_exited" from="UI/CombatPartyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [1, false]]
-[connection signal="button_down" from="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [2, false]]
-[connection signal="mouse_entered" from="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [2, false]]
-[connection signal="mouse_exited" from="UI/CombatPartyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [2, false]]
-[connection signal="button_down" from="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [3, false]]
-[connection signal="mouse_entered" from="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [3, false]]
-[connection signal="mouse_exited" from="UI/CombatPartyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [3, false]]
 [connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [0, true]]
 [connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager/UIManager" method="OnHoverOverFighterPanel" binds= [0, true]]
 [connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager/UIManager" method="OnStopHoverOverFighterPanel" binds= [0, true]]
@@ -3369,9 +3559,27 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [3, true]]
 [connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager/UIManager" method="OnHoverOverFighterPanel" binds= [3, true]]
 [connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager/UIManager" method="OnStopHoverOverFighterPanel" binds= [3, true]]
-[connection signal="button_down" from="UI/Options/Panel/AttackButton" to="CombatManager" method="OnAttackButtonDown"]
-[connection signal="button_down" from="UI/Options/Panel/CastButton" to="CombatManager" method="OnCastButtonDown"]
-[connection signal="button_down" from="UI/Options/Panel/ItemButton" to="CombatManager" method="OnItemButtonDown"]
+[connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [0, false]]
+[connection signal="mouse_entered" from="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [0, false]]
+[connection signal="mouse_exited" from="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [0, false]]
+[connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [1, false]]
+[connection signal="mouse_entered" from="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [1, false]]
+[connection signal="mouse_exited" from="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [1, false]]
+[connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [2, false]]
+[connection signal="mouse_entered" from="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [2, false]]
+[connection signal="mouse_exited" from="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [2, false]]
+[connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [3, false]]
+[connection signal="mouse_entered" from="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [3, false]]
+[connection signal="mouse_exited" from="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [3, false]]
+[connection signal="button_down" from="UI/Options/Choices/AttackButton" to="CombatManager" method="OnAttackButtonDown"]
+[connection signal="mouse_entered" from="UI/Options/Choices/AttackButton" to="CombatManager/UIManager" method="HoverOverInformation" binds= ["Attack an enemy with equipped weapon. Deals physical damage."]]
+[connection signal="mouse_exited" from="UI/Options/Choices/AttackButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
+[connection signal="button_down" from="UI/Options/Choices/CastButton" to="CombatManager" method="OnCastButtonDown"]
+[connection signal="mouse_entered" from="UI/Options/Choices/CastButton" to="CombatManager/UIManager" method="HoverOverInformation" binds= ["Cast an ability with mana."]]
+[connection signal="mouse_exited" from="UI/Options/Choices/CastButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
+[connection signal="button_down" from="UI/Options/Choices/ItemButton" to="CombatManager" method="OnItemButtonDown"]
+[connection signal="mouse_entered" from="UI/Options/Choices/ItemButton" to="CombatManager/UIManager" method="HoverOverInformation" binds= ["Use an item."]]
+[connection signal="mouse_exited" from="UI/Options/Choices/ItemButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
 [connection signal="button_down" from="UI/Options/CancelButton" to="CombatManager" method="OnCancelButtonDown"]
 [connection signal="button_down" from="UI/VictoryScreen/Back/Exit" to="CombatManager" method="OnExitButtonDown"]
 [connection signal="tab_clicked" from="UI/PartyMenuLayer/PartyMenu/TabContainer" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnTabPressed"]

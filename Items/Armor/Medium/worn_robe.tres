@@ -25,7 +25,7 @@ script = ExtResource("2_1ogjg")
 name = "Worn Robe"
 description = "Medium
 +2 intelligence, +1 constitution"
-scriptName = ""
+scriptPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false

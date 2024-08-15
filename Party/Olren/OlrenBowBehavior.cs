@@ -3,8 +3,8 @@ using System;
 
 public partial class OlrenBowBehavior : Node
 {
-   private const float TimeUntilDraw = 0.67f;
-   private const float TimeUntilGrabArrow = 0.4f;
+   private const float TimeUntilDraw = 1.9f;
+   private const float TimeUntilGrabArrow = 1f;
 
    private AnimationPlayer bowPlayer;
    private CombatManager combatManager;

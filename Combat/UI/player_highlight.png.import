@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cobireo2shpix"
-path="res://.godot/imported/Stealth.png-87bc0018b7f8ea6d4e3d92771e0caa53.ctex"
+uid="uid://b1pyyyaqedp84"
+path="res://.godot/imported/player_highlight.png-ee276f329fe8b3635b9acac32b18720d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Combat/UI/StatusEffects/Stealth.png"
-dest_files=["res://.godot/imported/Stealth.png-87bc0018b7f8ea6d4e3d92771e0caa53.ctex"]
+source_file="res://Combat/UI/player_highlight.png"
+dest_files=["res://.godot/imported/player_highlight.png-ee276f329fe8b3635b9acac32b18720d.ctex"]
 
 [params]
 

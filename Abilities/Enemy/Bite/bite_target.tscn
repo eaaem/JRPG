@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://lhtvfv2nd033"]
 
 [ext_resource type="Texture2D" uid="uid://bwebgmldd6bmg" path="res://Abilities/Enemy/Bite/bite.png" id="1_xk7iy"]
-[ext_resource type="Script" path="res://CombatOld/Abilities/Scripts/AbilityGraphic.cs" id="2_ingjf"]
+[ext_resource type="Script" path="res://Combat/0Core/AbilityGraphic.cs" id="2_ingjf"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_ucgi4"]
 spread = 90.0

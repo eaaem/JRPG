@@ -126,6 +126,7 @@ public partial class WorldEnemy : CharacterBody3D
       }
 
       Vector3 currentAgentPosition = GlobalTransform.Origin;
+      navigationAgent.PathHeightOffset = -currentAgentPosition.Y;
       Vector3 nextPathPosition = navigationAgent.GetNextPathPosition();
 
       Vector3 modelRotation = model.Rotation;
