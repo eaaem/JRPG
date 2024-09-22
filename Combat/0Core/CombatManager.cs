@@ -41,7 +41,7 @@ public enum StatusEffect
    Confuse,
    Disease,
    MegaBuff,
-   Birdseye,
+   KeenEye,
    Stealth
 }
 
@@ -549,7 +549,7 @@ public partial class CombatManager : Node
    /// <summary>
    /// Places the camera at its "default" place
    /// </summary>
-   private void ResetCamera() 
+   public void ResetCamera() 
    {
       arenaCamera.Position = new Vector3(-9.529f, 3.486f, 3.529f);
       arenaCamera.Rotation = new Vector3(Mathf.DegToRad(-13f), Mathf.DegToRad(-73.4f), Mathf.DegToRad(0.4f));
@@ -851,8 +851,6 @@ public partial class CombatManager : Node
 
    void OnCancelButtonDown()
    {
-      uiManager.StopHoveringOverInformation();
-
       if (IsAttacking)
       {
          uiManager.SetChoicesVisible(true);
@@ -864,6 +862,7 @@ public partial class CombatManager : Node
          uiManager.SetAbilityContainerVisible(false);
          uiManager.SetChoicesVisible(true);
          uiManager.SetCancelButtonVisible(false);
+         uiManager.ResetManaBarLossIndicator();
       }
       else if (uiManager.GetItemListVisible())
       {
@@ -876,6 +875,7 @@ public partial class CombatManager : Node
          uiManager.UpdateAbilities();
          uiManager.SetTargetsVisible(false);
          uiManager.SetAbilityContainerVisible(true);
+         uiManager.ResetManaBarLossIndicator();
          CurrentAbility = null;
 
          for (int i = 0; i < Fighters.Count; i++)
@@ -892,15 +892,6 @@ public partial class CombatManager : Node
          CurrentItem = null;
       }
 
-      if (IsCompanionTurn)
-      {
-        // FocusCameraOnFighter(CurrentFighter.companion.model);
-      }
-      else
-      {
-        // FocusCameraOnFighter(CurrentFighter.model);
-      }
-
       for (int i = 0; i < Fighters.Count; i++)
       {
          if (Fighters[i] != CurrentFighter)
@@ -912,14 +903,12 @@ public partial class CombatManager : Node
       }
       
       IsAttacking = false;
-      //uiManager.DisablePanels();
-      //uiManager.HideAll();
-      //uiManager.ShowSelectionBox();
+      uiManager.StopHoveringOverInformation();
    }
 
    public override void _Input(InputEvent @event)
    {
-      if (@event.IsActionPressed("menu") && !CurrentFighter.isEnemy)
+      if (IsInCombat && @event.IsActionPressed("menu") && !CurrentFighter.isEnemy)
       {
          OnCancelButtonDown();
       }
@@ -937,7 +926,7 @@ public partial class CombatManager : Node
       return null;
    }
 
-   async void CompleteAttack(Fighter target)
+   void CompleteAttack(Fighter target)
    {
       uiManager.HideAll();
 
@@ -952,10 +941,10 @@ public partial class CombatManager : Node
       // Athlia's attacks deal 10% damage
       damage.baseDamage = passiveManager.AthliaPassive(damage.baseDamage);
 
-      if (CurrentFighter.isEnemy)
+      /*if (CurrentFighter.isEnemy)
       {
          CurrentFighter.model.GetNode<Node3D>("Model").LookAt(target.model.GlobalPosition, Vector3.Up, true);
-         target.model.GetNode<Node3D>("Model").LookAt(CurrentFighter.model.GlobalPosition, Vector3.Up, true);
+         //target.model.GetNode<Node3D>("Model").LookAt(CurrentFighter.model.GlobalPosition, Vector3.Up, true);
         // FocusCameraOnFighter(target.model);
       }
 
@@ -970,7 +959,30 @@ public partial class CombatManager : Node
       {
          player = CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
          //ReverseFocusOnTarget(CurrentFighter.model);
+      }*/
+
+      AttackPreferences attackPreferences = CurrentFighter.model.GetNode<AttackPreferences>("AttackPreferences");
+      AbilityCommandHolder holder;
+
+      if (attackPreferences.OverrideCopy)
+      {
+         holder = CurrentFighter.model.GetNode<AbilityCommandHolder>(attackPreferences.PathToOverride);
       }
+      else
+      {
+         if (attackPreferences.IsRanged)
+         {
+            holder = GetNode<AbilityCommandHolder>("AbilityManager/RangedPreferences");
+         }
+         else
+         {
+            holder = GetNode<AbilityCommandHolder>("AbilityManager/MeleePreferences");
+         }
+      }
+
+      AbilityCommandInstance abilityCommandInstance = new AbilityCommandInstance();
+      abilityCommandInstance.commands = new AbilityCommand[holder.commands.Length];
+      holder.commands.CopyTo(abilityCommandInstance.commands, 0);
 
       bool crit = RollForCrit();
 
@@ -979,40 +991,33 @@ public partial class CombatManager : Node
          damage.baseDamage *= 2;
       }
 
-      ProcessAttack(CalculateDamage(new List<DamagingEntity>() { damage }), target);
+      ProcessAttack(new List<DamagingEntity>() { damage }, target, crit);
 
       // Olren's attacks have special effects
       passiveManager.ApplyOlrenPassive();
+
+      abilityManager.AddChild(abilityCommandInstance);
+      abilityCommandInstance.UpdateData(new List<Fighter> { target }, true);
       
-      player.Play("Attack");
-      EmitSignal(SignalName.AttackAnimation);
-
-      await ToSignal(GetTree().CreateTimer(player.CurrentAnimationLength + 0.35f), "timeout");
       
-      double waitTime = FocusOnTargets(new List<Fighter>() { target }, true);
+      //player.Play("Attack");
+      //EmitSignal(SignalName.AttackAnimation);
 
-      Label3D critBillboard = target.placementNode.GetNode<Label3D>("CritLabel");
 
-      if (target.wasHit)
-      {
-         if (crit)
-         {
-            critBillboard.Text = "CRIT";
-            critBillboard.Visible = true;
-         }
-      }
 
-      await ToSignal(GetTree().CreateTimer(waitTime + 0.35f), "timeout");
-
-      critBillboard.Visible = false;
+      //await ToSignal(GetTree().CreateTimer(player.CurrentAnimationLength + 0.35f), "timeout");
       
-      ProcessValues();
+      //double waitTime = FocusOnTargets(new List<Fighter>() { target }, true);
 
-      if (target.currentHealth > 0)
+      //await ToSignal(GetTree().CreateTimer(waitTime + 0.35f), "timeout");
+
+      //ProcessValues();
+
+      /*if (target.currentHealth > 0)
       {
          target.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
          player.Play("CombatIdle");
-      }
+      }*/
    }
 
    bool RollForCrit()
@@ -1082,7 +1087,7 @@ public partial class CombatManager : Node
          longestDuration = 0.6f;
       }
 
-      if (CurrentAbility != null)
+      /*if (CurrentAbility != null)
       {
          AbilityTargetGraphic = CurrentAbility.targetGraphic;
       }
@@ -1102,12 +1107,12 @@ public partial class CombatManager : Node
                abilityManager.SetTargetAbilityGraphics(abilityGraphic, targets[i].placementNode.GlobalPosition);
             }
          }
-      }
+      }*/
 
       for (int i = 0; i < targets.Count; i++)
       {
          uiManager.UpdateSingularUIPanel(targets[i]);
-         uiManager.UpdateStacksAndEffectsUI(targets[i]);
+         uiManager.MoveDamageTexts(targets[i]);
       }
 
       return longestDuration;
@@ -1147,7 +1152,7 @@ public partial class CombatManager : Node
       }
    }
 
-   public void ProcessAttack(int damage, Fighter target, bool bypassHitChance = false)
+   public void ProcessAttack(List<DamagingEntity> damagers, Fighter target, bool isCrit = false)
    {
       for (int i = 0; i < CurrentFighter.currentStatuses.Count; i++)
       {
@@ -1159,7 +1164,12 @@ public partial class CombatManager : Node
 
       if (HitAttack(target))
       {
-         target.currentHealth -= damage;
+         for (int i = 0; i < damagers.Count; i++)
+         {
+            int damage = CalculateDamage(damagers[i]);
+            target.currentHealth -= damage;
+            uiManager.ProjectDamageText(target, damage, damagers[i].damageType, isCrit);
+         }
          
          if (!target.isEnemy)
          {
@@ -1305,9 +1315,13 @@ public partial class CombatManager : Node
 
       for (int i = 0; i < deadFighters.Count; i++)
       {
-         ReverseFocusOnTarget(deadFighters[i].model);
          AnimationPlayer player = deadFighters[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
          player.Play("Death");
+
+         stacksAndStatusManager.ClearStatuses(deadFighters[i]);
+         stacksAndStatusManager.ClearStacks(deadFighters[i]);
+         uiManager.ChangeEffectUIWithDeath(deadFighters[i]);
+
          await ToSignal(GetTree().CreateTimer(player.CurrentAnimationLength + 0.35f), "timeout");
       }
 
@@ -1333,69 +1347,62 @@ public partial class CombatManager : Node
       affectedFighter.companion = null;
    }
 
-   public int CalculateDamage(List<DamagingEntity> damagers)
+   public int CalculateDamage(DamagingEntity damager)
    {
-      int currentDamageTotal = 0;
-      for (int i = 0; i < damagers.Count; i++)
+      int attackStat = 0;
+      int defenseStat = 0;
+      for (int j = 0; j < 10; j++)
       {
-         int attackStat = 0;
-         int defenseStat = 0;
-         for (int j = 0; j < 10; j++)
+         if (CurrentFighter.stats[j].statType == damager.scalingAttack)
          {
-            if (CurrentFighter.stats[j].statType == damagers[i].scalingAttack)
-            {
-               attackStat = CurrentFighter.stats[j].value;
-            }
-
-            if (CurrentTarget.stats[j].statType == damagers[i].scalingDefense)
-            {
-               defenseStat = CurrentFighter.stats[j].value;
-            }
+            attackStat = CurrentFighter.stats[j].value;
          }
 
-         float modifier = 1f;
-
-         if (CurrentFighter.affinity == Affinity.Shrouded)
+         if (CurrentTarget.stats[j].statType == damager.scalingDefense)
          {
-            for (int j = 0; j < CurrentFighter.currentStatuses.Count; j++)
-            {
-               if (CurrentFighter.currentStatuses[j].effect == StatusEffect.Stealth)
-               {
-                  modifier += 1f;
-                  break;
-               }
-            }
+            defenseStat = CurrentFighter.stats[j].value;
          }
-
-         AffinityStrengths targetStrsWeaks = affinityTable[(int)CurrentTarget.affinity];
-         AffinityStrengths casterStrsWeaks = affinityTable[(int)CurrentFighter.affinity];
-
-         if (targetStrsWeaks.weakTo1 == damagers[i].damageType || targetStrsWeaks.weakTo2 == damagers[i].damageType)
-         {
-            modifier += 0.25f;
-         }
-         else if (targetStrsWeaks.strongAgainst1 == damagers[i].damageType || targetStrsWeaks.strongAgainst2 == damagers[i].damageType)
-         {
-            modifier -= 0.25f;
-         }
-
-         if (casterStrsWeaks.strongAgainst1 == damagers[i].damageType || casterStrsWeaks.strongAgainst2 == damagers[i].damageType)
-         {
-            modifier += 0.25f;
-         }
-
-         int defenseApplier = defenseStat / 3;
-
-         if (defenseApplier <= 0)
-         {
-            defenseApplier = 1;
-         }
-
-         currentDamageTotal += (int)(((damagers[i].baseDamage * (attackStat / 2)) / defenseApplier) * modifier);
       }
-      
 
-      return Mathf.Clamp(currentDamageTotal, 1, 99999);
+      float modifier = 1f;
+
+      if (CurrentFighter.affinity == Affinity.Shrouded)
+      {
+         for (int j = 0; j < CurrentFighter.currentStatuses.Count; j++)
+         {
+            if (CurrentFighter.currentStatuses[j].effect == StatusEffect.Stealth)
+            {
+               modifier += 1f;
+               break;
+            }
+         }
+      }
+
+      AffinityStrengths targetStrsWeaks = affinityTable[(int)CurrentTarget.affinity];
+      AffinityStrengths casterStrsWeaks = affinityTable[(int)CurrentFighter.affinity];
+
+      if (targetStrsWeaks.weakTo1 == damager.damageType || targetStrsWeaks.weakTo2 == damager.damageType)
+      {
+         modifier += 0.25f;
+      }
+      else if (targetStrsWeaks.strongAgainst1 == damager.damageType || targetStrsWeaks.strongAgainst2 == damager.damageType)
+      {
+         modifier -= 0.25f;
+      }
+
+      if (casterStrsWeaks.strongAgainst1 == damager.damageType || casterStrsWeaks.strongAgainst2 == damager.damageType)
+      {
+         modifier += 0.25f;
+      }
+
+      int defenseApplier = defenseStat / 3;
+
+      if (defenseApplier <= 0)
+      {
+         defenseApplier = 1;
+      }
+
+      return Mathf.Clamp((int)(((damager.baseDamage * (attackStat / 2)) / defenseApplier) * modifier), 1, 99999);
    }
 
    public void ApplyStatModifier(StatType statType, int modifier, int duration, Fighter affectedFighter, Fighter applier, StatusEffect attachedStatus)
@@ -1575,7 +1582,7 @@ public partial class CombatManager : Node
       managers.MenuManager.canTakeInput = true;
    }
 
-   public async void RegularCast(List<Fighter> targets, bool playHitAnimation = true)
+   public void RegularCast(List<Fighter> targets, bool playHitAnimation = true)
    {
       AnimationPlayer player;
 
@@ -1596,7 +1603,7 @@ public partial class CombatManager : Node
          if (CurrentFighter.isEnemy)
          {
             CurrentFighter.model.GetNode<Node3D>("Model").LookAt(targets[0].model.GlobalPosition, Vector3.Up, true);
-            targets[0].model.GetNode<Node3D>("Model").LookAt(CurrentFighter.model.GlobalPosition, Vector3.Up, true);
+            //targets[0].model.GetNode<Node3D>("Model").LookAt(CurrentFighter.model.GlobalPosition, Vector3.Up, true);
             //FocusCameraOnFighter(targets[0].model);
          }
       }
@@ -1609,7 +1616,7 @@ public partial class CombatManager : Node
 
             for (int i = 0; i < targets.Count; i++)
             {
-               targets[i].model.GetNode<Node3D>("Model").LookAt(CurrentFighter.model.GlobalPosition, Vector3.Up, true);
+               //targets[i].model.GetNode<Node3D>("Model").LookAt(CurrentFighter.model.GlobalPosition, Vector3.Up, true);
             }
          }
          else
@@ -1618,9 +1625,29 @@ public partial class CombatManager : Node
          }
       }
 
-      player.Play("Cast");
-      await ToSignal(GetTree().CreateTimer(player.CurrentAnimationLength + 0.35f), "timeout");
+      abilityManager.CreateAbilityGraphicController(targets, playHitAnimation);
+
+      //player.Play("Cast");      
+   }
+
+   public async void FinishCastingProcess(List<Fighter> targets, bool playHitAnimation = true)
+   {  
+      AnimationPlayer player;
+
+      if (IsCompanionTurn)
+      {
+         player = CurrentFighter.companion.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
+         //ReverseFocusOnTarget(CurrentFighter.companion.model);
+      }
+      else
+      {
+         player = CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
+         //ReverseFocusOnTarget(CurrentFighter.model);
+      }
+
       uiManager.UpdateSingularUIPanel(CurrentFighter);
+      stacksAndStatusManager.ShowEffectGraphics();
+
       player.Play("CombatIdle");
 
       Panel companionUIHolder = CurrentFighter.UIPanel.GetNode<Panel>("CompanionHolder");

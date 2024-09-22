@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bfuyrsebwxqi7"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityRunner.cs" id="1_mncfl"]
+
+[node name="ability_runner" type="Node3D"]
+script = ExtResource("1_mncfl")

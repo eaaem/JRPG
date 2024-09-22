@@ -11,7 +11,7 @@ public partial class AbilityResource : Resource
    [Export]
    public int manaCost;
    [Export]
-   public string scriptName;
+   public string scriptPath;
    [Export]
    public bool hitsAll;
    [Export]
@@ -27,9 +27,7 @@ public partial class AbilityResource : Resource
    [Export]
    public bool bypassesDeaths;
    [Export]
-   public string casterGraphic = string.Empty;
-   [Export]
-   public string targetGraphic = string.Empty;
+   public string graphicPath;
    [Export]
    public int requiredLevel;
 }

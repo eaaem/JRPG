@@ -14,7 +14,7 @@ public partial class Gust : EnemyAbilityBehavior
       {
          if (!combatManager.Fighters[i].isDead && !combatManager.Fighters[i].isEnemy)
          {
-            combatManager.ProcessAttack(combatManager.CalculateDamage(damagers), combatManager.Fighters[i]);
+            combatManager.ProcessAttack(damagers, combatManager.Fighters[i]);
             targets.Add(combatManager.Fighters[i]);
          }
       }

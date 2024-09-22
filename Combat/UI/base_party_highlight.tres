@@ -1,0 +1,7 @@
+[gd_resource type="StyleBoxTexture" load_steps=2 format=3 uid="uid://bo4vcuowppm1o"]
+
+[ext_resource type="Texture2D" uid="uid://cx25eavncp1xo" path="res://Combat/UI/enemy_highlight.png" id="1_guq1e"]
+
+[resource]
+texture = ExtResource("1_guq1e")
+modulate_color = Color(1, 1, 1, 0.666667)

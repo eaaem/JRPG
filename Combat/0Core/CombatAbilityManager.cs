@@ -64,13 +64,12 @@ public partial class CombatAbilityManager : Node
       Node3D holder = packedSceneHolder.Instantiate<Node3D>();
       Node3D scriptHolder = holder.GetNode<Node3D>("Holder");
 
-      scriptHolder.SetScript(GD.Load<CSharpScript>("res://Abilities/Enemy/" + combatManager.CurrentAbility.scriptName + "/" 
-                                                   + combatManager.CurrentAbility.scriptName + ".cs"));
+      scriptHolder.SetScript(GD.Load<CSharpScript>(combatManager.CurrentAbility.scriptPath));
       combatManager.CurrentFighter.model.GetNode<EnemyDataHolder>("ScriptHolder").AddChild(holder);
 
       EmitSignal(SignalName.EnemyAbilityCast);
 
-      combatManager.AbilityTargetGraphic = combatManager.CurrentAbility.targetGraphic;
+      //combatManager.AbilityTargetGraphic = combatManager.CurrentAbility.targetGraphic;
 
       combatManager.CurrentFighter.model.GetNode<EnemyDataHolder>("ScriptHolder").RemoveChild(holder);
       holder.QueueFree();
@@ -78,7 +77,15 @@ public partial class CombatAbilityManager : Node
       combatManager.CurrentAbility = null;
    }
 
-   public AbilityGraphic GenerateTargetAbilityGraphic(string graphicPath)
+   public void CreateAbilityGraphicController(List<Fighter> targets, bool playHitAnimation)
+   {
+      AbilityCommandInstance abilityGraphic = GD.Load<PackedScene>(combatManager.CurrentAbility.graphicPath).Instantiate<AbilityCommandInstance>();
+      AddChild(abilityGraphic);
+
+      abilityGraphic.UpdateData(targets, playHitAnimation);
+   }
+
+   /*public AbilityGraphic GenerateTargetAbilityGraphic(string graphicPath)
    {
       PackedScene targetGraphicsScene = GD.Load<PackedScene>(graphicPath);
       Node3D targetGraphics = targetGraphicsScene.Instantiate<Node3D>();
@@ -97,5 +104,5 @@ public partial class CombatAbilityManager : Node
          graphic.GlobalPosition = targetPosition;
          graphic.GlobalPosition += new Vector3(0, abilityGraphic.VerticalOffset, 0);
       }
-   }
+   }*/
 }

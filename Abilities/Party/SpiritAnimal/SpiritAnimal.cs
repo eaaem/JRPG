@@ -66,6 +66,7 @@ public partial class SpiritAnimal : PlayerAbilityBehavior
          combatManager.CreateCompanion(combatManager.CurrentFighter, currentData, 3);
          secondaryOptions.Visible = false;
          combatManager.CurrentFighter.currentMana -= resource.manaCost;
+         combatManager.CurrentFighter.specialCooldown = 3;
          combatManager.RegularCast(new List<Fighter>() { combatManager.CurrentFighter }, false);
       }
    }

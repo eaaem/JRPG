@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using System.Collections.Generic;
 
 public partial class CombatStackStatusManager : Node
 {
@@ -7,6 +7,8 @@ public partial class CombatStackStatusManager : Node
    private CombatManager combatManager;
    [Export]
    private CombatUIManager uiManager;
+
+   private List<Node3D> hiddenEffectGraphics = new List<Node3D>();
 
 	public void ApplyStatus(int chance, Fighter target, StatusEffect statusEffect, int minTurn, int maxTurn)
    {
@@ -31,7 +33,9 @@ public partial class CombatStackStatusManager : Node
             appliedStatusEffect.isNegative = combatManager.StatusDatas[(int)statusEffect].isNegative;
             
             target.currentStatuses.Add(appliedStatusEffect);
-            uiManager.AddEffectUI(statusEffect, target, combatManager.StatusDatas[(int)statusEffect].description);
+            uiManager.AlterEffectUI(target, statusEffect.ToString(), false, duration, combatManager.StatusDatas[(int)statusEffect].displayRemainingTurns,
+                                    combatManager.StatusDatas[(int)statusEffect].description);
+            AddStatusGraphic(target, statusEffect);
 
             if (statusEffect == StatusEffect.Burn)
             {
@@ -49,7 +53,6 @@ public partial class CombatStackStatusManager : Node
             }
             else if (statusEffect == StatusEffect.MegaBuff)
             {
-               appliedStatusEffect.displayRemainingTurns = true;
                for (int i = 0; i < 10; i++)
                {
                   combatManager.ApplyStatModifier((StatType)i, Mathf.CeilToInt(target.stats[i].baseValue * 0.25f), duration, target, 
@@ -58,15 +61,13 @@ public partial class CombatStackStatusManager : Node
                target.maxHealth = target.GetMaxHealth();
                target.maxMana = target.GetMaxMana();
             }
-            else if (statusEffect == StatusEffect.Birdseye)
+            else if (statusEffect == StatusEffect.KeenEye)
             {
-               appliedStatusEffect.displayRemainingTurns = true;
                combatManager.ApplyStatModifier(StatType.Accuracy, Mathf.CeilToInt(target.stats[(int)StatType.Accuracy].baseValue * 0.25f), duration, 
-                                               target, combatManager.CurrentFighter, StatusEffect.Birdseye);
+                                               target, combatManager.CurrentFighter, StatusEffect.KeenEye);
             }
             else if (statusEffect == StatusEffect.Stealth)
             {
-               appliedStatusEffect.displayRemainingTurns = true;
                combatManager.ApplyStatModifier(StatType.Evasion, Mathf.CeilToInt(target.stats[(int)StatType.Evasion].baseValue * 0.75f), duration, 
                                                target, combatManager.CurrentFighter, StatusEffect.Stealth);
             }
@@ -83,10 +84,11 @@ public partial class CombatStackStatusManager : Node
             if (combatManager.Fighters[i].currentStatuses[j].applier == combatManager.CurrentFighter)
             {
                combatManager.Fighters[i].currentStatuses[j].remainingTurns--;
+               uiManager.DecrementEffectUI(combatManager.Fighters[i], combatManager.Fighters[i].currentStatuses[j].effect.ToString());
 
                if (combatManager.Fighters[i].currentStatuses[j].displayRemainingTurns)
                {
-                  uiManager.UpdateStatusTurns(combatManager.Fighters[i], combatManager.Fighters[i].currentStatuses[j], j);
+                  //uiManager.UpdateStatusTurns(combatManager.Fighters[i], combatManager.Fighters[i].currentStatuses[j], j);
                }
 
                if (combatManager.Fighters[i].currentStatuses[j].remainingTurns <= 0)
@@ -116,10 +118,66 @@ public partial class CombatStackStatusManager : Node
       }
    }
 
+   public void AddStatusGraphic(Fighter target, StatusEffect statusEffect)
+   {
+      StatusData statusData = combatManager.StatusDatas[(int)statusEffect];
+
+      Node3D graphic = GD.Load<PackedScene>(statusData.graphicEffectPath).Instantiate<Node3D>();
+      BoneAttachment3D boneAttachment = new BoneAttachment3D();
+      AddChild(boneAttachment);
+      boneAttachment.Visible = false;
+      boneAttachment.Name = target.fighterName + statusEffect.ToString();
+      boneAttachment.SetUseExternalSkeleton(true);
+      boneAttachment.SetExternalSkeleton(target.model.GetNode<Node3D>("Model").GetChild(0).GetChild(0).GetPath());
+
+      string boneToAttachTo = statusData.boneToAttachForGraphic;
+
+      if (target.model.HasNode("BoneConversions"))
+      {
+         BoneConversionList boneConversionList = target.model.GetNode<BoneConversionList>("BoneConversions");
+
+         for (int i = 0; i < boneConversionList.conversions.Length; i++)
+         {
+            if (boneConversionList.conversions[i].originalBone == statusData.boneToAttachForGraphic)
+            {
+               boneToAttachTo = boneConversionList.conversions[i].overrideBone;
+               break;
+            }
+         }
+      }
+
+      boneAttachment.BoneName = boneToAttachTo;
+      boneAttachment.AddChild(graphic);
+
+      hiddenEffectGraphics.Add(boneAttachment);
+   }
+
+   public void ShowEffectGraphics()
+   {
+      for (int i = 0; i < hiddenEffectGraphics.Count; i++)
+      {
+         hiddenEffectGraphics[i].Visible = true;
+      }
+
+      hiddenEffectGraphics.Clear();
+   }
+
+   public void RemoveStatusGraphic(Fighter target, StatusEffect statusEffect)
+   {
+      foreach (BoneAttachment3D child in GetChildren())
+      {
+         if (child.Name == target.fighterName + statusEffect.ToString())
+         {
+            RemoveChild(child);
+            child.QueueFree();
+            return;
+         }
+      }
+   }
+
    public void RemoveStatus(Fighter target, int statusIndex)
    {
       AppliedStatusEffect status = target.currentStatuses[statusIndex];
-      uiManager.RemoveEffectUI(status.effect, target);
 
       for (int i = 0; i < target.statModifiers.Count; i++)
       {
@@ -130,6 +188,8 @@ public partial class CombatStackStatusManager : Node
          }
       }
 
+      uiManager.ChangeEffectUIQuantity(target, target.currentStatuses[statusIndex].effect.ToString(), target.currentStatuses[statusIndex].remainingTurns);
+      RemoveStatusGraphic(target, target.currentStatuses[statusIndex].effect);
       target.currentStatuses.Remove(target.currentStatuses[statusIndex]);
    }
 
@@ -141,28 +201,46 @@ public partial class CombatStackStatusManager : Node
          {
             target.stacks[i].quantity += newStack.quantity;
             target.stacks[i].needsQuantityUpdate = true;
+            uiManager.AlterEffectUI(target, newStack.stackName, true, target.stacks[i].quantity, true, "");
             return;
          }
       }
 
-      uiManager.AddStackUI(target, newStack);
+      uiManager.AlterEffectUI(target, newStack.stackName, true, newStack.quantity, true, "");
       target.stacks.Add(newStack);
    }
 
    public void RemoveStack(Fighter target, string stackName, int quantityToLose)
    {
-      HBoxContainer stacksContainer = target.UIPanel.GetNode<HBoxContainer>("Effects/Stacks");
-
       for (int i = 0; i < target.stacks.Count; i++)
       {
          if (target.stacks[i].stackName == stackName)
          {
-            Panel child = stacksContainer.GetChild<Panel>(i);
             target.stacks[i].quantity -= quantityToLose;
-            target.stacks[i].needsQuantityUpdate = true;
+            uiManager.ChangeEffectUIQuantity(target, target.stacks[i].stackName, quantityToLose);
             
             return;
          }
+      }
+   }
+
+   public void ClearStatuses(Fighter target)
+   {
+      int size = target.currentStatuses.Count - 1;
+
+      for (int i = size; i >= 0; i--)
+      {
+         RemoveStatus(target, i);
+      }
+   }
+
+   public void ClearStacks(Fighter target)
+   {
+      int size = target.stacks.Count - 1;
+
+      for (int i = size; i >= 0; i--)
+      {
+         RemoveStack(target, target.stacks[i].stackName, target.stacks[i].quantity);
       }
    }
 }

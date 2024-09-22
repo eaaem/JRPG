@@ -14,8 +14,7 @@ public partial class Rend : PlayerAbilityBehavior
       if (combatManager.CurrentAbility == resource)
       {
          DamagingEntity damager = new DamagingEntity((int)(combatManager.CurrentFighter.level * 2.5), StatType.Strength, StatType.Fortitude, DamageType.Physical);
-         int damage = combatManager.CalculateDamage(new List<DamagingEntity>() { damager });
-         combatManager.ProcessAttack(damage, combatManager.CurrentTarget);
+         combatManager.ProcessAttack(new List<DamagingEntity>() { damager }, combatManager.CurrentTarget);
          stacksAndStatusManager.ApplyStatus(33, combatManager.CurrentTarget, StatusEffect.Bleed, 2, 3);
          combatManager.CurrentFighter.currentMana -= resource.manaCost;
          combatManager.RegularCast(new List<Fighter>() { combatManager.CurrentTarget });

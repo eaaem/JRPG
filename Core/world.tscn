@@ -1,4 +1,4 @@
-[gd_scene load_steps=135 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=149 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -12,22 +12,24 @@
 [ext_resource type="Script" path="res://Combat/0Core/CombatPassiveManager.cs" id="7_x03at"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatItemManager.cs" id="8_hnce1"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatStackStatusManager.cs" id="9_1u2nm"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandHolder.cs" id="9_4lxtk"]
 [ext_resource type="PackedScene" uid="uid://cdlo1pemj7l26" path="res://Combat/0Core/effect.tscn" id="9_67pu3"]
 [ext_resource type="Script" path="res://Party/0Core/PartyManager.cs" id="9_ah2fn"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="10_6pqua"]
 [ext_resource type="Resource" uid="uid://b6424vyj7dspo" path="res://Party/Vakthol/vakthol.tres" id="10_7pwb7"]
 [ext_resource type="PackedScene" uid="uid://c5yikq1y5un0d" path="res://Combat/UI/ability_button.tscn" id="10_w4nkx"]
 [ext_resource type="PackedScene" uid="uid://bn35oip147owg" path="res://Combat/0Core/stack_prefab.tscn" id="11_qyibu"]
 [ext_resource type="Resource" uid="uid://ck7wy6s7wajxw" path="res://Party/Thalria/thalria.tres" id="11_wj8pa"]
 [ext_resource type="Resource" uid="uid://0y8iemdigx00" path="res://Party/Athlia/athlia.tres" id="12_h78bi"]
-[ext_resource type="StyleBox" uid="uid://grtx6x4ut0jg" path="res://Combat/ButtonThemes/altered_party_highlight.tres" id="13_3vjj1"]
 [ext_resource type="Resource" uid="uid://cuw45oxjrj1jr" path="res://Party/Olren/olren.tres" id="13_nnw16"]
 [ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="14_oxatk"]
+[ext_resource type="StyleBox" uid="uid://bo4vcuowppm1o" path="res://Combat/UI/base_party_highlight.tres" id="14_xso5o"]
 [ext_resource type="PackedScene" uid="uid://b0itiinn5nr7j" path="res://Combat/0Core/special_arrow.tscn" id="15_27lj8"]
 [ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="15_86siq"]
+[ext_resource type="StyleBox" uid="uid://vtwamyu6ts6e" path="res://Combat/UI/altered_party_highlight.tres" id="15_jlnsn"]
 [ext_resource type="Script" path="res://Combat/0Core/ItemResource.cs" id="16_5bni6"]
 [ext_resource type="Resource" uid="uid://bos1dl2vq377j" path="res://Items/Thalria/heirloom_staff.tres" id="17_vxtna"]
 [ext_resource type="Resource" uid="uid://bt2f8yoo0nup8" path="res://Items/Olren/pine_bow.tres" id="19_4kg3f"]
-[ext_resource type="StyleBox" uid="uid://bc3272th8cw8m" path="res://Combat/ButtonThemes/base_party_highlight.tres" id="20_5bpft"]
 [ext_resource type="LabelSettings" uid="uid://d3mi4nujst60y" path="res://Combat/0Core/combat_ui_text.tres" id="21_u7sgt"]
 [ext_resource type="Script" path="res://Dialogue/0Core/DialogueManager.cs" id="22_argjw"]
 [ext_resource type="PackedScene" uid="uid://b1ub3e88mq513" path="res://Dialogue/0Core/branch_button.tscn" id="26_tb1nj"]
@@ -51,6 +53,7 @@
 [ext_resource type="FontFile" uid="uid://b2twoq48myxmy" path="res://Menus/0Core/Merriweather-Bold.ttf" id="35_v46tb"]
 [ext_resource type="Script" path="res://Levels/1Features/ItemPickup/ItemPickupManager.cs" id="36_qnjxv"]
 [ext_resource type="Script" path="res://Levels/1Features/Shop/ShopMenuManager.cs" id="37_jygy0"]
+[ext_resource type="Theme" uid="uid://cfmeoqvxshi43" path="res://Menus/0Core/basic_label_text.tres" id="38_6i0oi"]
 [ext_resource type="PackedScene" uid="uid://c08d1vnprgeay" path="res://Levels/1Features/Shop/item_button_prefab.tscn" id="38_xtl2k"]
 [ext_resource type="Script" path="res://Party/0Core/CharacterController.cs" id="39_q0foa"]
 [ext_resource type="PackedScene" uid="uid://c8sbeheqi10fl" path="res://Party/Vakthol/vakthol.glb" id="40_va38g"]
@@ -158,6 +161,9 @@ effect = 0
 description = ""
 isCleanseable = false
 isNegative = false
+displayRemainingTurns = false
+graphicEffectPath = ""
+boneToAttachForGraphic = ""
 
 [sub_resource type="Resource" id="Resource_igf5a"]
 script = ExtResource("4_t2qrl")
@@ -165,6 +171,9 @@ effect = 1
 description = "Unable to move"
 isCleanseable = true
 isNegative = true
+displayRemainingTurns = true
+graphicEffectPath = ""
+boneToAttachForGraphic = ""
 
 [sub_resource type="Resource" id="Resource_vj0lt"]
 script = ExtResource("4_t2qrl")
@@ -172,6 +181,9 @@ effect = 2
 description = "Losing health each turn"
 isCleanseable = true
 isNegative = true
+displayRemainingTurns = true
+graphicEffectPath = ""
+boneToAttachForGraphic = ""
 
 [sub_resource type="Resource" id="Resource_h6dwx"]
 script = ExtResource("4_t2qrl")
@@ -179,6 +191,9 @@ effect = 3
 description = "Losing health each turn"
 isCleanseable = true
 isNegative = true
+displayRemainingTurns = true
+graphicEffectPath = "res://Combat/StatusEffects/bleed_effect.tscn"
+boneToAttachForGraphic = "chest"
 
 [sub_resource type="Resource" id="Resource_5kq13"]
 script = ExtResource("4_t2qrl")
@@ -186,6 +201,9 @@ effect = 4
 description = "Physical damage decreased and losing health each turn"
 isCleanseable = true
 isNegative = true
+displayRemainingTurns = true
+graphicEffectPath = ""
+boneToAttachForGraphic = ""
 
 [sub_resource type="Resource" id="Resource_mftyv"]
 script = ExtResource("4_t2qrl")
@@ -193,6 +211,9 @@ effect = 5
 description = "Hits ally or enemy at random"
 isCleanseable = true
 isNegative = true
+displayRemainingTurns = true
+graphicEffectPath = ""
+boneToAttachForGraphic = ""
 
 [sub_resource type="Resource" id="Resource_e01c7"]
 script = ExtResource("4_t2qrl")
@@ -200,6 +221,9 @@ effect = 6
 description = "Maximum health and mana decreased"
 isCleanseable = true
 isNegative = true
+displayRemainingTurns = true
+graphicEffectPath = ""
+boneToAttachForGraphic = ""
 
 [sub_resource type="Resource" id="Resource_au516"]
 script = ExtResource("4_t2qrl")
@@ -207,6 +231,9 @@ effect = 7
 description = "All stats increased"
 isCleanseable = false
 isNegative = false
+displayRemainingTurns = true
+graphicEffectPath = ""
+boneToAttachForGraphic = ""
 
 [sub_resource type="Resource" id="Resource_1u3ta"]
 script = ExtResource("4_t2qrl")
@@ -214,6 +241,9 @@ effect = 8
 description = "Accuracy increased"
 isCleanseable = false
 isNegative = false
+displayRemainingTurns = true
+graphicEffectPath = "res://Combat/StatusEffects/keeneye_effect.tscn"
+boneToAttachForGraphic = "head"
 
 [sub_resource type="Resource" id="Resource_1rshu"]
 script = ExtResource("4_t2qrl")
@@ -222,6 +252,59 @@ description = "Evasion increased
 Breaks upon attacking or taking damage"
 isCleanseable = false
 isNegative = false
+displayRemainingTurns = true
+graphicEffectPath = ""
+boneToAttachForGraphic = ""
+
+[sub_resource type="Resource" id="Resource_ut0rk"]
+script = ExtResource("10_6pqua")
+CommandType = 12
+InvolvedFighter = "CASTER_MODEL"
+TargetName = "Attack"
+
+[sub_resource type="Resource" id="Resource_yuhsi"]
+script = ExtResource("10_6pqua")
+CommandType = 10
+Amount = 1.0
+
+[sub_resource type="Resource" id="Resource_iepjr"]
+script = ExtResource("10_6pqua")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_kn2cf"]
+script = ExtResource("10_6pqua")
+CommandType = 15
+
+[sub_resource type="Resource" id="Resource_h7pwi"]
+script = ExtResource("10_6pqua")
+CommandType = 13
+InvolvedFighter = "CASTER_MODEL"
+TargetName = "TARGETS_MODEL"
+Amount = 2.0
+
+[sub_resource type="Resource" id="Resource_nbepo"]
+script = ExtResource("10_6pqua")
+CommandType = 14
+PauseUntilTargetReached = true
+
+[sub_resource type="Resource" id="Resource_y7rrk"]
+script = ExtResource("10_6pqua")
+CommandType = 12
+InvolvedFighter = "CASTER_MODEL"
+TargetName = "Attack"
+
+[sub_resource type="Resource" id="Resource_fhjva"]
+script = ExtResource("10_6pqua")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_gnhnw"]
+script = ExtResource("10_6pqua")
+CommandType = 14
+PauseUntilTargetReached = false
+
+[sub_resource type="Resource" id="Resource_dbpl1"]
+script = ExtResource("10_6pqua")
+CommandType = 15
 
 [sub_resource type="Resource" id="Resource_rv5hx"]
 script = ExtResource("15_86siq")
@@ -333,6 +416,9 @@ bg_color = Color(0.0117647, 0.109804, 0, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7kkw0"]
 bg_color = Color(0.478431, 1, 0, 1)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kvt8o"]
+bg_color = Color(0.913725, 0.447059, 0.243137, 1)
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pvgnr"]
 bg_color = Color(0, 0, 0.184314, 1)
 
@@ -418,7 +504,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000612859, -3.72529e-09, 0
 stream = ExtResource("53_icsar")
 autoplay = true
 
-[node name="ManagerReferenceHolder" type="Node3D" parent="." node_paths=PackedStringArray("PartyManager", "Controller", "LevelManager", "SaveManager", "MenuManager", "ItemPickupManager", "DialogueManager", "CutsceneManager", "ShopMenuManager", "PartyMenuManager", "ItemMenuManager", "MainMenuManager")]
+[node name="ManagerReferenceHolder" type="Node3D" parent="." node_paths=PackedStringArray("PartyManager", "Controller", "LevelManager", "SaveManager", "MenuManager", "ItemPickupManager", "DialogueManager", "CutsceneManager", "ShopMenuManager", "PartyMenuManager", "ItemMenuManager")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15193e-07, 3.72529e-09, 2.97208e-07)
 script = ExtResource("1_7hlfi")
 PartyManager = NodePath("../PartyManager")
@@ -432,7 +518,6 @@ CutsceneManager = NodePath("../CutsceneManager")
 ShopMenuManager = NodePath("../UI/Shop/Background")
 PartyMenuManager = NodePath("../UI/PartyMenuLayer/PartyMenu/TabContainer/Party")
 ItemMenuManager = NodePath("../UI/PartyMenuLayer/PartyMenu/TabContainer/Items")
-MainMenuManager = NodePath("../MainMenu")
 
 [node name="CombatManager" type="Node3D" parent="." node_paths=PackedStringArray("managers", "uiManager", "abilityManager", "itemManager", "stacksAndStatusManager", "passiveManager", "playerCamera", "baseNode")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.36896, -1.7533, -8.04547)
@@ -457,6 +542,14 @@ combatManager = NodePath("..")
 uiManager = NodePath("../UIManager")
 enemyAbilityUseHolder = ExtResource("6_gn3sp")
 
+[node name="RangedPreferences" type="Node3D" parent="CombatManager/AbilityManager"]
+script = ExtResource("9_4lxtk")
+commands = [SubResource("Resource_ut0rk"), SubResource("Resource_yuhsi"), SubResource("Resource_iepjr"), SubResource("Resource_kn2cf")]
+
+[node name="MeleePreferences" type="Node3D" parent="CombatManager/AbilityManager"]
+script = ExtResource("9_4lxtk")
+commands = [SubResource("Resource_h7pwi"), SubResource("Resource_nbepo"), SubResource("Resource_y7rrk"), SubResource("Resource_fhjva"), SubResource("Resource_gnhnw"), SubResource("Resource_dbpl1")]
+
 [node name="UIManager" type="Node3D" parent="CombatManager" node_paths=PackedStringArray("managers", "combatManager", "UI", "partyList", "enemyList", "options", "abilityContainer", "abilityButtonContainer", "secondaryOptions", "secondaryOptionsContainer", "messageText", "cancelButton", "finalizeButton", "itemsList", "itemsContainer", "victoryScreen")]
 script = ExtResource("6_143na")
 managers = NodePath("../../ManagerReferenceHolder")
@@ -479,8 +572,9 @@ finalizeButton = NodePath("../../UI/Options/FinalizeButton")
 itemsList = NodePath("../../UI/Options/Items")
 itemsContainer = NodePath("../../UI/Options/Items/ScrollContainer/VBoxContainer")
 victoryScreen = NodePath("../../UI/VictoryScreen")
-baseHighlight = ExtResource("20_5bpft")
-alteredHighlight = ExtResource("13_3vjj1")
+baseHighlight = ExtResource("14_xso5o")
+alteredHighlight = ExtResource("15_jlnsn")
+damageTypeColors = PackedColorArray(0, 0, 0, 1, 0.596078, 0.596078, 0.596078, 1, 0, 0.486275, 0.870588, 1, 1, 0.498039, 0, 1, 0.388235, 0.270588, 0.168627, 1, 0, 0, 1, 1, 0.960784, 0.960784, 0.960784, 1, 1, 1, 0.568627, 1, 0.113725, 0.0862745, 0.121569, 1, 0.278431, 1, 0.254902, 1, 0.8, 0.615686, 0.780392, 1)
 
 [node name="PassiveManager" type="Node3D" parent="CombatManager" node_paths=PackedStringArray("combatManager", "uiManager", "stacksAndStatusManager")]
 script = ExtResource("7_x03at")
@@ -536,33 +630,77 @@ text = "Loading..."
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="DefeatScreen" type="Node2D" parent="UI/Overlay"]
+[node name="DefeatScreen" type="Control" parent="UI/Overlay"]
 visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -960.0
+offset_bottom = -540.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="Title" type="Label" parent="UI/Overlay/DefeatScreen"]
+[node name="Title" type="RichTextLabel" parent="UI/Overlay/DefeatScreen"]
+layout_mode = 0
 offset_top = 450.0
 offset_right = 1920.0
 offset_bottom = 516.0
-theme_override_font_sizes/font_size = 45
-text = "You have been defeated."
-horizontal_alignment = 1
-vertical_alignment = 1
+theme_override_colors/default_color = Color(1, 0.643137, 0.588235, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 6
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("35_v46tb")
+theme_override_font_sizes/normal_font_size = 45
+bbcode_enabled = true
+text = "[center]You have been defeated."
 
 [node name="LastSave" type="Button" parent="UI/Overlay/DefeatScreen"]
+layout_mode = 0
 offset_left = 700.0
 offset_top = 550.0
 offset_right = 912.0
 offset_bottom = 593.0
+theme = ExtResource("41_7gkvb")
 theme_override_font_sizes/font_size = 25
+
+[node name="Label" type="Label" parent="UI/Overlay/DefeatScreen/LastSave"]
+layout_mode = 0
+offset_right = 212.0
+offset_bottom = 43.0
+theme = ExtResource("38_6i0oi")
+theme_override_colors/font_color = Color(0.992157, 1, 0.815686, 1)
+theme_override_fonts/font = ExtResource("35_v46tb")
+theme_override_font_sizes/font_size = 20
 text = "Reload Last Save"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Quit" type="Button" parent="UI/Overlay/DefeatScreen"]
+layout_mode = 0
 offset_left = 1000.0
 offset_top = 550.0
 offset_right = 1212.0
 offset_bottom = 593.0
+theme = ExtResource("41_7gkvb")
 theme_override_font_sizes/font_size = 25
+
+[node name="Label" type="Label" parent="UI/Overlay/DefeatScreen/Quit"]
+layout_mode = 0
+offset_right = 212.0
+offset_bottom = 43.0
+theme = ExtResource("38_6i0oi")
+theme_override_colors/font_color = Color(0.992157, 1, 0.815686, 1)
+theme_override_fonts/font = ExtResource("35_v46tb")
+theme_override_font_sizes/font_size = 20
 text = "Quit to Menu"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Distortion" type="ColorRect" parent="UI/Overlay"]
 material = SubResource("ShaderMaterial_6oimm")
@@ -728,7 +866,7 @@ visible = false
 layout_mode = 0
 offset_right = 437.0
 offset_bottom = 60.0
-theme_override_styles/panel = ExtResource("20_5bpft")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt8o")
 
 [node name="Title" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/CompanionHolder"]
 layout_mode = 0
@@ -883,7 +1021,7 @@ visible = false
 layout_mode = 0
 offset_right = 437.0
 offset_bottom = 60.0
-theme_override_styles/panel = ExtResource("20_5bpft")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt8o")
 
 [node name="Title" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/CompanionHolder"]
 layout_mode = 0
@@ -1038,7 +1176,7 @@ visible = false
 layout_mode = 0
 offset_right = 437.0
 offset_bottom = 60.0
-theme_override_styles/panel = ExtResource("20_5bpft")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt8o")
 
 [node name="Title" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/CompanionHolder"]
 layout_mode = 0
@@ -1193,7 +1331,7 @@ visible = false
 layout_mode = 0
 offset_right = 437.0
 offset_bottom = 60.0
-theme_override_styles/panel = ExtResource("20_5bpft")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt8o")
 
 [node name="Title" type="Label" parent="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/CompanionHolder"]
 layout_mode = 0
@@ -1325,7 +1463,7 @@ visible = false
 offset_right = 435.2
 offset_bottom = 200.0
 theme = SubResource("Theme_3108v")
-theme_override_styles/panel = ExtResource("20_5bpft")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt8o")
 
 [node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder"]
 offset_right = 440.0
@@ -1451,7 +1589,7 @@ visible = false
 layout_mode = 0
 offset_right = 437.0
 offset_bottom = 60.0
-theme_override_styles/panel = ExtResource("20_5bpft")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt8o")
 
 [node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/CompanionHolder"]
 layout_mode = 0
@@ -1528,7 +1666,7 @@ visible = false
 offset_right = 435.2
 offset_bottom = 200.0
 theme = SubResource("Theme_3108v")
-theme_override_styles/panel = ExtResource("20_5bpft")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt8o")
 
 [node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder"]
 offset_right = 440.0
@@ -1654,7 +1792,7 @@ visible = false
 layout_mode = 0
 offset_right = 437.0
 offset_bottom = 60.0
-theme_override_styles/panel = ExtResource("20_5bpft")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt8o")
 
 [node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/CompanionHolder"]
 layout_mode = 0
@@ -1731,7 +1869,7 @@ visible = false
 offset_right = 435.2
 offset_bottom = 200.0
 theme = SubResource("Theme_3108v")
-theme_override_styles/panel = ExtResource("20_5bpft")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt8o")
 
 [node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder"]
 offset_right = 440.0
@@ -1857,7 +1995,7 @@ visible = false
 layout_mode = 0
 offset_right = 437.0
 offset_bottom = 60.0
-theme_override_styles/panel = ExtResource("20_5bpft")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt8o")
 
 [node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/CompanionHolder"]
 layout_mode = 0
@@ -1934,7 +2072,7 @@ visible = false
 offset_right = 435.2
 offset_bottom = 200.0
 theme = SubResource("Theme_3108v")
-theme_override_styles/panel = ExtResource("20_5bpft")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt8o")
 
 [node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder"]
 offset_right = 440.0
@@ -2060,7 +2198,7 @@ visible = false
 layout_mode = 0
 offset_right = 437.0
 offset_bottom = 60.0
-theme_override_styles/panel = ExtResource("20_5bpft")
+theme_override_styles/panel = SubResource("StyleBoxFlat_kvt8o")
 
 [node name="Title" type="Label" parent="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/CompanionHolder"]
 layout_mode = 0
@@ -2307,6 +2445,7 @@ layout_mode = 2
 layout_mode = 2
 
 [node name="Message" type="Control" parent="UI"]
+visible = false
 layout_mode = 3
 anchors_preset = 2
 anchor_top = 1.0
@@ -2344,7 +2483,8 @@ theme_override_colors/font_outline_color = Color(0.0941176, 0.0941176, 0.0941176
 theme_override_constants/shadow_outline_size = 3
 theme_override_constants/outline_size = 4
 theme_override_fonts/normal_font = ExtResource("35_v46tb")
-theme_override_font_sizes/normal_font_size = 25
+theme_override_font_sizes/normal_font_size = 20
+bbcode_enabled = true
 text = "Select an option."
 
 [node name="VictoryScreen" type="CanvasGroup" parent="UI"]
@@ -2587,7 +2727,7 @@ script = ExtResource("31_g468s")
 [node name="Accuracy" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
 custom_minimum_size = Vector2(320, 32)
 layout_mode = 2
-tooltip_text = "Hit chance"
+tooltip_text = "Hit and critical chance"
 theme_override_font_sizes/normal_font_size = 20
 text = "Accuracy:"
 script = ExtResource("31_g468s")
@@ -3191,18 +3331,11 @@ transform = Transform3D(0.889751, -0.138243, 0.435008, -7.45058e-09, 0.953032, 0
 [node name="DoorHandler" type="Node3D" parent="Misc"]
 script = ExtResource("46_2mc4k")
 
-[node name="MainMenu" type="Control" parent="." node_paths=PackedStringArray("managers")]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="MainMenu" type="CanvasLayer" parent="." node_paths=PackedStringArray("managers")]
 script = ExtResource("47_k3f71")
 managers = NodePath("../ManagerReferenceHolder")
 
 [node name="Background" type="Panel" parent="MainMenu"]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -3213,23 +3346,39 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_bjda6")
 
 [node name="Main" type="Control" parent="MainMenu/Background"]
 layout_mode = 1
-anchors_preset = 1
+anchors_preset = 6
 anchor_left = 1.0
+anchor_top = 0.5
 anchor_right = 1.0
-offset_left = -500.0
-offset_right = -500.0
+anchor_bottom = 0.5
+offset_left = -407.0
+offset_top = -515.0
+offset_right = -407.0
+offset_bottom = -515.0
 grow_horizontal = 0
+grow_vertical = 2
 
 [node name="Control" type="Control" parent="MainMenu/Background/Main"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = 509.0
+offset_bottom = 509.0
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Background" type="Sprite2D" parent="MainMenu/Background/Main/Control"]
+visible = false
 position = Vector2(0, 540)
+texture = ExtResource("57_3sl1u")
+
+[node name="Back" type="TextureRect" parent="MainMenu/Background/Main/Control"]
+layout_mode = 0
+offset_left = -462.0
+offset_top = -532.0
+offset_right = 538.0
+offset_bottom = 548.0
 texture = ExtResource("57_3sl1u")
 
 [node name="Continue" type="Button" parent="MainMenu/Background/Main"]
@@ -3614,13 +3763,13 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="button_down" from="MainMenu/Background/Main/LoadGame" to="MainMenu" method="OnLoadButtonDown"]
 [connection signal="button_down" from="MainMenu/Background/Main/Settings2" to="MainMenu" method="OnSettingsButtonDown"]
 [connection signal="button_down" from="MainMenu/Background/Main/QuitGame" to="MainMenu" method="OnQuitButtonDown"]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot1" to="MainMenu" method="OnLoadGameButtonDown" binds= [0]]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot2" to="MainMenu" method="OnLoadGameButtonDown" binds= [1]]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot3" to="MainMenu" method="OnLoadGameButtonDown" binds= [2]]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot4" to="MainMenu" method="OnLoadGameButtonDown" binds= [3]]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot5" to="MainMenu" method="OnLoadGameButtonDown" binds= [4]]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/Back" to="MainMenu" method="OnBackButtonDown" binds= ["Background/LoadGameSlots", "Background/Main"]]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot1" to="MainMenu" method="OnLoadGameButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot2" to="MainMenu" method="OnLoadGameButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot3" to="MainMenu" method="OnLoadGameButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot4" to="MainMenu" method="OnLoadGameButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot5" to="MainMenu" method="OnLoadGameButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/Back" to="MainMenu" method="OnBackButtonDown"]
 [connection signal="button_down" from="MainMenu/Background/LoadGameSlots/DeleteButton" to="MainMenu" method="OnDeleteButtonDown"]
 [connection signal="button_down" from="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back/ConfirmButton" to="MainMenu" method="OnConfirmDelete"]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back/BackButton" to="MainMenu" method="OnBackButtonDown" binds= ["Background/LoadGameSlots/ConfirmationWindow", "Background/LoadGameSlots"]]
-[connection signal="button_down" from="MainMenu/Background/Settings/Back" to="MainMenu" method="OnBackButtonDown" binds= ["Background/Settings", "Background/Main"]]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back/BackButton" to="MainMenu" method="OnBackButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/Settings/Back" to="MainMenu" method="OnBackButtonDown"]

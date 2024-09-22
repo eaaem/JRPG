@@ -6,7 +6,7 @@
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fls0w"]
 texture = ExtResource("2_liqgb")
-modulate_color = Color(0.8, 0.8, 0.8, 0.858824)
+modulate_color = Color(0.364706, 0.364706, 0.364706, 0.858824)
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_eil4p"]
 

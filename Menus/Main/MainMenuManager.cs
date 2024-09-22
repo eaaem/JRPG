@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class MainMenuManager : Control
+public partial class MainMenuManager : CanvasLayer
 {
    [Export]
    private ManagerReferenceHolder managers;

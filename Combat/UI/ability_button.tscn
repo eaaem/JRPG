@@ -1,43 +1,15 @@
-[gd_scene load_steps=12 format=3 uid="uid://c5yikq1y5un0d"]
+[gd_scene load_steps=5 format=3 uid="uid://c5yikq1y5un0d"]
 
 [ext_resource type="Script" path="res://Core/CustomTooltipButton.cs" id="1_76vnk"]
-[ext_resource type="FontFile" uid="uid://b2twoq48myxmy" path="res://Menus/0Core/Merriweather-Bold.ttf" id="1_eakyp"]
 [ext_resource type="Script" path="res://Combat/0Core/ResourceHolder.cs" id="1_k6upr"]
-[ext_resource type="Texture2D" uid="uid://ngal2v83ov4p" path="res://Combat/UI/combat_option_hover.png" id="2_s1j0f"]
+[ext_resource type="Theme" uid="uid://dxlsms8vreux4" path="res://Combat/UI/combat_button_theme.tres" id="1_wjm2i"]
 [ext_resource type="Theme" uid="uid://rhfvy1fs423s" path="res://Combat/UI/combat_text.tres" id="3_q36hs"]
-[ext_resource type="Texture2D" uid="uid://dgmw2jk42cbj1" path="res://Combat/UI/combat_option.png" id="3_s5jld"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_dicoi"]
-texture = ExtResource("2_s1j0f")
-modulate_color = Color(1, 1, 0.666667, 0.917647)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8og0j"]
-texture = ExtResource("2_s1j0f")
-modulate_color = Color(1, 1, 1, 0.839216)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_kp7sl"]
-texture = ExtResource("3_s5jld")
-modulate_color = Color(1, 1, 1, 0.666667)
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jg874"]
-texture = ExtResource("3_s5jld")
-modulate_color = Color(1, 1, 0.592157, 0.866667)
-
-[sub_resource type="Theme" id="Theme_xkwf4"]
-Button/colors/font_color = Color(0.87451, 0.87451, 0.760784, 1)
-Button/font_sizes/font_size = 25
-Button/fonts/font = ExtResource("1_eakyp")
-Button/styles/disabled = null
-Button/styles/focus = SubResource("StyleBoxTexture_dicoi")
-Button/styles/hover = SubResource("StyleBoxTexture_8og0j")
-Button/styles/normal = SubResource("StyleBoxTexture_kp7sl")
-Button/styles/pressed = SubResource("StyleBoxTexture_jg874")
 
 [node name="AbilityButton" type="Button"]
 custom_minimum_size = Vector2(325, 66)
 offset_right = 325.0
 offset_bottom = 66.0
-theme = SubResource("Theme_xkwf4")
+theme = ExtResource("1_wjm2i")
 theme_override_font_sizes/font_size = 15
 script = ExtResource("1_76vnk")
 

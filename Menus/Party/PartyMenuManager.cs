@@ -483,6 +483,7 @@ public partial class PartyMenuManager : Node
 
    void OnRemovePartyButtonDown()
    {
+      GD.Print("Removing");
       currentMember.isInParty = false;
       currentMember.model.GetNode<OverworldPartyController>("../" + currentMember.model.Name).IsActive = false;
 

@@ -1,0 +1,44 @@
+[gd_scene load_steps=9 format=3 uid="uid://beywvyta3bqd2"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_brre0"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_4fpvy"]
+
+[sub_resource type="Resource" id="Resource_eiqff"]
+script = ExtResource("2_4fpvy")
+CommandType = 13
+InvolvedFighter = "CASTER_MODEL"
+TargetName = "TARGETS_MODEL"
+Amount = 3.0
+
+[sub_resource type="Resource" id="Resource_uqcke"]
+script = ExtResource("2_4fpvy")
+CommandType = 14
+PauseUntilTargetReached = true
+
+[sub_resource type="Resource" id="Resource_iotkm"]
+script = ExtResource("2_4fpvy")
+CommandType = 1
+NodeName = "camera_target"
+Path = "CASTER_MODEL"
+Target = Vector3(0, 1, 0)
+PathToScene = ""
+
+[sub_resource type="Resource" id="Resource_jbdvl"]
+script = ExtResource("2_4fpvy")
+CommandType = 3
+Path = "CREATED_camera_target"
+
+[sub_resource type="Resource" id="Resource_v7c1c"]
+script = ExtResource("2_4fpvy")
+CommandType = 7
+Target = Vector3(0, 35, 0)
+Speed = 0.15
+
+[sub_resource type="Resource" id="Resource_y2hel"]
+script = ExtResource("2_4fpvy")
+CommandType = 14
+PauseUntilTargetReached = false
+
+[node name="birdseye_camera_directions" type="Node3D"]
+script = ExtResource("1_brre0")
+commands = [SubResource("Resource_eiqff"), SubResource("Resource_uqcke"), SubResource("Resource_iotkm"), SubResource("Resource_jbdvl"), SubResource("Resource_v7c1c"), SubResource("Resource_y2hel")]

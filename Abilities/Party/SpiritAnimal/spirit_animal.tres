@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_7v8ve")
 name = "Spirit Animal"
-description = "eeeee"
+description = "3 turn cooldown. Summons a spirit animal companion to assist Olren."
 manaCost = 7
 scriptName = "SpiritAnimal"
 hitsAll = false
@@ -15,4 +15,6 @@ hitsTeam = false
 onlyHitsTeam = false
 onlyHitsSelf = true
 bypassesDeaths = false
+casterGraphic = ""
+targetGraphic = ""
 requiredLevel = 0

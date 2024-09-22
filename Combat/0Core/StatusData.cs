@@ -12,4 +12,10 @@ public partial class StatusData : Resource
    public bool isCleanseable;
    [Export]
    public bool isNegative;
+   [Export]
+   public bool displayRemainingTurns;
+   [Export]
+   public string graphicEffectPath;
+   [Export]
+   public string boneToAttachForGraphic;
 }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://dyo00icq3gdtj"]
+[gd_scene load_steps=11 format=3 uid="uid://dyo00icq3gdtj"]
 
 [ext_resource type="Texture2D" uid="uid://cx25eavncp1xo" path="res://Combat/UI/enemy_highlight.png" id="1_l1xvv"]
 [ext_resource type="FontFile" uid="uid://b2twoq48myxmy" path="res://Menus/0Core/Merriweather-Bold.ttf" id="2_kif76"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://duabvj6fit1lk" path="res://Combat/UI/healthbar_over.png" id="4_qendn"]
 [ext_resource type="Texture2D" uid="uid://b5t2kudic3q6t" path="res://Combat/UI/healthbar_fill.png" id="5_i7fay"]
 [ext_resource type="FontFile" uid="uid://cg2kgq5pvsqi" path="res://Menus/0Core/Merriweather-BoldItalic.ttf" id="6_yi217"]
+[ext_resource type="Script" path="res://Combat/0Core/TargetInfoHolder.cs" id="7_ataes"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_82unp"]
 texture = ExtResource("1_l1xvv")
@@ -19,6 +20,8 @@ border_width_right = 50
 border_width_bottom = 1
 border_color = Color(0, 0, 0, 0)
 border_blend = true
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hiyia"]
 
 [node name="EnemyPanel" type="Control"]
 layout_mode = 3
@@ -79,3 +82,10 @@ theme_override_constants/outline_size = 3
 theme_override_fonts/normal_font = ExtResource("6_yi217")
 theme_override_font_sizes/normal_font_size = 25
 text = "50/50"
+
+[node name="InfoHolder" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 700.0
+offset_bottom = 75.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_hiyia")
+script = ExtResource("7_ataes")

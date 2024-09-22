@@ -31,7 +31,7 @@ public partial class ElementalExplosion : PlayerAbilityBehavior
             }
          }
 
-         combatManager.ProcessAttack(combatManager.CalculateDamage(damagers), combatManager.CurrentTarget);
+         combatManager.ProcessAttack(damagers, combatManager.CurrentTarget);
 
          combatManager.CurrentFighter.currentMana -= resource.manaCost;
 

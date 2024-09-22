@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwrkjqxk5wpr7"]
+
+[ext_resource type="FontFile" uid="uid://cg2kgq5pvsqi" path="res://Menus/0Core/Merriweather-BoldItalic.ttf" id="1_7cq53"]
+
+[node name="DamageIndicator" type="RichTextLabel"]
+visible = false
+offset_right = 100.0
+offset_bottom = 40.0
+theme_override_colors/default_color = Color(0.827451, 0.827451, 0.827451, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 6
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("1_7cq53")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[center]9999"

@@ -1,6 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://7nrqikik8ftl"]
+[gd_scene load_steps=21 format=3 uid="uid://7nrqikik8ftl"]
 
 [ext_resource type="Texture2D" uid="uid://d2n58dy4r63eg" path="res://Combat/Arena/selection_highlight_texture.png" id="2_ur28j"]
+[ext_resource type="FontFile" uid="uid://cg2kgq5pvsqi" path="res://Menus/0Core/Merriweather-BoldItalic.ttf" id="2_x6wcx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3r3hm"]
 shading_mode = 0
@@ -206,3 +207,13 @@ trail_enabled = true
 trail_lifetime = 0.1
 process_material = SubResource("ParticleProcessMaterial_1i1dk")
 draw_pass_1 = SubResource("RibbonTrailMesh_rrd8u")
+
+[node name="Label3D" type="Label3D" parent="."]
+visible = false
+billboard = 1
+double_sided = false
+modulate = Color(0.682353, 0.682353, 0.682353, 1)
+text = "9999"
+font = ExtResource("2_x6wcx")
+font_size = 125
+outline_size = 50

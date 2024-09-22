@@ -23,7 +23,6 @@ public partial class WorldMapLocation : Node
    {
       if (body.Name == "Player")
       {
-         GD.Print(textLabelName);
          if (!forceOpens)
          {
             worldMapController.ReceiveIntersectionData(textLabelName, locationName, entrancePointName);

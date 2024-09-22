@@ -1,0 +1,39 @@
+[gd_scene load_steps=7 format=3 uid="uid://dll2f70217hpq"]
+
+[sub_resource type="Gradient" id="Gradient_xghxo"]
+colors = PackedColorArray(0.166464, 1.09798e-07, 3.30899e-08, 1, 0.69246, 1.841e-06, 7.70092e-07, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7uaw2"]
+gradient = SubResource("Gradient_xghxo")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8e6bd"]
+emission_shape = 1
+emission_sphere_radius = 0.35
+direction = Vector3(0, -1, 0)
+spread = 0.0
+color = Color(1, 0.176471, 0.113725, 1)
+color_initial_ramp = SubResource("GradientTexture1D_7uaw2")
+
+[sub_resource type="Curve" id="Curve_rh823"]
+_data = [Vector2(0.0328767, 0.0736842), 0.0, 0.0, 0, 0, Vector2(0.515069, 0.515789), 0.0, 0.0, 0, 0, Vector2(0.975343, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_foa6l"]
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+billboard_mode = 2
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_o8ih3"]
+material = SubResource("StandardMaterial3D_foa6l")
+shape = 0
+size = 0.05
+section_length = 0.05
+curve = SubResource("Curve_rh823")
+
+[node name="bleed_effect" type="GPUParticles3D"]
+amount = 16
+lifetime = 0.75
+trail_lifetime = 0.1
+process_material = SubResource("ParticleProcessMaterial_8e6bd")
+draw_pass_1 = SubResource("RibbonTrailMesh_o8ih3")

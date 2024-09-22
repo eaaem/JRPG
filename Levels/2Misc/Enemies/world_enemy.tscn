@@ -1,7 +1,6 @@
-[gd_scene load_steps=33 format=3 uid="uid://cixq4hpp7hgrg"]
+[gd_scene load_steps=32 format=3 uid="uid://cixq4hpp7hgrg"]
 
 [ext_resource type="Script" path="res://Combat/0Core/WorldEnemy.cs" id="1_wd6ct"]
-[ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Levels/2Misc/Enemies/test.png" id="2_f5mfs"]
 [ext_resource type="ArrayMesh" uid="uid://c11bgcbkw8rjg" path="res://Levels/2Misc/Enemies/anomaly_face.res" id="3_yy4wi"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_e35sy"]
@@ -25,7 +24,6 @@ turbulence_enabled = true
 transparency = 1
 vertex_color_use_as_albedo = true
 albedo_color = Color(0.435294, 0.435294, 0.435294, 1)
-albedo_texture = ExtResource("2_f5mfs")
 emission_enabled = true
 emission = Color(1, 1, 1, 1)
 billboard_mode = 3

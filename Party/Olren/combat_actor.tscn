@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://b2lydknly7c58"]
+[gd_scene load_steps=7 format=3 uid="uid://b2lydknly7c58"]
 
 [ext_resource type="PackedScene" uid="uid://b6ut8vyjhyc4x" path="res://Party/Olren/olren.glb" id="1_jdxxl"]
 [ext_resource type="PackedScene" uid="uid://ca4cg8yfjvek3" path="res://Party/Olren/olren_bow.glb" id="2_baokr"]
 [ext_resource type="PackedScene" uid="uid://48ss871jtuis" path="res://Party/Olren/olren_quiver.glb" id="3_lnoq2"]
 [ext_resource type="Script" path="res://Party/Olren/OlrenBowBehavior.cs" id="4_tixil"]
 [ext_resource type="PackedScene" uid="uid://bmq5yx3vf54ai" path="res://Party/Olren/olren_arrow.glb" id="5_g188m"]
+[ext_resource type="Script" path="res://Abilities/0Core/AttackPreferences.cs" id="6_34cvg"]
 
 [node name="combat_actor" type="Node3D"]
 
@@ -84,5 +85,9 @@ transform = Transform3D(-0.158533, -0.487022, 0.858881, -0.0884016, 0.87339, 0.4
 transform = Transform3D(-0.995149, 0.098382, 0, -0.098382, -0.995149, 0, 0, 0, 1, -0.0392724, 0.624336, 0)
 
 [node name="Arrow" parent="SecondaryWeapon/ArrowHolder" instance=ExtResource("5_g188m")]
+
+[node name="AttackPreferences" type="Node3D" parent="."]
+script = ExtResource("6_34cvg")
+IsRanged = true
 
 [editable path="Model"]
