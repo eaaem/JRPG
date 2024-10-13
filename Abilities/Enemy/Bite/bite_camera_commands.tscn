@@ -1,0 +1,56 @@
+[gd_scene load_steps=10 format=3 uid="uid://drdxb11btydtj"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_fcn84"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_6dtsa"]
+
+[sub_resource type="Resource" id="Resource_s42s7"]
+script = ExtResource("2_6dtsa")
+CommandType = 13
+InvolvedFighter = "CASTER_MODEL"
+SpecialCodeOverride = 0
+TargetName = "TARGETS_MODEL"
+TargetCodeOverride = 0
+Amount = 2.0
+PauseAnimation = ""
+
+[sub_resource type="Resource" id="Resource_m0cma"]
+script = ExtResource("2_6dtsa")
+CommandType = 14
+PauseUntilTargetReached = true
+
+[sub_resource type="Resource" id="Resource_73cbo"]
+script = ExtResource("2_6dtsa")
+CommandType = 12
+InvolvedFighter = "CASTER_MODEL"
+SpecialCodeOverride = 0
+TargetName = "Attack"
+
+[sub_resource type="Resource" id="Resource_ge81g"]
+script = ExtResource("2_6dtsa")
+CommandType = 1
+NodeName = "BiteEffect"
+Path = "TARGETS_MODEL"
+SpecialCodeOverride = 0
+Target = Vector3(0, 1, 0)
+PathToScene = "res://Abilities/Enemy/Bite/bite_target.tscn"
+
+[sub_resource type="Resource" id="Resource_uem74"]
+script = ExtResource("2_6dtsa")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_fkgfv"]
+script = ExtResource("2_6dtsa")
+CommandType = 10
+Amount = 1.0
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_fivb6"]
+script = ExtResource("2_6dtsa")
+CommandType = 14
+PauseUntilTargetReached = false
+
+[node name="bite_camera_commands" type="Node3D"]
+script = ExtResource("1_fcn84")
+commands = [SubResource("Resource_s42s7"), SubResource("Resource_m0cma"), SubResource("Resource_73cbo"), SubResource("Resource_ge81g"), SubResource("Resource_uem74"), SubResource("Resource_fkgfv"), SubResource("Resource_fivb6")]

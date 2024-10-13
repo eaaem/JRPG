@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dyo00icq3gdtj"]
+[gd_scene load_steps=13 format=3 uid="uid://dyo00icq3gdtj"]
 
 [ext_resource type="Texture2D" uid="uid://cx25eavncp1xo" path="res://Combat/UI/enemy_highlight.png" id="1_l1xvv"]
 [ext_resource type="FontFile" uid="uid://b2twoq48myxmy" path="res://Menus/0Core/Merriweather-Bold.ttf" id="2_kif76"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b5t2kudic3q6t" path="res://Combat/UI/healthbar_fill.png" id="5_i7fay"]
 [ext_resource type="FontFile" uid="uid://cg2kgq5pvsqi" path="res://Menus/0Core/Merriweather-BoldItalic.ttf" id="6_yi217"]
 [ext_resource type="Script" path="res://Combat/0Core/TargetInfoHolder.cs" id="7_ataes"]
+[ext_resource type="StyleBox" uid="uid://bo4vcuowppm1o" path="res://Combat/UI/base_party_highlight.tres" id="8_p3wlw"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_82unp"]
 texture = ExtResource("1_l1xvv")
@@ -22,6 +23,8 @@ border_color = Color(0, 0, 0, 0)
 border_blend = true
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_hiyia"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p5r1k"]
 
 [node name="EnemyPanel" type="Control"]
 layout_mode = 3
@@ -89,3 +92,44 @@ offset_right = 700.0
 offset_bottom = 75.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_hiyia")
 script = ExtResource("7_ataes")
+
+[node name="CompanionHolder" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 648.0
+offset_right = 898.0
+offset_bottom = 125.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_p5r1k")
+
+[node name="Highlight" type="Panel" parent="CompanionHolder"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 113.0
+offset_top = -62.5
+offset_right = 363.0
+offset_bottom = 62.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(-1, 1)
+theme_override_styles/panel = ExtResource("8_p3wlw")
+
+[node name="NameLabel" type="RichTextLabel" parent="CompanionHolder"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 3.0
+offset_right = 249.0
+offset_bottom = 43.0
+theme_override_colors/default_color = Color(0.992157, 1, 0.870588, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.168627, 0.113725, 0.0235294, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 5
+theme_override_fonts/normal_font = ExtResource("2_kif76")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "Character Name"

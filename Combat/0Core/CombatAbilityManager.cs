@@ -69,8 +69,6 @@ public partial class CombatAbilityManager : Node
 
       EmitSignal(SignalName.EnemyAbilityCast);
 
-      //combatManager.AbilityTargetGraphic = combatManager.CurrentAbility.targetGraphic;
-
       combatManager.CurrentFighter.model.GetNode<EnemyDataHolder>("ScriptHolder").RemoveChild(holder);
       holder.QueueFree();
 

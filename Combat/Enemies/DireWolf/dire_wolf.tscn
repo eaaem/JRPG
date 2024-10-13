@@ -1,8 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://blvh7ndsywplh"]
+[gd_scene load_steps=10 format=3 uid="uid://blvh7ndsywplh"]
 
 [ext_resource type="Script" path="res://Combat/0Core/EnemyDataHolder.cs" id="1_x1bd4"]
 [ext_resource type="PackedScene" uid="uid://dhemfskwxo13i" path="res://Combat/Enemies/DireWolf/dire_wolf.glb" id="2_c15d0"]
 [ext_resource type="Script" path="res://Abilities/0Core/AttackPreferences.cs" id="3_rbtdb"]
+[ext_resource type="PackedScene" uid="uid://bdbi8yvqbpttm" path="res://Abilities/0Core/animation_preferences.tscn" id="4_83er1"]
+[ext_resource type="Script" path="res://Abilities/0Core/WaitTimeEvent.cs" id="5_j3moo"]
+[ext_resource type="Script" path="res://Abilities/0Core/AnimationPreference.cs" id="6_y6j54"]
+
+[sub_resource type="Resource" id="Resource_luc20"]
+script = ExtResource("5_j3moo")
+eventName = "AttackWait"
+waitTime = 0.5
+projectilePath = ""
+
+[sub_resource type="Resource" id="Resource_p5db2"]
+script = ExtResource("6_y6j54")
+animationName = "Attack"
+events = [SubResource("Resource_luc20")]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_816vj"]
 size = Vector3(2, 2, 3)
@@ -12,14 +26,32 @@ size = Vector3(2, 2, 3)
 [node name="ScriptHolder" type="Node3D" parent="."]
 script = ExtResource("1_x1bd4")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="ScriptHolder"]
-input_ray_pickable = false
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ScriptHolder/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0034, 0)
-shape = SubResource("BoxShape3D_816vj")
-
 [node name="Model" parent="." instance=ExtResource("2_c15d0")]
+
+[node name="Skeleton3D" parent="Model/Armature" index="0"]
+bones/7/rotation = Quaternion(-0.541026, -0.464785, 0.533244, 0.454881)
+bones/9/scale = Vector3(1.00003, 0.999974, 1)
+bones/11/rotation = Quaternion(-0.541026, 0.464785, -0.533244, 0.454881)
+bones/13/scale = Vector3(1.00003, 0.999974, 1)
+bones/15/rotation = Quaternion(-0.669521, 0.0182861, 0.0160875, 0.742394)
+bones/19/rotation = Quaternion(-0.669521, -0.0182861, -0.0160876, 0.742394)
+bones/31/rotation = Quaternion(-0.695983, 0, 0.718058, 0)
+bones/33/rotation = Quaternion(0.695983, 0, 0.718058, 0)
 
 [node name="AttackPreferences" type="Node3D" parent="."]
 script = ExtResource("3_rbtdb")
+FighterSize = 2.0
+
+[node name="AnimationPreferences" parent="." instance=ExtResource("4_83er1")]
+preferences = [SubResource("Resource_p5db2")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 256
+collision_mask = 128
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0034, 0)
+shape = SubResource("BoxShape3D_816vj")
+
+[editable path="Model"]

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 
@@ -33,11 +34,17 @@ public partial class AbilityCommandInstance : Node
    private bool isTracking;
    private float trackSpeed;
 
+   private bool isWaitingForProjectiles;
+
    List<Node3D> createdNodes = new List<Node3D>();
 
    private List<AbilityRunner> abilityRunners = new List<AbilityRunner>();
    private List<bool> runnersReached = new List<bool>();
    private bool isWaitingForRunners;
+
+   private List<FighterRotater> rotaters = new List<FighterRotater>();
+   private List<bool> rotatersFinished = new List<bool>();
+   private bool isWaitingForRotaters;
 
    public void UpdateData(List<Fighter> targets, bool playHitAnimation)
    {
@@ -52,6 +59,7 @@ public partial class AbilityCommandInstance : Node
 	{
       combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManager");
       ShowDamage += () => combatManager.FinishCastingProcess(targets, playHitAnimation);
+      TreeExiting += combatManager.FinishRound;
       arenaCamera = GetNode<Camera3D>("/root/BaseNode/Level/Arena/ArenaCamera");
 	}
 
@@ -61,22 +69,27 @@ public partial class AbilityCommandInstance : Node
       {
          ParseCommand(commands[i]);
 
+         while (isWaitingForProjectiles)
+         {
+            await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
+         }
+
          if (waitTime > 0f)
          {
             await ToSignal(GetTree().CreateTimer(waitTime), "timeout");
             waitTime = 0f;
          }
 
-         while (isWaitingForRunners)
+         while (isWaitingForRunners || isWaitingForRotaters)
          {
             await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
          }
       }
 
-      GetParent().RemoveChild(this);
+      GetParent().CallDeferred("remove_child", this);
       QueueFree();
    }
-
+ 
    void ParseCommand(AbilityCommand command)
    {
       switch (command.CommandType)
@@ -96,7 +109,7 @@ public partial class AbilityCommandInstance : Node
                newNode = new Node3D();
             }
 
-            List<Node3D> allParsed = ParseSpecialPath(command.Path);
+            List<Node3D> allParsed = ParseSpecialPath(command.SpecialCodeOverride, command.Path);
 
             if (allParsed.Count == 0)
             {
@@ -126,7 +139,7 @@ public partial class AbilityCommandInstance : Node
 
             break;
          case AbilityCommandType.CameraSetTarget:
-            List<Node3D> parsed = ParseSpecialPath(command.Path);
+            List<Node3D> parsed = ParseSpecialPath(command.SpecialCodeOverride, command.Path);
 
             if (parsed.Count == 0)
             {
@@ -139,10 +152,10 @@ public partial class AbilityCommandInstance : Node
 
             break;
          case AbilityCommandType.CameraSetParent:
-            List<Node3D> parsedNodes = ParseSpecialPath(command.Path);
+            List<Node3D> parsedNodes = ParseSpecialPath(command.SpecialCodeOverride, command.Path);
 
             Node3D parent = arenaCamera.GetParent<Node3D>();
-            parent.RemoveChild(arenaCamera);
+            parent.CallDeferred("remove_child", arenaCamera);
 
             if (parsedNodes.Count == 0)
             {
@@ -183,7 +196,7 @@ public partial class AbilityCommandInstance : Node
          case AbilityCommandType.CameraLookAtTarget:
             if (cameraTarget == null)
             {
-               GD.Print("Error for camera command: Can't look at target because target doesn't exist");
+               GD.PushError("Error for camera command: Can't look at target because target doesn't exist");
                return;
             }
 
@@ -203,12 +216,56 @@ public partial class AbilityCommandInstance : Node
             break;
          case AbilityCommandType.Pause:
             waitTime += command.Amount;
+
+            if (command.PauseAnimation.Length > 0)
+            {
+               Node3D animationPreferencesParent = ParseSpecialPath(command.SpecialCodeOverride, command.Path)[0];
+               AnimationPreferences animationPreferences = animationPreferencesParent.GetNode<AnimationPreferences>("AnimationPreferences");
+               AnimationPlayer player = animationPreferencesParent.GetNode<AnimationPlayer>("Model/AnimationPlayer");
+               WaitTimeEvent timeEvent = null;
+
+               for (int i = 0; i < animationPreferences.preferences.Length; i++)
+               {
+                  if (animationPreferences.preferences[i].animationName == player.CurrentAnimation)
+                  {
+                     for (int j = 0; j < animationPreferences.preferences[i].events.Length; j++)
+                     {
+                        if (animationPreferences.preferences[i].events[j].eventName == command.PauseAnimation)
+                        {
+                           timeEvent = animationPreferences.preferences[i].events[j];
+                           break;
+                        }
+                     }
+                     break;
+                  }
+               }
+
+               if (timeEvent == null)
+               {
+                  GD.PushError("Wait time event not found in Pause command");
+                  break;
+               }
+
+               if (timeEvent.projectilePath.Length > 0)
+               {
+                  Node3D projectile = GD.Load<PackedScene>(timeEvent.projectilePath).Instantiate<Node3D>();
+                  animationPreferencesParent.AddChild(projectile);
+                  projectile.GetNode<Projectile>("Projectile").OnProjectileEnded += ReceiveProjectileReached;
+                  projectile.GetNode<Projectile>("Projectile").ReceiveAbilityCommandInstanceInfo(animationPreferencesParent, 
+                                                                                                 ParseSpecialPath(SpecialCodeOverride.TargetsModel, ""), createdNodes);
+                  isWaitingForProjectiles = true;
+               }
+               else
+               {
+                  waitTime += timeEvent.waitTime;
+               }
+            }
             break;
          case AbilityCommandType.ShowDamage:
             EmitSignal(SignalName.ShowDamage);
             break;
          case AbilityCommandType.PlayAnimation:
-            List<Node3D> fightersToPlay = ParseSpecialPath(command.InvolvedFighter);
+            List<Node3D> fightersToPlay = ParseSpecialPath(command.SpecialCodeOverride, command.InvolvedFighter);
 
             for (int i = 0; i < fightersToPlay.Count; i++)
             {
@@ -217,8 +274,8 @@ public partial class AbilityCommandInstance : Node
 
             break;
          case AbilityCommandType.RunToFighter:
-            List<Node3D> runners = ParseSpecialPath(command.InvolvedFighter);
-            Node3D runnerTarget = ParseSpecialPath(command.TargetName)[0];
+            List<Node3D> runners = ParseSpecialPath(command.SpecialCodeOverride, command.InvolvedFighter);
+            Node3D runnerTarget = ParseSpecialPath(command.TargetCodeOverride, command.TargetName)[0];
 
             abilityRunners.Clear();
 
@@ -226,12 +283,39 @@ public partial class AbilityCommandInstance : Node
             {
                AbilityRunner abilityRunner = GD.Load<PackedScene>("res://Abilities/0Core/ability_runner.tscn").Instantiate<AbilityRunner>();
                runners[i].AddChild(abilityRunner);
-               abilityRunner.ReceiveData(runners[i].Position, runnerTarget, command.Amount);
                abilityRunners.Add(abilityRunner);
+               ResumeRunners += abilityRunners[i].ResumeRunning;
+               float secondaryWaitTime = 0f;
+
+               // This won't work as intended (pause animation will always apply to the run animation instead of the animation being played after running)
+               if (command.PauseAnimation.Length > 0)
+               {
+                  AnimationPreferences animationPreferences = runners[i].GetNode<AnimationPreferences>("AnimationPreferences");
+                  AnimationPlayer player = runners[i].GetNode<AnimationPlayer>("Model/AnimationPlayer");
+
+                  for (int j = 0; j < animationPreferences.preferences.Length; j++)
+                  {
+                     if (animationPreferences.preferences[j].animationName == player.CurrentAnimation)
+                     {
+                        for (int k = 0; k < animationPreferences.preferences[j].events.Length; k++)
+                        {
+                           if (animationPreferences.preferences[j].events[k].eventName == command.PauseAnimation)
+                           {
+                              secondaryWaitTime = animationPreferences.preferences[j].events[k].waitTime;
+                              break;
+                           }
+                        }
+                        break;
+                     }
+                  }
+               }
+
+               abilityRunner.ReceiveData(runners[i].Position, runnerTarget, command.Amount, secondaryWaitTime);
             }
 
             break;
          case AbilityCommandType.PauseDuringRun:
+            runnersReached.Clear();
             for (int i = 0; i < abilityRunners.Count; i++)
             {
                abilityRunners[i].ReceiveWaitingInformation(command.PauseUntilTargetReached);
@@ -246,11 +330,47 @@ public partial class AbilityCommandInstance : Node
                   abilityRunners[i].ReachedOrigin += () => ReceiveRunnerReached(abilityParent);
                }
 
-               ResumeRunners += abilityRunners[i].ResumeRunning;
                runnersReached.Add(false);
             }
 
             isWaitingForRunners = true;
+
+            break;
+         case AbilityCommandType.RotateFighter:
+         {
+            List<Node3D> toRotate = ParseSpecialPath(command.SpecialCodeOverride, command.InvolvedFighter);
+            Node3D target = null;
+
+            rotaters.Clear();
+            for (int i = 0; i < toRotate.Count; i++)
+            {
+               FighterRotater rotater = GD.Load<PackedScene>("res://Abilities/0Core/fighter_rotater.tscn").Instantiate<FighterRotater>();
+               toRotate[i].AddChild(rotater);
+
+               if (command.TargetCodeOverride != SpecialCodeOverride.None)
+               {
+                  target = ParseSpecialPath(command.TargetCodeOverride, command.TargetName)[0];
+               }
+
+               rotater.UpdateData(command.Target, command.Amount, command.LookImmediately, target);
+
+               rotaters.Add(rotater);
+            }
+
+            break;
+         }
+         case AbilityCommandType.PauseDuringRotate:
+            rotatersFinished.Clear();
+
+            for (int i = 0; i < rotaters.Count; i++)
+            {      
+               int index = i;
+               Node3D rotaterParent = rotaters[i].GetParent<Node3D>();
+               rotaters[i].RotationFinished += () => ReceiveRotatedTarget(index);
+               rotatersFinished.Add(false);
+            }
+
+            isWaitingForRotaters = true;
 
             break;
          case AbilityCommandType.Reset:
@@ -296,55 +416,79 @@ public partial class AbilityCommandInstance : Node
       isWaitingForRunners = false;
    }
 
-   List<Node3D> ParseSpecialPath(string commandContent)
+   public void ReceiveRotatedTarget(int targetIndex)
    {
-      if (commandContent == "CASTER_PLACEMENT")
+      for (int i = 0; i < rotaters.Count; i++)
       {
-         return new List<Node3D>() { combatManager.CurrentFighter.placementNode };
-      }
-      else if (commandContent == "CASTER_MODEL")
-      {
-         return new List<Node3D>() { combatManager.CurrentFighter.model };
-      }
-      else if (commandContent == "TARGETS_PLACEMENT")
-      {
-         List<Node3D> result = new List<Node3D>();
-
-         for (int i = 0; i < targets.Count; i++)
+         GD.Print(targetIndex);
+         if (i == targetIndex)
          {
-            result.Add(targets[i].placementNode);
+            rotatersFinished[i] = true;
+            break;
          }
-
-         return result;
       }
-      else if (commandContent == "TARGETS_MODEL")
-      {
-         List<Node3D> result = new List<Node3D>();
 
-         for (int i = 0; i < targets.Count; i++)
+      for (int i = 0; i < rotatersFinished.Count; i++)
+      {
+         if (!rotatersFinished[i])
          {
-            result.Add(targets[i].model);
+            return;
          }
-
-         return result;
       }
-      else if (commandContent.StartsWith("CREATED_"))
-      {
-         string name = commandContent.Substring(8);
 
-         for (int i = 0; i < createdNodes.Count; i++)
+      isWaitingForRotaters = false;
+   }
+
+   public void ReceiveProjectileReached()
+   {
+      isWaitingForProjectiles = false;
+   }
+
+   List<Node3D> ParseSpecialPath(SpecialCodeOverride codeOverride, string createdNodeName)
+   {
+      switch (codeOverride)
+      {
+         case SpecialCodeOverride.None:
+            return new List<Node3D>();
+         case SpecialCodeOverride.CasterPlacement:
+            return new List<Node3D>() { combatManager.CurrentFighter.placementNode };
+         case SpecialCodeOverride.CasterModel:
+            return new List<Node3D>() { combatManager.CurrentFighter.model };
+         case SpecialCodeOverride.TargetsPlacement:
          {
-            if (createdNodes[i].Name == name)
+            List<Node3D> result = new List<Node3D>();
+
+            for (int i = 0; i < targets.Count; i++)
             {
-               return new List<Node3D>() { createdNodes[i] };
+               result.Add(targets[i].placementNode);
             }
-         }
 
-         return new List<Node3D>();
-      }
-      else
-      {
-         return new List<Node3D>();
+            return result;
+         }
+         case SpecialCodeOverride.TargetsModel:
+         { 
+            List<Node3D> result = new List<Node3D>();
+
+            for (int i = 0; i < targets.Count; i++)
+            {
+               result.Add(targets[i].model);
+            }
+
+            return result;
+         }
+         case SpecialCodeOverride.CreatedNode:
+            for (int i = 0; i < createdNodes.Count; i++)
+            {
+               if (createdNodes[i].Name == createdNodeName)
+               {
+                  return new List<Node3D>() { createdNodes[i] };
+               }
+            }
+
+            return new List<Node3D>();
+         default:
+            GD.Print("Special code invalid");
+            return new List<Node3D>();
       }
    }
 
@@ -389,7 +533,7 @@ public partial class AbilityCommandInstance : Node
 
       for (int i = 0; i < createdNodes.Count; i++)
       {
-         createdNodes[i].GetParent().RemoveChild(createdNodes[i]);
+         createdNodes[i].GetParent().CallDeferred("remove_child", createdNodes[i]);
          createdNodes[i].QueueFree();
       }
    }

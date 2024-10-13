@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ciwtr8njhvtgm"]
+[gd_scene load_steps=13 format=3 uid="uid://ciwtr8njhvtgm"]
 
 [ext_resource type="StyleBox" uid="uid://bo4vcuowppm1o" path="res://Combat/UI/base_party_highlight.tres" id="1_3dnyk"]
 [ext_resource type="FontFile" uid="uid://b2twoq48myxmy" path="res://Menus/0Core/Merriweather-Bold.ttf" id="2_n53n3"]
@@ -12,6 +12,8 @@
 [ext_resource type="Script" path="res://Combat/0Core/TargetInfoHolder.cs" id="10_325bs"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r2sg6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ot86v"]
 
 [node name="PartyPanel" type="Control"]
 layout_mode = 3
@@ -119,3 +121,96 @@ offset_right = 700.0
 offset_bottom = 125.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_r2sg6")
 script = ExtResource("10_325bs")
+
+[node name="CompanionHolder" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -207.0
+offset_right = 43.0
+offset_bottom = 125.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ot86v")
+
+[node name="Highlight" type="Panel" parent="CompanionHolder"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 141.0
+offset_top = -62.5
+offset_right = 391.0
+offset_bottom = 62.5
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(-1, 1)
+theme_override_styles/panel = ExtResource("1_3dnyk")
+
+[node name="NameLabel" type="RichTextLabel" parent="CompanionHolder"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = 3.0
+offset_right = 249.0
+offset_bottom = 43.0
+theme_override_colors/default_color = Color(0.992157, 1, 0.870588, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.168627, 0.113725, 0.0235294, 1)
+theme_override_constants/shadow_outline_size = 10
+theme_override_constants/outline_size = 5
+theme_override_fonts/normal_font = ExtResource("2_n53n3")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "Character Name"
+text_direction = 2
+
+[node name="ManaBar" type="TextureProgressBar" parent="CompanionHolder"]
+layout_mode = 0
+offset_left = 33.0
+offset_top = 35.0
+offset_right = 464.0
+offset_bottom = 65.0
+scale = Vector2(0.5, 1)
+value = 75.0
+texture_over = ExtResource("8_fgg1v")
+texture_progress = ExtResource("9_2w22v")
+
+[node name="LossBar" type="TextureProgressBar" parent="CompanionHolder/ManaBar"]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture_under = ExtResource("7_o5m0a")
+texture_progress = ExtResource("9_2w22v")
+tint_progress = Color(1, 0.635294, 0.580392, 1)
+
+[node name="ManaLabel" type="RichTextLabel" parent="CompanionHolder"]
+layout_mode = 0
+offset_left = -265.0
+offset_top = 45.0
+offset_right = 235.0
+offset_bottom = 80.0
+theme_override_colors/default_color = Color(0.858824, 0.858824, 0.858824, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 6
+theme_override_constants/outline_size = 3
+theme_override_fonts/normal_font = ExtResource("6_c54df")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[right]50/50"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CompanionHolder"]
+layout_mode = 0
+offset_top = 80.0
+offset_right = 250.0
+offset_bottom = 120.0
+theme_override_colors/default_color = Color(1, 1, 0.933333, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_outline_size = 5
+theme_override_constants/outline_size = 4
+theme_override_fonts/normal_font = ExtResource("6_c54df")
+theme_override_font_sizes/normal_font_size = 30
+bbcode_enabled = true
+text = "[right]# turns[/right]"

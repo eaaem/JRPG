@@ -715,6 +715,7 @@ public partial class CombatUIManager : Node
       StopHoveringOverInformation();
       SetAbilityContainerVisible(true);
       SetChoicesVisible(false);
+      SetCancelButtonVisible(true);
    }
 
    public void ItemButton()

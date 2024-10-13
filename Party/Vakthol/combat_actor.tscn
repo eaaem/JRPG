@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cpacfft63w3rs"]
+[gd_scene load_steps=4 format=3 uid="uid://cpacfft63w3rs"]
 
 [ext_resource type="PackedScene" uid="uid://c8sbeheqi10fl" path="res://Party/Vakthol/vakthol.glb" id="1_0qle1"]
 [ext_resource type="PackedScene" uid="uid://yhwlyfetwmre" path="res://Party/Vakthol/vakthol_axe.glb" id="2_1ib11"]
+[ext_resource type="PackedScene" uid="uid://btvgyb2kh78pv" path="res://Abilities/0Core/attack_preferences.tscn" id="3_xgsyj"]
 
 [node name="combat_actor" type="Node3D"]
 
@@ -20,3 +21,6 @@ transform = Transform3D(-0.158533, -0.487022, 0.858881, -0.0884016, 0.87339, 0.4
 transform = Transform3D(-0.158533, -0.487022, 0.858881, -0.0884016, 0.87339, 0.478932, -0.983388, 2.23517e-08, -0.181515, 0.303228, -0.2582, -0.144977)
 
 [node name="Weapon" parent="." instance=ExtResource("2_1ib11")]
+
+[node name="AttackPreferences" parent="." instance=ExtResource("3_xgsyj")]
+FighterSize = 1.0

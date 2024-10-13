@@ -19,4 +19,6 @@ public partial class AttackPreferences : Node
    /// </summary>
    [Export]
    public string PathToOverride { get; set;}
+   [Export]
+   public float FighterSize { get; set;}
 }

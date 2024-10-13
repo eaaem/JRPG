@@ -12,6 +12,7 @@ public partial class AbilityRunner : Node
    private Node3D parent;
    private AnimationPlayer player;
    private float waitTime;
+   private float relativeSize;
 
    private bool runningToTarget;
    private bool runningBack;
@@ -23,13 +24,18 @@ public partial class AbilityRunner : Node
    [Signal]
    public delegate void ReachedOriginEventHandler();
 	
-   public void ReceiveData(Vector3 origin, Node3D target, float waitTime)
+   public void ReceiveData(Vector3 origin, Node3D target, float waitTime, float waitTimeEvent = 0f)
    {
       this.origin = origin;
       this.target = target;
-      this.waitTime = waitTime;
+      this.waitTime = waitTime + waitTimeEvent;
       parent = GetParent<Node3D>();
       player = parent.GetNode<AnimationPlayer>("Model/AnimationPlayer");
+
+      float targetSize = target.GetNode<AttackPreferences>("AttackPreferences").FighterSize;
+      float parentSize = parent.GetNode<AttackPreferences>("AttackPreferences").FighterSize;
+
+      relativeSize = targetSize + parentSize;
 
       parent.GetNode<Node3D>("Model").LookAt(target.Position, Vector3.Up, true);
       runningToTarget = true;
@@ -52,8 +58,9 @@ public partial class AbilityRunner : Node
 
    void Terminate()
    {
+      //parent.CallDeferred("remove_child", this);
       parent.RemoveChild(this);
-      QueueFree();
+      CallDeferred("queue_free");
    }
 
    /// <summary>
@@ -61,6 +68,10 @@ public partial class AbilityRunner : Node
    /// </summary>
    public void ResumeRunning()
    {
+      if (!waitForOthers) {
+         return;
+      }
+
       if (waitAtTarget)
       {
          Pause();
@@ -75,10 +86,10 @@ public partial class AbilityRunner : Node
 	{
       if (runningToTarget)
       {
-         Vector3 positionIncrement = parent.Position.MoveToward(target.GlobalPosition, (float)delta * 3f);
+         Vector3 positionIncrement = parent.Position.MoveToward(target.GlobalPosition, (float)delta * 5f);
          parent.GlobalPosition = positionIncrement;
 
-         if (parent.GlobalPosition.DistanceSquaredTo(target.GlobalPosition) < 0.1f)
+         if (parent.GlobalPosition.DistanceSquaredTo(target.GlobalPosition) < relativeSize * relativeSize)
          {
             runningToTarget = false;
             EmitSignal(SignalName.ReachedTarget);
@@ -96,16 +107,17 @@ public partial class AbilityRunner : Node
 
       if (runningBack)
       {
-         Vector3 positionIncrement = parent.Position.MoveToward(origin, (float)delta * 3f);
+         Vector3 positionIncrement = parent.Position.MoveToward(origin, (float)delta * 5f);
          parent.Position = positionIncrement;
 
          if (parent.Position.DistanceSquaredTo(origin) < 0.1f)
          {
             runningBack = false;
-            EmitSignal(SignalName.ReachedOrigin, GetParent<Node3D>());
+            EmitSignal(SignalName.ReachedOrigin);
 
             if (!waitForOthers || waitAtTarget)
             {
+               GD.Print("TERMINATING");
                Terminate();
                return;
             }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=149 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=152 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -256,31 +256,61 @@ displayRemainingTurns = true
 graphicEffectPath = ""
 boneToAttachForGraphic = ""
 
+[sub_resource type="Resource" id="Resource_kn2cf"]
+script = ExtResource("10_6pqua")
+CommandType = 15
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+TargetName = ""
+TargetCodeOverride = 4
+Amount = 5.0
+RotateImmediately = null
+
+[sub_resource type="Resource" id="Resource_4c630"]
+script = ExtResource("10_6pqua")
+CommandType = 16
+
 [sub_resource type="Resource" id="Resource_ut0rk"]
 script = ExtResource("10_6pqua")
 CommandType = 12
-InvolvedFighter = "CASTER_MODEL"
+InvolvedFighter = ""
+SpecialCodeOverride = 2
 TargetName = "Attack"
+
+[sub_resource type="Resource" id="Resource_ljk7v"]
+script = ExtResource("10_6pqua")
+CommandType = 10
+Amount = 0.0
+PauseAnimation = "AttackFire"
+Path = ""
+SpecialCodeOverride = 2
 
 [sub_resource type="Resource" id="Resource_yuhsi"]
 script = ExtResource("10_6pqua")
 CommandType = 10
-Amount = 1.0
+Amount = 0.0
+PauseAnimation = "AttackWait"
+Path = ""
+SpecialCodeOverride = 2
 
 [sub_resource type="Resource" id="Resource_iepjr"]
 script = ExtResource("10_6pqua")
 CommandType = 11
 
-[sub_resource type="Resource" id="Resource_kn2cf"]
+[sub_resource type="Resource" id="Resource_1oh5s"]
 script = ExtResource("10_6pqua")
-CommandType = 15
+CommandType = 17
 
 [sub_resource type="Resource" id="Resource_h7pwi"]
 script = ExtResource("10_6pqua")
 CommandType = 13
-InvolvedFighter = "CASTER_MODEL"
-TargetName = "TARGETS_MODEL"
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = ""
+TargetCodeOverride = 4
 Amount = 2.0
+PauseAnimation = ""
 
 [sub_resource type="Resource" id="Resource_nbepo"]
 script = ExtResource("10_6pqua")
@@ -290,8 +320,17 @@ PauseUntilTargetReached = true
 [sub_resource type="Resource" id="Resource_y7rrk"]
 script = ExtResource("10_6pqua")
 CommandType = 12
-InvolvedFighter = "CASTER_MODEL"
+InvolvedFighter = ""
+SpecialCodeOverride = 2
 TargetName = "Attack"
+
+[sub_resource type="Resource" id="Resource_xpf8s"]
+script = ExtResource("10_6pqua")
+CommandType = 10
+Amount = 0.0
+PauseAnimation = "AttackWait"
+Path = ""
+SpecialCodeOverride = 2
 
 [sub_resource type="Resource" id="Resource_fhjva"]
 script = ExtResource("10_6pqua")
@@ -301,10 +340,6 @@ CommandType = 11
 script = ExtResource("10_6pqua")
 CommandType = 14
 PauseUntilTargetReached = false
-
-[sub_resource type="Resource" id="Resource_dbpl1"]
-script = ExtResource("10_6pqua")
-CommandType = 15
 
 [sub_resource type="Resource" id="Resource_rv5hx"]
 script = ExtResource("15_86siq")
@@ -544,11 +579,11 @@ enemyAbilityUseHolder = ExtResource("6_gn3sp")
 
 [node name="RangedPreferences" type="Node3D" parent="CombatManager/AbilityManager"]
 script = ExtResource("9_4lxtk")
-commands = [SubResource("Resource_ut0rk"), SubResource("Resource_yuhsi"), SubResource("Resource_iepjr"), SubResource("Resource_kn2cf")]
+commands = [SubResource("Resource_kn2cf"), SubResource("Resource_4c630"), SubResource("Resource_ut0rk"), SubResource("Resource_ljk7v"), SubResource("Resource_yuhsi"), SubResource("Resource_iepjr"), SubResource("Resource_1oh5s")]
 
 [node name="MeleePreferences" type="Node3D" parent="CombatManager/AbilityManager"]
 script = ExtResource("9_4lxtk")
-commands = [SubResource("Resource_h7pwi"), SubResource("Resource_nbepo"), SubResource("Resource_y7rrk"), SubResource("Resource_fhjva"), SubResource("Resource_gnhnw"), SubResource("Resource_dbpl1")]
+commands = [SubResource("Resource_h7pwi"), SubResource("Resource_nbepo"), SubResource("Resource_y7rrk"), SubResource("Resource_xpf8s"), SubResource("Resource_fhjva"), SubResource("Resource_gnhnw")]
 
 [node name="UIManager" type="Node3D" parent="CombatManager" node_paths=PackedStringArray("managers", "combatManager", "UI", "partyList", "enemyList", "options", "abilityContainer", "abilityButtonContainer", "secondaryOptions", "secondaryOptionsContainer", "messageText", "cancelButton", "finalizeButton", "itemsList", "itemsContainer", "victoryScreen")]
 script = ExtResource("6_143na")
@@ -857,7 +892,6 @@ layout_mode = 2
 theme_override_constants/separation = 1
 
 [node name="CompanionHolder" type="Panel" parent="UI/CombatEnemyList/HBoxContainer/Panel1/Holder"]
-visible = false
 offset_top = -60.0
 offset_right = 437.0
 

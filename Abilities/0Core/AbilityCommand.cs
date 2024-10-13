@@ -4,22 +4,6 @@ using Godot.Collections;
 
 /// <summary>
 /// A command for graphical actions during ability usage.
-/// <br></br>
-/// Most is self-explanatory, except for paths to targets and parents. You can put one of the following codes instead of an absolute path (or fighter name, in the case 
-/// of PlayAnimation) to find a special node:
-/// <br></br>
-/// <c>CASTER_PLACEMENT</c> : finds the placement node of the ability caster
-/// <br></br>
-/// <c>CASTER_MODEL</c> : finds the model of the ability caster
-/// <br></br>
-/// <c>TARGETS_PLACEMENT</c> : finds the placement nodes of the targets; for SetTarget and SetParent, this will pick the first placement node found,
-/// while for CreateNode, a node will be created for each fighter
-/// <br></br>
-/// <c>TARGETS_MODEL</c> : finds the models of the targets, with the same rules as for TARGETS_PLACEMENT
-/// <br></br><br></br>
-/// SetTarget and SetParent also have one special command:
-/// <br></br>
-/// <c>CREATED_(name)</c> : finds a node previously created by another command of the name (name)
 /// </summary>
 public enum AbilityCommandType
 {
@@ -34,6 +18,8 @@ public enum AbilityCommandType
    /// <br></br>
    /// <c>Path</c> (string) : the path to the parent of the new node
    /// <br></br>
+   /// <c>SpecialCodeOverride</c> (SpecialCodeOverride) : overrides the absolute path with a specially defined path
+   /// <br></br>
    /// <c>Target</c> (Vector3) : the location of the node, relative to its parent
    /// <br></br>
    /// <c>PathToScene</c> (string) : the path to the packed scene to instantiate from; leave blank if creating an empty node
@@ -43,12 +29,16 @@ public enum AbilityCommandType
    /// Sets the camera's target. Unless otherwise specified, all positions in other commands will be relative to the target.
    /// <br></br><br></br>
    /// <c>Path</c> (string) : the path to the target
+   /// <br></br>
+   /// <c>SpecialCodeOverride</c> (SpecialCodeOverride) : overrides the absolute path with a specially defined path
    /// </summary>
    CameraSetTarget,
    /// <summary>
    /// Sets the parent of the camera.
    /// <br></br><br></br>
    /// <c>Path</c> (string) : the path to the parent
+   /// <br></br>
+   /// <c>SpecialCodeOverride</c> (SpecialCodeOverride) : overrides the absolute path with a specially defined path
    /// </summary>
    CameraSetParent,
    /// <summary>
@@ -99,6 +89,12 @@ public enum AbilityCommandType
    /// Pauses all commands for a certain amount of time.
    /// <br></br><br></br>
    /// <c>Amount</c> (float) : the amount of time to pause
+   /// <br></br>
+   /// <c>PauseAnimation</c> (string) : pauses for a WaitTimeEvent according to the currently played animation of a fighter; this is added to Amount
+   /// <br></br>
+   /// <c>Path</c> (string) : the path to a fighter/node that has an AnimationPreferences as a child; applies only when PauseAnimation is not empty
+   /// <br></br>
+   /// <c>SpecialCodeOverride</c> (SpecialCodeOverride) : overrides the involved path with a special code; applies only when PauseAnimation is not empty
    /// </summary>
    Pause,
    /// <summary>
@@ -110,6 +106,8 @@ public enum AbilityCommandType
    /// <br></br><br></br>
    /// <c>InvolvedFighter</c> (string) : the fighter(s) to play the animation
    /// <br></br>
+   /// <c>SpecialCodeOverride</c> (SpecialCodeOverride) : overrides the absolute fighter name with a defined fighter
+   /// <br></br>
    /// <c>TargetName</c> (float) : the name of the animation to play
    /// </summary>
    PlayAnimation,
@@ -119,9 +117,15 @@ public enum AbilityCommandType
    /// <br></br><br></br>
    /// <c>InvolvedFighter</c> (string) : the fighter(s) to run
    /// <br></br>
+   /// <c>SpecialCodeOverride</c> (SpecialCodeOverride) : overrides the involved fighter with a defined fighter
+   /// <br></br>
    /// <c>TargetName</c> (string) : the fighter to target
    /// <br></br>
+   /// <c>TargetCodeOverride</c> (SpecialCodeOverride) : overrides the targeted fighter with a defined fighter
+   /// <br></br>
    /// <c>Amount</c> (float) : the amount of time to pause
+   /// <br></br>
+   /// <c>PauseAnimation</c> (string) : pauses for a WaitTimeEvent according to the currently played animation; this is added to Amount
    /// </summary>
    RunToFighter,
    /// <summary>
@@ -133,9 +137,60 @@ public enum AbilityCommandType
    /// </summary>
    PauseDuringRun,
    /// <summary>
+   /// Rotates a fighter by a certain quantity or to look at something.
+   /// <br></br><br></br>
+   /// <c>InvolvedFighter</c> (string) : the fighter(s) to rotate
+   /// <br></br>
+   /// <c>SpecialCodeOverride</c> (SpecialCodeOverride) : overrides the involved fighter with a defined fighter
+   /// <br></br>
+   /// <c>Target</c> (Vector3) : the amount to orbit along the 3 axes, in degrees
+   /// <br></br>
+   /// <c>TargetName</c> (string) : the node/fighter to target; leave blank if looking at a target isn't desired
+   /// <br></br>
+   /// <c>TargetCodeOverride</c> (SpecialCodeOverride) : overrides the target
+   /// <br></br>
+   /// <c>Amount</c> (float) : how fast to rotate
+   /// <br></br>
+   /// <c>RotateImmediately</c> (bool) : whether to snap the rotation rather than rotate smoothly
+   /// </summary>
+   RotateFighter,
+   /// <summary>
+   /// Pauses all commands until rotating fighters are done rotating.
+   /// </summary>
+   PauseDuringRotate,
+   /// <summary>
    /// Resets the camera to the combat manager's default position and rotation. This also resets the camera's target and parent. 
    /// </summary>
    Reset
+}
+
+/// <summary>
+/// Overrides a path/fighter using a special, predefined code.
+/// </summary>
+public enum SpecialCodeOverride {
+   None,
+   /// <summary>
+   /// Gets the placement node of the caster
+   /// </summary>
+   CasterPlacement,
+   /// <summary>
+   /// Gets the model of the caster
+   /// </summary>
+   CasterModel,
+   /// <summary>
+   /// Gets the placement nodes of all targets; for SetTarget and SetParent, this will pick the first placement node found, while for CreateNode, 
+   /// a node will be created for each fighter
+   /// </summary>
+   TargetsPlacement,
+   /// <summary>
+   /// Gets the models of all targets; for SetTarget and SetParent, this will pick the first model found, while for CreateNode, 
+   /// a node will be created for each fighter
+   /// </summary>
+   TargetsModel,
+   /// <summary>
+   /// Gets a node created by a previous command; put the name of the node in the string field that usually provides the path/fighter
+   /// </summary>
+   CreatedNode
 }
 
 [GlobalClass, Tool]
@@ -163,7 +218,10 @@ public partial class AbilityCommand : Resource
    public bool LookImmediately { get; set; }
    public string Method { get; set;}
    public float Amount { get; set; }
+   public string PauseAnimation { get; set; }
    public float Speed { get; set; }
+   public SpecialCodeOverride SpecialCodeOverride { get; set; }
+   public SpecialCodeOverride TargetCodeOverride { get; set; }
 
    public string InvolvedFighter { get; set; }
    public string TargetName { get; set; }
@@ -179,7 +237,7 @@ public partial class AbilityCommand : Resource
          { "type", (int)Variant.Type.Int },
          { "hint", (int)PropertyHint.Enum },
          { "hint_string", "None,CreateNode,CameraSetTarget,CameraSetParent,CameraPlace,CameraRotateInstantly,CameraPan,CameraOrbit,CameraLookAtTarget,"
-                           + "TriggerEffect,Pause,ShowDamage,PlayAnimation,RunToFighter,PauseDuringRun,Reset" }
+                           + "TriggerEffect,Pause,ShowDamage,PlayAnimation,RunToFighter,PauseDuringRun,RotateFighter,PauseDuringRotate,Reset" }
       });
 
       switch (commandType)
@@ -195,6 +253,14 @@ public partial class AbilityCommand : Resource
             {
                { "name", $"Path" },
                { "type", (int)Variant.Type.String }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"SpecialCodeOverride" },
+               { "type", (int)Variant.Type.Int },
+               { "hint", (int)PropertyHint.Enum },
+               { "hint_string", "None,CasterPlacement,CasterModel,TargetsPlacement,TargetsModel,CreatedNode" }
             });
 
             result.Add(new Dictionary()
@@ -217,12 +283,28 @@ public partial class AbilityCommand : Resource
                { "type", (int)Variant.Type.String }
             });
 
+            result.Add(new Dictionary()
+            {
+               { "name", $"SpecialCodeOverride" },
+               { "type", (int)Variant.Type.Int },
+               { "hint", (int)PropertyHint.Enum },
+               { "hint_string", "None,CasterPlacement,CasterModel,TargetsPlacement,TargetsModel,CreatedNode" }
+            });
+
             break;
          case AbilityCommandType.CameraSetParent:
             result.Add(new Dictionary()
             {
                { "name", $"Path" },
                { "type", (int)Variant.Type.String }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"SpecialCodeOverride" },
+               { "type", (int)Variant.Type.Int },
+               { "hint", (int)PropertyHint.Enum },
+               { "hint_string", "None,CasterPlacement,CasterModel,TargetsPlacement,TargetsModel,CreatedNode" }
             });
 
             break;
@@ -305,12 +387,40 @@ public partial class AbilityCommand : Resource
                { "type", (int)Variant.Type.Float }
             });
 
+            result.Add(new Dictionary()
+            {
+               { "name", $"PauseAnimation" },
+               { "type", (int)Variant.Type.String }
+            });   
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"Path" },
+               { "type", (int)Variant.Type.String }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"SpecialCodeOverride" },
+               { "type", (int)Variant.Type.Int },
+               { "hint", (int)PropertyHint.Enum },
+               { "hint_string", "None,CasterPlacement,CasterModel,TargetsPlacement,TargetsModel,CreatedNode" }
+            });
+
             break;
          case AbilityCommandType.PlayAnimation:
             result.Add(new Dictionary()
             {
                { "name", $"InvolvedFighter" },
                { "type", (int)Variant.Type.String }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"SpecialCodeOverride" },
+               { "type", (int)Variant.Type.Int },
+               { "hint", (int)PropertyHint.Enum },
+               { "hint_string", "None,CasterPlacement,CasterModel,TargetsPlacement,TargetsModel,CreatedNode" }
             });
 
             result.Add(new Dictionary()
@@ -329,8 +439,24 @@ public partial class AbilityCommand : Resource
 
             result.Add(new Dictionary()
             {
+               { "name", $"SpecialCodeOverride" },
+               { "type", (int)Variant.Type.Int },
+               { "hint", (int)PropertyHint.Enum },
+               { "hint_string", "None,CasterPlacement,CasterModel,TargetsPlacement,TargetsModel,CreatedNode" }
+            });
+
+            result.Add(new Dictionary()
+            {
                { "name", $"TargetName" },
                { "type", (int)Variant.Type.String }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"TargetCodeOverride" },
+               { "type", (int)Variant.Type.Int },
+               { "hint", (int)PropertyHint.Enum },
+               { "hint_string", "None,CasterPlacement,CasterModel,TargetsPlacement,TargetsModel,CreatedNode" }
             });
 
             result.Add(new Dictionary()
@@ -338,6 +464,12 @@ public partial class AbilityCommand : Resource
                { "name", $"Amount" },
                { "type", (int)Variant.Type.Float }
             });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"PauseAnimation" },
+               { "type", (int)Variant.Type.String }
+            });           
          
             break;
          case AbilityCommandType.PauseDuringRun:
@@ -347,6 +479,55 @@ public partial class AbilityCommand : Resource
                { "type", (int)Variant.Type.Bool }
             });
          
+            break;
+         case AbilityCommandType.RotateFighter:
+            result.Add(new Dictionary()
+            {
+               { "name", $"InvolvedFighter" },
+               { "type", (int)Variant.Type.String }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"SpecialCodeOverride" },
+               { "type", (int)Variant.Type.Int },
+               { "hint", (int)PropertyHint.Enum },
+               { "hint_string", "None,CasterPlacement,CasterModel,TargetsPlacement,TargetsModel,CreatedNode" }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"Target" },
+               { "type", (int)Variant.Type.Vector3 }
+            });
+
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"TargetName" },
+               { "type", (int)Variant.Type.String }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"TargetCodeOverride" },
+               { "type", (int)Variant.Type.Int },
+               { "hint", (int)PropertyHint.Enum },
+               { "hint_string", "None,CasterPlacement,CasterModel,TargetsPlacement,TargetsModel,CreatedNode" }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"Amount" },
+               { "type", (int)Variant.Type.Float }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"RotateImmediately" },
+               { "type", (int)Variant.Type.Bool }
+            });
+
             break;
       }
 

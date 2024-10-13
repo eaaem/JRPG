@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://beywvyta3bqd2"]
+[gd_scene load_steps=11 format=3 uid="uid://beywvyta3bqd2"]
 
 [ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_brre0"]
 [ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_4fpvy"]
@@ -39,6 +39,14 @@ script = ExtResource("2_4fpvy")
 CommandType = 14
 PauseUntilTargetReached = false
 
+[sub_resource type="Resource" id="Resource_p1njk"]
+script = ExtResource("2_4fpvy")
+CommandType = 15
+
+[sub_resource type="Resource" id="Resource_voebg"]
+script = ExtResource("2_4fpvy")
+CommandType = 11
+
 [node name="birdseye_camera_directions" type="Node3D"]
 script = ExtResource("1_brre0")
-commands = [SubResource("Resource_eiqff"), SubResource("Resource_uqcke"), SubResource("Resource_iotkm"), SubResource("Resource_jbdvl"), SubResource("Resource_v7c1c"), SubResource("Resource_y2hel")]
+commands = [SubResource("Resource_eiqff"), SubResource("Resource_uqcke"), SubResource("Resource_iotkm"), SubResource("Resource_jbdvl"), SubResource("Resource_v7c1c"), SubResource("Resource_y2hel"), SubResource("Resource_p1njk"), SubResource("Resource_voebg")]

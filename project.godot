@@ -104,6 +104,8 @@ sprint={
 3d_physics/layer_5="items"
 3d_physics/layer_6="doors"
 3d_physics/layer_7="terrain"
+3d_physics/layer_8="projectile"
+3d_physics/layer_9="fighter"
 
 [rendering]
 

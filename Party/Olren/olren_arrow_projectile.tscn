@@ -1,0 +1,105 @@
+[gd_scene load_steps=10 format=3 uid="uid://cl75gphsr0elo"]
+
+[ext_resource type="PackedScene" uid="uid://bmq5yx3vf54ai" path="res://Party/Olren/olren_arrow.glb" id="1_hw453"]
+[ext_resource type="Script" path="res://Abilities/0Core/Projectile.cs" id="2_57lw8"]
+[ext_resource type="Script" path="res://Abilities/0Core/ProjectilePathPoint.cs" id="3_2paxp"]
+
+[sub_resource type="Animation" id="Animation_ki8qe"]
+resource_name = "ProjectileAnimation"
+length = 0.9
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Path3D/PathFollow3D/Arrow")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0.33041, 0, 0.5, 1, 0, 1.09598, -2.34883, 0.9, 1, 0, 0.519758, -4.02537)
+tracks/1/type = "rotation_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Path3D/PathFollow3D/Arrow")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, -0.649813, 0, 0, 0.760094, 0.5, 1, -0.691507, 0, 0, 0.72237, 0.9, 1, -0.821776, 0, 0, 0.56981)
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Path3D/PathFollow3D/Arrow")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.9),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"OnAnimationEnded"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_otn07"]
+resource_name = "new_animation"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2bw51"]
+_data = {
+"ProjectileAnimation": SubResource("Animation_ki8qe"),
+"new_animation": SubResource("Animation_otn07")
+}
+
+[sub_resource type="Curve3D" id="Curve3D_i7tkr"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0.413537, 0.000688529, 0, 0.0597594, -1.86273, 0, -0.0597594, 1.86273, 0, 2.15089, 4.02607, 0, 0, 0, 0, 0, 0, 0, 0.0888621, 7.67346),
+"tilts": PackedFloat32Array(0, 0, 0)
+}
+point_count = 3
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dne84"]
+size = Vector3(0.15, 0.5, 0.15)
+
+[sub_resource type="Resource" id="Resource_yigva"]
+script = ExtResource("3_2paxp")
+Path = ""
+OverridePath = 4
+PointIndex = 2
+Offset = Vector3(0, 1, 0)
+
+[node name="olren_arrow_projectile" type="Node3D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2bw51")
+}
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_i7tkr")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 0.91812, 0.396261, 0, -0.396261, 0.91812, 0, 0.413537, 0.000688529)
+use_model_front = true
+loop = false
+
+[node name="Arrow" parent="Path3D/PathFollow3D" instance=ExtResource("1_hw453")]
+transform = Transform3D(-0.993743, -0.110846, -0.0137399, -0.0292173, 0.139241, 0.989828, -0.107805, 0.984036, -0.141608, 0, 0, 0)
+
+[node name="StaticBody3D" type="Area3D" parent="Path3D/PathFollow3D/Arrow"]
+transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0.200785, 0)
+collision_layer = 128
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/Arrow/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("BoxShape3D_dne84")
+
+[node name="MiddleIndicator" type="Node3D" parent="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.17009, 3.98754)
+
+[node name="Projectile" type="Node3D" parent="." node_paths=PackedStringArray("projectile", "pathToFollow")]
+script = ExtResource("2_57lw8")
+signalOnCollision = true
+deleteOnCollision = true
+projectile = NodePath("../Path3D/PathFollow3D/Arrow")
+usePath = true
+pathToFollow = NodePath("../Path3D/PathFollow3D")
+pathSpeed = 10.0
+points = [SubResource("Resource_yigva")]
+
+[connection signal="body_entered" from="Path3D/PathFollow3D/Arrow/StaticBody3D" to="Projectile" method="OnBodyEntered"]

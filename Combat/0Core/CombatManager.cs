@@ -591,7 +591,7 @@ public partial class CombatManager : Node
          if (CurrentFighter.companion != null && !CurrentFighter.companion.hadTurn)
          {
             CurrentFighter.companion.duration--;
-            CurrentFighter.UIPanel.GetNode<Label>("CompanionHolder/Duration").Text = CurrentFighter.companion.duration + " turns";
+            CurrentFighter.UIPanel.GetNode<Label>("CompanionHolder/Duration").Text = "[right]" + CurrentFighter.companion.duration + " turns";
 
             if (CurrentFighter.companion.duration <= 0)
             {
@@ -618,23 +618,14 @@ public partial class CombatManager : Node
       
       while (true) 
       {
-         //await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
          for (int i = 0; i < Fighters.Count; i++) 
          {
             if (!Fighters[i].isDead)
             {
                Fighters[i].actionLevel += CalculateCurrentSpeed(Fighters[i]);
 
-               // Update action bar BEFORE increasing the action level so that it doesn't stop before reaching 100
-               if (!Fighters[i].isEnemy)
-               {
-                  //uiManager.SetActionBar(Fighters[i], Fighters[i].actionLevel);
-               }
-
                if (Fighters[i].actionLevel >= 100) 
                {
-                  //await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
-
                   CurrentFighter = Fighters[i];
                   stacksAndStatusManager.IncrementAppliedStatuses();
                   IncrementStatModifiers();
@@ -741,8 +732,6 @@ public partial class CombatManager : Node
 
       if (IsInCombat)
       {
-         //ResetCamera();
-
          for (int i = 0; i < Fighters.Count; i++)
          {
             if (Fighters[i].isEnemy)
@@ -941,26 +930,6 @@ public partial class CombatManager : Node
       // Athlia's attacks deal 10% damage
       damage.baseDamage = passiveManager.AthliaPassive(damage.baseDamage);
 
-      /*if (CurrentFighter.isEnemy)
-      {
-         CurrentFighter.model.GetNode<Node3D>("Model").LookAt(target.model.GlobalPosition, Vector3.Up, true);
-         //target.model.GetNode<Node3D>("Model").LookAt(CurrentFighter.model.GlobalPosition, Vector3.Up, true);
-        // FocusCameraOnFighter(target.model);
-      }
-
-      AnimationPlayer player;
-
-      if (IsCompanionTurn)
-      {
-         player = CurrentFighter.companion.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-         //ReverseFocusOnTarget(CurrentFighter.companion.model);
-      }
-      else
-      {
-         player = CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-         //ReverseFocusOnTarget(CurrentFighter.model);
-      }*/
-
       AttackPreferences attackPreferences = CurrentFighter.model.GetNode<AttackPreferences>("AttackPreferences");
       AbilityCommandHolder holder;
 
@@ -998,26 +967,6 @@ public partial class CombatManager : Node
 
       abilityManager.AddChild(abilityCommandInstance);
       abilityCommandInstance.UpdateData(new List<Fighter> { target }, true);
-      
-      
-      //player.Play("Attack");
-      //EmitSignal(SignalName.AttackAnimation);
-
-
-
-      //await ToSignal(GetTree().CreateTimer(player.CurrentAnimationLength + 0.35f), "timeout");
-      
-      //double waitTime = FocusOnTargets(new List<Fighter>() { target }, true);
-
-      //await ToSignal(GetTree().CreateTimer(waitTime + 0.35f), "timeout");
-
-      //ProcessValues();
-
-      /*if (target.currentHealth > 0)
-      {
-         target.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
-         player.Play("CombatIdle");
-      }*/
    }
 
    bool RollForCrit()
@@ -1277,9 +1226,6 @@ public partial class CombatManager : Node
    // Prevents negative health/mana and processes death
    public async void ProcessValues()
    {
-      bool hasAliveEnemy = false;
-      bool hasAlivePartyMember = false;
-
       List<Fighter> deadFighters = new List<Fighter>();
 
       for (int i = 0; i < Fighters.Count; i++)
@@ -1300,17 +1246,6 @@ public partial class CombatManager : Node
                RemoveCompanion(Fighters[i]);
             }
          }
-         else
-         {
-            if (Fighters[i].isEnemy)
-            {
-               hasAliveEnemy = true;
-            }
-            else
-            {
-               hasAlivePartyMember = true;
-            }
-         }
       }
 
       for (int i = 0; i < deadFighters.Count; i++)
@@ -1323,6 +1258,27 @@ public partial class CombatManager : Node
          uiManager.ChangeEffectUIWithDeath(deadFighters[i]);
 
          await ToSignal(GetTree().CreateTimer(player.CurrentAnimationLength + 0.35f), "timeout");
+      }
+   }
+
+   public void FinishRound()
+   {
+      bool hasAliveEnemy = false;
+      bool hasAlivePartyMember = false;
+
+      for (int i = 0; i < Fighters.Count; i++)
+      {
+         if (Fighters[i].currentHealth > 0)
+         {
+            if (Fighters[i].isEnemy)
+            {
+               hasAliveEnemy = true;
+            }
+            else
+            {
+               hasAlivePartyMember = true;
+            }
+         }
       }
 
       if (!hasAliveEnemy)
@@ -1637,12 +1593,10 @@ public partial class CombatManager : Node
       if (IsCompanionTurn)
       {
          player = CurrentFighter.companion.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-         //ReverseFocusOnTarget(CurrentFighter.companion.model);
       }
       else
       {
          player = CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-         //ReverseFocusOnTarget(CurrentFighter.model);
       }
 
       uiManager.UpdateSingularUIPanel(CurrentFighter);
@@ -1663,14 +1617,12 @@ public partial class CombatManager : Node
 
       for (int i = 0; i < targets.Count; i++)
       {
-         targets[i].placementNode.GetNode<Label3D>("CritLabel").Visible = false;
-
          if (targets[i].currentHealth > 0)
          {
             targets[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
          }
       }
-
+      
       ProcessValues();
    }
 
@@ -1712,10 +1664,10 @@ public partial class CombatManager : Node
    {
       Panel companionUIHolder = affectedFighter.UIPanel.GetNode<Panel>("CompanionHolder");
 
-      companionUIHolder.GetNode<Label>("Title").Text = affectedFighter.companion.companionName;
-      companionUIHolder.GetNode<Label>("ManaDescription").Text = affectedFighter.companion.currentMana + "/" + affectedFighter.companion.maxMana;
+      companionUIHolder.GetNode<Label>("NameLabel").Text = affectedFighter.companion.companionName;
+      companionUIHolder.GetNode<Label>("ManaLabel").Text = affectedFighter.companion.currentMana + "/" + affectedFighter.companion.maxMana;
       companionUIHolder.GetNode<ProgressBar>("ManaBar").Value = 100;
-      companionUIHolder.GetNode<Label>("Duration").Text = "" + affectedFighter.companion.duration;
+      companionUIHolder.GetNode<Label>("Duration").Text = "[right]" + affectedFighter.companion.duration;
 
       PackedScene packedSceneModel = GD.Load<PackedScene>(affectedFighter.companion.enemyDataSource.model.ResourcePath);
       affectedFighter.companion.model = packedSceneModel.Instantiate<Node3D>();
