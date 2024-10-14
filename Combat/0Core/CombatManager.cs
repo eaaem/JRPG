@@ -94,6 +94,8 @@ public partial class CombatManager : Node
    public InventoryItem CurrentItem { get; set; }
    public AbilityResource CurrentAbility { get; set; }
 
+   private bool isProcessing;
+
    public string AbilityTargetGraphic { get; set; }
 
    private double deathWaitTime = 0;
@@ -441,7 +443,7 @@ public partial class CombatManager : Node
             newFighter.model = GD.Load<PackedScene>("res://Party/" + managers.PartyManager.Party[i].characterType + "/combat_actor.tscn").Instantiate<Node3D>();
             baseNode.AddChild(newFighter.model);
             //newFighter.model.GetNode<AnimationTree>("AnimationTree").Active = false;
-            newFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
+            newFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle", 0.25f);
 
             BoneAttachment3D attachment = new BoneAttachment3D();
             newFighter.model.GetNode<Skeleton3D>("Model/Armature/Skeleton3D").AddChild(attachment);
@@ -516,7 +518,7 @@ public partial class CombatManager : Node
          newFighter.placementNode = placementGroup.GetNode<Node3D>("EnemyPlacement" + (i + 1));
          baseNode.AddChild(newFighter.model);
 
-         newFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
+         newFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle", 0.25f);
          newFighter.model.GetNode<Node3D>("Model").Rotation = new Vector3(-0, Mathf.DegToRad(-90f), 0);
 
          uiManager.InitializeEnemyPanel(newFighter, i);
@@ -1036,28 +1038,6 @@ public partial class CombatManager : Node
          longestDuration = 0.6f;
       }
 
-      /*if (CurrentAbility != null)
-      {
-         AbilityTargetGraphic = CurrentAbility.targetGraphic;
-      }
-
-      if (AbilityTargetGraphic.Length > 0)
-      {
-         AbilityGraphic abilityGraphic = abilityManager.GenerateTargetAbilityGraphic(AbilityTargetGraphic);
-
-         if (abilityGraphic.GenerateOnlyOnce)
-         {
-            abilityManager.SetTargetAbilityGraphics(abilityGraphic, targets[0].placementNode.GlobalPosition);
-         }
-         else
-         {
-            for (int i = 0; i < targets.Count; i++)
-            {
-               abilityManager.SetTargetAbilityGraphics(abilityGraphic, targets[i].placementNode.GlobalPosition);
-            }
-         }
-      }*/
-
       for (int i = 0; i < targets.Count; i++)
       {
          uiManager.UpdateSingularUIPanel(targets[i]);
@@ -1259,10 +1239,27 @@ public partial class CombatManager : Node
 
          await ToSignal(GetTree().CreateTimer(player.CurrentAnimationLength + 0.35f), "timeout");
       }
+
+      isProcessing = false;
    }
 
-   public void FinishRound()
+   public async void FinishRound()
    {
+      int timer = 0;
+
+      while (isProcessing)
+      {
+         await ToSignal(GetTree().CreateTimer(0.1f), "timeout");
+         timer++;
+
+         // Prevent infinite loop locking up combat
+         if (timer > 240)
+         {
+            GD.PushError("Combat error: Processing never finished; bypassing wait and finishing the round");
+            break;
+         }
+      }
+
       bool hasAliveEnemy = false;
       bool hasAlivePartyMember = false;
 
@@ -1588,6 +1585,9 @@ public partial class CombatManager : Node
 
    public async void FinishCastingProcess(List<Fighter> targets, bool playHitAnimation = true)
    {  
+      // Don't let the round finish until everything has been processed
+      isProcessing = true;
+
       AnimationPlayer player;
 
       if (IsCompanionTurn)
@@ -1602,7 +1602,7 @@ public partial class CombatManager : Node
       uiManager.UpdateSingularUIPanel(CurrentFighter);
       stacksAndStatusManager.ShowEffectGraphics();
 
-      player.Play("CombatIdle");
+      player.Play("CombatIdle", 0.25f);
 
       Panel companionUIHolder = CurrentFighter.UIPanel.GetNode<Panel>("CompanionHolder");
       if (CurrentFighter.companion != null && companionUIHolder.Visible == false)
@@ -1619,7 +1619,7 @@ public partial class CombatManager : Node
       {
          if (targets[i].currentHealth > 0)
          {
-            targets[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
+            targets[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle", 0.25f);
          }
       }
       
@@ -1681,7 +1681,7 @@ public partial class CombatManager : Node
       affectedFighter.companion.model.GetNode<Node3D>("Model").Rotation = fighterModel.Rotation;
       affectedFighter.companion.model.GetNode<Node3D>("Model").Position = Vector3.Zero;
 
-      affectedFighter.companion.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
+      affectedFighter.companion.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle", 0.25f);
       affectedFighter.companion.model.Visible = false;
    }
 

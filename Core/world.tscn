@@ -1,4 +1,4 @@
-[gd_scene load_steps=152 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=153 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -264,7 +264,7 @@ SpecialCodeOverride = 2
 Target = Vector3(0, 0, 0)
 TargetName = ""
 TargetCodeOverride = 4
-Amount = 5.0
+Amount = 10.0
 RotateImmediately = null
 
 [sub_resource type="Resource" id="Resource_4c630"]
@@ -309,8 +309,8 @@ InvolvedFighter = ""
 SpecialCodeOverride = 2
 TargetName = ""
 TargetCodeOverride = 4
-Amount = 2.0
-PauseAnimation = ""
+Amount = 0.5
+PauseAnimation = "AttackWait"
 
 [sub_resource type="Resource" id="Resource_nbepo"]
 script = ExtResource("10_6pqua")
@@ -340,6 +340,10 @@ CommandType = 11
 script = ExtResource("10_6pqua")
 CommandType = 14
 PauseUntilTargetReached = false
+
+[sub_resource type="Resource" id="Resource_gi53r"]
+script = ExtResource("10_6pqua")
+CommandType = 17
 
 [sub_resource type="Resource" id="Resource_rv5hx"]
 script = ExtResource("15_86siq")
@@ -583,7 +587,7 @@ commands = [SubResource("Resource_kn2cf"), SubResource("Resource_4c630"), SubRes
 
 [node name="MeleePreferences" type="Node3D" parent="CombatManager/AbilityManager"]
 script = ExtResource("9_4lxtk")
-commands = [SubResource("Resource_h7pwi"), SubResource("Resource_nbepo"), SubResource("Resource_y7rrk"), SubResource("Resource_xpf8s"), SubResource("Resource_fhjva"), SubResource("Resource_gnhnw")]
+commands = [SubResource("Resource_h7pwi"), SubResource("Resource_nbepo"), SubResource("Resource_y7rrk"), SubResource("Resource_xpf8s"), SubResource("Resource_fhjva"), SubResource("Resource_gnhnw"), SubResource("Resource_gi53r")]
 
 [node name="UIManager" type="Node3D" parent="CombatManager" node_paths=PackedStringArray("managers", "combatManager", "UI", "partyList", "enemyList", "options", "abilityContainer", "abilityButtonContainer", "secondaryOptions", "secondaryOptionsContainer", "messageText", "cancelButton", "finalizeButton", "itemsList", "itemsContainer", "victoryScreen")]
 script = ExtResource("6_143na")

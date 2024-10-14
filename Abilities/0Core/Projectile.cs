@@ -85,22 +85,21 @@ public partial class Projectile : Node
 
    public void OnBodyEntered(Node3D body)
    {
-      if (body.GetParent() != GetParent())
+      if (body.GetParent() == GetParent())
       {
          return;
       }
 
-      GD.Print("Collided");
-
       if (signalOnCollision)
       {
+         GD.Print("Collided");
          EmitSignal(SignalName.OnProjectileEnded);
       }
 
       if (deleteOnCollision)
       {
          isTraveling = false;
-         GetParent().GetParent().RemoveChild(GetParent());
+         GetParent().GetParent().CallDeferred("remove_child", GetParent());
          GetParent().QueueFree();
       }
    }

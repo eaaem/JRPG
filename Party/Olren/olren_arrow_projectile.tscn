@@ -47,10 +47,10 @@ _data = {
 
 [sub_resource type="Curve3D" id="Curve3D_i7tkr"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0, 0.413537, 0.000688529, 0, 0.0597594, -1.86273, 0, -0.0597594, 1.86273, 0, 2.15089, 4.02607, 0, 0, 0, 0, 0, 0, 0, 0.0888621, 7.67346),
-"tilts": PackedFloat32Array(0, 0, 0)
+"points": PackedVector3Array(0, -0.781424, -3.4573, 0, 0.781424, 3.4573, 0, 0.413537, 0.000688529, 0, 1.58588, -3.99263, 0, -1.58588, 3.99263, 0, 0.0888621, 7.67346),
+"tilts": PackedFloat32Array(0, 0)
 }
-point_count = 3
+point_count = 2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dne84"]
 size = Vector3(0.15, 0.5, 0.15)
@@ -59,7 +59,7 @@ size = Vector3(0.15, 0.5, 0.15)
 script = ExtResource("3_2paxp")
 Path = ""
 OverridePath = 4
-PointIndex = 2
+PointIndex = 1
 Offset = Vector3(0, 1, 0)
 
 [node name="olren_arrow_projectile" type="Node3D"]
@@ -73,7 +73,7 @@ libraries = {
 curve = SubResource("Curve3D_i7tkr")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(1, 0, 0, 0, 0.91812, 0.396261, 0, -0.396261, 0.91812, 0, 0.413537, 0.000688529)
+transform = Transform3D(1, 0, 0, 0, 0.97538, 0.220457, 0, -0.220457, 0.97538, 0, 0.413537, 0.000688529)
 use_model_front = true
 loop = false
 
@@ -86,7 +86,6 @@ collision_layer = 128
 collision_mask = 256
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/Arrow/StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("BoxShape3D_dne84")
 
 [node name="MiddleIndicator" type="Node3D" parent="Path3D"]
@@ -99,7 +98,7 @@ deleteOnCollision = true
 projectile = NodePath("../Path3D/PathFollow3D/Arrow")
 usePath = true
 pathToFollow = NodePath("../Path3D/PathFollow3D")
-pathSpeed = 10.0
+pathSpeed = 20.0
 points = [SubResource("Resource_yigva")]
 
 [connection signal="body_entered" from="Path3D/PathFollow3D/Arrow/StaticBody3D" to="Projectile" method="OnBodyEntered"]

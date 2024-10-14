@@ -64,6 +64,7 @@ public partial class FighterRotater : Node
          if (model.Rotation.DistanceSquaredTo(target) < 0.001f)
          {
             isRotating = false;
+            GD.Print("Deleting rotater");
             EmitSignal(SignalName.RotationFinished);
             GetParent().RemoveChild(this);
             QueueFree();

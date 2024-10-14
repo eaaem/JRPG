@@ -59,7 +59,6 @@ public partial class AbilityCommandInstance : Node
 	{
       combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManager");
       ShowDamage += () => combatManager.FinishCastingProcess(targets, playHitAnimation);
-      TreeExiting += combatManager.FinishRound;
       arenaCamera = GetNode<Camera3D>("/root/BaseNode/Level/Arena/ArenaCamera");
 	}
 
@@ -287,15 +286,35 @@ public partial class AbilityCommandInstance : Node
                ResumeRunners += abilityRunners[i].ResumeRunning;
                float secondaryWaitTime = 0f;
 
-               // This won't work as intended (pause animation will always apply to the run animation instead of the animation being played after running)
                if (command.PauseAnimation.Length > 0)
                {
                   AnimationPreferences animationPreferences = runners[i].GetNode<AnimationPreferences>("AnimationPreferences");
                   AnimationPlayer player = runners[i].GetNode<AnimationPlayer>("Model/AnimationPlayer");
 
+                  // Find the next PlayAnimation command, and use the wait event for that
+                  int index = 0;
+                  for (int j = 0; j < commands.Length; j++)
+                  {
+                     if (commands[j] == command)
+                     {
+                        index = j;
+                        break;
+                     }
+                  }
+
+                  string animationName = player.CurrentAnimation;
+                  for (int j = index; j < commands.Length; j++)
+                  {
+                     if (commands[j].CommandType == AbilityCommandType.PlayAnimation)
+                     {
+                        animationName = commands[j].TargetName;
+                     }
+                  }
+
+                  // TO DO: Optimize this (maybe create a dictionary inside each fighter so we don't have to linear search for the event every single time?)
                   for (int j = 0; j < animationPreferences.preferences.Length; j++)
                   {
-                     if (animationPreferences.preferences[j].animationName == player.CurrentAnimation)
+                     if (animationPreferences.preferences[j].animationName == animationName)
                      {
                         for (int k = 0; k < animationPreferences.preferences[j].events.Length; k++)
                         {
@@ -420,7 +439,6 @@ public partial class AbilityCommandInstance : Node
    {
       for (int i = 0; i < rotaters.Count; i++)
       {
-         GD.Print(targetIndex);
          if (i == targetIndex)
          {
             rotatersFinished[i] = true;
@@ -530,6 +548,7 @@ public partial class AbilityCommandInstance : Node
    public override void _ExitTree()
    {
       ShowDamage -= () => combatManager.FinishCastingProcess(targets, playHitAnimation);
+      combatManager.FinishRound();
 
       for (int i = 0; i < createdNodes.Count; i++)
       {
