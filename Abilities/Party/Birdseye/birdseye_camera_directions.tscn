@@ -3,30 +3,20 @@
 [ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_brre0"]
 [ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_4fpvy"]
 
-[sub_resource type="Resource" id="Resource_eiqff"]
-script = ExtResource("2_4fpvy")
-CommandType = 13
-InvolvedFighter = "CASTER_MODEL"
-TargetName = "TARGETS_MODEL"
-Amount = 3.0
-
-[sub_resource type="Resource" id="Resource_uqcke"]
-script = ExtResource("2_4fpvy")
-CommandType = 14
-PauseUntilTargetReached = true
-
 [sub_resource type="Resource" id="Resource_iotkm"]
 script = ExtResource("2_4fpvy")
 CommandType = 1
 NodeName = "camera_target"
-Path = "CASTER_MODEL"
+Path = ""
+SpecialCodeOverride = 2
 Target = Vector3(0, 1, 0)
 PathToScene = ""
 
 [sub_resource type="Resource" id="Resource_jbdvl"]
 script = ExtResource("2_4fpvy")
-CommandType = 3
-Path = "CREATED_camera_target"
+CommandType = 2
+Path = "camera_target"
+SpecialCodeOverride = 5
 
 [sub_resource type="Resource" id="Resource_v7c1c"]
 script = ExtResource("2_4fpvy")
@@ -34,19 +24,37 @@ CommandType = 7
 Target = Vector3(0, 35, 0)
 Speed = 0.15
 
-[sub_resource type="Resource" id="Resource_y2hel"]
+[sub_resource type="Resource" id="Resource_ay68o"]
 script = ExtResource("2_4fpvy")
-CommandType = 14
-PauseUntilTargetReached = false
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "BirdseyeCast"
 
-[sub_resource type="Resource" id="Resource_p1njk"]
+[sub_resource type="Resource" id="Resource_1lh58"]
 script = ExtResource("2_4fpvy")
-CommandType = 15
+CommandType = 10
+Amount = 2.0
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_5fnsu"]
+script = ExtResource("2_4fpvy")
+CommandType = 17
 
 [sub_resource type="Resource" id="Resource_voebg"]
 script = ExtResource("2_4fpvy")
 CommandType = 11
 
+[sub_resource type="Resource" id="Resource_38tav"]
+script = ExtResource("2_4fpvy")
+CommandType = 10
+Amount = 0.5
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
 [node name="birdseye_camera_directions" type="Node3D"]
 script = ExtResource("1_brre0")
-commands = [SubResource("Resource_eiqff"), SubResource("Resource_uqcke"), SubResource("Resource_iotkm"), SubResource("Resource_jbdvl"), SubResource("Resource_v7c1c"), SubResource("Resource_y2hel"), SubResource("Resource_p1njk"), SubResource("Resource_voebg")]
+commands = [SubResource("Resource_iotkm"), SubResource("Resource_jbdvl"), SubResource("Resource_v7c1c"), SubResource("Resource_ay68o"), SubResource("Resource_1lh58"), SubResource("Resource_5fnsu"), SubResource("Resource_voebg"), SubResource("Resource_38tav")]

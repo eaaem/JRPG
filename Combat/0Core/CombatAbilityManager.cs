@@ -31,6 +31,8 @@ public partial class CombatAbilityManager : Node
 
       combatManager.CurrentTarget = target;
       uiManager.HideAll();
+      combatManager.CurrentFighter.currentMana -= combatManager.CurrentAbility.manaCost;
+      uiManager.UpdatePartyMemberManaBar(combatManager.CurrentFighter);
       EmitSignal(SignalName.AbilityCast);
    }
 
@@ -82,25 +84,4 @@ public partial class CombatAbilityManager : Node
 
       abilityGraphic.UpdateData(targets, playHitAnimation);
    }
-
-   /*public AbilityGraphic GenerateTargetAbilityGraphic(string graphicPath)
-   {
-      PackedScene targetGraphicsScene = GD.Load<PackedScene>(graphicPath);
-      Node3D targetGraphics = targetGraphicsScene.Instantiate<Node3D>();
-      AbilityGraphic abilityGraphicScript = targetGraphics.GetNode<AbilityGraphic>("ScriptHolder");
-
-      return abilityGraphicScript;
-   }
-
-   public void SetTargetAbilityGraphics(AbilityGraphic abilityGraphic, Vector3 targetPosition)
-   {
-      Node3D graphic = abilityGraphic.GetParent<Node3D>();
-      GetNode<Node3D>("/root/BaseNode").AddChild(graphic);
-
-      if (abilityGraphic.SnapToTarget)
-      {
-         graphic.GlobalPosition = targetPosition;
-         graphic.GlobalPosition += new Vector3(0, abilityGraphic.VerticalOffset, 0);
-      }
-   }*/
 }

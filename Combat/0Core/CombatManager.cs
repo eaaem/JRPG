@@ -442,7 +442,6 @@ public partial class CombatManager : Node
 
             newFighter.model = GD.Load<PackedScene>("res://Party/" + managers.PartyManager.Party[i].characterType + "/combat_actor.tscn").Instantiate<Node3D>();
             baseNode.AddChild(newFighter.model);
-            //newFighter.model.GetNode<AnimationTree>("AnimationTree").Active = false;
             newFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle", 0.25f);
 
             BoneAttachment3D attachment = new BoneAttachment3D();
@@ -508,7 +507,6 @@ public partial class CombatManager : Node
 
          PackedScene packedScene = GD.Load<PackedScene>(enemyDatas[i].model.ResourcePath);
          newFighter.model = packedScene.Instantiate<Node3D>();
-         newFighter.model.Position = placementGroup.GetNode<Node3D>("EnemyPlacement" + (i + 1)).GlobalPosition;
 
          if (!currentEnemyScript.isStaticEnemy)
          {
@@ -517,6 +515,7 @@ public partial class CombatManager : Node
          
          newFighter.placementNode = placementGroup.GetNode<Node3D>("EnemyPlacement" + (i + 1));
          baseNode.AddChild(newFighter.model);
+         newFighter.model.GlobalPosition = placementGroup.GetNode<Node3D>("EnemyPlacement" + (i + 1)).GlobalPosition;
 
          newFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle", 0.25f);
          newFighter.model.GetNode<Node3D>("Model").Rotation = new Vector3(-0, Mathf.DegToRad(-90f), 0);
@@ -540,6 +539,7 @@ public partial class CombatManager : Node
       }
    
       Node3D placementGroup = arena.GetNode<Node3D>("PartyGroup" + inParty.Count);
+
       for (int i = 0; i < inParty.Count; i++)
       {
          inParty[i].model.GlobalPosition = placementGroup.GetNode<Node3D>("PartyPlacement" + (i + 1)).GlobalPosition;
@@ -780,23 +780,6 @@ public partial class CombatManager : Node
 
    public void OnFighterPanelDown(Fighter target)
    {
-      /*Fighter target = GetFighterFromIndex(index, isEnemy);
-
-      if (target.isDead)
-      {
-         if (CurrentAbility != null)
-         {
-            if (!CurrentAbility.bypassesDeaths)
-            {
-               return;
-            }
-         }
-         else
-         {
-            return;
-         }
-      }*/
-
       if (IsAttacking)
       {
          CompleteAttack(target);
@@ -1040,6 +1023,7 @@ public partial class CombatManager : Node
 
       for (int i = 0; i < targets.Count; i++)
       {
+         uiManager.MoveHealthBar(targets[i]);
          uiManager.UpdateSingularUIPanel(targets[i]);
          uiManager.MoveDamageTexts(targets[i]);
       }

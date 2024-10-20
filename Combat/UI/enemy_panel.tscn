@@ -66,10 +66,17 @@ offset_left = 45.0
 offset_top = 31.0
 offset_right = 645.0
 offset_bottom = 61.0
-value = 100.0
-texture_under = ExtResource("3_6bgfk")
 texture_over = ExtResource("4_qendn")
 texture_progress = ExtResource("5_i7fay")
+
+[node name="LossBar" type="TextureProgressBar" parent="HealthBar"]
+show_behind_parent = true
+offset_right = 40.0
+offset_bottom = 40.0
+value = 90.0
+texture_under = ExtResource("3_6bgfk")
+texture_progress = ExtResource("5_i7fay")
+tint_progress = Color(1, 0, 0, 1)
 
 [node name="HealthLabel" type="RichTextLabel" parent="."]
 layout_mode = 0

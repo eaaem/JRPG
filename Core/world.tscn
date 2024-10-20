@@ -649,6 +649,7 @@ managers = NodePath("../ManagerReferenceHolder")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="Overlay" type="CanvasLayer" parent="UI"]
+layer = 2
 
 [node name="BlackScreen" type="ColorRect" parent="UI/Overlay"]
 anchors_preset = 15

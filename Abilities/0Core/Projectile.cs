@@ -24,14 +24,6 @@ public partial class Projectile : Node
    [Signal]
    public delegate void OnProjectileEndedEventHandler();
 
-   private AnimationPlayer animationPlayer;
-
-   public override void _Ready()
-   {
-      //animationPlayer = GetNode<AnimationPlayer>("../AnimationPlayer");
-      //animationPlayer.Play("ProjectileAnimation");
-   }
-
    public void ReceiveAbilityCommandInstanceInfo(Node3D source, List<Node3D> targets, List<Node3D> createdNodes)
    {
       if (usePath)
@@ -92,7 +84,6 @@ public partial class Projectile : Node
 
       if (signalOnCollision)
       {
-         GD.Print("Collided");
          EmitSignal(SignalName.OnProjectileEnded);
       }
 

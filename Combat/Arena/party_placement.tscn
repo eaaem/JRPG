@@ -9,7 +9,6 @@ shading_mode = 0
 material = SubResource("StandardMaterial3D_3r3hm")
 
 [node name="PartyPlacement1" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.741, 0, 0.379038)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 visible = false

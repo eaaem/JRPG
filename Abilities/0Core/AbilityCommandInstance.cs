@@ -154,7 +154,7 @@ public partial class AbilityCommandInstance : Node
             List<Node3D> parsedNodes = ParseSpecialPath(command.SpecialCodeOverride, command.Path);
 
             Node3D parent = arenaCamera.GetParent<Node3D>();
-            parent.CallDeferred("remove_child", arenaCamera);
+            parent.RemoveChild(arenaCamera);
 
             if (parsedNodes.Count == 0)
             {

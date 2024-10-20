@@ -26,8 +26,6 @@ public partial class Birdseye : PlayerAbilityBehavior
             stacksAndStatusManager.ApplyStatus(100, combatManager.Fighters[i], StatusEffect.KeenEye, 3, 3);
          }
 
-         combatManager.CurrentFighter.currentMana -= resource.manaCost;
-
          combatManager.RegularCast(targets, false);
       }
    }

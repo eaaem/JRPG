@@ -86,7 +86,7 @@ public partial class AbilityRunner : Node
 	{
       if (runningToTarget)
       {
-         Vector3 positionIncrement = parent.Position.MoveToward(target.GlobalPosition, (float)delta * 5f);
+         Vector3 positionIncrement = parent.Position.MoveToward(target.GlobalPosition, (float)delta * 6f);
          parent.GlobalPosition = positionIncrement;
 
          if (parent.GlobalPosition.DistanceSquaredTo(target.GlobalPosition) < relativeSize * relativeSize)

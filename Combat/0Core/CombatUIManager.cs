@@ -1,7 +1,5 @@
 using Godot;
 using System.Collections.Generic;
-using System;
-using System.Security.Cryptography;
 
 public partial class CombatUIManager : Node
 {
@@ -605,7 +603,7 @@ public partial class CombatUIManager : Node
 
    public void SetDefeatScreenVisible(bool visible) 
    {
-      UI.GetNode<Node2D>("Overlay/DefeatScreen").Visible = false;
+      UI.GetNode<Control>("Overlay/DefeatScreen").Visible = visible;
    }
 
    public void ExitVictoryScreen() 
@@ -678,6 +676,7 @@ public partial class CombatUIManager : Node
       {
          fighter.UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = "[right]" + fighter.currentMana + "/" + fighter.maxMana;
          fighter.UIPanel.GetNode<TextureProgressBar>("ManaBar").Value = (fighter.currentMana * 1f / fighter.maxMana) * 100f;
+         fighter.UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value = 0f;
 
          if (fighter.companion != null)
          {
@@ -687,6 +686,13 @@ public partial class CombatUIManager : Node
       }
 
       uiIsUpdated = true;
+   }
+
+   public void UpdatePartyMemberManaBar(Fighter fighter)
+   {
+      fighter.UIPanel.GetNode<TextureProgressBar>("ManaBar").Value = (fighter.currentMana * 1f / fighter.maxMana) * 100f;
+      fighter.UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value = 0f;
+      fighter.UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = "[right]" + fighter.currentMana + "/" + fighter.maxMana;
    }
 
    public void EnableOptions()
@@ -830,7 +836,7 @@ public partial class CombatUIManager : Node
 
       for (int i = 0; i < combatManager.Fighters.Count; i++)
       {
-         if (combatManager.Fighters[i].isEnemy)
+         if (combatManager.Fighters[i].isEnemy && !combatManager.Fighters[i].isDead)
          {
             enemies.Add(combatManager.Fighters[i]);
          }
@@ -909,10 +915,11 @@ public partial class CombatUIManager : Node
 
       if (UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value == 0)
       {
-      UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value = UIPanel.GetNode<TextureProgressBar>("ManaBar").Value;
-      UIPanel.GetNode<TextureProgressBar>("ManaBar").Value = ((combatManager.CurrentFighter.currentMana - lossAmount) * 1f / combatManager.CurrentFighter.maxMana) * 100f;
-      UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = "[right][color=red]" + (combatManager.CurrentFighter.currentMana - lossAmount) + "[/color]/" +
-                                                         combatManager.CurrentFighter.maxMana;
+         UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value = UIPanel.GetNode<TextureProgressBar>("ManaBar").Value;
+         UIPanel.GetNode<TextureProgressBar>("ManaBar").Value = ((combatManager.CurrentFighter.currentMana - lossAmount) 
+                                                                  * 1f / combatManager.CurrentFighter.maxMana) * 100f;
+         UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = "[right][color=red]" + (combatManager.CurrentFighter.currentMana - lossAmount) + "[/color]/" +
+                                                            combatManager.CurrentFighter.maxMana;
       }
    }
 
@@ -926,6 +933,27 @@ public partial class CombatUIManager : Node
          UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value = 0;
          UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = "[right]" + combatManager.CurrentFighter.currentMana + "/" + combatManager.CurrentFighter.maxMana;
       }
+   }
+
+   public async void MoveHealthBar(Fighter fighter)
+   {
+      Control UIPanel = fighter.UIPanel;
+      TextureProgressBar healthBar = UIPanel.GetNode<TextureProgressBar>("HealthBar");
+      TextureProgressBar lossBar = healthBar.GetNode<TextureProgressBar>("LossBar");
+
+      lossBar.Value = healthBar.Value;
+      healthBar.Value = (fighter.currentHealth * 1f / fighter.maxHealth) * 100f;
+
+
+      await ToSignal(GetTree().CreateTimer(0.75f), "timeout");
+
+      while (lossBar.Value > healthBar.Value)
+      {
+         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         lossBar.Value--;
+      }
+
+      lossBar.Value = 0;
    }
 
    /// <summary>
