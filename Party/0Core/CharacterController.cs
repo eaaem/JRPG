@@ -9,6 +9,9 @@ public partial class CharacterController : CharacterBody3D
 
    public bool IsSprinting { get; set; }
 
+   [Export]
+   private bool isWorldMap;
+
 	// Get the gravity from the project settings to be synced with RigidBody nodes.
 	private float gravity = ProjectSettings.GetSetting("physics/3d/default_gravity").AsSingle();
 
@@ -34,7 +37,14 @@ public partial class CharacterController : CharacterBody3D
 
    public override void _Ready()
    {
-      ResetNodes();
+      if (!isWorldMap)
+      {
+         ResetNodes();
+      }
+      else
+      {
+         GetWorldMapNodes();
+      }
    }
 
    public void ResetNodes()
@@ -70,6 +80,13 @@ public partial class CharacterController : CharacterBody3D
       PlaceSecondaryWeaponOnBack();
    }
 
+   private void GetWorldMapNodes()
+   {
+      cameraTarget = GetNode<Node3D>("CameraTarget");
+      model = GetNode<Node3D>("Model");
+      animationTree = GetNode<AnimationTree>("AnimationTree");
+   }
+
    public override void _PhysicsProcess(double delta)
 	{
       Vector3 velocity = Velocity;
@@ -88,7 +105,7 @@ public partial class CharacterController : CharacterBody3D
 
          Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
-         if (Input.IsActionPressed("sprint"))
+         if (Input.IsActionPressed("sprint") && !isWorldMap)
          {
             IsSprinting = true;
          }

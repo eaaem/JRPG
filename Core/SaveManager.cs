@@ -17,7 +17,7 @@ public partial class SaveManager : Node
    public ColorRect blackScreen;
    public Label loadingLabel;
 
-   public Vector2 worldMapPosition;
+   public Vector3 WorldMapPosition { get; set; }
 
    public override void _Ready()
    {
@@ -38,8 +38,9 @@ public partial class SaveManager : Node
          { "PlayerPosX", managers.Controller.Position.X },
          { "PlayerPosY", managers.Controller.Position.Y },
          { "PlayerPosZ", managers.Controller.Position.Z },
-         { "PlayerPosXMap", worldMapPosition.X },
-         { "PlayerPosYMap", worldMapPosition.Y }
+         { "PlayerPosXMap", WorldMapPosition.X },
+         { "PlayerPosYMap", WorldMapPosition.Y },
+         { "PlayerPosZMap", WorldMapPosition.Z }
       };
    }
 
@@ -50,9 +51,8 @@ public partial class SaveManager : Node
 
       if (GetNode<Node3D>("/root/BaseNode").HasNode("WorldMap"))
       {
-         Vector2 position = GetNode<CharacterBody2D>("/root/BaseNode/WorldMap/Player").GlobalPosition;
-         worldMapPosition.X = position.X;
-         worldMapPosition.Y = position.Y;
+         Vector3 position = GetNode<CharacterBody3D>("/root/BaseNode/WorldMap/Player").GlobalPosition;
+         WorldMapPosition = position;
       }
 
       using var saveGame = FileAccess.Open("user://savegame" + index + ".save", FileAccess.ModeFlags.Write);
@@ -168,7 +168,8 @@ public partial class SaveManager : Node
             if ((string)nodeData["Location"] == "World Map")
             {
                managers.LevelManager.OpenWorldMap((string)nodeData["InternalLocation"], 
-                                                  new Vector2((float)nodeData["PlayerPosXMap"], (float)nodeData["PlayerPosYMap"]), true);
+                                                  new Vector3((float)nodeData["PlayerPosXMap"], (float)nodeData["PlayerPosYMap"], (float)nodeData["PlayerPosZMap"]), 
+                                                  true);
             }
             else
             {

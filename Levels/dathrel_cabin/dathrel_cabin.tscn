@@ -773,3 +773,5 @@ texture = ExtResource("26_mq3bv")
 transform = Transform3D(-2, 0, -1.74846e-07, 0, 2, 0, 1.74846e-07, 0, -2, -20.7322, 4.37918, 48.5221)
 double_sided = false
 texture = ExtResource("26_mq3bv")
+
+[node name="Chunks" type="Node3D" parent="."]

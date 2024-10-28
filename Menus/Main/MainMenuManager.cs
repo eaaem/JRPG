@@ -348,7 +348,7 @@ public partial class MainMenuManager : CanvasLayer
 
       Node3D level = packedScene.Instantiate<Node3D>();
       level.Name = "MainMenuLevel";
-      level.GetNode<Camera3D>("Camera").MakeCurrent();
+      //level.GetNode<Camera3D>("Camera").MakeCurrent();
       AddChild(level);
    }
 

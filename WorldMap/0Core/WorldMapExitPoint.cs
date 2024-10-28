@@ -27,7 +27,7 @@ public partial class WorldMapExitPoint : Node
             await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
          }
 
-         managers.LevelManager.CallDeferred(nameof(managers.LevelManager.OpenWorldMap), mapName, Vector2.Zero, false, spawnLocation);
+         managers.LevelManager.CallDeferred(nameof(managers.LevelManager.OpenWorldMap), mapName, Vector3.Zero, false, spawnLocation);
       }
    }
 }

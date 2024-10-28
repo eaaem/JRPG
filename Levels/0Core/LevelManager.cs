@@ -37,7 +37,7 @@ public partial class LevelManager : Node
       musicPlayer = baseNode.GetNode<AudioStreamPlayer>("MusicPlayer");
    }
 
-   public async void OpenWorldMap(string map, Vector2 spawnLocation, bool useSpawnLocation, string spawnPointName = "")
+   public async void OpenWorldMap(string map, Vector3 spawnLocation, bool useSpawnLocation, string spawnPointName = "")
    {  
       EmitSignal(SignalName.SaveLevelProgression);
       DiscardExistingLevel();
@@ -49,27 +49,26 @@ public partial class LevelManager : Node
       // We need to move the controller away so that it doesn't reactivate an exit point immediately upon exiting the world map
       managers.Controller.GlobalPosition = new Vector3(0f, 25f, 0f);
 
-      PackedScene worldMapPrefab = GD.Load<PackedScene>("res://WorldMap/0Core/world_map_prefab.tscn");
-      Node2D worldMap = worldMapPrefab.Instantiate<Node2D>();
+      PackedScene worldMapPrefab = GD.Load<PackedScene>("res://WorldMap/0Core/world_map_base.tscn");
+      Node3D worldMap = worldMapPrefab.Instantiate<Node3D>();
 
       PackedScene specialMapPrefab = GD.Load<PackedScene>("res://WorldMap/Maps/" + map + "/" + map + ".tscn");
-      Node2D specialMap = specialMapPrefab.Instantiate<Node2D>();
+      Node3D specialMap = specialMapPrefab.Instantiate<Node3D>();
 
       baseNode.AddChild(worldMap);
       baseNode.AddChild(specialMap);
 
-      Node2D colliderHolder = specialMap.GetNode<Node2D>("Colliders");
-      specialMap.RemoveChild(colliderHolder);
-      worldMap.AddChild(colliderHolder);
-      worldMap.GetNode<Sprite2D>("Map").Texture = specialMap.GetNode<Sprite2D>("Map").Texture;
+      Node3D informationHolder = specialMap.GetNode<Node3D>("InformationHolder");
+      specialMap.RemoveChild(informationHolder);
+      worldMap.AddChild(informationHolder);
 
       if (!useSpawnLocation)
       {
-         worldMap.GetNode<CharacterBody2D>("Player").GlobalPosition = specialMap.GetNode<Node2D>(spawnPointName).GlobalPosition;
+         worldMap.GetNode<CharacterBody3D>("Player").GlobalPosition = specialMap.GetNode<Node3D>(spawnPointName).GlobalPosition;
       }
       else
       {
-         worldMap.GetNode<CharacterBody2D>("Player").GlobalPosition = spawnLocation;
+         worldMap.GetNode<CharacterBody3D>("Player").GlobalPosition = spawnLocation;
       }
 
       location = "World Map";
@@ -77,8 +76,8 @@ public partial class LevelManager : Node
 
       EmitSignal(SignalName.LoadLevelProgression);
 
-      worldMap.GetNode<Camera2D>("Player/2DPlayerCamera").MakeCurrent();
-      worldMap.GetNode<WorldMapController>("Player").DisableMovement = true;
+      worldMap.GetNode<Camera3D>("Player/CameraTarget/PlayerCamera").MakeCurrent();
+      worldMap.GetNode<CharacterController>("Player").DisableMovement = true;
 
       baseNode.RemoveChild(specialMap);
       specialMap.QueueFree();
@@ -92,7 +91,7 @@ public partial class LevelManager : Node
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
       }
 
-      worldMap.GetNode<WorldMapController>("Player").DisableMovement = false;
+      worldMap.GetNode<CharacterController>("Player").DisableMovement = false;
    }
 
    public void DiscardExistingLevel()

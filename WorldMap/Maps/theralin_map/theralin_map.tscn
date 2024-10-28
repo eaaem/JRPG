@@ -1,62 +1,116 @@
-[gd_scene load_steps=5 format=3 uid="uid://ga2i18ygf8gl"]
+[gd_scene load_steps=16 format=3 uid="uid://dpshffb7pkx1p"]
 
-[ext_resource type="Texture2D" uid="uid://d1ndqs0sb3llj" path="res://WorldMap/Maps/theralin_map/theralin.png" id="1_poy1c"]
-[ext_resource type="Script" path="res://WorldMap/0Core/WorldMapLocation.cs" id="1_srptl"]
+[ext_resource type="ArrayMesh" uid="uid://chonrfhlhwcnb" path="res://Levels/2Misc/Terrain/pine_tree.obj" id="1_7by32"]
+[ext_resource type="Shader" uid="uid://dn58dbmb2mxms" path="res://Levels/2Misc/Terrain/tree_shader.tres" id="2_6kayc"]
+[ext_resource type="Material" uid="uid://cuokdfy0sxcql" path="res://Levels/2Misc/Terrain/tree_material.tres" id="3_64low"]
+[ext_resource type="Script" path="res://WorldMap/0Core/WorldMapLocation.cs" id="4_2gg76"]
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_elgrc"]
+[sub_resource type="PlaneMesh" id="PlaneMesh_t3s85"]
+size = Vector2(15, 15)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_vkvh2"]
-size = Vector2(83, 20)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_meefv"]
+albedo_color = Color(0.294118, 0.470588, 0.27451, 1)
+grow = true
 
-[node name="WorldMap" type="Node2D"]
-position = Vector2(40, 768)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jenes"]
+render_priority = 0
+shader = ExtResource("2_6kayc")
 
-[node name="MapBackground" type="Sprite2D" parent="."]
-position = Vector2(960, -400)
-scale = Vector2(4000, 4000)
-texture = SubResource("CanvasTexture_elgrc")
+[sub_resource type="BoxShape3D" id="BoxShape3D_2gpgo"]
+size = Vector3(25, 0.1, 25)
 
-[node name="Map" type="Sprite2D" parent="."]
-position = Vector2(920, -228)
-texture = ExtResource("1_poy1c")
+[sub_resource type="Gradient" id="Gradient_xfy1p"]
+colors = PackedColorArray(0.917647, 0.827451, 0, 0.439216, 1, 1, 1, 0.384314)
 
-[node name="Colliders" type="Node2D" parent="."]
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qcy7c"]
+gradient = SubResource("Gradient_xfy1p")
 
-[node name="Cabin" type="Area2D" parent="Colliders"]
-position = Vector2(447, -306)
-script = ExtResource("1_srptl")
-textLabelName = "Dathrel's Cabin"
-locationName = "dathrel_cabin"
-entrancePointName = "RoadEntrance"
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_kcfs4"]
+ground_bottom_color = Color(0.898039, 0.67451, 0.352941, 1)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/Cabin"]
-position = Vector2(468, 101)
-rotation = -0.503969
-shape = SubResource("RectangleShape2D_vkvh2")
+[sub_resource type="Sky" id="Sky_7n5ak"]
+sky_material = SubResource("ProceduralSkyMaterial_kcfs4")
 
-[node name="FirstPath" type="StaticBody2D" parent="Colliders"]
-visible = false
+[sub_resource type="Environment" id="Environment_u8wvd"]
+background_mode = 1
+sky = SubResource("Sky_7n5ak")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 2
+glow_enabled = true
+glow_blend_mode = 1
+fog_density = 0.1468
+adjustment_color_correction = SubResource("GradientTexture1D_qcy7c")
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Colliders/FirstPath"]
-build_mode = 1
-polygon = PackedVector2Array(574, 164, 717, 50, 812, -118, 909, -312, 801, -318, 693, -256, 658, -143, 587, 7, 533, 112)
+[sub_resource type="BoxShape3D" id="BoxShape3D_flbew"]
 
-[node name="Theralin" type="Area2D" parent="Colliders"]
-position = Vector2(415, -442)
-script = ExtResource("1_srptl")
-textLabelName = "Theralin"
-locationName = "theralin"
-entrancePointName = "FrontEntrance"
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_30y2w"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colliders/Theralin"]
-position = Vector2(468, 101)
-rotation = -0.503969
-shape = SubResource("RectangleShape2D_vkvh2")
+[node name="theralin_map" type="Node3D"]
 
-[node name="SpawnPoint" type="Node2D" parent="."]
-position = Vector2(918, -210)
+[node name="InformationHolder" type="Node3D" parent="."]
 
-[connection signal="body_entered" from="Colliders/Cabin" to="Colliders/Cabin" method="OnBodyEntered" flags=18]
-[connection signal="body_exited" from="Colliders/Cabin" to="Colliders/Cabin" method="OnBodyExited" flags=18]
-[connection signal="body_entered" from="Colliders/Theralin" to="Colliders/Theralin" method="OnBodyEntered" flags=18]
-[connection signal="body_exited" from="Colliders/Theralin" to="Colliders/Theralin" method="OnBodyExited" flags=18]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InformationHolder"]
+mesh = SubResource("PlaneMesh_t3s85")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_meefv")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InformationHolder/MeshInstance3D"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.812282, 0, -0.51813)
+mesh = ExtResource("1_7by32")
+surface_material_override/0 = SubResource("ShaderMaterial_jenes")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="InformationHolder/MeshInstance3D"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.438665, -1.19209e-07, -0.0393419)
+mesh = ExtResource("1_7by32")
+surface_material_override/0 = ExtResource("3_64low")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="InformationHolder/MeshInstance3D"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -1.13329, -1.19209e-07, 0.143805)
+mesh = ExtResource("1_7by32")
+surface_material_override/0 = ExtResource("3_64low")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="InformationHolder/MeshInstance3D"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -1.50148, -1.19209e-07, -0.311209)
+mesh = ExtResource("1_7by32")
+surface_material_override/0 = ExtResource("3_64low")
+
+[node name="MeshInstance3D5" type="MeshInstance3D" parent="InformationHolder/MeshInstance3D"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -1.33231, -1.19209e-07, -1.09084)
+mesh = ExtResource("1_7by32")
+surface_material_override/0 = ExtResource("3_64low")
+
+[node name="MeshInstance3D6" type="MeshInstance3D" parent="InformationHolder/MeshInstance3D"]
+transform = Transform3D(0.15, 0, 0, 0, 0.15, 0, 0, 0, 0.15, -0.636537, -1.19209e-07, -1.23735)
+mesh = ExtResource("1_7by32")
+surface_material_override/0 = ExtResource("3_64low")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="InformationHolder/MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InformationHolder/MeshInstance3D/StaticBody3D"]
+shape = SubResource("BoxShape3D_2gpgo")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="InformationHolder"]
+transform = Transform3D(1, 0, 0, 0, 0.143562, 0.989641, 0, -0.989641, 0.143562, 0, 1.81382, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="InformationHolder"]
+environment = SubResource("Environment_u8wvd")
+
+[node name="Area3D" type="Area3D" parent="InformationHolder"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.582915, 2.75656)
+script = ExtResource("4_2gg76")
+textLabelName = "Text"
+locationName = "location"
+entrancePointName = "test"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InformationHolder/Area3D"]
+shape = SubResource("BoxShape3D_flbew")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="InformationHolder/Area3D"]
+mesh = SubResource("CapsuleMesh_30y2w")
+
+[node name="SpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.182738, 0)
+
+[connection signal="body_entered" from="InformationHolder/Area3D" to="InformationHolder/Area3D" method="OnBodyEntered"]
+[connection signal="body_exited" from="InformationHolder/Area3D" to="InformationHolder/Area3D" method="OnBodyExited"]

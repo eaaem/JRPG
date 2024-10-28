@@ -12,33 +12,34 @@ public partial class WorldMapLocation : Node
    [Export]
    private bool forceOpens;
 
-   private WorldMapController worldMapController;
+   private WorldMapTracker worldMapTracker;
 
    public override void _Ready()
    {
-      worldMapController = GetNode<WorldMapController>("/root/BaseNode/WorldMap/Player");
+      worldMapTracker = GetNode<WorldMapTracker>("/root/BaseNode/WorldMap/Player/Tracker");
    }
 
-   public void OnBodyEntered(Node2D body)
+   public void OnBodyEntered(Node3D body)
    {
+      GD.Print(body.Name);
       if (body.Name == "Player")
       {
          if (!forceOpens)
          {
-            worldMapController.ReceiveIntersectionData(textLabelName, locationName, entrancePointName);
+            worldMapTracker.ReceiveIntersectionData(textLabelName, locationName, entrancePointName);
          }
          else
          {
-            worldMapController.ExitWorldMap(locationName, textLabelName, entrancePointName);
+            worldMapTracker.ExitWorldMap(locationName, textLabelName, entrancePointName);
          }
       }
    }
 
-   public void OnBodyExited(Node2D body)
+   public void OnBodyExited(Node3D body)
    {
       if (body.Name == "Player")
       {
-         worldMapController.HideIntersectionLabel();
+         worldMapTracker.HideIntersectionLabel();
       }
    }
 }
