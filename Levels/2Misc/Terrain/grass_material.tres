@@ -1,15 +1,22 @@
 [gd_resource type="ShaderMaterial" load_steps=4 format=3 uid="uid://es5vmlg1c36f"]
 
-[ext_resource type="Shader" uid="uid://cottgkqx8ie2h" path="res://Levels/2Misc/Terrain/grass_shader.tres" id="1_iario"]
+[ext_resource type="Shader" path="res://Levels/2Misc/Terrain/grass.gdshader" id="1_vpf0f"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_hwcdn"]
-fractal_type = 0
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jy4xt"]
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_uhyt8"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_p3ii8"]
 seamless = true
-noise = SubResource("FastNoiseLite_hwcdn")
+noise = SubResource("FastNoiseLite_jy4xt")
 
 [resource]
 render_priority = 0
-shader = ExtResource("1_iario")
-shader_parameter/WindNoise = SubResource("NoiseTexture2D_uhyt8")
+shader = ExtResource("1_vpf0f")
+shader_parameter/top_color = Color(0.223529, 0.423529, 0.180392, 1)
+shader_parameter/bottom_color = Color(0, 0.270588, 0, 1)
+shader_parameter/ambient_occlusion_factor = 0.3
+shader_parameter/specular_strength = 0.0
+shader_parameter/wind_direction = Vector3(1, -0.3, 1)
+shader_parameter/wind_strength = 0.3
+shader_parameter/wind_noise_size = 0.05
+shader_parameter/wind_noise_speed = 0.1
+shader_parameter/wind_noise = SubResource("NoiseTexture2D_p3ii8")

@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8rpw3mtavu3e"]
+
+[ext_resource type="Script" path="res://WorldMap/0Core/WorldMapLocation.cs" id="1_gvcex"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_flbew"]
+size = Vector3(2, 1, 1)
+
+[node name="Cabin" type="Area3D"]
+transform = Transform3D(0.842781, 0, -0.538256, 0, 1, 0, 0.538256, 0, 0.842781, 3.68732, 0.582915, 16.1102)
+script = ExtResource("1_gvcex")
+textLabelName = "Dathrel's Cabin"
+locationName = "dathrel_cabin"
+entrancePointName = "EntrancePoint"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_flbew")
+
+[connection signal="body_entered" from="." to="." method="OnBodyEntered"]
+[connection signal="body_exited" from="." to="." method="OnBodyExited"]

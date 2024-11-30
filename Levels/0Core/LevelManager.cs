@@ -111,7 +111,7 @@ public partial class LevelManager : Node
 
       if (baseNode.HasNode("WorldMap"))
       {
-         Node2D worldMap = baseNode.GetNode<Node2D>("WorldMap");
+         Node3D worldMap = baseNode.GetNode<Node3D>("WorldMap");
          baseNode.RemoveChild(worldMap);
          worldMap.QueueFree();
       }

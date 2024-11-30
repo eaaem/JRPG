@@ -69,6 +69,7 @@ public partial class ObjectBrush : EditorPlugin
 
          Reset();
          currentSet.Multimesh.Mesh.Changed -= CreateMesh;
+
          DestroyMesh();
          currentSet = null;
       }
@@ -217,6 +218,38 @@ public partial class ObjectBrush : EditorPlugin
          return Vector3.Zero;
       }
    }
+
+   /*System.Collections.Generic.List<Vector3> GeneratePoints(Vector3 initialPoint)
+   {
+      System.Collections.Generic.List<Vector3> result = new System.Collections.Generic.List<Vector3>();
+      result.Add(initialPoint);
+
+      for (int i = 1; i < currentSet.PaintQuantity; i++)
+      {
+         Vector3 point = new Vector3((float)GD.RandRange(initialPoint.X - currentSet.BrushRadius, initialPoint.X + currentSet.BrushRadius), initialPoint.Y + 15f, 
+                                     (float)GD.RandRange(initialPoint.Z - currentSet.BrushRadius, initialPoint.Z + currentSet.BrushRadius));
+
+         PhysicsDirectSpaceState3D spaceState = GetViewport().World3D.DirectSpaceState;
+         PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(point, point - (Vector3.Down * 50f), 64);
+         query.CollideWithAreas = true;
+
+         var raycast = spaceState.IntersectRay(query);
+
+         if (raycast.Count > 0)
+         {
+            GD.Print("Found");
+            point = (Vector3)raycast["position"];
+         }
+         else
+         {
+            continue;
+         }
+
+         result.Add(point);
+      }
+
+      return result;
+   }*/
 
    void MouseButtonDown(Vector3 point)
    {

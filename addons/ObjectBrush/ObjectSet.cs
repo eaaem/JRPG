@@ -106,6 +106,28 @@ public partial class ObjectSet : MultiMeshInstance3D
       }
    }
 
+   [Export]
+   public int paintQuantity = 1;
+   /// <summary>
+   /// Not affected by paintQuantity; it just tries to fill a grid of brushRadius size.
+   /// </summary>
+   private bool gridPaint;
+   [Export]
+   private bool GridPaint
+   {
+      get
+      {
+         return gridPaint;
+      }
+      set
+      {
+         gridPaint = value;
+         NotifyPropertyListChanged();
+      }
+   }
+
+   private float gridSpaceSize;
+
    public override void _EnterTree()
    {
       if (Multimesh == null)
@@ -119,9 +141,59 @@ public partial class ObjectSet : MultiMeshInstance3D
 
    public void AddMesh(Vector3 position, Vector3 overridenRotation)
    {
+      if (!gridPaint)
+      {
+         for (int i = 0; i < paintQuantity; i++)
+         {
+            SetInstance(position, overridenRotation);
+         }
+      }
+      else
+      {
+         Vector3 point = new Vector3(position.X - brushRadius / 2f, position.Y, position.Z - brushRadius / 2f);
+         int quantity = (int)(brushRadius * brushRadius * (1f / (gridSpaceSize * gridSpaceSize)));
+
+         for (int i = 0; i < quantity; i++)
+         {
+            SetInstance(point, overridenRotation);
+            point = new Vector3(point.X, point.Y, point.Z + gridSpaceSize);
+
+            if (point.Z >= position.Z + brushRadius / 2f)
+            {
+               point.X += gridSpaceSize;
+               point.Z = position.Z - brushRadius / 2f;
+            }
+         }
+      }
+   }
+
+   void SetInstance(Vector3 position, Vector3 overridenRotation)
+   {
+      Vector3 point = position;
+
+      if (paintQuantity > 1 || gridPaint)
+      {
+         if (paintQuantity > 1)
+         {
+            point = new Vector3((float)GD.RandRange(position.X - brushRadius / 2f, position.X + brushRadius / 2f), position.Y, 
+                                 (float)GD.RandRange(position.Z - brushRadius / 2f, position.Z + brushRadius / 2f));
+         }
+         
+         PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
+         PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(point, point - (Vector3.Down * 50f), 64);
+         query.CollideWithAreas = true;
+
+         var result = spaceState.IntersectRay(query);
+
+         if (result.Count > 0)
+         {
+            point = (Vector3)result["position"];
+         }
+      }
+
       instanceCounter++;
 
-      Transform3D transform = new Transform3D(Basis.Identity, position - GlobalPosition);
+      Transform3D transform = new Transform3D(Basis.Identity, point - GlobalPosition);
 
       if (overridenRotation == Vector3.Zero)
       {
@@ -142,7 +214,7 @@ public partial class ObjectSet : MultiMeshInstance3D
       if (randomizeScale)
       {
          Vector3 scale = new Vector3((float)GD.RandRange(lowerScale.X, upperScale.X), (float)GD.RandRange(lowerScale.Y, upperScale.Y), 
-                                     (float)GD.RandRange(lowerScale.Z, upperScale.Z));
+                                    (float)GD.RandRange(lowerScale.Z, upperScale.Z));
          transform.Basis = transform.Basis.Scaled(scale);
       }
 
@@ -311,8 +383,16 @@ public partial class ObjectSet : MultiMeshInstance3D
             { "type", (int)Variant.Type.Bool }
          });
       }
-      
 
+      if (GridPaint)
+      {
+         result.Add(new Dictionary()
+         {
+            { "name", $"gridSpaceSize" },
+            { "type", (int)Variant.Type.Float }
+         });
+      }
+      
       return result;
    }
 }

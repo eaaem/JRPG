@@ -10,7 +10,6 @@ public partial class MenuManager : Node
    public CharacterController controller;
    private AnimationPlayer animationPlayer;
    private TabContainer container;
-   //public bool closeDisabled;
 
    SettingsMenuManager settingsMenuManager;
    MiscMenuManager miscMenuManager;
@@ -99,7 +98,7 @@ public partial class MenuManager : Node
 
       if (baseNode.HasNode("WorldMap"))
       {
-         baseNode.GetNode<WorldMapController>("WorldMap/Player").DisableMovement = true;
+         baseNode.GetNode<CharacterController>("WorldMap/Player").DisableMovement = true;
       }
    }
 
@@ -112,7 +111,7 @@ public partial class MenuManager : Node
 
       if (baseNode.HasNode("WorldMap"))
       {
-         baseNode.GetNode<WorldMapController>("WorldMap/Player").DisableMovement = false;
+         baseNode.GetNode<CharacterController>("WorldMap/Player").DisableMovement = false;
       }
    }
 

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bnt7c10hgiy1d"]
+
+[ext_resource type="Shader" path="res://Levels/2Misc/Terrain/water.gdshader" id="1_cygvl"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ii40a"]
+render_priority = 0
+shader = ExtResource("1_cygvl")
+shader_parameter/output_color = Color(0, 0.2, 1, 1)
+shader_parameter/amount = 0.569
+shader_parameter/beer_factor = 2.0
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i1h7t"]
+material = SubResource("ShaderMaterial_ii40a")
+size = Vector2(100, 100)
+subdivide_width = 50
+subdivide_depth = 50
+
+[node name="Water" type="MeshInstance3D"]
+mesh = SubResource("PlaneMesh_i1h7t")

@@ -21,7 +21,6 @@ public partial class WorldMapLocation : Node
 
    public void OnBodyEntered(Node3D body)
    {
-      GD.Print(body.Name);
       if (body.Name == "Player")
       {
          if (!forceOpens)
