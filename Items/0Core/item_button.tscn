@@ -1,10 +1,13 @@
-[gd_scene load_steps=3 format=3 uid="uid://dbbaek7pmrokf"]
+[gd_scene load_steps=4 format=3 uid="uid://dbbaek7pmrokf"]
 
+[ext_resource type="Theme" uid="uid://b1ndyocqpom7" path="res://Menus/0Core/small_button.tres" id="1_0tbm0"]
 [ext_resource type="Script" path="res://Combat/0Core/ItemResourceHolder.cs" id="1_8htmd"]
 [ext_resource type="Script" path="res://Core/CustomTooltipButton.cs" id="1_hl6gy"]
 
 [node name="ItemButton" type="Button"]
-custom_minimum_size = Vector2(320, 0)
+custom_minimum_size = Vector2(500, 60)
+theme = ExtResource("1_0tbm0")
+theme_override_font_sizes/font_size = 25
 text = "This is an item"
 alignment = 0
 script = ExtResource("1_hl6gy")

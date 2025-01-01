@@ -1,10 +1,31 @@
-[gd_resource type="Theme" load_steps=2 format=3 uid="uid://cfmeoqvxshi43"]
+[gd_resource type="Theme" load_steps=6 format=3 uid="uid://cfmeoqvxshi43"]
 
 [ext_resource type="FontFile" uid="uid://cu53hbuj171ub" path="res://Menus/0Core/Merriweather-Regular.ttf" id="1_cb4ja"]
+[ext_resource type="FontFile" uid="uid://b2twoq48myxmy" path="res://Menus/0Core/Merriweather-Bold.ttf" id="2_beh6t"]
+[ext_resource type="FontFile" uid="uid://cg2kgq5pvsqi" path="res://Menus/0Core/Merriweather-BoldItalic.ttf" id="3_xmq2m"]
+[ext_resource type="FontFile" uid="uid://ccrrftptiji35" path="res://Menus/0Core/Merriweather-Italic.ttf" id="4_wnuj8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mii6e"]
+bg_color = Color(0.0823529, 0.0823529, 0.0745098, 0.803922)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.835294, 0.835294, 0.419608, 0.733333)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0)
 
 [resource]
-Label/colors/font_outline_color = Color(0, 0, 0, 1)
-Label/colors/font_shadow_color = Color(0, 0, 0, 1)
-Label/constants/outline_size = 3
-Label/constants/shadow_outline_size = 3
+Button/colors/font_color = Color(1, 1, 1, 1)
+Button/fonts/font = ExtResource("1_cb4ja")
 Label/fonts/font = ExtResource("1_cb4ja")
+RichTextLabel/colors/default_color = Color(1, 1, 0.886275, 1)
+RichTextLabel/font_sizes/normal_font_size = 25
+RichTextLabel/fonts/bold_font = ExtResource("2_beh6t")
+RichTextLabel/fonts/bold_italics_font = ExtResource("3_xmq2m")
+RichTextLabel/fonts/italics_font = ExtResource("4_wnuj8")
+RichTextLabel/fonts/normal_font = ExtResource("1_cb4ja")
+TooltipPanel/styles/panel = SubResource("StyleBoxFlat_mii6e")

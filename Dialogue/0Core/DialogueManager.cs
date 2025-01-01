@@ -25,7 +25,7 @@ public partial class DialogueManager : Node
    [Export]
    public InspectorDialogueInteraction[] dialoguesInThisRegion = new InspectorDialogueInteraction[5];
 
-   public CanvasGroup DialogueContainer { get; set; }
+   public Control DialogueContainer { get; set; }
    private Sprite2D sprite;
    private RichTextLabel body;
    private RichTextLabel title;
@@ -60,8 +60,8 @@ public partial class DialogueManager : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-      DialogueContainer = GetParent<CanvasGroup>();
-      sprite = GetNode<Sprite2D>("Sprite");
+      DialogueContainer = GetParent<Control>();
+      sprite = GetNode<Sprite2D>("SpriteHolder/Sprite");
       body = GetNode<RichTextLabel>("Body");
       title = GetNode<RichTextLabel>("Title");
 
@@ -159,34 +159,22 @@ public partial class DialogueManager : Node
 
       if (currentObject.characterType != CharacterType.None)
       {
-        // body.Size = new Vector2(dialogueWidth - spriteSize - buffer, dialogueHeight - titleHeight);
-         //body.Position = new Vector2(spriteSize + buffer, titleHeight);
-         //title.Size = new Vector2(dialogueWidth - spriteSize - buffer, titleHeight);
-         //title.Position = new Vector2(spriteSize + buffer, 0);
          title.Text = currentObject.characterType + "";
 
          if (currentObject.emotion != Emotion.None)
          {
-            Texture2D spriteTexture = GD.Load<Texture2D>("res://Dialogue/Sprites/" + currentObject.characterType + "/" + currentObject.emotion + ".png");
+            Texture2D spriteTexture = GD.Load<Texture2D>("res://Dialogue/UI/" + currentObject.characterType + "/" + currentObject.emotion + ".png");
             sprite.Texture = spriteTexture;
             sprite.Visible = true;
          }
       }
       else
       {
-       //  body.Size = new Vector2(dialogueWidth, dialogueHeight - titleHeight);
-         //body.Position = new Vector2(0, titleHeight);
-        // title.Size = new Vector2(dialogueWidth, titleHeight);
-        // title.Position = Vector2.Zero;
          title.Text = currentObject.speaker;
       }
-
-      body.Size = new Vector2(dialogueWidth, dialogueHeight - titleHeight);
-      body.Position = new Vector2(0, titleHeight);
-      title.Size = new Vector2(dialogueWidth, titleHeight);
-      title.Position = Vector2.Zero;
   
-      body.Text = "";
+      body.VisibleCharacters = 0;
+      body.Text = currentObject.content;
 
       if (currentDialogueList.branchingDialogues.Length > 0)
       {
@@ -206,7 +194,7 @@ public partial class DialogueManager : Node
 
          validToSkip = true;
 
-         body.Text += currentObject.content[i];
+         body.VisibleCharacters++;
 
          // Add BBcode tags in blocks; otherwise, they'll be entered in awkwardly one character at a time
          if (currentObject.content[i] == '[')
@@ -214,7 +202,7 @@ public partial class DialogueManager : Node
             while (currentObject.content[i] != ']')
             {
                i++;
-               body.Text += currentObject.content[i];
+               body.VisibleCharacters++;
             }
          }
          
@@ -318,7 +306,7 @@ public partial class DialogueManager : Node
             else if (validToSkip)
             {
                // Complete the content immediately if the player hits interact while it's still being typed in
-               body.Text = currentDialogueList.dialogues[CurrentIndex].content;
+               body.VisibleCharacters = -1;
                currentObjectFinished = true;
             }
          }

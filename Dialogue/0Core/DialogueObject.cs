@@ -18,7 +18,11 @@ public enum Emotion
    Tired,
    Dismayed,
    Smug,
-   Avoidant
+   Avoidant,
+   Exasperated,
+   Concerned,
+   Unhappy,
+   Playful
 }
 
 /// <summary>

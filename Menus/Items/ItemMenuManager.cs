@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
-public partial class ItemMenuManager : Node
+public partial class ItemMenuManager : Panel
 {
    [Export]
    public PackedScene itemButtonPrefab;
@@ -37,25 +37,27 @@ public partial class ItemMenuManager : Node
       for (int i = 0; i < managers.PartyManager.Items.Count; i++)
       {
          InventoryItem currentItem = managers.PartyManager.Items[i];
+
+         Button currentButton = itemButtonPrefab.Instantiate<Button>();
+
+         currentButton.GetNode<ItemResourceHolder>("ResourceHolder").itemResource = currentItem;
+
+         currentButton.Text = "  " + currentItem.item.name + " (" + currentItem.quantity + "x)";
+         currentButton.TooltipText = currentItem.item.description;
+         currentButton.Name = "ItemButton" + (i + 1);
+
+         if (!currentItem.item.usableOutsideCombat)
+         {
+            currentButton.Disabled = true;
+         }
+
          if (currentItem.item.scriptPath != "")
          {
-            Button currentButton = itemButtonPrefab.Instantiate<Button>();
-
-            currentButton.GetNode<ItemResourceHolder>("ResourceHolder").itemResource = currentItem;
-
             Node2D scriptHolder = currentButton.GetNode<Node2D>("ScriptHolder");
             scriptHolder.SetScript(GD.Load<CSharpScript>(currentItem.item.scriptPath));
-
-            currentButton.Text = currentItem.item.name + " (" + currentItem.quantity + "x)";
-            currentButton.TooltipText = currentItem.item.description;
-            currentButton.Name = "ItemButton" + (i + 1);
-            itemsContainer.AddChild(currentButton);
-
-            if (!currentItem.item.usableOutsideCombat)
-            {
-               currentButton.Disabled = true;
-            }
          }
+
+         itemsContainer.AddChild(currentButton);
       }
    }
 
@@ -72,6 +74,10 @@ public partial class ItemMenuManager : Node
    {
       Member member = GetMemberFromName(memberName);
       currentTarget = member;
+
+      Popup popup = GD.Load<PackedScene>("res://Core/popup.tscn").Instantiate<Popup>();
+      GetNode<CanvasLayer>("/root/BaseNode/UI/Overlay").AddChild(popup);
+      popup.ReceiveInfo(1.5f, currentItem.item.outOfCombatUseMessage);
 
       EmitSignal(SignalName.ItemUse);
 
@@ -111,7 +117,7 @@ public partial class ItemMenuManager : Node
          }
       }
 
-      itemButton.Text = inventoryItem.item.name + " (" + inventoryItem.quantity + "x, " + inventoryItem.item.price + " each)";
+      itemButton.Text = "  " + inventoryItem.item.name + " (" + inventoryItem.quantity + "x)";
 
       if (inventoryItem.quantity <= 0)
       {

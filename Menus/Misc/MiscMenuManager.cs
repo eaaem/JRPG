@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class MiscMenuManager : Node
+public partial class MiscMenuManager : Panel
 {
    [Export]
    private ManagerReferenceHolder managers;

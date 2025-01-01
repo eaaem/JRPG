@@ -22,3 +22,4 @@ itemCategory = 0
 price = 7
 affectedStats = SubResource("Resource_sk4g5")
 usableOutsideCombat = true
+outOfCombatUseMessage = "Regenerated mana for 1 use"

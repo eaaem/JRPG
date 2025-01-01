@@ -1,0 +1,104 @@
+[gd_resource type="AnimationNodeBlendTree" load_steps=22 format=3 uid="uid://bb1oypehus0u"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wk5t4"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_y612c"]
+animation = &"Run"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_jbo8h"]
+animation = &"Walk"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_10gv5"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_wk5t4")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_y612c")
+blend_point_1/pos = 1.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_jbo8h")
+blend_point_2/pos = 0.0
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_w4spe"]
+animation = &"Hit"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_itvs7"]
+animation = &"Cast"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_30r70"]
+animation = &"Dodge"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7v73u"]
+animation = &"Death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_4pvdr"]
+animation = &"Attack"
+
+[sub_resource type="Curve" id="Curve_b800d"]
+_data = [Vector2(0.910088, 0.0210526), 0.0, 0.0, 0, 0, Vector2(0.993421, 0.873684), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_4n146"]
+fadeout_curve = SubResource("Curve_b800d")
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_qtxi4"]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_ethtj"]
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_ato4d"]
+
+[sub_resource type="AnimationNodeOneShot" id="AnimationNodeOneShot_trhvt"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_tpk76"]
+animation = &"CombatIdle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_xmeum"]
+animation = &"CombatActive"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_7kcpt"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_tpk76")
+blend_point_0/pos = -1.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_xmeum")
+blend_point_1/pos = 1.0
+
+[sub_resource type="AnimationNodeTimeSeek" id="AnimationNodeTimeSeek_ltx06"]
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_aj0br"]
+graph_offset = Vector2(-76.489, -95.7128)
+nodes/Animation/node = SubResource("AnimationNodeAnimation_4pvdr")
+nodes/Animation/position = Vector2(0, 80)
+"nodes/Animation 2/node" = SubResource("AnimationNodeAnimation_w4spe")
+"nodes/Animation 2/position" = Vector2(180, 180)
+"nodes/Animation 3/node" = SubResource("AnimationNodeAnimation_itvs7")
+"nodes/Animation 3/position" = Vector2(460, 280)
+"nodes/Animation 4/node" = SubResource("AnimationNodeAnimation_30r70")
+"nodes/Animation 4/position" = Vector2(700, 300)
+"nodes/Animation 5/node" = SubResource("AnimationNodeAnimation_7v73u")
+"nodes/Animation 5/position" = Vector2(900, 400)
+nodes/Attack/node = SubResource("AnimationNodeOneShot_4n146")
+nodes/Attack/position = Vector2(200, -80)
+nodes/Cast/node = SubResource("AnimationNodeOneShot_qtxi4")
+nodes/Cast/position = Vector2(680, 60)
+nodes/DeathHandler/node = SubResource("AnimationNodeBlend2_ethtj")
+nodes/DeathHandler/position = Vector2(1180, 180)
+nodes/Dodge/node = SubResource("AnimationNodeOneShot_ato4d")
+nodes/Dodge/position = Vector2(920, 100)
+nodes/Hit/node = SubResource("AnimationNodeOneShot_trhvt")
+nodes/Hit/position = Vector2(460, 40)
+nodes/IdleOrActive/node = SubResource("AnimationNodeBlendSpace1D_7kcpt")
+nodes/IdleOrActive/position = Vector2(-20, -60)
+nodes/ResetDeath/node = SubResource("AnimationNodeTimeSeek_ltx06")
+nodes/ResetDeath/position = Vector2(1040, 340)
+nodes/output/position = Vector2(1340, 80)
+node_connections = [&"output", 0, &"DeathHandler", &"Attack", 0, &"IdleOrActive", &"Attack", 1, &"Animation", &"Cast", 0, &"Hit", &"Cast", 1, &"Animation 3", &"DeathHandler", 0, &"Dodge", &"DeathHandler", 1, &"ResetDeath", &"Dodge", 0, &"Cast", &"Dodge", 1, &"Animation 4", &"Hit", 0, &"Attack", &"Hit", 1, &"Animation 2", &"ResetDeath", 0, &"Animation 5"]
+
+[sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_wvbys"]
+
+[resource]
+graph_offset = Vector2(-194.7, 31.7314)
+nodes/BasicMovement/node = SubResource("AnimationNodeBlendSpace1D_10gv5")
+nodes/BasicMovement/position = Vector2(80, 100)
+nodes/Combat/node = SubResource("AnimationNodeBlendTree_aj0br")
+nodes/Combat/position = Vector2(-40, 260)
+nodes/CombatControl/node = SubResource("AnimationNodeBlend2_wvbys")
+nodes/CombatControl/position = Vector2(260, 140)
+nodes/output/position = Vector2(460, 100)
+node_connections = [&"output", 0, &"CombatControl", &"CombatControl", 0, &"BasicMovement", &"CombatControl", 1, &"Combat"]

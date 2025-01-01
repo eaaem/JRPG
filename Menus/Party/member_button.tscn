@@ -1,80 +1,108 @@
-[gd_scene load_steps=4 format=3 uid="uid://dl1uyhuu43vfo"]
+[gd_scene load_steps=10 format=3 uid="uid://dl1uyhuu43vfo"]
 
 [ext_resource type="Script" path="res://Menus/Party/MemberButton.cs" id="1_tar3v"]
+[ext_resource type="Theme" uid="uid://b1ndyocqpom7" path="res://Menus/0Core/small_button.tres" id="1_xobhq"]
+[ext_resource type="Theme" uid="uid://cfmeoqvxshi43" path="res://Menus/0Core/basic_label_text.tres" id="1_yw0us"]
+[ext_resource type="Texture2D" uid="uid://c4qlde51dy5va" path="res://Menus/0Core/medium_button.png" id="2_l5vmd"]
+[ext_resource type="Texture2D" uid="uid://cwod8jg274urr" path="res://Menus/0Core/medium_button_hover.png" id="3_t16t4"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_03k3u"]
+texture = ExtResource("2_l5vmd")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l7eyr"]
+texture = ExtResource("3_t16t4")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7h28f"]
 bg_color = Color(0.435294, 0.662745, 0.478431, 0.603922)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_13bwm"]
-bg_color = Color(0.423529, 0.588235, 0.941176, 0.756863)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oj4vq"]
+bg_color = Color(0.439216, 0.615686, 0.788235, 0.603922)
+corner_radius_top_left = 7
+corner_radius_top_right = 7
+corner_radius_bottom_right = 7
+corner_radius_bottom_left = 7
 
 [node name="Member" type="Button"]
-custom_minimum_size = Vector2(320, 176)
-offset_right = 320.0
-offset_bottom = 176.0
+custom_minimum_size = Vector2(300, 170)
+offset_right = 300.0
+offset_bottom = 170.0
+size_flags_horizontal = 4
+theme = ExtResource("1_xobhq")
+theme_override_styles/normal = SubResource("StyleBoxTexture_03k3u")
+theme_override_styles/hover = SubResource("StyleBoxTexture_l7eyr")
 
 [node name="Highlight" type="Panel" parent="."]
 visible = false
 layout_mode = 0
-offset_right = 320.0
-offset_bottom = 176.0
+offset_right = 300.0
+offset_bottom = 170.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_7h28f")
 
 [node name="SwapHighlight" type="Panel" parent="."]
 visible = false
 layout_mode = 0
-offset_right = 320.0
-offset_bottom = 176.0
+offset_right = 300.0
+offset_bottom = 170.0
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_13bwm")
+theme_override_styles/panel = SubResource("StyleBoxFlat_oj4vq")
 
 [node name="Title" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 8.0
-offset_right = 320.0
-offset_bottom = 40.0
+offset_left = 17.0
+offset_top = 6.0
+offset_right = 329.0
+offset_bottom = 46.0
 mouse_filter = 2
+theme = ExtResource("1_yw0us")
 theme_override_font_sizes/normal_font_size = 25
 text = "Name"
 
 [node name="Level" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 40.0
-offset_right = 320.0
-offset_bottom = 72.0
+offset_left = 17.0
+offset_top = 41.0
+offset_right = 329.0
+offset_bottom = 73.0
 mouse_filter = 2
+theme = ExtResource("1_yw0us")
 theme_override_font_sizes/normal_font_size = 20
 text = "Level:"
 
 [node name="Health" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 72.0
-offset_right = 320.0
-offset_bottom = 104.0
+offset_left = 17.0
+offset_top = 73.0
+offset_right = 329.0
+offset_bottom = 105.0
 mouse_filter = 2
+theme = ExtResource("1_yw0us")
 theme_override_font_sizes/normal_font_size = 20
 text = "Health:"
 
 [node name="Mana" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 104.0
-offset_right = 320.0
-offset_bottom = 136.0
+offset_left = 17.0
+offset_top = 105.0
+offset_right = 329.0
+offset_bottom = 137.0
 mouse_filter = 2
+theme = ExtResource("1_yw0us")
 theme_override_font_sizes/normal_font_size = 20
 text = "Mana:"
 
 [node name="Exp" type="RichTextLabel" parent="."]
 layout_mode = 0
-offset_left = 8.0
-offset_top = 136.0
-offset_right = 320.0
-offset_bottom = 168.0
+offset_left = 17.0
+offset_top = 137.0
+offset_right = 329.0
+offset_bottom = 169.0
 mouse_filter = 2
+theme = ExtResource("1_yw0us")
 theme_override_font_sizes/normal_font_size = 20
 text = "EXP:"
 

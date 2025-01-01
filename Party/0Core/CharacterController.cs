@@ -19,6 +19,7 @@ public partial class CharacterController : CharacterBody3D
    private Node3D model;
    private AnimationPlayer animationPlayer;
    private AnimationTree animationTree;
+   private AnimationTree methodsTree;
 
    private Node3D weapon;
    private Node3D weaponAnchor;
@@ -53,6 +54,7 @@ public partial class CharacterController : CharacterBody3D
       model = GetNode<Node3D>("Model");
       animationPlayer = GetNode<AnimationPlayer>("Model/AnimationPlayer");
       animationTree = GetNode<AnimationTree>("AnimationTree");
+      methodsTree = GetNode<AnimationTree>("MethodsTree");
 
       weapon = GetNode<Node3D>("Weapon");
       weaponAnchor = GetNode<Node3D>("BackAnchor");
@@ -145,6 +147,7 @@ public partial class CharacterController : CharacterBody3D
          }
 
          animationTree.Set("parameters/BasicMovement/blend_position", MovementBlend / 10f);
+         methodsTree.Set("parameters/Movement/blend_position", MovementBlend / 10f);
          Velocity = velocity;
 
          MoveAndSlide();
@@ -152,6 +155,7 @@ public partial class CharacterController : CharacterBody3D
       else
       {
          animationTree.Set("parameters/BasicMovement/blend_position", -1f);
+         methodsTree.Set("parameters/Movement/blend_position", -1f);
       }
 	}
 

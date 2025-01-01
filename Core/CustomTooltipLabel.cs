@@ -14,6 +14,7 @@ public partial class CustomTooltipLabel : RichTextLabel
    {
       RichTextLabel tooltip = customTooltipScene.Instantiate<RichTextLabel>();
       tooltip.Text = forText;
+
       return tooltip;
    }
 }

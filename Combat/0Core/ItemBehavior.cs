@@ -24,9 +24,10 @@ public abstract partial class ItemBehavior : Node
    public void ReadyBehavior()
    {
       // This needs to be its own function for scripts that override the ready behavior (those scripts need to call this, or else they'll miss important behaviors)
-      combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManagerObj");
+      combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManager");
+      itemManager = combatManager.GetNode<CombatItemManager>("ItemManager");
 
-      itemMenuManager = GetNode<ItemMenuManager>("/root/BaseNode/UI/PartyMenuLayer/PartyMenu/TabContainer/Items");
+      itemMenuManager = GetNode<ItemMenuManager>("/root/BaseNode/UI/PartyMenuLayer/PartyMenu/MenuContainer/Items");
       menuManager = itemMenuManager.GetNode<MenuManager>("../../MenuManager");
       cancelButton = GetNode<Button>("/root/BaseNode/UI/Options/CancelButton");
 

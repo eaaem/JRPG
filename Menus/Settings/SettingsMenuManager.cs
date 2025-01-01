@@ -3,12 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Reflection.PortableExecutable;
 
-public partial class SettingsMenuManager : Node
+public partial class SettingsMenuManager : Panel
 {
    private int activeTab = 0;
 
-   List<Panel> panels;
-   List<Button> tabs;
+   [Export]
+   private ManagerReferenceHolder managers;
+
+   [Export]
+   Panel[] panels;
+   [Export]
+   Button[] tabs;
 
    Panel videoPanel;
    Panel controlsPanel;
@@ -38,9 +43,6 @@ public partial class SettingsMenuManager : Node
 
       videoButton = GetNode<Button>("ButtonsContainer/Video");
       controlsButton = GetNode<Button>("ButtonsContainer/Controls");
-
-      panels = new List<Panel>{ videoPanel, controlsPanel };
-      tabs = new List<Button>{ videoButton, controlsButton };
 
       InitializeResolutions();
 
@@ -100,6 +102,11 @@ public partial class SettingsMenuManager : Node
             controlsPanel.GetNode<SpinBox>("Sensitivity/SpinBox").Value = characterController.HorizontalSensitivity * 10f;
             controlsPanel.GetNode<Slider>("Sensitivity/Slider").Value = characterController.HorizontalSensitivity * 10f;
          }
+         else if (section == "audio")
+         {
+            managers.AudioManager.MusicVolume = (float)configFile.GetValue(section, "music");
+            GetNode<Slider>("Audio/Music/Slider").Value = managers.AudioManager.MusicVolume;
+         }
       }
    }
 
@@ -115,7 +122,7 @@ public partial class SettingsMenuManager : Node
 
    public void LoadSettingsMenu()
    {
-      for (int i = 1; i < tabs.Count; i++)
+      for (int i = 1; i < tabs.Length; i++)
       {
          tabs[i].Disabled = false;
          panels[i].Visible = false;
@@ -183,6 +190,14 @@ public partial class SettingsMenuManager : Node
       controlsPanel.GetNode<Slider>("Sensitivity/Slider").Value = value;
 
       configFile.SetValue("controls", "sensitivity", characterController.HorizontalSensitivity);
+   }
+
+   void OnSlideMusicVolume(float value)
+   {
+      managers.AudioManager.MusicVolume = value;
+      //GetNode<Label>("Audio/Music/Number").Text = managers.AudioManager.MusicVolume;
+
+      configFile.SetValue("audio", "music", managers.AudioManager.MusicVolume);
    }
 
    public override void _ExitTree()

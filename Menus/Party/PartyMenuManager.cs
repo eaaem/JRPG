@@ -2,7 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 
-public partial class PartyMenuManager : Node
+public partial class PartyMenuManager : Panel
 {
    [Export]
    private PackedScene memberButtonPrefab;
@@ -13,7 +13,7 @@ public partial class PartyMenuManager : Node
    [Export]
    private ManagerReferenceHolder managers;
 
-   CanvasGroup menu;
+   Control menu;
    VBoxContainer partyList;
    VBoxContainer statsList;
    VBoxContainer abilityList;
@@ -41,7 +41,7 @@ public partial class PartyMenuManager : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-      menu = GetParent().GetParent<CanvasGroup>();
+      menu = GetParent().GetParent<Control>();
 
       partyList = GetNode<VBoxContainer>("ListBackground/List/VBoxContainer");
       statsList = GetNode<VBoxContainer>("Stats/VBoxContainer");
@@ -147,6 +147,9 @@ public partial class PartyMenuManager : Node
       {
          addPartyButton.Disabled = true;
       }
+
+      Sprite2D sprite = GetNode<Sprite2D>("Image");
+      sprite.Texture = GD.Load<Texture2D>("res://Party/" + memberName + "/close_up.png");
    }
 
    void LoadMemberButton(Member partyMember)
@@ -188,7 +191,11 @@ public partial class PartyMenuManager : Node
    void LoadAbilities(Member partyMember)
    {
       ClearAbilities();
-      GenerateAbilityLabel(partyMember.specialAbility);
+
+      if (partyMember.level >= 3)
+      {
+         GenerateAbilityLabel(partyMember.specialAbility);
+      }
 
       for (int i = 0; i < partyMember.abilities.Count; i++)
       {
@@ -221,12 +228,12 @@ public partial class PartyMenuManager : Node
          Button button = equipmentList.GetNode<Button>(partyMember.equipment[i].itemType + "");
          if (partyMember.equipment[i].name == null)
          {
-            button.Text = partyMember.equipment[i].itemType + ": None";
+            button.Text = "  " + partyMember.equipment[i].itemType + ": None";
             button.TooltipText = "";
          }
          else
          {
-            button.Text = partyMember.equipment[i].itemType + ": " + partyMember.equipment[i].name;
+            button.Text = "  " + partyMember.equipment[i].itemType + ": " + partyMember.equipment[i].name;
             button.TooltipText = partyMember.equipment[i].description;
          }
       }
@@ -483,7 +490,6 @@ public partial class PartyMenuManager : Node
 
    void OnRemovePartyButtonDown()
    {
-      GD.Print("Removing");
       currentMember.isInParty = false;
       currentMember.model.GetNode<OverworldPartyController>("../" + currentMember.model.Name).IsActive = false;
 
@@ -540,7 +546,7 @@ public partial class PartyMenuManager : Node
       return true;
    }
 
-   void DisableMenu()
+   public void DisableMenu()
    {
       inputDisabled = true;
       foreach (Button button in partyList.GetChildren())
@@ -554,7 +560,7 @@ public partial class PartyMenuManager : Node
       }
    }
 
-   void EnableMenu()
+   public void EnableMenu()
    {
       inputDisabled = false;
       foreach (Button button in partyList.GetChildren())

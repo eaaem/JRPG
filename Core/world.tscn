@@ -1,7 +1,11 @@
-[gd_scene load_steps=153 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=207 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
+[ext_resource type="Script" path="res://Core/AudioManager.cs" id="2_8jy0e"]
+[ext_resource type="AudioStream" uid="uid://c5crs7htp27do" path="res://Menus/0Core/ui_hover.wav" id="2_ngvmf"]
+[ext_resource type="Script" path="res://Menus/0Core/ButtonSounds.cs" id="3_v2sov"]
+[ext_resource type="AudioStream" uid="uid://dljm4d518med7" path="res://Menus/0Core/ui_click.wav" id="4_r0itw"]
 [ext_resource type="Script" path="res://Combat/0Core/StatusData.cs" id="4_t2qrl"]
 [ext_resource type="PackedScene" uid="uid://dbbaek7pmrokf" path="res://Items/0Core/item_button.tscn" id="5_2svhw"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatAbilityManager.cs" id="5_ejkmm"]
@@ -56,7 +60,7 @@
 [ext_resource type="Theme" uid="uid://cfmeoqvxshi43" path="res://Menus/0Core/basic_label_text.tres" id="38_6i0oi"]
 [ext_resource type="PackedScene" uid="uid://c08d1vnprgeay" path="res://Levels/1Features/Shop/item_button_prefab.tscn" id="38_xtl2k"]
 [ext_resource type="Script" path="res://Party/0Core/CharacterController.cs" id="39_q0foa"]
-[ext_resource type="PackedScene" uid="uid://c8sbeheqi10fl" path="res://Party/Vakthol/vakthol.glb" id="40_va38g"]
+[ext_resource type="PackedScene" uid="uid://dxo8axv6qyav6" path="res://Party/Vakthol/vakthol.glb" id="40_va38g"]
 [ext_resource type="Theme" uid="uid://dxlsms8vreux4" path="res://Combat/UI/combat_button_theme.tres" id="41_7gkvb"]
 [ext_resource type="PackedScene" uid="uid://yhwlyfetwmre" path="res://Party/Vakthol/vakthol_axe.glb" id="41_8y4r5"]
 [ext_resource type="PackedScene" uid="uid://x3lptq4ur4qe" path="res://Combat/UI/target_button.tscn" id="41_51p5x"]
@@ -66,14 +70,38 @@
 [ext_resource type="Script" path="res://Levels/0Core/LevelManager.cs" id="44_yvp60"]
 [ext_resource type="Script" path="res://Cutscenes/CutsceneManager.cs" id="45_2ss0b"]
 [ext_resource type="Script" path="res://Levels/0Core/DoorBehavior.cs" id="46_2mc4k"]
+[ext_resource type="Texture2D" uid="uid://dhh5y2c86r64c" path="res://Dialogue/UI/dialogue_back.png" id="46_obusw"]
 [ext_resource type="Script" path="res://Menus/Main/MainMenuManager.cs" id="47_k3f71"]
 [ext_resource type="PackedScene" uid="uid://bnl6l7xqjdp2p" path="res://Menus/Other/tutorial_popup.tscn" id="48_a3c2t"]
+[ext_resource type="Texture2D" uid="uid://bg4y1yaayfinc" path="res://Dialogue/UI/Vakthol/Neutral.png" id="50_0sxn0"]
+[ext_resource type="Texture2D" uid="uid://cw6tl38ts70oj" path="res://Menus/0Core/menu_back.png" id="52_ldpry"]
 [ext_resource type="AudioStream" uid="uid://bh73sq4742dhj" path="res://Menus/Main/main_menu.mp3" id="53_icsar"]
 [ext_resource type="Script" path="res://Levels/0Core/MusicHolder.cs" id="54_gsvxg"]
 [ext_resource type="Theme" uid="uid://bv4egxy2hvmih" path="res://Menus/0Core/main_menu_button_theme.tres" id="54_o8lba"]
+[ext_resource type="Texture2D" uid="uid://c8wuab2p5ktgx" path="res://Party/Vakthol/close_up.png" id="54_xi2wh"]
 [ext_resource type="PackedScene" uid="uid://cm85wp3wpxuti" path="res://Combat/UI/transition_particles.tscn" id="55_rp0yf"]
 [ext_resource type="Texture2D" uid="uid://bf6gem1qckp6h" path="res://Menus/0Core/main_menu_back.png" id="57_3sl1u"]
+[ext_resource type="Texture2D" uid="uid://ceoomujjxu6xb" path="res://Menus/Party/stats_back.png" id="57_86m3o"]
 [ext_resource type="FontFile" uid="uid://cg2kgq5pvsqi" path="res://Menus/0Core/Merriweather-BoldItalic.ttf" id="58_bw31p"]
+[ext_resource type="Texture2D" uid="uid://b8i1xavxawjt" path="res://Menus/Party/party_image_border.png" id="58_wmg7h"]
+[ext_resource type="Script" path="res://Core/CustomTooltipButton.cs" id="63_y56r8"]
+[ext_resource type="Theme" uid="uid://b1ndyocqpom7" path="res://Menus/0Core/small_button.tres" id="64_xypp5"]
+[ext_resource type="Texture2D" uid="uid://b3jk6pqnfnj61" path="res://Menus/0Core/back_light_border.png" id="65_078c4"]
+[ext_resource type="Texture2D" uid="uid://bh8y7yaxgcboy" path="res://Menus/0Core/back_light_border_opaque.png" id="67_0gojn"]
+[ext_resource type="Texture2D" uid="uid://bbapqo1qh5j3c" path="res://Menus/0Core/main_menu_background.png" id="75_4g5gp"]
+[ext_resource type="Script" path="res://Party/0Core/CharacterAudioController.cs" id="79_pr45g"]
+[ext_resource type="AudioStream" uid="uid://b7i785pitce5k" path="res://Core/footstep1.wav" id="80_k0a62"]
+[ext_resource type="AudioStream" uid="uid://bok1x07qalrg5" path="res://Core/footstep2.wav" id="81_fnttl"]
+[ext_resource type="AudioStream" uid="uid://cssk5x4i0ki51" path="res://Core/footstep3.wav" id="82_pidmq"]
+[ext_resource type="AudioStream" uid="uid://cti7dd0fwm5ww" path="res://Core/footstep4.wav" id="83_bhx1r"]
+[ext_resource type="AudioStream" uid="uid://b546dpfrw5vpp" path="res://Core/footstep5.wav" id="84_8qd2p"]
+[ext_resource type="AudioStream" uid="uid://bm3i2wii2wk4f" path="res://Core/footstep6.wav" id="85_sjf67"]
+[ext_resource type="AudioStream" uid="uid://c1r2wlvij1wh8" path="res://Core/footsteps_grass1.wav" id="86_y4pru"]
+[ext_resource type="AudioStream" uid="uid://cwvfd71mwaj8u" path="res://Core/footsteps_grass2.wav" id="87_oomc2"]
+[ext_resource type="AudioStream" uid="uid://ekeqosutj7gi" path="res://Core/footsteps_grass3.wav" id="88_huk1f"]
+[ext_resource type="AudioStream" uid="uid://d3y8bkl5eaysb" path="res://Core/footsteps_grass4.wav" id="89_rvlxq"]
+[ext_resource type="AudioStream" uid="uid://d3besxcv2duhq" path="res://Core/footsteps_grass5.wav" id="90_mj2l2"]
+[ext_resource type="AudioStream" uid="uid://ck5donxagp11w" path="res://Core/footsteps_grass6.wav" id="91_ysla0"]
 
 [sub_resource type="Resource" id="Resource_vsscq"]
 script = ExtResource("7_f260g")
@@ -371,6 +399,7 @@ itemCategory = 6
 price = 0
 affectedStats = SubResource("Resource_1lnan")
 usableOutsideCombat = false
+outOfCombatUseMessage = ""
 
 [sub_resource type="Resource" id="Resource_qvkyg"]
 script = ExtResource("15_86siq")
@@ -398,6 +427,7 @@ itemCategory = 3
 price = 0
 affectedStats = SubResource("Resource_e22ji")
 usableOutsideCombat = false
+outOfCombatUseMessage = ""
 
 [sub_resource type="Resource" id="Resource_80ryb"]
 script = ExtResource("15_86siq")
@@ -431,6 +461,7 @@ itemCategory = 3
 price = 0
 affectedStats = SubResource("Resource_mokav")
 usableOutsideCombat = false
+outOfCombatUseMessage = ""
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ufnw2"]
 
@@ -443,6 +474,19 @@ shader_parameter/speed = 0.1
 shader_parameter/scale = 0.0
 shader_parameter/BIAS = 1.0
 shader_parameter/noise = SubResource("NoiseTexture2D_2286b")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y2m82"]
+texture = ExtResource("67_0gojn")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_01vuf"]
+bg_color = Color(1, 0, 0, 0.231373)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jy45v"]
+texture = ExtResource("67_0gojn")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vcft5"]
+texture = ExtResource("67_0gojn")
+modulate_color = Color(0.988235, 0.356863, 0.356863, 1)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_fvio1"]
 
@@ -506,21 +550,145 @@ border_width_top = 5
 border_color = Color(0.968627, 1, 0.639216, 1)
 border_blend = true
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_bnc6q"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qxx6t"]
+texture = ExtResource("46_obusw")
 
-[sub_resource type="CanvasTexture" id="CanvasTexture_42qah"]
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tkfn4"]
+texture = ExtResource("52_ldpry")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_p5qrv"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_40ql0"]
+texture = ExtResource("57_86m3o")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xesmx"]
+texture = ExtResource("58_wmg7h")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jp83i"]
+texture = ExtResource("57_86m3o")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ccywf"]
+texture = ExtResource("57_86m3o")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5b8tm"]
+texture = ExtResource("57_86m3o")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_jc1ty"]
+texture = ExtResource("57_86m3o")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_t1ab5"]
+texture = ExtResource("57_86m3o")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7f43o"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ngw7s"]
+texture = ExtResource("57_86m3o")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xcu0o"]
+texture = ExtResource("57_86m3o")
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_cblsy"]
-color = Color(0.203922, 0.203922, 0.203922, 1)
+color = Color(0.52549, 0.529412, 0.254902, 1)
 grow_begin = 4.0
 thickness = 5
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pw0yk"]
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_i86a6"]
+texture = ExtResource("65_078c4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_makuo"]
+texture = ExtResource("65_078c4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_theuu"]
+texture = ExtResource("65_078c4")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_en4rr"]
+texture = ExtResource("67_0gojn")
+
 [sub_resource type="Theme" id="Theme_oe3fy"]
 PopupMenu/font_sizes/font_size = 30
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_snhpk"]
+
+[sub_resource type="Animation" id="Animation_pp8hq"]
+resource_name = "Blank"
+
+[sub_resource type="Animation" id="Animation_i4xf4"]
+resource_name = "RunMethods"
+loop_mode = 1
+step = 0.01
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioHandler")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.06, 0.53),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"PlayFootstep"
+}, {
+"args": [],
+"method": &"PlayFootstep"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_vnoh0"]
+resource_name = "WalkEvents"
+length = 1.0833
+loop_mode = 1
+step = 0.01
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AudioHandler")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.11, 0.61),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"PlayFootstep"
+}, {
+"args": [],
+"method": &"PlayFootstep"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_upklh"]
+_data = {
+"Blank": SubResource("Animation_pp8hq"),
+"RunMethods": SubResource("Animation_i4xf4"),
+"WalkEvents": SubResource("Animation_vnoh0")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d4p7v"]
+animation = &"WalkEvents"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vqwxf"]
+animation = &"RunMethods"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7ameu"]
+animation = &"Blank"
+
+[sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_76xkv"]
+blend_point_0/node = SubResource("AnimationNodeAnimation_d4p7v")
+blend_point_0/pos = 0.0
+blend_point_1/node = SubResource("AnimationNodeAnimation_vqwxf")
+blend_point_1/pos = 1.0
+blend_point_2/node = SubResource("AnimationNodeAnimation_7ameu")
+blend_point_2/pos = -1.0
+
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_h7jng"]
+graph_offset = Vector2(-237.696, 9.00406)
+nodes/Movement/node = SubResource("AnimationNodeBlendSpace1D_76xkv")
+nodes/Movement/position = Vector2(240, 100)
+nodes/output/position = Vector2(460, 100)
+node_connections = [&"output", 0, &"Movement"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjda6"]
 bg_color = Color(0.384314, 0.384314, 0.384314, 0)
@@ -531,19 +699,36 @@ font_names = PackedStringArray("Gabriola")
 [sub_resource type="Theme" id="Theme_0ac0l"]
 default_font = SubResource("SystemFont_hlb0o")
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qwivw"]
-bg_color = Color(0.862745, 0.462745, 0.490196, 1)
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_dadn2"]
-
 [node name="BaseNode" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000612859, -3.72529e-09, 0.0018937)
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("53_icsar")
 autoplay = true
+bus = &"Music"
 
-[node name="ManagerReferenceHolder" type="Node3D" parent="." node_paths=PackedStringArray("PartyManager", "Controller", "LevelManager", "SaveManager", "MenuManager", "ItemPickupManager", "DialogueManager", "CutsceneManager", "ShopMenuManager", "PartyMenuManager", "ItemMenuManager")]
+[node name="AudioPlayer" type="Node3D" parent="."]
+script = ExtResource("2_8jy0e")
+
+[node name="AudioPlayers" type="Node3D" parent="."]
+
+[node name="ButtonSoundController" type="Node3D" parent="AudioPlayers" node_paths=PackedStringArray("hoverOverSound", "clickSound")]
+script = ExtResource("3_v2sov")
+hoverOverSound = NodePath("../UI_SFX/ButtonHover")
+clickSound = NodePath("../UI_SFX/ButtonClick")
+
+[node name="UI_SFX" type="Node3D" parent="AudioPlayers"]
+
+[node name="ButtonHover" type="AudioStreamPlayer" parent="AudioPlayers/UI_SFX"]
+stream = ExtResource("2_ngvmf")
+volume_db = -9.763
+bus = &"UI"
+
+[node name="ButtonClick" type="AudioStreamPlayer" parent="AudioPlayers/UI_SFX"]
+stream = ExtResource("4_r0itw")
+bus = &"UI"
+
+[node name="ManagerReferenceHolder" type="Node3D" parent="." node_paths=PackedStringArray("PartyManager", "Controller", "LevelManager", "SaveManager", "MenuManager", "ItemPickupManager", "DialogueManager", "CutsceneManager", "ShopMenuManager", "PartyMenuManager", "ItemMenuManager", "MainMenuManager", "AudioManager")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15193e-07, 3.72529e-09, 2.97208e-07)
 script = ExtResource("1_7hlfi")
 PartyManager = NodePath("../PartyManager")
@@ -555,8 +740,10 @@ ItemPickupManager = NodePath("../UI/ItemPickup/Back")
 DialogueManager = NodePath("../UI/DialogueScreen/Back")
 CutsceneManager = NodePath("../CutsceneManager")
 ShopMenuManager = NodePath("../UI/Shop/Background")
-PartyMenuManager = NodePath("../UI/PartyMenuLayer/PartyMenu/TabContainer/Party")
-ItemMenuManager = NodePath("../UI/PartyMenuLayer/PartyMenu/TabContainer/Items")
+PartyMenuManager = NodePath("../UI/PartyMenuLayer/PartyMenu/MenuContainer/Party")
+ItemMenuManager = NodePath("../UI/PartyMenuLayer/PartyMenu/MenuContainer/Items")
+MainMenuManager = NodePath("../MainMenu")
+AudioManager = NodePath("../AudioPlayer")
 
 [node name="CombatManager" type="Node3D" parent="." node_paths=PackedStringArray("managers", "uiManager", "abilityManager", "itemManager", "stacksAndStatusManager", "passiveManager", "playerCamera", "baseNode")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.36896, -1.7533, -8.04547)
@@ -767,6 +954,315 @@ grow_vertical = 2
 
 [node name="CombatTransition" parent="UI/Overlay/CombatTransitionHolder" instance=ExtResource("55_rp0yf")]
 visible = false
+
+[node name="SlotsBackground" type="Panel" parent="UI/Overlay"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -270.0
+offset_top = -295.0
+offset_right = 280.0
+offset_bottom = 305.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_y2m82")
+
+[node name="Slots" type="VBoxContainer" parent="UI/Overlay"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -258.0
+offset_right = 150.0
+offset_bottom = 258.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Slot1" type="Button" parent="UI/Overlay/Slots"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 35
+text = "Slot 1"
+
+[node name="Time" type="Label" parent="UI/Overlay/Slots/Slot1"]
+layout_mode = 0
+offset_top = 70.0
+offset_right = 150.0
+offset_bottom = 100.0
+theme = ExtResource("38_6i0oi")
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area" type="Label" parent="UI/Overlay/Slots/Slot1"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 70.0
+offset_right = 300.0
+offset_bottom = 100.0
+theme = ExtResource("38_6i0oi")
+text = "Location"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RedOverlay" type="Panel" parent="UI/Overlay/Slots/Slot1"]
+visible = false
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 100.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_01vuf")
+
+[node name="Slot2" type="Button" parent="UI/Overlay/Slots"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 35
+text = "Slot 1"
+
+[node name="Time" type="Label" parent="UI/Overlay/Slots/Slot2"]
+layout_mode = 0
+offset_top = 70.0
+offset_right = 150.0
+offset_bottom = 100.0
+theme = ExtResource("38_6i0oi")
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area" type="Label" parent="UI/Overlay/Slots/Slot2"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 70.0
+offset_right = 300.0
+offset_bottom = 100.0
+theme = ExtResource("38_6i0oi")
+text = "Location"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RedOverlay" type="Panel" parent="UI/Overlay/Slots/Slot2"]
+visible = false
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 100.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_01vuf")
+
+[node name="Slot3" type="Button" parent="UI/Overlay/Slots"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 35
+text = "Slot 1"
+
+[node name="Time" type="Label" parent="UI/Overlay/Slots/Slot3"]
+layout_mode = 0
+offset_top = 70.0
+offset_right = 150.0
+offset_bottom = 100.0
+theme = ExtResource("38_6i0oi")
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area" type="Label" parent="UI/Overlay/Slots/Slot3"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 70.0
+offset_right = 300.0
+offset_bottom = 100.0
+theme = ExtResource("38_6i0oi")
+text = "Location"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RedOverlay" type="Panel" parent="UI/Overlay/Slots/Slot3"]
+visible = false
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 100.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_01vuf")
+
+[node name="Slot4" type="Button" parent="UI/Overlay/Slots"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 35
+text = "Slot 1"
+
+[node name="Time" type="Label" parent="UI/Overlay/Slots/Slot4"]
+layout_mode = 0
+offset_top = 70.0
+offset_right = 150.0
+offset_bottom = 100.0
+theme = ExtResource("38_6i0oi")
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area" type="Label" parent="UI/Overlay/Slots/Slot4"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 70.0
+offset_right = 300.0
+offset_bottom = 100.0
+theme = ExtResource("38_6i0oi")
+text = "Location"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RedOverlay" type="Panel" parent="UI/Overlay/Slots/Slot4"]
+visible = false
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 100.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_01vuf")
+
+[node name="Slot5" type="Button" parent="UI/Overlay/Slots"]
+custom_minimum_size = Vector2(300, 100)
+layout_mode = 2
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 35
+text = "Slot 1"
+
+[node name="Time" type="Label" parent="UI/Overlay/Slots/Slot5"]
+layout_mode = 0
+offset_top = 70.0
+offset_right = 150.0
+offset_bottom = 100.0
+theme = ExtResource("38_6i0oi")
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Area" type="Label" parent="UI/Overlay/Slots/Slot5"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 70.0
+offset_right = 300.0
+offset_bottom = 100.0
+theme = ExtResource("38_6i0oi")
+text = "Location"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RedOverlay" type="Panel" parent="UI/Overlay/Slots/Slot5"]
+visible = false
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 100.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_01vuf")
+
+[node name="OverwriteMessage" type="Panel" parent="UI/Overlay"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -125.0
+offset_right = 225.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_jy45v")
+
+[node name="Text" type="RichTextLabel" parent="UI/Overlay/OverwriteMessage"]
+clip_contents = false
+layout_mode = 0
+offset_top = 25.0
+offset_right = 450.0
+offset_bottom = 125.0
+theme = ExtResource("38_6i0oi")
+bbcode_enabled = true
+text = "[center]Are you sure you want to overwrite the save in Slot ??
+[color=red]This action cannot be reversed.[/color]"
+
+[node name="YesButton" type="Button" parent="UI/Overlay/OverwriteMessage"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 160.0
+offset_right = 400.0
+offset_bottom = 210.0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
+text = "Yes"
+
+[node name="NoButton" type="Button" parent="UI/Overlay/OverwriteMessage"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 160.0
+offset_right = 200.0
+offset_bottom = 210.0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
+text = "No"
+
+[node name="ConfirmationWindow" type="Control" parent="UI/Overlay"]
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -540.0
+offset_right = -920.0
+offset_bottom = -500.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Back" type="Panel" parent="UI/Overlay/ConfirmationWindow"]
+layout_mode = 0
+offset_left = 760.0
+offset_top = 390.0
+offset_right = 1160.0
+offset_bottom = 690.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_vcft5")
+
+[node name="Title" type="RichTextLabel" parent="UI/Overlay/ConfirmationWindow/Back"]
+layout_mode = 0
+offset_top = 75.0
+offset_right = 400.0
+offset_bottom = 225.0
+theme = ExtResource("38_6i0oi")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[center]Are you sure you want to delete Slot #?
+[color=red]This action is irreversible."
+
+[node name="ConfirmButton" type="Button" parent="UI/Overlay/ConfirmationWindow/Back"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 200.0
+offset_right = 350.0
+offset_bottom = 243.0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
+text = "Yes"
+
+[node name="BackButton" type="Button" parent="UI/Overlay/ConfirmationWindow/Back"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 200.0
+offset_right = 160.0
+offset_bottom = 243.0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
+text = "Cancel"
 
 [node name="CombatEnemyList" type="Control" parent="UI"]
 visible = false
@@ -2593,15 +3089,29 @@ offset_right = 344.0
 offset_bottom = 449.6
 text = "Exit"
 
-[node name="DialogueScreen" type="CanvasGroup" parent="UI"]
+[node name="DialogueScreen" type="Control" parent="UI"]
 visible = false
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="Back" type="Panel" parent="UI/DialogueScreen" node_paths=PackedStringArray("managers")]
-offset_left = 40.0
-offset_top = 768.0
-offset_right = 1800.0
-offset_bottom = 1043.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 510.0
+offset_top = -290.0
+offset_right = -510.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_qxx6t")
 script = ExtResource("22_argjw")
 dialoguesInThisRegion = []
 branchingButton = ExtResource("26_tb1nj")
@@ -2609,33 +3119,33 @@ managers = NodePath("../../../ManagerReferenceHolder")
 
 [node name="Body" type="RichTextLabel" parent="UI/DialogueScreen/Back"]
 layout_mode = 0
-offset_left = 344.0
-offset_top = 64.0
-offset_right = 1760.0
-offset_bottom = 264.0
+offset_left = 15.0
+offset_top = 90.0
+offset_right = 900.0
+offset_bottom = 240.0
+theme_override_colors/default_color = Color(0.933333, 0.92549, 0.803922, 1)
 theme_override_fonts/normal_font = ExtResource("33_dmyrj")
 theme_override_fonts/italics_font = ExtResource("34_0e0eh")
-theme_override_font_sizes/normal_font_size = 30
-theme_override_font_sizes/bold_font_size = 30
-theme_override_font_sizes/italics_font_size = 30
-theme_override_font_sizes/bold_italics_font_size = 30
-theme_override_font_sizes/mono_font_size = 30
+theme_override_font_sizes/normal_font_size = 35
+theme_override_font_sizes/bold_font_size = 35
+theme_override_font_sizes/italics_font_size = 35
+theme_override_font_sizes/bold_italics_font_size = 35
+theme_override_font_sizes/mono_font_size = 35
 bbcode_enabled = true
-text = "This is the body of the text"
+text = "This is the body of the text text text text loooooooooong"
+visible_characters_behavior = 1
 
 [node name="Title" type="RichTextLabel" parent="UI/DialogueScreen/Back"]
 layout_mode = 0
-offset_left = 344.0
-offset_right = 1760.0
-offset_bottom = 64.0
+offset_left = 15.0
+offset_top = 20.0
+offset_right = 900.0
+offset_bottom = 110.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_fonts/normal_font = ExtResource("35_v46tb")
-theme_override_font_sizes/normal_font_size = 40
+theme_override_font_sizes/normal_font_size = 45
 bbcode_enabled = true
 text = "Vakthol"
-
-[node name="Sprite" type="Sprite2D" parent="UI/DialogueScreen/Back"]
-position = Vector2(168, -160)
-texture = SubResource("CanvasTexture_bnc6q")
 
 [node name="Branches" type="VBoxContainer" parent="UI/DialogueScreen/Back"]
 visible = false
@@ -2648,12 +3158,41 @@ mouse_filter = 2
 theme_override_constants/separation = 0
 alignment = 2
 
+[node name="SpriteHolder" type="Control" parent="UI/DialogueScreen/Back"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -183.0
+offset_top = 30.0
+offset_right = -143.0
+offset_bottom = 70.0
+grow_horizontal = 0
+
+[node name="Sprite" type="Sprite2D" parent="UI/DialogueScreen/Back/SpriteHolder"]
+position = Vector2(0, -134)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("50_0sxn0")
+
 [node name="PartyMenuLayer" type="CanvasLayer" parent="UI"]
 
-[node name="PartyMenu" type="CanvasGroup" parent="UI/PartyMenuLayer"]
+[node name="PartyMenu" type="Control" parent="UI/PartyMenuLayer"]
 visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -960.0
+offset_top = -515.0
+offset_right = -805.0
+offset_bottom = -515.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="TabContainer" type="TabContainer" parent="UI/PartyMenuLayer/PartyMenu"]
+[node name="MenuContainer" type="Panel" parent="UI/PartyMenuLayer/PartyMenu"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -2661,246 +3200,310 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 300.0
 offset_top = 100.0
-offset_right = 1660.0
-offset_bottom = 900.0
-grow_horizontal = 0
+offset_right = 1655.0
+offset_bottom = 871.0
+grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(680, 400)
-tab_alignment = 1
+theme_override_styles/panel = SubResource("StyleBoxTexture_tkfn4")
 
-[node name="Party" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer" node_paths=PackedStringArray("managers")]
+[node name="Party" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer" node_paths=PackedStringArray("managers")]
 layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -45.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_p5qrv")
 script = ExtResource("27_o3g2u")
 memberButtonPrefab = ExtResource("28_40bba")
 abilityLabelPrefab = ExtResource("29_jtio8")
 reequipButtonPrefab = ExtResource("30_bblpj")
 managers = NodePath("../../../../../ManagerReferenceHolder")
 
-[node name="ListBackground" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+[node name="ListBackground" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
 custom_minimum_size = Vector2(320, 720)
 layout_mode = 2
 offset_left = 16.0
 offset_top = 32.0
 offset_right = 336.0
 offset_bottom = 752.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_40ql0")
 
-[node name="List" type="ScrollContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/ListBackground"]
+[node name="List" type="ScrollContainer" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/ListBackground"]
 layout_mode = 0
-offset_right = 320.0
-offset_bottom = 720.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 310.0
+offset_bottom = 730.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/ListBackground/List"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/ListBackground/List"]
 layout_mode = 2
 
-[node name="Image" type="Sprite2D" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+[node name="Image" type="Sprite2D" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
 position = Vector2(552, 176)
-scale = Vector2(320, 320)
-texture = SubResource("CanvasTexture_42qah")
+texture = ExtResource("54_xi2wh")
 
-[node name="Stats" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+[node name="ImageBorder" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
+layout_mode = 0
+offset_left = 389.0
+offset_top = 13.0
+offset_right = 715.0
+offset_bottom = 339.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_xesmx")
+
+[node name="Stats" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
 layout_mode = 0
 offset_left = 392.0
 offset_top = 352.0
 offset_right = 712.0
-offset_bottom = 736.0
+offset_bottom = 752.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_jp83i")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Stats"]
 layout_mode = 0
-offset_right = 320.0
-offset_bottom = 384.0
+offset_left = 11.0
+offset_top = 5.0
+offset_right = 331.0
+offset_bottom = 391.0
+theme_override_constants/separation = 4
 
-[node name="Affinity" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
-custom_minimum_size = Vector2(320, 32)
+[node name="Affinity" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 35)
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 20
+theme = ExtResource("38_6i0oi")
 text = "Affinity:"
+scroll_active = false
 
-[node name="Constitution" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
-custom_minimum_size = Vector2(320, 32)
+[node name="Constitution" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 35)
 layout_mode = 2
 tooltip_text = "Maximum health"
-theme_override_font_sizes/normal_font_size = 20
+theme = ExtResource("38_6i0oi")
 text = "Constitution:"
+scroll_active = false
 script = ExtResource("31_g468s")
 
-[node name="Knowledge" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
-custom_minimum_size = Vector2(320, 32)
+[node name="Knowledge" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 35)
 layout_mode = 2
 tooltip_text = "Maximum mana"
-theme_override_font_sizes/normal_font_size = 20
+theme = ExtResource("38_6i0oi")
 text = "Knowledge:"
+scroll_active = false
 script = ExtResource("31_g468s")
 
-[node name="Strength" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
-custom_minimum_size = Vector2(320, 32)
+[node name="Strength" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 35)
 layout_mode = 2
 tooltip_text = "Physical damage"
-theme_override_font_sizes/normal_font_size = 20
+theme = ExtResource("38_6i0oi")
 text = "Strength:"
+scroll_active = false
 script = ExtResource("31_g468s")
 
-[node name="Intelligence" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
-custom_minimum_size = Vector2(320, 32)
+[node name="Intelligence" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 35)
 layout_mode = 2
 tooltip_text = "Magical damage"
-theme_override_font_sizes/normal_font_size = 20
+theme = ExtResource("38_6i0oi")
 text = "Intelligence:"
+scroll_active = false
 script = ExtResource("31_g468s")
 
-[node name="Fortitude" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
-custom_minimum_size = Vector2(320, 32)
+[node name="Fortitude" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 35)
 layout_mode = 2
 tooltip_text = "Physical defense"
-theme_override_font_sizes/normal_font_size = 20
+theme = ExtResource("38_6i0oi")
 text = "Fortitude:"
+scroll_active = false
 script = ExtResource("31_g468s")
 
-[node name="Willpower" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
-custom_minimum_size = Vector2(320, 32)
+[node name="Willpower" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 35)
 layout_mode = 2
 tooltip_text = "Magical defense"
-theme_override_font_sizes/normal_font_size = 20
+theme = ExtResource("38_6i0oi")
 text = "Willpower:"
+scroll_active = false
 script = ExtResource("31_g468s")
 
-[node name="Accuracy" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
-custom_minimum_size = Vector2(320, 32)
+[node name="Accuracy" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 35)
 layout_mode = 2
 tooltip_text = "Hit and critical chance"
-theme_override_font_sizes/normal_font_size = 20
+theme = ExtResource("38_6i0oi")
 text = "Accuracy:"
+scroll_active = false
 script = ExtResource("31_g468s")
 
-[node name="Evasion" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
-custom_minimum_size = Vector2(320, 32)
+[node name="Evasion" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 35)
 layout_mode = 2
 tooltip_text = "Dodge chance"
-theme_override_font_sizes/normal_font_size = 20
+theme = ExtResource("38_6i0oi")
 text = "Evasion:"
+scroll_active = false
 script = ExtResource("31_g468s")
 
-[node name="Speed" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Stats/VBoxContainer"]
-custom_minimum_size = Vector2(320, 32)
+[node name="Speed" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Stats/VBoxContainer"]
+custom_minimum_size = Vector2(320, 35)
 layout_mode = 2
 tooltip_text = "Turn order"
-theme_override_font_sizes/normal_font_size = 20
+theme = ExtResource("38_6i0oi")
 text = "Speed:"
+scroll_active = false
 script = ExtResource("31_g468s")
 
-[node name="Abilities" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+[node name="Abilities" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
 layout_mode = 0
 offset_left = 736.0
 offset_top = 48.0
 offset_right = 1336.0
 offset_bottom = 336.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_ccywf")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Abilities"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Abilities"]
 layout_mode = 0
-offset_right = 600.0
-offset_bottom = 320.0
+offset_left = 15.0
+offset_top = 10.0
+offset_right = 615.0
+offset_bottom = 285.0
 
-[node name="Equipment" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+[node name="Equipment" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
 layout_mode = 0
 offset_left = 736.0
 offset_top = 352.0
 offset_right = 1032.0
-offset_bottom = 736.0
+offset_bottom = 752.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_5b8tm")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment"]
 layout_mode = 0
-offset_right = 296.0
-offset_bottom = 384.0
-theme_override_constants/separation = 32
+offset_left = 10.0
+offset_right = 260.0
+offset_bottom = 400.0
+theme_override_constants/separation = 25
+alignment = 1
 
-[node name="Weapon" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer"]
+[node name="Weapon" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer"]
+custom_minimum_size = Vector2(275, 35)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
-text = "Weapon:"
+size_flags_horizontal = 0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 18
+text = "  Weapon:"
 alignment = 0
+script = ExtResource("63_y56r8")
 
-[node name="Head" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer"]
+[node name="Head" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer"]
+custom_minimum_size = Vector2(275, 35)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+size_flags_horizontal = 0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 18
 text = "Head:"
 alignment = 0
+script = ExtResource("63_y56r8")
 
-[node name="Chest" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer"]
+[node name="Chest" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer"]
+custom_minimum_size = Vector2(275, 35)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+size_flags_horizontal = 0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 18
 text = "Chest:"
 alignment = 0
+script = ExtResource("63_y56r8")
 
-[node name="Legs" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer"]
+[node name="Legs" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer"]
+custom_minimum_size = Vector2(275, 35)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+size_flags_horizontal = 0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 18
 text = "Legs:"
 alignment = 0
+script = ExtResource("63_y56r8")
 
-[node name="Arms" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer"]
+[node name="Arms" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer"]
+custom_minimum_size = Vector2(275, 35)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+size_flags_horizontal = 0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 18
 text = "Arms:"
 alignment = 0
+script = ExtResource("63_y56r8")
 
-[node name="Accessory" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer"]
+[node name="Accessory" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer"]
+custom_minimum_size = Vector2(275, 35)
 layout_mode = 2
-theme_override_font_sizes/font_size = 20
+size_flags_horizontal = 0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 18
 text = "Accessory:"
 alignment = 0
+script = ExtResource("63_y56r8")
 
-[node name="ReequipBackground" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+[node name="ReequipBackground" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
 custom_minimum_size = Vector2(296, 384)
 layout_mode = 2
 offset_left = 1040.0
 offset_top = 352.0
 offset_right = 1336.0
-offset_bottom = 736.0
+offset_bottom = 752.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_jc1ty")
 
-[node name="Reequip" type="ScrollContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/ReequipBackground"]
+[node name="Reequip" type="ScrollContainer" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/ReequipBackground"]
 layout_mode = 0
 offset_right = 296.0
 offset_bottom = 384.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/ReequipBackground/Reequip"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/ReequipBackground/Reequip"]
 layout_mode = 2
 
-[node name="Passive" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+[node name="Passive" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
 layout_mode = 0
 offset_left = 736.0
 offset_top = 16.0
 offset_right = 1216.0
 offset_bottom = 48.0
+theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/normal_font_size = 20
 text = "Passive:"
 script = ExtResource("31_g468s")
 
-[node name="SwapButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+[node name="SwapButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
 layout_mode = 0
 offset_left = 96.0
+offset_top = 10.0
 offset_right = 248.0
-offset_bottom = 35.2
+offset_bottom = 35.0
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 15
 text = "Swap"
 
-[node name="AddPartyButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+[node name="AddPartyButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
 layout_mode = 0
 offset_left = 1080.0
 offset_top = 8.0
 offset_right = 1188.8
 offset_bottom = 43.2
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 15
 text = "Add to Party"
 
-[node name="RemovePartyButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Party"]
+[node name="RemovePartyButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
 layout_mode = 0
 offset_left = 1200.0
 offset_top = 8.0
 offset_right = 1320.0
 offset_bottom = 43.2
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 12
 text = "Remove from Party"
 
-[node name="Items" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer" node_paths=PackedStringArray("managers")]
+[node name="Items" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer" node_paths=PackedStringArray("managers")]
 visible = false
 layout_mode = 2
 script = ExtResource("32_1h4ro")
@@ -2908,79 +3511,110 @@ itemButtonPrefab = ExtResource("5_2svhw")
 memberButtonPrefab = ExtResource("28_40bba")
 managers = NodePath("../../../../../ManagerReferenceHolder")
 
-[node name="ItemSContainer" type="ScrollContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Items"]
+[node name="ItemSContainer" type="ScrollContainer" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Items"]
 layout_mode = 0
-offset_right = 1360.0
-offset_bottom = 750.4
+offset_left = 10.5
+offset_top = 9.0
+offset_right = 1370.5
+offset_bottom = 759.4
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Items/ItemSContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Items/ItemSContainer"]
 layout_mode = 2
 
-[node name="ListBackground" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Items"]
+[node name="ListBackground" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Items"]
 custom_minimum_size = Vector2(320, 720)
 layout_mode = 0
-offset_left = 1040.0
-offset_top = 16.0
-offset_right = 1360.0
-offset_bottom = 736.0
+offset_left = 1008.5
+offset_top = 27.0
+offset_right = 1328.5
+offset_bottom = 747.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_t1ab5")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Items/ListBackground"]
+[node name="VBoxContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Items/ListBackground"]
 layout_mode = 2
 
-[node name="Settings" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer"]
+[node name="Settings" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer" node_paths=PackedStringArray("managers", "panels", "tabs")]
 visible = false
 layout_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -29.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_7f43o")
 script = ExtResource("33_jvddv")
+managers = NodePath("../../../../../ManagerReferenceHolder")
+panels = [NodePath("Video"), NodePath("Controls"), NodePath("Audio")]
+tabs = [NodePath("ButtonsContainer/Video"), NodePath("ButtonsContainer/Controls"), NodePath("ButtonsContainer/Audio")]
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings"]
+[node name="ButtonsContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings"]
 layout_mode = 0
 offset_right = 250.0
 offset_bottom = 769.0
 theme_override_constants/separation = 35
 alignment = 1
 
-[node name="Video" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/ButtonsContainer"]
+[node name="Video" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer"]
+custom_minimum_size = Vector2(225, 50)
 layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 25
 text = "Video"
 
-[node name="Controls" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/ButtonsContainer"]
+[node name="Controls" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer"]
+custom_minimum_size = Vector2(225, 50)
 layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 25
 text = "Controls"
 
-[node name="Video" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings"]
+[node name="Audio" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer"]
+custom_minimum_size = Vector2(225, 50)
+layout_mode = 2
+size_flags_horizontal = 8
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
+text = "Audio"
+
+[node name="Video" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings"]
 layout_mode = 0
 offset_left = 250.0
-offset_right = 1360.0
-offset_bottom = 769.0
+offset_top = 15.0
+offset_right = 1340.0
+offset_bottom = 755.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_ngw7s")
 
-[node name="Resolution" type="Control" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video"]
+[node name="Resolution" type="Control" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Video"]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 27.5
+offset_top = 48.0
+offset_right = 67.5
+offset_bottom = 88.0
 
-[node name="Title" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution"]
+[node name="Title" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Video/Resolution"]
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 40.0
+theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/normal_font_size = 25
 text = "Resolution"
 
-[node name="WindowLabel" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution"]
+[node name="WindowLabel" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Video/Resolution"]
 layout_mode = 0
 offset_top = 40.0
 offset_right = 300.0
 offset_bottom = 80.0
+theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/normal_font_size = 20
 text = "Windowed Mode:"
 
-[node name="WindowButton" type="OptionButton" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution"]
+[node name="WindowButton" type="OptionButton" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Video/Resolution"]
 layout_mode = 0
 offset_left = 175.0
 offset_top = 40.0
 offset_right = 383.0
 offset_bottom = 71.0
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 18
 item_count = 3
 selected = 0
@@ -2991,70 +3625,274 @@ popup/item_1/id = 1
 popup/item_2/text = "Windowed"
 popup/item_2/id = 2
 
-[node name="ResolutionLabel" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution"]
+[node name="ResolutionLabel" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Video/Resolution"]
 layout_mode = 0
 offset_top = 80.0
 offset_right = 300.0
 offset_bottom = 120.0
+theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/normal_font_size = 20
 text = "Resolution:"
 
-[node name="ResolutionButton" type="OptionButton" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution"]
+[node name="ResolutionButton" type="OptionButton" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Video/Resolution"]
 layout_mode = 0
 offset_left = 175.0
 offset_top = 80.0
 offset_right = 404.0
 offset_bottom = 114.0
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 18
 
-[node name="Controls" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings"]
+[node name="Controls" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings"]
 visible = false
 layout_mode = 0
 offset_left = 250.0
-offset_right = 1360.0
-offset_bottom = 769.0
+offset_top = 15.0
+offset_right = 1340.0
+offset_bottom = 755.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_xcu0o")
 
-[node name="Sensitivity" type="Control" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Controls"]
+[node name="Sensitivity" type="Control" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Controls"]
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 26.5
+offset_top = 50.0
+offset_right = 66.5
+offset_bottom = 90.0
 
-[node name="Label" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Controls/Sensitivity"]
+[node name="Label" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Controls/Sensitivity"]
 layout_mode = 0
 offset_right = 200.0
 offset_bottom = 40.0
+theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/normal_font_size = 20
 text = "Sensitivity:"
 
-[node name="Slider" type="HSlider" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Controls/Sensitivity"]
+[node name="Slider" type="HSlider" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Controls/Sensitivity"]
 layout_mode = 0
-offset_left = 110.0
-offset_top = 10.0
-offset_right = 260.0
-offset_bottom = 26.0
+offset_left = 120.0
+offset_top = 6.0
+offset_right = 270.0
+offset_bottom = 22.0
 theme_override_styles/slider = SubResource("StyleBoxLine_cblsy")
 min_value = 0.1
 max_value = 10.0
 step = 0.1
 value = 5.0
 
-[node name="SpinBox" type="SpinBox" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Controls/Sensitivity"]
+[node name="SpinBox" type="SpinBox" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Controls/Sensitivity"]
 layout_mode = 0
-offset_left = 275.0
-offset_right = 358.063
-offset_bottom = 40.0
+offset_left = 276.0
+offset_top = -4.0
+offset_right = 359.063
+offset_bottom = 36.0
 min_value = 0.1
 max_value = 10.0
 step = 0.1
 value = 5.0
 
-[node name="Menu" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer" node_paths=PackedStringArray("managers")]
+[node name="Audio" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings"]
+visible = false
+layout_mode = 0
+offset_left = 250.0
+offset_top = 15.0
+offset_right = 1340.0
+offset_bottom = 755.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_xcu0o")
+
+[node name="Master" type="Control" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio"]
+anchors_preset = 0
+offset_left = 52.5
+offset_top = 31.0
+offset_right = 92.5
+offset_bottom = 71.0
+
+[node name="Label" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Master"]
+layout_mode = 0
+offset_right = 200.0
+offset_bottom = 40.0
+theme = ExtResource("38_6i0oi")
+theme_override_font_sizes/normal_font_size = 20
+text = "Master Volume:"
+
+[node name="Slider" type="HSlider" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Master"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 6.0
+offset_right = 319.0
+offset_bottom = 22.0
+theme_override_styles/slider = SubResource("StyleBoxLine_cblsy")
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 5.0
+
+[node name="Number" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Master"]
+layout_mode = 0
+offset_left = 329.0
+offset_top = -7.0
+offset_right = 386.0
+offset_bottom = 28.0
+theme = ExtResource("38_6i0oi")
+theme_override_font_sizes/font_size = 25
+text = "50%"
+
+[node name="Music" type="Control" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio"]
+anchors_preset = 0
+offset_left = 52.5
+offset_top = 58.0
+offset_right = 92.5
+offset_bottom = 98.0
+
+[node name="Label" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Music"]
+layout_mode = 0
+offset_left = 11.0
+offset_right = 211.0
+offset_bottom = 40.0
+theme = ExtResource("38_6i0oi")
+theme_override_font_sizes/normal_font_size = 20
+text = "Music Volume:"
+
+[node name="Slider" type="HSlider" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Music"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 6.0
+offset_right = 319.0
+offset_bottom = 22.0
+theme_override_styles/slider = SubResource("StyleBoxLine_cblsy")
+min_value = -80.0
+max_value = 10.0
+
+[node name="Number" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Music"]
+layout_mode = 0
+offset_left = 329.0
+offset_top = -7.0
+offset_right = 386.0
+offset_bottom = 28.0
+theme = ExtResource("38_6i0oi")
+theme_override_font_sizes/font_size = 25
+text = "50%"
+
+[node name="Effects" type="Control" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio"]
+anchors_preset = 0
+offset_left = 52.5
+offset_top = 84.0
+offset_right = 92.5
+offset_bottom = 124.0
+
+[node name="Label" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Effects"]
+layout_mode = 0
+offset_left = 1.0
+offset_right = 201.0
+offset_bottom = 40.0
+theme = ExtResource("38_6i0oi")
+theme_override_font_sizes/normal_font_size = 20
+text = "Effects Volume:"
+
+[node name="Slider" type="HSlider" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Effects"]
+layout_mode = 0
+offset_left = 169.0
+offset_top = 6.0
+offset_right = 319.0
+offset_bottom = 22.0
+theme_override_styles/slider = SubResource("StyleBoxLine_cblsy")
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 5.0
+
+[node name="Number" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Effects"]
+layout_mode = 0
+offset_left = 329.0
+offset_top = -7.0
+offset_right = 386.0
+offset_bottom = 28.0
+theme = ExtResource("38_6i0oi")
+theme_override_font_sizes/font_size = 25
+text = "50%"
+
+[node name="Ambience" type="Control" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio"]
+anchors_preset = 0
+offset_left = 26.5
+offset_top = 111.0
+offset_right = 66.5
+offset_bottom = 151.0
+
+[node name="Label" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Ambience"]
+layout_mode = 0
+offset_left = -2.0
+offset_right = 198.0
+offset_bottom = 40.0
+theme = ExtResource("38_6i0oi")
+theme_override_font_sizes/normal_font_size = 20
+text = "Ambience Volume:"
+
+[node name="Slider" type="HSlider" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Ambience"]
+layout_mode = 0
+offset_left = 195.0
+offset_top = 7.0
+offset_right = 345.0
+offset_bottom = 23.0
+theme_override_styles/slider = SubResource("StyleBoxLine_cblsy")
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 5.0
+
+[node name="Number" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Ambience"]
+layout_mode = 0
+offset_left = 355.0
+offset_top = -6.0
+offset_right = 412.0
+offset_bottom = 29.0
+theme = ExtResource("38_6i0oi")
+theme_override_font_sizes/font_size = 25
+text = "50%"
+
+[node name="UI" type="Control" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio"]
+anchors_preset = 0
+offset_left = 26.5
+offset_top = 140.0
+offset_right = 66.5
+offset_bottom = 180.0
+
+[node name="Label" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/UI"]
+layout_mode = 0
+offset_left = 73.0
+offset_right = 273.0
+offset_bottom = 40.0
+theme = ExtResource("38_6i0oi")
+theme_override_font_sizes/normal_font_size = 20
+text = "UI Volume:"
+
+[node name="Slider" type="HSlider" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/UI"]
+layout_mode = 0
+offset_left = 195.0
+offset_top = 7.0
+offset_right = 345.0
+offset_bottom = 23.0
+theme_override_styles/slider = SubResource("StyleBoxLine_cblsy")
+min_value = 0.1
+max_value = 10.0
+step = 0.1
+value = 5.0
+
+[node name="Number" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/UI"]
+layout_mode = 0
+offset_left = 355.0
+offset_top = -6.0
+offset_right = 412.0
+offset_bottom = 29.0
+theme = ExtResource("38_6i0oi")
+theme_override_font_sizes/font_size = 25
+text = "50%"
+
+[node name="Menu" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer" node_paths=PackedStringArray("managers")]
 visible = false
 layout_mode = 2
 script = ExtResource("34_bcm0h")
 managers = NodePath("../../../../../ManagerReferenceHolder")
 
-[node name="SaveAndQuit" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu"]
+[node name="SaveAndQuit" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu"]
 layout_mode = 0
 offset_left = 600.0
 offset_top = 320.0
@@ -3062,7 +3900,7 @@ offset_right = 760.0
 offset_bottom = 369.6
 text = "Save and Quit"
 
-[node name="QuitNoSave" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu"]
+[node name="QuitNoSave" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu"]
 layout_mode = 0
 offset_left = 600.0
 offset_top = 390.0
@@ -3070,18 +3908,18 @@ offset_right = 763.0
 offset_bottom = 439.6
 text = "Quit Without Saving"
 
-[node name="ConfirmationWindow" type="CanvasGroup" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu"]
+[node name="ConfirmationWindow" type="CanvasGroup" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu"]
 visible = false
 z_index = 1
 
-[node name="Back" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/ConfirmationWindow"]
+[node name="Confirmation" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu/ConfirmationWindow"]
 offset_left = 525.0
 offset_top = 275.0
 offset_right = 825.0
 offset_bottom = 475.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_pw0yk")
 
-[node name="Info" type="Label" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/ConfirmationWindow/Back"]
+[node name="Info" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu/ConfirmationWindow/Confirmation"]
 layout_mode = 0
 offset_right = 300.0
 offset_bottom = 26.0
@@ -3090,7 +3928,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="YesButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/ConfirmationWindow/Back"]
+[node name="YesButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu/ConfirmationWindow/Confirmation"]
 layout_mode = 0
 offset_left = 175.0
 offset_top = 125.0
@@ -3098,7 +3936,7 @@ offset_right = 250.0
 offset_bottom = 156.0
 text = "Yes"
 
-[node name="NoButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/ConfirmationWindow/Back"]
+[node name="NoButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu/ConfirmationWindow/Confirmation"]
 layout_mode = 0
 offset_left = 50.0
 offset_top = 125.0
@@ -3106,7 +3944,7 @@ offset_right = 125.0
 offset_bottom = 156.0
 text = "No"
 
-[node name="SaveButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu"]
+[node name="SaveButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu"]
 layout_mode = 0
 offset_left = 600.0
 offset_top = 244.0
@@ -3114,9 +3952,200 @@ offset_right = 750.4
 offset_bottom = 293.6
 text = "Save Game"
 
-[node name="MenuManager" type="Node2D" parent="UI/PartyMenuLayer/PartyMenu" node_paths=PackedStringArray("managers")]
+[node name="Additional" type="Control" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TabsContainerBack" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional"]
+layout_mode = 0
+offset_left = -190.0
+offset_bottom = 550.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_i86a6")
+
+[node name="TabsContainer" type="VBoxContainer" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -20.0
+offset_bottom = 530.0
+grow_vertical = 2
+theme_override_constants/separation = 15
+alignment = 1
+
+[node name="PartyButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer"]
+custom_minimum_size = Vector2(175, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
+text = "Party"
+
+[node name="ItemButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer"]
+custom_minimum_size = Vector2(175, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
+text = "Items"
+
+[node name="SettingsButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer"]
+custom_minimum_size = Vector2(175, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
+text = "Settings"
+
+[node name="SaveButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer"]
+custom_minimum_size = Vector2(175, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
+text = "Save"
+
+[node name="QuitButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer"]
+custom_minimum_size = Vector2(175, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
+text = "Quit"
+
+[node name="GoldHolder" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional"]
+layout_mode = 0
+offset_left = -190.0
+offset_top = 550.0
+offset_bottom = 660.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_makuo")
+
+[node name="Label" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/GoldHolder"]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 190.0
+offset_bottom = 110.0
+theme = ExtResource("38_6i0oi")
+theme_override_font_sizes/font_size = 25
+text = "Gold:"
+vertical_alignment = 1
+
+[node name="LocationHolder" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional"]
+layout_mode = 0
+offset_left = -190.0
+offset_top = 660.0
+offset_bottom = 770.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_theuu")
+
+[node name="Label" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/LocationHolder"]
+layout_mode = 0
+offset_left = 10.0
+offset_right = 190.0
+offset_bottom = 110.0
+theme_override_fonts/font = ExtResource("33_dmyrj")
+theme_override_font_sizes/font_size = 23
+text = "Location"
+vertical_alignment = 1
+
+[node name="QuitOptions" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -179.5
+offset_right = 200.0
+offset_bottom = 120.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_en4rr")
+
+[node name="QuitSave" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions"]
+layout_mode = 0
+offset_left = 29.0
+offset_top = 49.0
+offset_right = 379.0
+offset_bottom = 99.0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 30
+text = "Save and Quit to Menu"
+
+[node name="QuitNoSave" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 124.5
+offset_right = 360.0
+offset_bottom = 174.5
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 30
+text = "Quit without Saving"
+
+[node name="QuitDesktop" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions"]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 200.0
+offset_right = 391.0
+offset_bottom = 250.0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 30
+text = "Save and Quit to Desktop"
+
+[node name="QuitConfirmation" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -225.0
+offset_top = -125.0
+offset_right = 225.0
+offset_bottom = 125.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_jy45v")
+
+[node name="Text" type="RichTextLabel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitConfirmation"]
+clip_contents = false
+layout_mode = 0
+offset_top = 25.0
+offset_right = 450.0
+offset_bottom = 125.0
+theme = ExtResource("38_6i0oi")
+bbcode_enabled = true
+text = "[center]Are you sure you want to quit without saving?"
+
+[node name="YesButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitConfirmation"]
+layout_mode = 0
+offset_left = 250.0
+offset_top = 160.0
+offset_right = 400.0
+offset_bottom = 210.0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
+text = "Yes"
+
+[node name="NoButton" type="Button" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitConfirmation"]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 160.0
+offset_right = 200.0
+offset_bottom = 210.0
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
+text = "No"
+
+[node name="MenuManager" type="Node2D" parent="UI/PartyMenuLayer/PartyMenu" node_paths=PackedStringArray("managers", "tabs", "menuPanels")]
 script = ExtResource("35_dwed3")
 managers = NodePath("../../../../ManagerReferenceHolder")
+tabs = [NodePath("../MenuContainer/Additional/TabsContainer/PartyButton"), NodePath("../MenuContainer/Additional/TabsContainer/ItemButton"), NodePath("../MenuContainer/Additional/TabsContainer/SettingsButton"), NodePath("../MenuContainer/Additional/TabsContainer/SaveButton"), NodePath("../MenuContainer/Additional/TabsContainer/QuitButton")]
+menuPanels = [NodePath("../MenuContainer/Party"), NodePath("../MenuContainer/Items"), NodePath("../MenuContainer/Settings")]
 
 [node name="ItemPickup" type="CanvasGroup" parent="UI"]
 visible = false
@@ -3318,6 +4347,66 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 
 [node name="AnimationTree" type="AnimationTree" parent="PartyMembers/Member1"]
 
+[node name="AnimationMethods" type="AnimationPlayer" parent="PartyMembers/Member1"]
+libraries = {
+"": SubResource("AnimationLibrary_upklh")
+}
+
+[node name="MethodsTree" type="AnimationTree" parent="PartyMembers/Member1"]
+tree_root = SubResource("AnimationNodeBlendTree_h7jng")
+anim_player = NodePath("../AnimationMethods")
+active = true
+parameters/Movement/blend_position = 0
+
+[node name="dirtFootsteps" type="Node3D" parent="PartyMembers/Member1"]
+
+[node name="Footstep1" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/dirtFootsteps"]
+stream = ExtResource("80_k0a62")
+
+[node name="Footstep2" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/dirtFootsteps"]
+stream = ExtResource("81_fnttl")
+
+[node name="Footstep3" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/dirtFootsteps"]
+stream = ExtResource("82_pidmq")
+
+[node name="Footstep4" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/dirtFootsteps"]
+stream = ExtResource("83_bhx1r")
+
+[node name="Footstep5" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/dirtFootsteps"]
+stream = ExtResource("84_8qd2p")
+
+[node name="Footstep6" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/dirtFootsteps"]
+stream = ExtResource("85_sjf67")
+
+[node name="grassFootsteps" type="Node3D" parent="PartyMembers/Member1"]
+
+[node name="Footstep1" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/grassFootsteps"]
+stream = ExtResource("86_y4pru")
+volume_db = 15.267
+
+[node name="Footstep2" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/grassFootsteps"]
+stream = ExtResource("87_oomc2")
+volume_db = 15.267
+
+[node name="Footstep3" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/grassFootsteps"]
+stream = ExtResource("88_huk1f")
+volume_db = 15.267
+
+[node name="Footstep4" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/grassFootsteps"]
+stream = ExtResource("89_rvlxq")
+volume_db = 15.267
+
+[node name="Footstep5" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/grassFootsteps"]
+stream = ExtResource("90_mj2l2")
+volume_db = 15.267
+
+[node name="Footstep6" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/grassFootsteps"]
+stream = ExtResource("91_ysla0")
+volume_db = 15.267
+
+[node name="AudioHandler" type="Node3D" parent="PartyMembers/Member1"]
+script = ExtResource("79_pr45g")
+
 [node name="Member2" type="CharacterBody3D" parent="PartyMembers" node_paths=PackedStringArray("managers")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.13414, 0.320904, 0)
 collision_layer = 8
@@ -3415,10 +4504,10 @@ texture = ExtResource("57_3sl1u")
 [node name="Back" type="TextureRect" parent="MainMenu/Background/Main/Control"]
 layout_mode = 0
 offset_left = -462.0
-offset_top = -532.0
+offset_top = -1003.0
 offset_right = 538.0
-offset_bottom = 548.0
-texture = ExtResource("57_3sl1u")
+offset_bottom = 1077.0
+texture = ExtResource("75_4g5gp")
 
 [node name="Continue" type="Button" parent="MainMenu/Background/Main"]
 layout_mode = 0
@@ -3465,13 +4554,15 @@ offset_bottom = 951.094
 theme = ExtResource("54_o8lba")
 text = "Quit Game"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="MainMenu/Background/Main"]
+[node name="Title" type="RichTextLabel" parent="MainMenu/Background/Main"]
 layout_mode = 0
 offset_left = -282.0
 offset_top = 51.0
 offset_right = 418.0
 offset_bottom = 251.0
 theme = SubResource("Theme_0ac0l")
+theme_override_colors/default_color = Color(0.133333, 0.117647, 0.0196078, 1)
+theme_override_constants/outline_size = 10
 theme_override_fonts/italics_font = ExtResource("58_bw31p")
 theme_override_font_sizes/normal_font_size = 175
 theme_override_font_sizes/italics_font_size = 150
@@ -3493,144 +4584,13 @@ offset_bottom = -500.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MainMenu/Background/LoadGameSlots"]
-layout_mode = 0
-offset_left = 810.0
-offset_top = 290.0
-offset_right = 1110.0
-offset_bottom = 806.0
-
-[node name="Slot1" type="Button" parent="MainMenu/Background/LoadGameSlots/VBoxContainer"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "Slot 1"
-
-[node name="Time" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot1"]
-layout_mode = 0
-offset_top = 70.0
-offset_right = 150.0
-offset_bottom = 100.0
-text = "00:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Area" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot1"]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 70.0
-offset_right = 300.0
-offset_bottom = 100.0
-text = "Location"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Slot2" type="Button" parent="MainMenu/Background/LoadGameSlots/VBoxContainer"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "Slot 1"
-
-[node name="Time" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot2"]
-layout_mode = 0
-offset_top = 70.0
-offset_right = 150.0
-offset_bottom = 100.0
-text = "00:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Area" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot2"]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 70.0
-offset_right = 300.0
-offset_bottom = 100.0
-text = "Location"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Slot3" type="Button" parent="MainMenu/Background/LoadGameSlots/VBoxContainer"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "Slot 1"
-
-[node name="Time" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot3"]
-layout_mode = 0
-offset_top = 70.0
-offset_right = 150.0
-offset_bottom = 100.0
-text = "00:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Area" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot3"]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 70.0
-offset_right = 300.0
-offset_bottom = 100.0
-text = "Location"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Slot4" type="Button" parent="MainMenu/Background/LoadGameSlots/VBoxContainer"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "Slot 1"
-
-[node name="Time" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot4"]
-layout_mode = 0
-offset_top = 70.0
-offset_right = 150.0
-offset_bottom = 100.0
-text = "00:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Area" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot4"]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 70.0
-offset_right = 300.0
-offset_bottom = 100.0
-text = "Location"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Slot5" type="Button" parent="MainMenu/Background/LoadGameSlots/VBoxContainer"]
-custom_minimum_size = Vector2(300, 100)
-layout_mode = 2
-theme_override_font_sizes/font_size = 35
-text = "Slot 1"
-
-[node name="Time" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot5"]
-layout_mode = 0
-offset_top = 70.0
-offset_right = 150.0
-offset_bottom = 100.0
-text = "00:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Area" type="Label" parent="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot5"]
-layout_mode = 0
-offset_left = 150.0
-offset_top = 70.0
-offset_right = 300.0
-offset_bottom = 100.0
-text = "Location"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Back" type="Button" parent="MainMenu/Background/LoadGameSlots"]
 layout_mode = 0
 offset_left = 922.0
 offset_top = 940.0
 offset_right = 999.0
 offset_bottom = 990.0
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 30
 text = "Back"
 
@@ -3640,59 +4600,9 @@ offset_left = 1135.0
 offset_top = 540.0
 offset_right = 1285.0
 offset_bottom = 590.0
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 25
 text = "Delete Save"
-
-[node name="ConfirmationWindow" type="Control" parent="MainMenu/Background/LoadGameSlots"]
-visible = false
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Back" type="Panel" parent="MainMenu/Background/LoadGameSlots/ConfirmationWindow"]
-layout_mode = 0
-offset_left = 760.0
-offset_top = 390.0
-offset_right = 1160.0
-offset_bottom = 690.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_qwivw")
-
-[node name="Title" type="Label" parent="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back"]
-layout_mode = 0
-offset_top = 75.0
-offset_right = 400.0
-offset_bottom = 125.0
-theme_override_font_sizes/font_size = 20
-text = "Are you sure you want to delete Slot #?"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="ConfirmButton" type="Button" parent="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back"]
-layout_mode = 0
-offset_left = 250.0
-offset_top = 200.0
-offset_right = 350.0
-offset_bottom = 243.0
-theme_override_font_sizes/font_size = 25
-text = "Yes"
-
-[node name="BackButton" type="Button" parent="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back"]
-layout_mode = 0
-offset_left = 60.0
-offset_top = 200.0
-offset_right = 160.0
-offset_bottom = 243.0
-theme_override_font_sizes/font_size = 25
-text = "Cancel"
 
 [node name="Settings" type="Control" parent="MainMenu/Background"]
 visible = false
@@ -3715,16 +4625,9 @@ offset_left = 922.0
 offset_top = 940.0
 offset_right = 999.0
 offset_bottom = 990.0
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 30
 text = "Back"
-
-[node name="Back" type="Sprite2D" parent="MainMenu/Background"]
-visible = false
-modulate = Color(0, 0, 0, 0.247059)
-position = Vector2(1656, 483.094)
-rotation = -0.229239
-scale = Vector2(837, 1300)
-texture = SubResource("CanvasTexture_dadn2")
 
 [node name="MenuCamera" type="Camera2D" parent="MainMenu"]
 position = Vector2(960, 540)
@@ -3735,6 +4638,22 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 
 [connection signal="button_down" from="UI/Overlay/DefeatScreen/LastSave" to="CombatManager" method="OnReloadLastButtonDown"]
 [connection signal="button_down" from="UI/Overlay/DefeatScreen/Quit" to="CombatManager" method="OnQuitToMenuButtonDown"]
+[connection signal="button_down" from="UI/Overlay/Slots/Slot1" to="MainMenu" method="OnSlotDown" binds= [0]]
+[connection signal="mouse_entered" from="UI/Overlay/Slots/Slot1" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Overlay/Slots/Slot2" to="MainMenu" method="OnSlotDown" binds= [1]]
+[connection signal="mouse_entered" from="UI/Overlay/Slots/Slot2" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Overlay/Slots/Slot3" to="MainMenu" method="OnSlotDown" binds= [2]]
+[connection signal="mouse_entered" from="UI/Overlay/Slots/Slot3" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Overlay/Slots/Slot4" to="MainMenu" method="OnSlotDown" binds= [3]]
+[connection signal="mouse_entered" from="UI/Overlay/Slots/Slot4" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Overlay/Slots/Slot5" to="MainMenu" method="OnSlotDown" binds= [4]]
+[connection signal="mouse_entered" from="UI/Overlay/Slots/Slot5" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Overlay/OverwriteMessage/YesButton" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnConfirmSave"]
+[connection signal="button_down" from="UI/Overlay/OverwriteMessage/NoButton" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnCancelSave"]
+[connection signal="button_down" from="UI/Overlay/ConfirmationWindow/Back/ConfirmButton" to="MainMenu" method="OnConfirmDelete"]
+[connection signal="mouse_entered" from="UI/Overlay/ConfirmationWindow/Back/ConfirmButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Overlay/ConfirmationWindow/Back/BackButton" to="MainMenu" method="OnBackButtonDown" binds= ["/root/BaseNode/UI/Overlay/ConfirmationWindow", "/root/BaseNode/MainMenu/Background/LoadGameSlots"]]
+[connection signal="mouse_entered" from="UI/Overlay/ConfirmationWindow/Back/BackButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
 [connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [0, true]]
 [connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager/UIManager" method="OnHoverOverFighterPanel" binds= [0, true]]
 [connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager/UIManager" method="OnStopHoverOverFighterPanel" binds= [0, true]]
@@ -3770,45 +4689,98 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="mouse_exited" from="UI/Options/Choices/ItemButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
 [connection signal="button_down" from="UI/Options/CancelButton" to="CombatManager" method="OnCancelButtonDown"]
 [connection signal="button_down" from="UI/VictoryScreen/Back/Exit" to="CombatManager" method="OnExitButtonDown"]
-[connection signal="tab_clicked" from="UI/PartyMenuLayer/PartyMenu/TabContainer" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnTabPressed"]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer/Weapon" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnEquipButtonDown" binds= [1]]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer/Head" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnEquipButtonDown" binds= [2]]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer/Chest" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnEquipButtonDown" binds= [3]]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer/Legs" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnEquipButtonDown" binds= [4]]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer/Arms" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnEquipButtonDown" binds= [5]]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/Equipment/VBoxContainer/Accessory" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnEquipButtonDown" binds= [6]]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/SwapButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnSwapButtonDown"]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/AddPartyButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnAddPartyButtonDown"]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Party/RemovePartyButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Party" method="OnRemovePartyButtonDown"]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/ButtonsContainer/Video" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings" method="OnTabButtonDown" binds= [0]]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/ButtonsContainer/Controls" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings" method="OnTabButtonDown" binds= [1]]
-[connection signal="item_selected" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution/WindowButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings" method="OnSelectWindowedMode"]
-[connection signal="item_selected" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Video/Resolution/ResolutionButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings" method="OnSelectResolution"]
-[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Controls/Sensitivity/Slider" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings" method="OnSlideSensitivity"]
-[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings/Controls/Sensitivity/SpinBox" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Settings" method="OnEnterSensitivity"]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/SaveAndQuit" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu" method="OnSaveQuitButtonDown"]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/QuitNoSave" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu" method="OnQuitNoSaveButtonDown"]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/ConfirmationWindow/Back/YesButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu" method="OnConfirmButtonDown"]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/ConfirmationWindow/Back/NoButton" to="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu" method="OnCancelButtonDown"]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/TabContainer/Menu/SaveButton" to="SaveManager" method="OnSaveButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Weapon" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [1]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Head" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [2]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Chest" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [3]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Legs" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [4]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Arms" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [5]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Accessory" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [6]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/SwapButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnSwapButtonDown"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/SwapButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/AddPartyButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnAddPartyButtonDown"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/AddPartyButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/RemovePartyButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnRemovePartyButtonDown"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/RemovePartyButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer/Video" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer/Video" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnTabButtonDown" binds= [0]]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer/Video" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer/Controls" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer/Controls" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnTabButtonDown" binds= [1]]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer/Controls" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer/Audio" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer/Audio" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnTabButtonDown" binds= [2]]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer/Audio" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="item_selected" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Video/Resolution/WindowButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSelectWindowedMode"]
+[connection signal="item_selected" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Video/Resolution/ResolutionButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSelectResolution"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Controls/Sensitivity/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideSensitivity"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Controls/Sensitivity/SpinBox" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnEnterSensitivity"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Master/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideSensitivity"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Music/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideMusicVolume"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Effects/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideSensitivity"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Ambience/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideSensitivity"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/UI/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideSensitivity"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu/SaveAndQuit" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu" method="OnSaveQuitButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu/QuitNoSave" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu" method="OnQuitNoSaveButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu/ConfirmationWindow/Confirmation/YesButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu" method="OnConfirmButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu/ConfirmationWindow/Confirmation/NoButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu" method="OnCancelButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu/SaveButton" to="SaveManager" method="OnSaveButtonDown"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/PartyButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/PartyButton" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnTabPressed" binds= [0]]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/PartyButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/ItemButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/ItemButton" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnTabPressed" binds= [1]]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/ItemButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/SettingsButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/SettingsButton" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnTabPressed" binds= [2]]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/SettingsButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/SaveButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/SaveButton" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnTabPressed" binds= [3]]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/SaveButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/QuitButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/QuitButton" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnTabPressed" binds= [4]]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Additional/TabsContainer/QuitButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitSave" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitSave" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnSaveQuitButtonDown"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitSave" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitNoSave" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitNoSave" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnQuitNoSaveButtonDown"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitNoSave" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitDesktop" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitDesktop" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnQuitToDesktopButtonDown"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitDesktop" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitConfirmation/YesButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitConfirmation/YesButton" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnConfirmQuitNoSaveButtonDown"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitConfirmation/YesButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitConfirmation/NoButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitConfirmation/NoButton" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnCancelButtonDown"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/QuitOptions/QuitConfirmation/NoButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
 [connection signal="button_down" from="UI/Shop/Background/Buttons/Buy" to="UI/Shop/Background" method="OnBuyButtonDown"]
 [connection signal="button_down" from="UI/Shop/Background/Buttons/Sell" to="UI/Shop/Background" method="OnSellButtonDown"]
 [connection signal="button_down" from="UI/Shop/Background/Buttons/Exit" to="UI/Shop/Background" method="OnExitButtonDown"]
 [connection signal="item_selected" from="UI/Shop/Background/Buttons/Bulk" to="UI/Shop/Background" method="OnSelectBulk"]
 [connection signal="button_down" from="UI/Shop/Background/Notification/YesButton" to="UI/Shop/Background" method="OnYesButtonDown"]
 [connection signal="button_down" from="UI/Shop/Background/Notification/NoButton" to="UI/Shop/Background" method="OnNoButtonDown"]
+[connection signal="button_down" from="MainMenu/Background/Main/Continue" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="MainMenu/Background/Main/Continue" to="MainMenu" method="OnContinueButtonDown"]
+[connection signal="mouse_entered" from="MainMenu/Background/Main/Continue" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="MainMenu/Background/Main/NewGame" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="MainMenu/Background/Main/NewGame" to="MainMenu" method="OnNewGameButtonDown"]
+[connection signal="mouse_entered" from="MainMenu/Background/Main/NewGame" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="MainMenu/Background/Main/LoadGame" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="MainMenu/Background/Main/LoadGame" to="MainMenu" method="OnLoadButtonDown"]
+[connection signal="mouse_entered" from="MainMenu/Background/Main/LoadGame" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="MainMenu/Background/Main/Settings2" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="MainMenu/Background/Main/Settings2" to="MainMenu" method="OnSettingsButtonDown"]
+[connection signal="mouse_entered" from="MainMenu/Background/Main/Settings2" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="MainMenu/Background/Main/QuitGame" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="MainMenu/Background/Main/QuitGame" to="MainMenu" method="OnQuitButtonDown"]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot1" to="MainMenu" method="OnLoadGameButtonDown"]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot2" to="MainMenu" method="OnLoadGameButtonDown"]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot3" to="MainMenu" method="OnLoadGameButtonDown"]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot4" to="MainMenu" method="OnLoadGameButtonDown"]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/VBoxContainer/Slot5" to="MainMenu" method="OnLoadGameButtonDown"]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/Back" to="MainMenu" method="OnBackButtonDown"]
+[connection signal="mouse_entered" from="MainMenu/Background/Main/QuitGame" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/Back" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/Back" to="MainMenu" method="OnBackButtonDown" binds= ["/root/BaseNode/MainMenu/Background/LoadGameSlots", "/root/BaseNode/MainMenu/Background/Main"]]
+[connection signal="mouse_entered" from="MainMenu/Background/LoadGameSlots/Back" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/DeleteButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="MainMenu/Background/LoadGameSlots/DeleteButton" to="MainMenu" method="OnDeleteButtonDown"]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back/ConfirmButton" to="MainMenu" method="OnConfirmDelete"]
-[connection signal="button_down" from="MainMenu/Background/LoadGameSlots/ConfirmationWindow/Back/BackButton" to="MainMenu" method="OnBackButtonDown"]
-[connection signal="button_down" from="MainMenu/Background/Settings/Back" to="MainMenu" method="OnBackButtonDown"]
+[connection signal="mouse_entered" from="MainMenu/Background/LoadGameSlots/DeleteButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="MainMenu/Background/Settings/Back" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="button_down" from="MainMenu/Background/Settings/Back" to="MainMenu" method="OnBackButtonDown" binds= ["/root/BaseNode/MainMenu/Background/Settings", "/root/BaseNode/MainMenu/Background/Main"]]
+[connection signal="mouse_entered" from="MainMenu/Background/Settings/Back" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]

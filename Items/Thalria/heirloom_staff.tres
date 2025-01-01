@@ -30,3 +30,4 @@ itemCategory = 5
 price = 0
 affectedStats = SubResource("Resource_1lnan")
 usableOutsideCombat = false
+outOfCombatUseMessage = ""

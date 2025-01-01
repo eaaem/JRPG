@@ -1,8 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://cou82d6jx808b"]
+[gd_scene load_steps=3 format=3 uid="uid://cou82d6jx808b"]
 
+[ext_resource type="Theme" uid="uid://cfmeoqvxshi43" path="res://Menus/0Core/basic_label_text.tres" id="1_imwwy"]
 [ext_resource type="Script" path="res://Core/CustomTooltipLabel.cs" id="1_m8ufu"]
 
 [node name="AbilityLabel" type="RichTextLabel"]
 custom_minimum_size = Vector2(600, 40)
+theme = ExtResource("1_imwwy")
 text = "Ability"
 script = ExtResource("1_m8ufu")

@@ -5,11 +5,23 @@ public partial class MenuManager : Node
 {
    [Export]
    private ManagerReferenceHolder managers;
+   [Export]
+   private Button[] tabs = new Button[0];
+   [Export]
+   private Panel[] menuPanels = new Panel[0];
 
-   public CanvasGroup menu;
+   public Control menu;
    public CharacterController controller;
    private AnimationPlayer animationPlayer;
-   private TabContainer container;
+   private Panel container;
+
+   private Panel quitOptions;
+   private Panel quitConfirmation;
+
+   private int activeTabID = 0;
+   public int ActiveSlot { get; set; }
+   private bool isSaving;
+   private bool isQuitting;
 
    SettingsMenuManager settingsMenuManager;
    MiscMenuManager miscMenuManager;
@@ -23,35 +35,135 @@ public partial class MenuManager : Node
 
    public override void _Ready()
    {
-      menu = GetParent<CanvasGroup>();
-      container = GetNode<TabContainer>("../TabContainer");
+      menu = GetParent<Control>();
+      container = GetNode<Panel>("../MenuContainer");
       settingsMenuManager = container.GetNode<SettingsMenuManager>("Settings");
       baseNode = GetNode<Node3D>("/root/BaseNode");
       controller = baseNode.GetNode<CharacterController>("PartyMembers/Member1");
       miscMenuManager = container.GetNode<MiscMenuManager>("Menu");
+      quitOptions = container.GetNode<Panel>("QuitOptions");
+      quitConfirmation = quitOptions.GetNode<Panel>("QuitConfirmation");
 
       blackScreen = GetNode<ColorRect>("/root/BaseNode/UI/Overlay/BlackScreen");
    }
 
-   void OnTabPressed(int tabID)
+   void OnTabPressed(int ID)
    {
-      if (tabID == 0) // Party menu
+      if (ID < 3)
+      {
+         menuPanels[activeTabID].Visible = false;
+         menuPanels[ID].Visible = true;
+
+         tabs[activeTabID].Disabled = false;
+         tabs[ID].Disabled = true;
+
+         activeTabID = ID;
+      }
+
+      if (ID == 0) // Party menu
       {
          managers.PartyMenuManager.LoadPartyMenu();
       }
-      else if (tabID == 1) // Item menu
+      else if (ID == 1) // Item menu
       {
          managers.ItemMenuManager.LoadItemMenu();
          managers.PartyMenuManager.isActive = false;
       }
-      else if (tabID == 2) // Settings menu
+      else if (ID == 2) // Settings menu
       {
          settingsMenuManager.LoadSettingsMenu();
       }
-      else if (tabID == 3) // Main menu
+      else if (ID == 3) // Save
       {
-         miscMenuManager.LoadMainMenu();
+         isSaving = true;
+         LoadSaveSlots();
       }
+      else // Quit
+      {
+         quitOptions.Visible = true;
+         DisableTabs();
+         isQuitting = true;
+      }
+   }
+
+   void LoadSaveSlots()
+   {
+      VBoxContainer slots = GetNode<VBoxContainer>("/root/BaseNode/UI/Overlay/Slots");
+      for(int i = 0; i < 5; i++)
+      {
+         Button slot = slots.GetNode<Button>("Slot" + (i + 1));
+         managers.MainMenuManager.PopulateSlotInformation(slot, i);
+         slot.Disabled = false;
+      }
+      slots.Visible = true;
+      GetNode<Panel>("/root/BaseNode/UI/Overlay/SlotsBackground").Visible = true;
+
+      managers.PartyMenuManager.DisableMenu();
+      DisableTabs();
+   }
+
+   public void OnConfirmSave()
+   {
+      managers.SaveManager.SaveGame(false, ActiveSlot);
+
+      GetNode<Panel>("/root/BaseNode/UI/Overlay/OverwriteMessage").Visible = false;
+
+      managers.MainMenuManager.PopulateSlotInformation(GetNode<Button>("/root/BaseNode/UI/Overlay/Slots/Slot" + (ActiveSlot + 1)), ActiveSlot);
+
+      Popup popup = GD.Load<PackedScene>("res://Core/popup.tscn").Instantiate<Popup>();
+      GetNode<CanvasLayer>("/root/BaseNode/UI/Overlay").AddChild(popup);
+      popup.ReceiveInfo(4, "Save successful!");
+
+      for(int i = 0; i < 5; i++)
+      {
+         Button slot = GetNode<Button>("/root/BaseNode/UI/Overlay/Slots/Slot" + (i + 1));
+         slot.Disabled = false;
+      }
+   }
+
+   void OnCancelSave()
+   {
+      for (int i = 0; i < 5; i++)
+      {
+         Button slot = GetNode<Button>("/root/BaseNode/UI/Overlay/Slots/Slot" + (i + 1));
+         slot.Disabled = false;
+      }
+      GetNode<Panel>("/root/BaseNode/UI/Overlay/OverwriteMessage").Visible = false;;
+   }
+
+   void OnSaveQuitButtonDown()
+   {
+      managers.SaveManager.SaveGame(false, managers.SaveManager.currentSaveIndex);
+      managers.LevelManager.ResetGameState();
+      menu.Visible = false;
+      quitOptions.Visible = false;
+   }
+
+   void OnQuitToDesktopButtonDown()
+   {
+      managers.SaveManager.SaveGame(false, managers.SaveManager.currentSaveIndex);
+      GetTree().Quit();
+   }
+
+   void OnQuitNoSaveButtonDown()
+   {
+      DisableTabs();
+      quitConfirmation.Visible = true;
+   }
+
+   void OnConfirmQuitNoSaveButtonDown()
+   {
+      quitConfirmation.Visible = false;
+      managers.LevelManager.ResetGameState();
+      menu.Visible = false;
+      EnableTabs();
+      quitOptions.Visible = false;
+   }
+
+   void OnCancelButtonDown()
+   {
+      EnableTabs();
+      quitConfirmation.Visible = false;
    }
 
    public override void _Input(InputEvent @event)
@@ -71,6 +183,23 @@ public partial class MenuManager : Node
             else if (managers.ItemMenuManager.isUsingItem)
             {
                managers.ItemMenuManager.CancelItemUsage();
+            }
+            else if (isSaving)
+            {
+               GetNode<VBoxContainer>("/root/BaseNode/UI/Overlay/Slots").Visible = false;
+               GetNode<Panel>("/root/BaseNode/UI/Overlay/SlotsBackground").Visible = false;
+               GetNode<Panel>("/root/BaseNode/UI/Overlay/OverwriteMessage").Visible = false;
+
+               managers.PartyMenuManager.EnableMenu();
+               EnableTabs();
+               isSaving = false;
+            }
+            else if (isQuitting)
+            {
+               quitOptions.Visible = false;
+               EnableTabs();
+               quitConfirmation.Visible = false;
+               isQuitting = false;
             }
             else
             {
@@ -93,13 +222,17 @@ public partial class MenuManager : Node
       controller.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Idle");
       EnableTabs();
       Input.MouseMode = Input.MouseModeEnum.Visible;
-      container.CurrentTab = 0;
+      //container.CurrentTab = 0;
       managers.PartyMenuManager.LoadPartyMenu();
+      tabs[0].Disabled = true;
 
       if (baseNode.HasNode("WorldMap"))
       {
          baseNode.GetNode<CharacterController>("WorldMap/Player").DisableMovement = true;
       }
+
+      GetNode<Label>("../MenuContainer/Additional/GoldHolder/Label").Text = "Gold: " + managers.PartyManager.Gold;
+      GetNode<Label>("../MenuContainer/Additional/LocationHolder/Label").Text = managers.LevelManager.location;
    }
 
    public void CloseMenu()
@@ -117,17 +250,17 @@ public partial class MenuManager : Node
 
    public void DisableTabs()
    {
-      for (int i = 0; i < container.GetTabCount(); i++)
+      for (int i = 0; i < tabs.Length; i++)
       {
-         container.SetTabDisabled(i, true);
+         tabs[i].Disabled = true;
       }
    }
 
    public void EnableTabs()
    {
-      for (int i = 0; i < container.GetTabCount(); i++)
+      for (int i = 0; i < tabs.Length; i++)
       {
-         container.SetTabDisabled(i, false);
+         tabs[i].Disabled = false;
       }
    }
 

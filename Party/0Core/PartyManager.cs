@@ -49,7 +49,7 @@ public partial class PartyManager : Node
       memberToAdd.level = 1;
       memberToAdd.characterName = baseMembers[0].memberName;
       memberToAdd.characterType = baseMembers[0].memberType;
-      memberToAdd.affinity = baseMembers[0].affinity;
+      memberToAdd.affinity = Affinity.None;
       memberToAdd.stats = new Stat[10];
       memberToAdd.specialAbility = baseMembers[0].specialAbility;
       memberToAdd.isInParty = true;
@@ -100,7 +100,16 @@ public partial class PartyManager : Node
       newMember.level = level;
       newMember.experience = experience;
       newMember.characterType = (CharacterType)characterType;
-      newMember.affinity = newMember.baseMember.affinity;
+
+      if (newMember.level >= 5)
+      {
+         newMember.affinity = newMember.baseMember.affinity;
+      }
+      else
+      {
+         newMember.affinity = Affinity.None;
+      }
+
       newMember.stats = new Stat[10];
       newMember.specialAbility = newMember.baseMember.specialAbility;
       newMember.isInParty = isInParty;

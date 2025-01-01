@@ -1,7 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://5e75gvplr40p"]
+[gd_scene load_steps=6 format=3 uid="uid://5e75gvplr40p"]
 
 [ext_resource type="PackedScene" uid="uid://dywuqybpsdvjf" path="res://Levels/2Misc/Accessories/wooden_door_thick.glb" id="1_33opk"]
 [ext_resource type="Script" path="res://Levels/0Core/Door.cs" id="2_1pgxh"]
+[ext_resource type="AudioStream" uid="uid://gm8d7lnm7ye8" path="res://Levels/0Core/door_open.ogg" id="3_injv0"]
+[ext_resource type="AudioStream" uid="uid://b04vc3ocgceuj" path="res://Levels/0Core/door_close.ogg" id="4_m5m8b"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oiuna"]
 size = Vector3(1.5, 2.2, 0.3)
@@ -9,9 +11,20 @@ size = Vector3(1.5, 2.2, 0.3)
 [node name="wooden_door_thick" instance=ExtResource("1_33opk")]
 script = ExtResource("2_1pgxh")
 
+[node name="Door" parent="." index="1"]
+transform = Transform3D(0.999759, 0, 0.0219458, 0, 1, 0, -0.0219458, 0, 0.999759, -0.7, 1.2, 0)
+
 [node name="StaticBody3D" type="StaticBody3D" parent="Door" index="0"]
 collision_layer = 33
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Door/StaticBody3D" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.671795, -0.0883782, 0)
 shape = SubResource("BoxShape3D_oiuna")
+
+[node name="DoorOpen" type="AudioStreamPlayer3D" parent="." index="3"]
+stream = ExtResource("3_injv0")
+volume_db = 14.045
+
+[node name="DoorClose" type="AudioStreamPlayer3D" parent="." index="4"]
+stream = ExtResource("4_m5m8b")
+volume_db = 14.045

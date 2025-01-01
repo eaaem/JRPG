@@ -30,3 +30,4 @@ itemCategory = 6
 price = 0
 affectedStats = SubResource("Resource_ygyno")
 usableOutsideCombat = false
+outOfCombatUseMessage = ""

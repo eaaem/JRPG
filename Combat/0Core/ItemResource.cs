@@ -53,6 +53,8 @@ public partial class ItemResource : Resource
    public StatContainer affectedStats = new StatContainer();
    [Export]
    public bool usableOutsideCombat;
+   [Export(PropertyHint.MultilineText)]
+   public string outOfCombatUseMessage;
 }
 
 public partial class InventoryItem : Node

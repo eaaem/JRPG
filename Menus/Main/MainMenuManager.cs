@@ -9,10 +9,11 @@ public partial class MainMenuManager : CanvasLayer
 	private Control mainScreen;
    private Control settingsScreen;
    private Control loadGameSlots;
+   private VBoxContainer slots;
    private Control deleteConfirmationWindow;
 
-   private CanvasGroup partyMenu;
-   private TabContainer partyTabContainer;
+   private Control partyMenu;
+   private Panel partyContainer;
 
    private Button deleteButton;
 
@@ -24,11 +25,12 @@ public partial class MainMenuManager : CanvasLayer
       mainScreen = GetNode<Control>("Background/Main");
       settingsScreen = GetNode<Control>("Background/Settings");
       loadGameSlots = GetNode<Control>("Background/LoadGameSlots");
+      slots = GetNode<VBoxContainer>("/root/BaseNode/UI/Overlay/Slots");
       deleteButton = loadGameSlots.GetNode<Button>("DeleteButton");
-      deleteConfirmationWindow = loadGameSlots.GetNode<Control>("ConfirmationWindow");
+      deleteConfirmationWindow = GetNode<Control>("/root/BaseNode/UI/Overlay/ConfirmationWindow");
 
-      partyMenu = GetNode<CanvasGroup>("/root/BaseNode/UI/PartyMenuLayer/PartyMenu");
-      partyTabContainer = partyMenu.GetNode<TabContainer>("TabContainer");
+      partyMenu = GetNode<Control>("/root/BaseNode/UI/PartyMenuLayer/PartyMenu");
+      partyContainer = partyMenu.GetNode<Panel>("MenuContainer");
 
       CreateMainMenuLevel();
       CheckLoadGameButtonAvailability();
@@ -107,8 +109,14 @@ public partial class MainMenuManager : CanvasLayer
 
       partyMenu.Visible = true;
 
-      partyTabContainer.CurrentTab = 2;
-      partyTabContainer.TabsVisible = false;
+      partyContainer.GetNode<Control>("Additional").Visible = false;
+
+      foreach (Control child in partyContainer.GetChildren())
+      {
+         child.Visible = false;
+      }
+
+      partyContainer.GetNode<Panel>("Settings").Visible = true;
    }
 
    void OnLoadButtonDown()
@@ -117,60 +125,67 @@ public partial class MainMenuManager : CanvasLayer
 
       for (int i = 0; i < 5; i++)
       {
-         Button slotButton = loadGameSlots.GetNode<Button>("VBoxContainer/Slot" + (i + 1));
-         if (FileAccess.FileExists("user://savegame" + i + ".save"))
-         {
-            using var saveGame = FileAccess.Open("user://savegame" + i + ".save", FileAccess.ModeFlags.Read);
-            slotButton.Text = "Slot " + (i + 1);
-
-            while (saveGame.GetPosition() < saveGame.GetLength())
-            {
-               string jsonString = saveGame.GetLine();
-               Json json = new Json();
-               Error parseResult = json.Parse(jsonString);
-               Godot.Collections.Dictionary<string, Variant> nodeData = new Godot.Collections.Dictionary<string, Variant>((Godot.Collections.Dictionary)json.Data);
-
-               // Time
-               if (nodeData.ContainsKey("TimeSpent"))
-               {
-                  Label timeLabel = slotButton.GetChild<Label>(0);
-                  timeLabel.Text = string.Empty;
-                  int minutes = ((int)nodeData["TimeSpent"] / 60) % 60;
-                  int hours = (int)nodeData["TimeSpent"] / 360;
-
-                  if (hours < 10)
-                  {
-                     timeLabel.Text += "0";
-                  }
-
-                  timeLabel.Text += hours + ":";
-
-                  if (minutes < 10)
-                  {
-                     timeLabel.Text += "0";
-                  }
-
-                  timeLabel.Text += minutes;
-
-                  slotButton.GetChild<Label>(1).Text = (string)nodeData["Location"];
-               }
-            }
-
-            slotButton.GetChild<Label>(0).Visible = true;
-            slotButton.GetChild<Label>(1).Visible = true;
-            slotButton.Disabled = false;
-         }
-         else
-         {
-            slotButton.GetChild<Label>(0).Visible = false;
-            slotButton.GetChild<Label>(1).Visible = false;
-            slotButton.Text = "Empty";
-            slotButton.Disabled = true;
-         }
+         Button slotButton = slots.GetNode<Button>("Slot" + (i + 1));
+         PopulateSlotInformation(slotButton, i);
       }
 
       deleteButton.Text = "Delete";
       loadGameSlots.Visible = true;
+      slots.Visible = true;
+   }
+
+   public void PopulateSlotInformation(Button slot, int index)
+   {
+      slot.GetNode<Panel>("RedOverlay").Visible = false;
+      if (FileAccess.FileExists("user://savegame" + index + ".save"))
+      {
+         using var saveGame = FileAccess.Open("user://savegame" + index + ".save", FileAccess.ModeFlags.Read);
+         slot.Text = "Slot " + (index + 1);
+
+         while (saveGame.GetPosition() < saveGame.GetLength())
+         {
+            string jsonString = saveGame.GetLine();
+            Json json = new Json();
+            Error parseResult = json.Parse(jsonString);
+            Godot.Collections.Dictionary<string, Variant> nodeData = new Godot.Collections.Dictionary<string, Variant>((Godot.Collections.Dictionary)json.Data);
+
+            // Time
+            if (nodeData.ContainsKey("TimeSpent"))
+            {
+               Label timeLabel = slot.GetChild<Label>(0);
+               timeLabel.Text = string.Empty;
+               int minutes = ((int)nodeData["TimeSpent"] / 60) % 60;
+               int hours = (int)nodeData["TimeSpent"] / 360;
+
+               if (hours < 10)
+               {
+                  timeLabel.Text += "0";
+               }
+
+               timeLabel.Text += hours + ":";
+
+               if (minutes < 10)
+               {
+                  timeLabel.Text += "0";
+               }
+
+               timeLabel.Text += minutes;
+
+               slot.GetChild<Label>(1).Text = (string)nodeData["Location"];
+            }
+         }
+
+         slot.GetChild<Label>(0).Visible = true;
+         slot.GetChild<Label>(1).Visible = true;
+         slot.Disabled = false;
+      }
+      else
+      {
+         slot.GetChild<Label>(0).Visible = false;
+         slot.GetChild<Label>(1).Visible = false;
+         slot.Text = "Empty";
+         slot.Disabled = true;
+      }
    }
 
    void OnBackButtonDown(string originPath, string targetPath)
@@ -189,8 +204,8 @@ public partial class MainMenuManager : CanvasLayer
 
          partyMenu.Visible = false;
 
-         partyTabContainer.CurrentTab = 0;
-         partyTabContainer.TabsVisible = true;
+         partyContainer.GetNode<Control>("Additional").Visible = true;
+         slots.Visible = false;
       }
       else if (targetCanvas == loadGameSlots)
       {
@@ -198,24 +213,50 @@ public partial class MainMenuManager : CanvasLayer
       }
    }
 
-   void OnLoadGameButtonDown(int index)
+   void OnSlotDown(int index)
    {
       if (isDeletingSaves)
       {
-         deleteConfirmationWindow.GetNode<Label>("Back/Title").Text = "Are you sure you want to delete the save in Slot " + (index + 1) + "?\nThis cannot be reversed.";
+         deleteConfirmationWindow.GetNode<RichTextLabel>("Back/Title").Text = "[center]Are you sure you want to delete the save in Slot " + (index + 1) + "?\n"
+                                                                              + "[color=red]This action is irreversible.";
          deleteConfirmationWindow.Visible = true;
          currentDeletingSlotIndex = index;
 
          for (int i = 0; i < 5; i++)
          {
-            loadGameSlots.GetNode<Button>("VBoxContainer/Slot" + (i + 1)).Disabled = true;
+            slots.GetNode<Button>("Slot" + (i + 1)).Disabled = true;
          }
          loadGameSlots.GetNode<Button>("Back").Disabled = true;
          deleteButton.Disabled = true;
       }
       else
       {
-         Load(index);
+         if (Visible)
+         {
+            Load(index);
+         }
+         else // Saving
+         {
+            Button slotButton = slots.GetNode<Button>("Slot" + (index + 1));
+            managers.MenuManager.ActiveSlot = index;
+
+            if (slotButton.Text == "Empty")
+            {
+               managers.MenuManager.OnConfirmSave();
+            }
+            else
+            {        
+               foreach (Button button in slots.GetChildren())
+               {
+                  button.Disabled = true;
+               }
+
+               Panel message = GetNode<Panel>("/root/BaseNode/UI/Overlay/OverwriteMessage");
+               message.GetNode<RichTextLabel>("Text").Text = "[center]Are you sure you want to overwrite the save in Slot " + (index + 1) + "?\n"
+                                                             + "[color=red]This action cannot be reversed.[/color]";
+               message.Visible = true;
+            }
+         }
       }
    }
 
@@ -231,7 +272,7 @@ public partial class MainMenuManager : CanvasLayer
 
       for (int i = 0; i < 5; i++)
       {
-         Button slotButton = loadGameSlots.GetNode<Button>("VBoxContainer/Slot" + (i + 1));
+         Button slotButton = slots.GetNode<Button>("Slot" + (i + 1));
          if (FileAccess.FileExists("user://savegame" + i + ".save"))
          {
             using var saveGame = FileAccess.Open("user://savegame" + i + ".save", FileAccess.ModeFlags.Read);
@@ -264,6 +305,7 @@ public partial class MainMenuManager : CanvasLayer
       managers.SaveManager.currentSaveIndex = index;
       managers.SaveManager.LoadGame(index);
       Visible = false;
+      GetNode<VBoxContainer>("/root/BaseNode/UI/Overlay/Slots").Visible = false;
       DestroyMainMenuLevel();
    }
 
@@ -273,17 +315,30 @@ public partial class MainMenuManager : CanvasLayer
       {
          isDeletingSaves = true;
          deleteButton.Text = "Cancel";
+
+         foreach (Button button in slots.GetChildren())
+         {
+            if (button.Text != "Empty")
+            {
+               button.GetNode<Panel>("RedOverlay").Visible = true;
+            }
+         }
       }
       else
       {
          isDeletingSaves = false;
          deleteButton.Text = "Delete";
+
+         foreach (Button button in slots.GetChildren())
+         {
+            button.GetNode<Panel>("RedOverlay").Visible = false;
+         }
       }
    }
 
    void OnConfirmDelete()
    {
-      Button correspondingSlot = loadGameSlots.GetNode<Button>("VBoxContainer/Slot" + (currentDeletingSlotIndex + 1));
+      Button correspondingSlot = slots.GetNode<Button>("Slot" + (currentDeletingSlotIndex + 1));
       correspondingSlot.Disabled = true;
 
       DirAccess.RemoveAbsolute("user://savegame" + currentDeletingSlotIndex + ".save");
@@ -301,7 +356,8 @@ public partial class MainMenuManager : CanvasLayer
    {
       for (int i = 0; i < 5; i++)
       {
-         Button slot = loadGameSlots.GetNode<Button>("VBoxContainer/Slot" + (i + 1));
+         Button slot = slots.GetNode<Button>("Slot" + (i + 1));
+         slot.GetNode<Panel>("RedOverlay").Visible = false;
 
          if (slot.Text != "Empty")
          {
@@ -311,6 +367,7 @@ public partial class MainMenuManager : CanvasLayer
 
       loadGameSlots.GetNode<Button>("Back").Disabled = false;
       deleteButton.Disabled = false;
+      deleteButton.Text = "Delete";
    }
 
    public void CreateMainMenuLevel()
@@ -348,7 +405,6 @@ public partial class MainMenuManager : CanvasLayer
 
       Node3D level = packedScene.Instantiate<Node3D>();
       level.Name = "MainMenuLevel";
-      //level.GetNode<Camera3D>("Camera").MakeCurrent();
       AddChild(level);
    }
 
