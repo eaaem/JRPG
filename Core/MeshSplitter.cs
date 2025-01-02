@@ -11,7 +11,7 @@ public partial class MeshSplitter : Node
    [Export]
    private MeshInstance3D mesh;
    [Export]
-   private float scaleFactor = 1f;
+   private bool considerParentTransform;
 	
    private bool activate;
    [Export]
@@ -23,11 +23,18 @@ public partial class MeshSplitter : Node
 
    void Generate()
    {
+      if (mesh == null)
+      {
+         GD.PrintErr("Unable to create colliders: No source mesh found (did you forget to delete the MeshSplitter?).");
+         return;
+      }
+
       MeshDataTool meshDataTool = new MeshDataTool();
       for (int i = 0; i < mesh.Mesh.GetSurfaceCount(); i++)
       {
          meshDataTool.CreateFromSurface((ArrayMesh)mesh.Mesh, i);
-         Vector3[] vertices = new Vector3[meshDataTool.GetVertexCount()];
+
+         Vector3[] vertices = new Vector3[meshDataTool.GetFaceCount() * 3];
 
          int vertexIndex = 0;
          for (int j = 0; j < meshDataTool.GetFaceCount(); j++)
@@ -49,9 +56,19 @@ public partial class MeshSplitter : Node
          AddChild(body);
          body.Owner = GetParent();
          collider.Owner = GetParent();
-         collider.Scale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+         body.Name = mesh.Mesh.SurfaceGetMaterial(i).ResourceName;
+
+         collider.Scale = mesh.Scale;
+         collider.Rotation = collider.Rotation;
+
+         if (considerParentTransform)
+         {
+            Node3D parent = mesh.GetParent<Node3D>();
+            collider.Scale = new Vector3(collider.Scale.X * parent.Scale.X, collider.Scale.Y * parent.Scale.Y, collider.Scale.Z * parent.Scale.Z);
+            collider.Rotation = new Vector3(collider.Rotation.X + parent.Rotation.X, collider.Rotation.Y + parent.Rotation.Y, collider.Rotation.Z + parent.Rotation.Z);
+         }
       }
       
-      GD.Print("Created colliders. If they seem invisible, double check their scale and the scale of the source mesh. Remember to remove the MeshSplitter when you're done!");
+      GD.Print("Created colliders. Remember to remove the MeshSplitter when you're done!");
    }
 }

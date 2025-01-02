@@ -180,7 +180,7 @@ public partial class ObjectSet : MultiMeshInstance3D
          }
          
          PhysicsDirectSpaceState3D spaceState = GetWorld3D().DirectSpaceState;
-         PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(point, point - (Vector3.Down * 50f), 64);
+         PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(point, point + (Vector3.Down * 50f), 64);
          query.CollideWithAreas = true;
 
          var result = spaceState.IntersectRay(query);
@@ -188,6 +188,21 @@ public partial class ObjectSet : MultiMeshInstance3D
          if (result.Count > 0)
          {
             point = (Vector3)result["position"];
+         }
+         else // Try raycasting up, if there was nothing below
+         {
+            query = PhysicsRayQueryParameters3D.Create(point, point + (Vector3.Up * 50f), 64);
+
+            result = spaceState.IntersectRay(query);
+
+            if (result.Count > 0)
+            {
+               point = (Vector3)result["position"];
+            }
+            else // No valid position above or below exists, so exit
+            {
+               return;
+            }
          }
       }
 

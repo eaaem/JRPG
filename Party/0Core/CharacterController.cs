@@ -147,7 +147,12 @@ public partial class CharacterController : CharacterBody3D
          }
 
          animationTree.Set("parameters/BasicMovement/blend_position", MovementBlend / 10f);
-         methodsTree.Set("parameters/Movement/blend_position", MovementBlend / 10f);
+
+         if (!isWorldMap)
+         {
+            methodsTree.Set("parameters/Movement/blend_position", MovementBlend / 10f);
+         }
+
          Velocity = velocity;
 
          MoveAndSlide();
@@ -155,7 +160,11 @@ public partial class CharacterController : CharacterBody3D
       else
       {
          animationTree.Set("parameters/BasicMovement/blend_position", -1f);
-         methodsTree.Set("parameters/Movement/blend_position", -1f);
+
+         if (!isWorldMap)
+         {
+            methodsTree.Set("parameters/Movement/blend_position", -1f);
+         }
       }
 	}
 

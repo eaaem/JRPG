@@ -2,7 +2,7 @@
 
 importer="mp3"
 type="AudioStreamMP3"
-uid="uid://cq17dml6734kk"
+uid="uid://02rxnnoebsls"
 path="res://.godot/imported/theralin.mp3-2c184b396c0a0f8eae80e69ee7a294e4.mp3str"
 
 [deps]
@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/theralin.mp3-2c184b396c0a0f8eae80e69ee7a294e4
 [params]
 
 loop=true
-loop_offset=0
-bpm=0
+loop_offset=0.0
+bpm=0.0
 beat_count=0
 bar_beats=4

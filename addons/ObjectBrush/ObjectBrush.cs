@@ -257,7 +257,7 @@ public partial class ObjectBrush : EditorPlugin
       {
          currentSet.AddMesh(point, visibleMesh.Rotation);
       }
-      else
+      else if (isErasing)
       {
          currentSet.AttemptErase(point);
       }
