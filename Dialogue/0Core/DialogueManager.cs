@@ -24,6 +24,8 @@ public partial class DialogueManager : Node
    private float textSpeed = 0.01f;
    [Export]
    public InspectorDialogueInteraction[] dialoguesInThisRegion = new InspectorDialogueInteraction[5];
+   [Export]
+   private AudioStreamPlayer dialogueBlip;
 
    public Control DialogueContainer { get; set; }
    private Sprite2D sprite;
@@ -195,6 +197,7 @@ public partial class DialogueManager : Node
          validToSkip = true;
 
          body.VisibleCharacters++;
+         dialogueBlip.Play();
 
          // Add BBcode tags in blocks; otherwise, they'll be entered in awkwardly one character at a time
          if (currentObject.content[i] == '[')
@@ -268,6 +271,12 @@ public partial class DialogueManager : Node
          managers.CutsceneManager.ProgressCutscene(CurrentIndex + 1);
       }
 
+      if (CurrentIndex + 1 >= currentDialogueList.dialogues.Length)
+      {
+         ExitDialogue();
+         return;
+      }
+      
       NextDialogue(CurrentIndex + 1);
    }
 

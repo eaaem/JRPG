@@ -253,8 +253,7 @@ public partial class TheralinProgress : LevelProgession
       managers.PartyManager.Party.Clear();
       managers.PartyManager.Party.Add(vakthol);
 
-      GetNode<CombatManager>("/root/BaseNode/CombatManager").SetupCombat(enemy.enemies, Vector3.Zero, Vector3.Zero,
-                                                                         enemy);
+      GetNode<CombatManager>("/root/BaseNode/CombatManager").SetupCombat(enemy.enemies, Vector3.Zero, Vector3.Zero, enemy);
       GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = true;
       GetNode<CombatManager>("/root/BaseNode/CombatManager").BattleEnd += EndOfTutorialBattle;
    }
@@ -363,15 +362,13 @@ public partial class TheralinProgress : LevelProgession
 
          managers.Controller.DisableMovement = true;
          managers.Controller.DisableCamera = true;
-         managers.MenuManager.FadeToBlack();
+         Tween tween = CreateTween();
+         managers.MenuManager.FadeToBlack(tween);
 
          managers.Controller.RegularSpeed = 5f;
          managers.Controller.SprintSpeed = 10f;
 
-         while (!managers.MenuManager.BlackScreenIsVisible)
-         {
-            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-         }
+         await ToSignal(tween, Tween.SignalName.Finished);
 
          material.SetShaderParameter("scale", 0);
 

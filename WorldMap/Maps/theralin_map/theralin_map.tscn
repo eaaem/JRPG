@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://b8rpw3mtavu3e" path="res://WorldMap/0Core/3d_exit_point.tscn" id="1_mns67"]
 [ext_resource type="PackedScene" uid="uid://uskhgu67g8cj" path="res://WorldMap/Maps/theralin_map/grass_plane_basic.glb" id="2_10p6y"]
-[ext_resource type="PackedScene" uid="uid://0bghlkvkgcip" path="res://Levels/Dathrel_Cabin/dathrel_cabin.glb" id="6_4rsf4"]
+[ext_resource type="PackedScene" uid="uid://0bghlkvkgcip" path="res://Levels/dathrel_cabin/dathrel_cabin.glb" id="6_4rsf4"]
 [ext_resource type="PackedScene" uid="uid://87ptatcg7fwp" path="res://Levels/2Misc/Structures/peasant_house.glb" id="7_1m234"]
 [ext_resource type="Material" uid="uid://cuokdfy0sxcql" path="res://Levels/2Misc/Terrain/tree_material.tres" id="8_kl3f1"]
 [ext_resource type="PackedScene" uid="uid://mcflil85ynuu" path="res://Levels/2Misc/Structures/well.glb" id="8_qs1y0"]

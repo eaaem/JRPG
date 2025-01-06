@@ -35,6 +35,4 @@ public partial class PartyMemberBase : Resource
    public ItemCategory itemCategoryWorn;
    [Export]
    public ItemCategory itemCategoryWielded;
-   [Export]
-   public Node3D model;
 }

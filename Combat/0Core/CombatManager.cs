@@ -176,12 +176,9 @@ public partial class CombatManager : Node
          }
          else
          {
-            managers.MenuManager.FadeToBlack();
-
-            while (!managers.MenuManager.BlackScreenIsVisible)
-            {
-               await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-            }
+            Tween tween = CreateTween();
+            managers.MenuManager.FadeToBlack(tween);
+            await ToSignal(tween, Tween.SignalName.Finished);
          }
 
          await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
@@ -1408,8 +1405,6 @@ public partial class CombatManager : Node
             int oldLevel = managers.PartyManager.Party[i].level;
             int oldAbilityCount = managers.PartyManager.Party[i].abilities.Count;
 
-            //managers.PartyManager.Party[i].model.GetNode<AnimationTree>("AnimationTree").Active = true;
-
             Fighter fighter = GetFighterFromMember(managers.PartyManager.Party[i]);
             managers.PartyManager.Party[i].currentHealth = Mathf.Clamp(fighter.currentHealth, 1, 9999);
             managers.PartyManager.Party[i].currentMana = fighter.currentMana;
@@ -1423,12 +1418,9 @@ public partial class CombatManager : Node
 
    async void OnExitButtonDown()
    {
-      managers.MenuManager.FadeToBlack();
-
-      while (!managers.MenuManager.BlackScreenIsVisible)
-      {
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-      }
+      Tween tween = CreateTween();
+      managers.MenuManager.FadeToBlack(tween);
+      await ToSignal(tween, Tween.SignalName.Finished);
 
       uiManager.ExitVictoryScreen();
       managers.Controller.PlaceWeaponOnBack();
@@ -1460,7 +1452,8 @@ public partial class CombatManager : Node
 
    void Loss()
    {
-      managers.MenuManager.FadeToBlack();
+      Tween tween = CreateTween();
+      managers.MenuManager.FadeToBlack(tween);
       uiManager.SetDefeatScreenVisible(true);
       IsInCombat = false;
    }

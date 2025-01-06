@@ -14,14 +14,15 @@ public partial class SaveManager : Node
 
    public int currentSaveIndex = -1;
 
-   public ColorRect blackScreen;
    public Label loadingLabel;
 
    public Vector3 WorldMapPosition { get; set; }
 
+   [Signal]
+   public delegate void SaveFinishedEventHandler();
+
    public override void _Ready()
    {
-      blackScreen = GetNode<ColorRect>("/root/BaseNode/UI/Overlay/BlackScreen");
       loadingLabel = GetNode<Label>("/root/BaseNode/UI/Overlay/LoadingText");
    }
 
@@ -38,6 +39,9 @@ public partial class SaveManager : Node
          { "PlayerPosX", managers.Controller.Position.X },
          { "PlayerPosY", managers.Controller.Position.Y },
          { "PlayerPosZ", managers.Controller.Position.Z },
+         { "PlayerControllerRotation", managers.Controller.Rotation.Y },
+         { "PlayerModelRotation", managers.Controller.GetNode<Node3D>("Model").Rotation.Y },
+         { "CameraRotationX", managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.X },
          { "PlayerPosXMap", WorldMapPosition.X },
          { "PlayerPosYMap", WorldMapPosition.Y },
          { "PlayerPosZMap", WorldMapPosition.Z }
@@ -61,7 +65,6 @@ public partial class SaveManager : Node
       if (isNewGame)
       {
          managers.PartyManager.InitializeNewParty();
-         managers.Controller.Position = new Vector3(0.922f, 0.603f, -24.508f);
          managers.PartyManager.Items.Clear();
          managers.LevelManager.CreateLevel("Dathrel's Cabin", "dathrel_cabin", "SpawnPoint", false);
          managers.LevelManager.MainMenuScreenName = "theralin";
@@ -120,9 +123,7 @@ public partial class SaveManager : Node
          saveGame.StoreLine(jsonString);
       }
 
-      var levelData = managers.LevelManager.Call("SaveLevelData");
-      jsonString = Json.Stringify(levelData);
-      saveGame.StoreLine(jsonString);
+      EmitSignal(SignalName.SaveFinished);
    }
 
    public void LoadGame(int index)
@@ -134,15 +135,11 @@ public partial class SaveManager : Node
 
       Input.MouseMode = Input.MouseModeEnum.Captured;
 
-      GetNode<ColorRect>("/root/BaseNode/UI/Overlay/BlackScreen").Color = new Color(0, 0, 0, 1);
-      GetNode<Label>("/root/BaseNode/UI/Overlay/LoadingText").Visible = true;
-
       using var saveGame = FileAccess.Open("user://savegame" + index + ".save", FileAccess.ModeFlags.Read);
 
       managers.PartyManager.Party.Clear();
       managers.PartyManager.Items.Clear();
       managers.LevelManager.LocationDatas.Clear();
-      managers.Controller.HideWeapon();
 
       startingTime = Time.GetUnixTimeFromSystem();
 
@@ -178,6 +175,9 @@ public partial class SaveManager : Node
                managers.Controller.Position = new Vector3((float)nodeData["PlayerPosX"], (float)nodeData["PlayerPosY"], (float)nodeData["PlayerPosZ"]);
                managers.Controller.DisableMovement = false;
                managers.Controller.DisableCamera = false;
+               managers.Controller.Rotation = new Vector3(0f, (float)nodeData["PlayerControllerRotation"], 0f);
+               managers.Controller.GetNode<Node3D>("Model").Rotation = new Vector3(0f, (float)nodeData["PlayerModelRotation"], 0f);
+               managers.Controller.GetNode<Node3D>("CameraTarget").Rotation = new Vector3((float)nodeData["CameraRotationX"], 0f, 0f);
 
                managers.LevelManager.MainMenuScreenName = (string)nodeData["MainMenuScreen"];        
             }
@@ -204,8 +204,7 @@ public partial class SaveManager : Node
          }
       }
 
-      GetNode<ColorRect>("/root/BaseNode/UI/Overlay/BlackScreen").Color = new Color(0, 0, 0, 0);
-      GetNode<Label>("/root/BaseNode/UI/Overlay/LoadingText").Visible = false;
+      EmitSignal(SignalName.SaveFinished);
    }
    
    void OnSaveButtonDown()

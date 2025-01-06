@@ -42,6 +42,8 @@ public enum CommandType
    /// Shows or hides an actor's weapon.
    /// <br></br><br></br>
    /// <c>Hide</c> (bool) : true will hide the weapon, false will show the weapon
+   /// <br></br>
+   /// <c>ActorName</c> (string) : the name of the actor
    /// </summary>
    ChangeWeaponVisibility,
    /// <summary>
@@ -93,9 +95,9 @@ public enum CommandType
    /// <br></br>
    /// <c>Blend</c> (int) : the blend amount between the previous animation and this one (-1 is no blend, 1 is slowest possible blend)
    /// <br></br>
-   /// <c>UseAnimationLength</c> (bool) : whether to wait the length of the animation before playing the idle animation again or not
+   /// <c>UseAnimationLength</c> (bool) : whether to wait the length of the animation before playing the default animation again or not
    /// <br></br>
-   /// <c>WaitTime</c> (float) : if UseAnimationLength is false, the amount of time to wait before playing the idle animation
+   /// <c>WaitTime</c> (float) : if UseAnimationLength is false, the amount of time to wait before playing the default animation
    /// </summary>
    PlayAnimation,
    /// <summary>
@@ -146,7 +148,15 @@ public enum CommandType
    /// <br></br>
    /// <c>Target</c> (string) : the name of the target (an actor or a node path from the root to the object)
    /// </summary>
-   TurnToLookAt
+   TurnToLookAt,
+   /// <summary>
+   /// Pauses the music track until ResumeMusic is executed.
+   /// </summary>
+   PauseMusic,
+   /// <summary>
+   /// Resumes the music track.
+   /// </summary>
+   ResumeMusic
 }
 
 /// <summary>
@@ -200,7 +210,8 @@ public partial class ActorCommand : Resource
          { "type", (int)Variant.Type.Int },
          { "hint", (int)PropertyHint.Enum },
          { "hint_string", "None,Move,Rotate,QuickRotate,ChangeDialogueVisibility,ChangeWeaponVisibility,ChangeDialogueLock,SpeakNext,SetIdleAnimation," + 
-                          "SetWalkAnimation,Pause,Place,PlayAnimation,Track,StopTrack,FadeBlack,PlaceCamera,QuickRotateCamera,CallMethod,TurnToLookAt" }
+                          "SetWalkAnimation,Pause,Place,PlayAnimation,Track,StopTrack,FadeBlack,PlaceCamera,QuickRotateCamera,CallMethod,TurnToLookAt,PauseMusic," + 
+                          "ResumeMusic" }
       });
 
       switch (commandType)
@@ -351,6 +362,13 @@ public partial class ActorCommand : Resource
                { "name", $"Hide" },
                { "type", (int)Variant.Type.Bool }
             });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"ActorName" },
+               { "type", (int)Variant.Type.String }
+            });
+
             break;
          case CommandType.Track:
             result.Add(new Dictionary()

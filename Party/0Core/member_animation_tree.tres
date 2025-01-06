@@ -88,7 +88,7 @@ nodes/IdleOrActive/position = Vector2(-20, -60)
 nodes/ResetDeath/node = SubResource("AnimationNodeTimeSeek_ltx06")
 nodes/ResetDeath/position = Vector2(1040, 340)
 nodes/output/position = Vector2(1340, 80)
-node_connections = [&"output", 0, &"DeathHandler", &"Attack", 0, &"IdleOrActive", &"Attack", 1, &"Animation", &"Cast", 0, &"Hit", &"Cast", 1, &"Animation 3", &"DeathHandler", 0, &"Dodge", &"DeathHandler", 1, &"ResetDeath", &"Dodge", 0, &"Cast", &"Dodge", 1, &"Animation 4", &"Hit", 0, &"Attack", &"Hit", 1, &"Animation 2", &"ResetDeath", 0, &"Animation 5"]
+node_connections = [&"Attack", 0, &"IdleOrActive", &"Attack", 1, &"Animation", &"Cast", 0, &"Hit", &"Cast", 1, &"Animation 3", &"DeathHandler", 0, &"Dodge", &"DeathHandler", 1, &"ResetDeath", &"Dodge", 0, &"Cast", &"Dodge", 1, &"Animation 4", &"Hit", 0, &"Attack", &"Hit", 1, &"Animation 2", &"ResetDeath", 0, &"Animation 5", &"output", 0, &"DeathHandler"]
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_wvbys"]
 
@@ -101,4 +101,4 @@ nodes/Combat/position = Vector2(-40, 260)
 nodes/CombatControl/node = SubResource("AnimationNodeBlend2_wvbys")
 nodes/CombatControl/position = Vector2(260, 140)
 nodes/output/position = Vector2(460, 100)
-node_connections = [&"output", 0, &"CombatControl", &"CombatControl", 0, &"BasicMovement", &"CombatControl", 1, &"Combat"]
+node_connections = [&"CombatControl", 0, &"BasicMovement", &"CombatControl", 1, &"Combat", &"output", 0, &"CombatControl"]

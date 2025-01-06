@@ -55,8 +55,28 @@ public partial class Actor : CharacterBody3D
       }
    }
 
+   public void WieldWeapon()
+   {
+      if (!hasWeapon)
+      {
+         GD.PrintErr("Weapon not found when trying to wield on actor " + Name);
+         return;
+      }
+
+      attachment.BoneName = "middle_arm.L.001";
+
+      weapon.Position = GetNode<Node3D>("WieldAnchor").Position;
+      weapon.Rotation = GetNode<Node3D>("WieldAnchor").Rotation;
+   }
+
    public void PlaceWeaponOnBack()
    {
+      if (!hasWeapon)
+      {
+         GD.PrintErr("Weapon not found when trying to put on back on actor " + Name);
+         return;
+      }
+
       attachment.BoneName = "torso";
 
       weapon.Position = weaponAnchor.Position;
@@ -173,6 +193,7 @@ public partial class Actor : CharacterBody3D
    public async void PlayAnimation(string animationName, ActorStatus actorStatus, float blend, bool useLength, float waitTime = 0f)
    {
       AnimationPlayer player = GetNode<AnimationPlayer>("Model/AnimationPlayer");
+
       player.Play(animationName, blend);
 
       if (useLength)
@@ -184,7 +205,10 @@ public partial class Actor : CharacterBody3D
          await ToSignal(GetTree().CreateTimer(waitTime), "timeout");
       }
 
-      player.Play(actorStatus.idleAnim, 1f);
+      if (player.CurrentAnimation == animationName) // Avoid interrupting other animation plays, in case they have started playing since
+      {
+         player.Play(actorStatus.idleAnim, 1f);
+      }
    }
 
    public void Track(Actor target)

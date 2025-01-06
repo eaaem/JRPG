@@ -104,8 +104,20 @@ public partial class SettingsMenuManager : Panel
          }
          else if (section == "audio")
          {
+            managers.AudioManager.MasterVolume = (float)configFile.GetValue(section, "master");
+            GetNode<Slider>("Audio/Master/Slider").Value = managers.AudioManager.MasterVolume;
+
             managers.AudioManager.MusicVolume = (float)configFile.GetValue(section, "music");
             GetNode<Slider>("Audio/Music/Slider").Value = managers.AudioManager.MusicVolume;
+
+            managers.AudioManager.EffectsVolume = (float)configFile.GetValue(section, "effects");
+            GetNode<Slider>("Audio/Effects/Slider").Value = managers.AudioManager.EffectsVolume;
+
+            managers.AudioManager.AmbienceVolume = (float)configFile.GetValue(section, "ambience");
+            GetNode<Slider>("Audio/Ambience/Slider").Value = managers.AudioManager.AmbienceVolume;
+
+            managers.AudioManager.UIVolume = (float)configFile.GetValue(section, "ui");
+            GetNode<Slider>("Audio/UI/Slider").Value = managers.AudioManager.UIVolume;
          }
       }
    }
@@ -192,12 +204,39 @@ public partial class SettingsMenuManager : Panel
       configFile.SetValue("controls", "sensitivity", characterController.HorizontalSensitivity);
    }
 
+   void OnSlideMasterVolume(float value)
+   {
+      managers.AudioManager.MasterVolume = value;
+      GetNode<Label>("Audio/Master/Number").Text = (value + 80).ToString() + "%";
+      configFile.SetValue("audio", "master", managers.AudioManager.MasterVolume);
+   }
+
    void OnSlideMusicVolume(float value)
    {
       managers.AudioManager.MusicVolume = value;
-      //GetNode<Label>("Audio/Music/Number").Text = managers.AudioManager.MusicVolume;
-
+      GetNode<Label>("Audio/Music/Number").Text = (value + 80).ToString() + "%";
       configFile.SetValue("audio", "music", managers.AudioManager.MusicVolume);
+   }
+
+   void OnSlideEffectsVolume(float value)
+   {
+      managers.AudioManager.EffectsVolume = value;
+      GetNode<Label>("Audio/Effects/Number").Text = (value + 80).ToString() + "%";
+      configFile.SetValue("audio", "effects", managers.AudioManager.EffectsVolume);
+   }
+
+   void OnSlideAmbienceVolume(float value)
+   {
+      managers.AudioManager.AmbienceVolume = value;
+      GetNode<Label>("Audio/Ambience/Number").Text = (value + 80).ToString() + "%";
+      configFile.SetValue("audio", "ambience", managers.AudioManager.AmbienceVolume);
+   }
+
+   void OnSlideUIVolume(float value)
+   {
+      managers.AudioManager.UIVolume = value;
+      GetNode<Label>("Audio/UI/Number").Text = (value + 80).ToString() + "%";
+      configFile.SetValue("audio", "ui", managers.AudioManager.UIVolume);
    }
 
    public override void _ExitTree()

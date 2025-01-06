@@ -19,7 +19,7 @@ script = ExtResource("3_appsv")
 name = "Plain Battleaxe"
 description = "Battleaxe
 +1 strength"
-scriptName = ""
+scriptPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false
@@ -30,3 +30,4 @@ itemCategory = 6
 price = 0
 affectedStats = SubResource("Resource_1lnan")
 usableOutsideCombat = false
+outOfCombatUseMessage = ""

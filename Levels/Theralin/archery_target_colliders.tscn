@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dpia0wu6w3n2w"]
 
-[ext_resource type="PackedScene" uid="uid://pt0hkagsuovp" path="res://Levels/Theralin/archery_target.glb" id="1_sfwj1"]
+[ext_resource type="PackedScene" uid="uid://pt0hkagsuovp" path="res://Levels/theralin/archery_target.glb" id="1_sfwj1"]
 [ext_resource type="Material" uid="uid://bij3eok6nabku" path="res://Levels/2Misc/Structures/wood.tres" id="2_r7cbc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_epb63"]

@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cqprbsttd2w5l"]
 
-[ext_resource type="PackedScene" uid="uid://c4vhebv7ydujm" path="res://Levels/Theralin/arlitha.glb" id="1_kfwa2"]
+[ext_resource type="PackedScene" uid="uid://c4vhebv7ydujm" path="res://Levels/theralin/arlitha.glb" id="1_kfwa2"]
 [ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_xlr0h"]
 [ext_resource type="Material" uid="uid://bxpgwna63imme" path="res://Levels/2Misc/Peasants/light_skin.tres" id="2_7m2xs"]
 [ext_resource type="Material" uid="uid://dn51mexlh8ker" path="res://Levels/2Misc/Peasants/green_eyes.tres" id="3_8pq3j"]

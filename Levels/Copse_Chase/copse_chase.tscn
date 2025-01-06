@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://dqtf3wh2hun3r" path="res://Combat/Arena/base_arena.tscn" id="1_n6bjo"]
 [ext_resource type="Script" path="res://Levels/0Core/MusicHolder.cs" id="2_4608n"]
 [ext_resource type="ArrayMesh" uid="uid://drksi3utcu20r" path="res://Levels/AthiliCopse/pine_tree.res" id="3_fymyd"]
-[ext_resource type="Texture2D" uid="uid://cmeyng8l7xdjn" path="res://Levels/Dathrel_Cabin/forest_back.png" id="5_0l48k"]
+[ext_resource type="Texture2D" uid="uid://cmeyng8l7xdjn" path="res://Levels/dathrel_cabin/forest_back.png" id="5_0l48k"]
 [ext_resource type="Script" path="res://addons/ObjectBrush/ObjectSet.cs" id="5_afwcn"]
 [ext_resource type="ArrayMesh" uid="uid://ccl1rrix6k47y" path="res://Levels/AthiliCopse/bush.res" id="5_pwvkt"]
 [ext_resource type="Texture2D" uid="uid://c82phsdb451on" path="res://copse_chase_outline.png" id="5_y2bld"]
@@ -350,6 +350,8 @@ PreCutsceneCommands = []
 hideParty = false
 cameraPosition = Vector3(0, 0, 0)
 cameraRotation = Vector3(0, 0, 0)
+fadeBlackIntroTransition = false
+fadeBlackExitTransition = false
 
 [node name="copse_chase" type="Node3D"]
 

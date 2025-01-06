@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=7 format=3 uid="uid://cstlmlc1wk5px"]
+[gd_resource type="Resource" script_class="ItemResource" load_steps=7 format=3 uid="uid://cstlmlc1wk5px"]
 
 [ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="1_ejjdy"]
 [ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="2_6d3qy"]
@@ -25,7 +25,7 @@ script = ExtResource("3_exnes")
 name = "Rusty Greaves"
 description = "Heavy
 +2 fortitude, +1 willpower"
-scriptName = ""
+scriptPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false
@@ -36,3 +36,4 @@ itemCategory = 3
 price = 0
 affectedStats = SubResource("Resource_1lnan")
 usableOutsideCombat = false
+outOfCombatUseMessage = ""

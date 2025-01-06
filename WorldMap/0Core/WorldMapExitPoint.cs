@@ -19,14 +19,12 @@ public partial class WorldMapExitPoint : Node
    {
       if (body.Name == "Member1")
       {
-         managers.MenuManager.FadeToBlack();
+         Tween tween = CreateTween();
+         managers.MenuManager.FadeToBlack(tween);
          managers.Controller.DisableMovement = true;
 
-         while (!managers.MenuManager.BlackScreenIsVisible)
-         {
-            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-         }
-
+         await ToSignal(tween, Tween.SignalName.Finished);
+         
          managers.LevelManager.CallDeferred(nameof(managers.LevelManager.OpenWorldMap), mapName, Vector3.Zero, false, spawnLocation);
       }
    }

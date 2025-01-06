@@ -75,12 +75,10 @@ public partial class WorldMapController : CharacterBody2D
 
    public async void ExitWorldMap(string internalLocation, string externalLocation, string spawnPoint)
    {
-      managers.MenuManager.FadeToBlack();
+      Tween tween = CreateTween();
+      managers.MenuManager.FadeToBlack(tween);
 
-      while (!managers.MenuManager.BlackScreenIsVisible)
-      {
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-      }
+      await ToSignal(tween, Tween.SignalName.Finished);
  
       managers.LevelManager.TransitionLevels(internalLocation, externalLocation, spawnPoint);
    }

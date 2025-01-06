@@ -1,4 +1,4 @@
-[gd_scene load_steps=207 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=200 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -10,10 +10,13 @@
 [ext_resource type="PackedScene" uid="uid://dbbaek7pmrokf" path="res://Items/0Core/item_button.tscn" id="5_2svhw"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatAbilityManager.cs" id="5_ejkmm"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatUIManager.cs" id="6_143na"]
+[ext_resource type="AudioStream" uid="uid://71rl5qhg4nes" path="res://Dialogue/0Core/dialogue_blip.wav" id="6_eflph"]
 [ext_resource type="PackedScene" uid="uid://cwee74btvhq8k" path="res://Combat/0Core/holder_parent.tscn" id="6_gn3sp"]
 [ext_resource type="Material" uid="uid://b2ect0s7kbk77" path="res://Combat/0Core/enemy_transition.tres" id="6_xxlrs"]
 [ext_resource type="Script" path="res://Combat/0Core/AffinityStrengths.cs" id="7_f260g"]
+[ext_resource type="AudioStream" uid="uid://c01mgu7ekvlvk" path="res://Menus/0Core/ui_open.wav" id="7_qsl2d"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatPassiveManager.cs" id="7_x03at"]
+[ext_resource type="AudioStream" uid="uid://bkgjdrl2sy0hv" path="res://Menus/0Core/ui_close.wav" id="8_gbgux"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatItemManager.cs" id="8_hnce1"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatStackStatusManager.cs" id="9_1u2nm"]
 [ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandHolder.cs" id="9_4lxtk"]
@@ -26,12 +29,9 @@
 [ext_resource type="Resource" uid="uid://ck7wy6s7wajxw" path="res://Party/Thalria/thalria.tres" id="11_wj8pa"]
 [ext_resource type="Resource" uid="uid://0y8iemdigx00" path="res://Party/Athlia/athlia.tres" id="12_h78bi"]
 [ext_resource type="Resource" uid="uid://cuw45oxjrj1jr" path="res://Party/Olren/olren.tres" id="13_nnw16"]
-[ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="14_oxatk"]
 [ext_resource type="StyleBox" uid="uid://bo4vcuowppm1o" path="res://Combat/UI/base_party_highlight.tres" id="14_xso5o"]
 [ext_resource type="PackedScene" uid="uid://b0itiinn5nr7j" path="res://Combat/0Core/special_arrow.tscn" id="15_27lj8"]
-[ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="15_86siq"]
 [ext_resource type="StyleBox" uid="uid://vtwamyu6ts6e" path="res://Combat/UI/altered_party_highlight.tres" id="15_jlnsn"]
-[ext_resource type="Script" path="res://Combat/0Core/ItemResource.cs" id="16_5bni6"]
 [ext_resource type="Resource" uid="uid://bos1dl2vq377j" path="res://Items/Thalria/heirloom_staff.tres" id="17_vxtna"]
 [ext_resource type="Resource" uid="uid://bt2f8yoo0nup8" path="res://Items/Olren/pine_bow.tres" id="19_4kg3f"]
 [ext_resource type="LabelSettings" uid="uid://d3mi4nujst60y" path="res://Combat/0Core/combat_ui_text.tres" id="21_u7sgt"]
@@ -47,11 +47,14 @@
 [ext_resource type="Resource" uid="uid://dlwmogbc2wb5y" path="res://Items/Armor/Light/leather_tunic.tres" id="31_1d5xq"]
 [ext_resource type="Script" path="res://Core/CustomTooltipLabel.cs" id="31_g468s"]
 [ext_resource type="Script" path="res://Menus/Items/ItemMenuManager.cs" id="32_1h4ro"]
+[ext_resource type="Resource" uid="uid://c0chh1ibp7pqo" path="res://Items/Vakthol/plain_battleaxe.tres" id="32_hw5rl"]
 [ext_resource type="Resource" uid="uid://dj77mnpcky4si" path="res://Items/Armor/Light/leather_gloves.tres" id="32_m7fip"]
+[ext_resource type="Resource" uid="uid://c3q0txluph24y" path="res://Items/Armor/Heavy/leather_cuirass.tres" id="33_6gfj8"]
 [ext_resource type="FontFile" uid="uid://cu53hbuj171ub" path="res://Menus/0Core/Merriweather-Regular.ttf" id="33_dmyrj"]
 [ext_resource type="Script" path="res://Menus/Settings/SettingsMenuManager.cs" id="33_jvddv"]
 [ext_resource type="FontFile" uid="uid://ccrrftptiji35" path="res://Menus/0Core/Merriweather-Italic.ttf" id="34_0e0eh"]
 [ext_resource type="Script" path="res://Menus/Misc/MiscMenuManager.cs" id="34_bcm0h"]
+[ext_resource type="Resource" uid="uid://cstlmlc1wk5px" path="res://Items/Armor/Heavy/rusty_greaves.tres" id="34_oa32a"]
 [ext_resource type="Script" path="res://Menus/0Core/MenuManager.cs" id="35_dwed3"]
 [ext_resource type="Shader" path="res://Core/screen_distortion.gdshader" id="35_r7lu3"]
 [ext_resource type="FontFile" uid="uid://b2twoq48myxmy" path="res://Menus/0Core/Merriweather-Bold.ttf" id="35_v46tb"]
@@ -373,96 +376,6 @@ PauseUntilTargetReached = false
 script = ExtResource("10_6pqua")
 CommandType = 17
 
-[sub_resource type="Resource" id="Resource_rv5hx"]
-script = ExtResource("15_86siq")
-statType = 2
-value = 1
-baseValue = 0
-
-[sub_resource type="Resource" id="Resource_1lnan"]
-script = ExtResource("14_oxatk")
-stats = [SubResource("Resource_rv5hx")]
-
-[sub_resource type="Resource" id="Resource_gaxvb"]
-script = ExtResource("16_5bni6")
-name = "Plain Battleaxe"
-description = "Battleaxe
-+1 strength"
-scriptPath = ""
-specialModifier = 0.0
-hitsAll = false
-hitsSurrounding = false
-hitsSelf = false
-hitsTeam = false
-itemType = 1
-itemCategory = 6
-price = 0
-affectedStats = SubResource("Resource_1lnan")
-usableOutsideCombat = false
-outOfCombatUseMessage = ""
-
-[sub_resource type="Resource" id="Resource_qvkyg"]
-script = ExtResource("15_86siq")
-statType = 0
-value = 3
-baseValue = 0
-
-[sub_resource type="Resource" id="Resource_e22ji"]
-script = ExtResource("14_oxatk")
-stats = [SubResource("Resource_qvkyg")]
-
-[sub_resource type="Resource" id="Resource_cxsht"]
-script = ExtResource("16_5bni6")
-name = "Leather Cuirass"
-description = "Heavy
-+3 constitution"
-scriptPath = ""
-specialModifier = 0.0
-hitsAll = false
-hitsSurrounding = false
-hitsSelf = false
-hitsTeam = false
-itemType = 3
-itemCategory = 3
-price = 0
-affectedStats = SubResource("Resource_e22ji")
-usableOutsideCombat = false
-outOfCombatUseMessage = ""
-
-[sub_resource type="Resource" id="Resource_80ryb"]
-script = ExtResource("15_86siq")
-statType = 4
-value = 2
-baseValue = 0
-
-[sub_resource type="Resource" id="Resource_3yqt4"]
-script = ExtResource("15_86siq")
-statType = 5
-value = 1
-baseValue = 0
-
-[sub_resource type="Resource" id="Resource_mokav"]
-script = ExtResource("14_oxatk")
-stats = [SubResource("Resource_80ryb"), SubResource("Resource_3yqt4")]
-
-[sub_resource type="Resource" id="Resource_lxtj8"]
-script = ExtResource("16_5bni6")
-name = "Rusty Greaves"
-description = "Heavy
-+2 fortitude, +1 willpower"
-scriptPath = ""
-specialModifier = 0.0
-hitsAll = false
-hitsSurrounding = false
-hitsSelf = false
-hitsTeam = false
-itemType = 4
-itemCategory = 3
-price = 0
-affectedStats = SubResource("Resource_mokav")
-usableOutsideCombat = false
-outOfCombatUseMessage = ""
-
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_ufnw2"]
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2286b"]
@@ -508,13 +421,13 @@ bg_color = Color(0, 0, 0.184314, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7n1xf"]
 bg_color = Color(0, 0.6, 1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l7mf"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_18icv"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hl231"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_18icv"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0l7mf"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="Theme" id="Theme_3108v"]
@@ -525,10 +438,10 @@ bg_color = Color(0.203922, 0.203922, 0.203922, 1)
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1mn27"]
 bg_color = Color(1, 1, 1, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6snfy"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tt0fo"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tt0fo"]
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6snfy"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xkk30"]
@@ -728,6 +641,18 @@ bus = &"UI"
 stream = ExtResource("4_r0itw")
 bus = &"UI"
 
+[node name="DialogueBlip" type="AudioStreamPlayer" parent="AudioPlayers/UI_SFX"]
+stream = ExtResource("6_eflph")
+bus = &"UI"
+
+[node name="UIOpen" type="AudioStreamPlayer" parent="AudioPlayers/UI_SFX"]
+stream = ExtResource("7_qsl2d")
+bus = &"UI"
+
+[node name="UIClose" type="AudioStreamPlayer" parent="AudioPlayers/UI_SFX"]
+stream = ExtResource("8_gbgux")
+bus = &"UI"
+
 [node name="ManagerReferenceHolder" type="Node3D" parent="." node_paths=PackedStringArray("PartyManager", "Controller", "LevelManager", "SaveManager", "MenuManager", "ItemPickupManager", "DialogueManager", "CutsceneManager", "ShopMenuManager", "PartyMenuManager", "ItemMenuManager", "MainMenuManager", "AudioManager")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15193e-07, 3.72529e-09, 2.97208e-07)
 script = ExtResource("1_7hlfi")
@@ -826,7 +751,7 @@ musicPath = "res://Combat/0Core/battle.mp3"
 [node name="PartyManager" type="Node3D" parent="." node_paths=PackedStringArray("managers")]
 script = ExtResource("9_ah2fn")
 baseMembers = [ExtResource("10_7pwb7"), ExtResource("11_wj8pa"), ExtResource("12_h78bi"), ExtResource("13_nnw16")]
-vaktholItems = [SubResource("Resource_gaxvb"), SubResource("Resource_cxsht"), SubResource("Resource_lxtj8")]
+vaktholItems = [ExtResource("32_hw5rl"), ExtResource("33_6gfj8"), ExtResource("34_oa32a")]
 ThalriaItems = [ExtResource("17_vxtna"), ExtResource("27_n8681")]
 AthliaItems = [ExtResource("29_g6fdf"), ExtResource("30_r5v1q")]
 OlrenItems = [ExtResource("31_1d5xq"), ExtResource("30_r5v1q"), ExtResource("32_m7fip"), ExtResource("19_4kg3f")]
@@ -878,10 +803,10 @@ offset_top = 450.0
 offset_right = 1920.0
 offset_bottom = 516.0
 theme_override_colors/default_color = Color(1, 0.643137, 0.588235, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/shadow_outline_size = 6
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 6
 theme_override_fonts/normal_font = ExtResource("35_v46tb")
 theme_override_font_sizes/normal_font_size = 45
 bbcode_enabled = true
@@ -1463,9 +1388,9 @@ offset_right = 437.0
 offset_bottom = 112.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_18icv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
 
 [node name="Panel2" type="Panel" parent="UI/CombatEnemyList/HBoxContainer"]
 layout_mode = 2
@@ -1618,9 +1543,9 @@ offset_right = 437.0
 offset_bottom = 112.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_18icv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
 
 [node name="Panel3" type="Panel" parent="UI/CombatEnemyList/HBoxContainer"]
 layout_mode = 2
@@ -1773,9 +1698,9 @@ offset_right = 437.0
 offset_bottom = 112.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_18icv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
 
 [node name="Panel4" type="Panel" parent="UI/CombatEnemyList/HBoxContainer"]
 layout_mode = 2
@@ -1928,9 +1853,9 @@ offset_right = 437.0
 offset_bottom = 112.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
-theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_18icv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hl231")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
 
 [node name="CombatPartyList" type="Control" parent="UI"]
 visible = false
@@ -2186,9 +2111,9 @@ offset_right = 437.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
-theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_tt0fo")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
 
 [node name="Panel2" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer"]
 layout_mode = 2
@@ -2389,9 +2314,9 @@ offset_right = 437.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
-theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_xkk30")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
 
 [node name="Panel3" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer"]
 layout_mode = 2
@@ -2592,9 +2517,9 @@ offset_right = 437.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
-theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_xkk30")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
 
 [node name="Panel4" type="Panel" parent="UI/CombatPartyListOLD/HBoxContainer"]
 layout_mode = 2
@@ -2795,9 +2720,9 @@ offset_right = 437.0
 offset_bottom = 200.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
-theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
 theme_override_styles/disabled = SubResource("StyleBoxFlat_xkk30")
+theme_override_styles/hover = SubResource("StyleBoxFlat_6snfy")
+theme_override_styles/normal = SubResource("StyleBoxFlat_0l7mf")
 
 [node name="Options" type="Control" parent="UI"]
 layout_mode = 3
@@ -3013,10 +2938,10 @@ offset_top = 400.0
 offset_right = 1129.0
 offset_bottom = 475.0
 theme_override_colors/default_color = Color(1, 1, 1, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0.0941176, 0.0941176, 0.0941176, 1)
-theme_override_constants/shadow_outline_size = 3
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
+theme_override_constants/shadow_outline_size = 3
 theme_override_fonts/normal_font = ExtResource("35_v46tb")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
@@ -3099,7 +3024,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="Back" type="Panel" parent="UI/DialogueScreen" node_paths=PackedStringArray("managers")]
+[node name="Back" type="Panel" parent="UI/DialogueScreen" node_paths=PackedStringArray("dialogueBlip", "managers")]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -3114,6 +3039,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_qxx6t")
 script = ExtResource("22_argjw")
 dialoguesInThisRegion = []
+dialogueBlip = NodePath("../../../AudioPlayers/UI_SFX/DialogueBlip")
 branchingButton = ExtResource("26_tb1nj")
 managers = NodePath("../../../ManagerReferenceHolder")
 
@@ -3126,11 +3052,11 @@ offset_bottom = 240.0
 theme_override_colors/default_color = Color(0.933333, 0.92549, 0.803922, 1)
 theme_override_fonts/normal_font = ExtResource("33_dmyrj")
 theme_override_fonts/italics_font = ExtResource("34_0e0eh")
+theme_override_font_sizes/bold_italics_font_size = 35
+theme_override_font_sizes/italics_font_size = 35
+theme_override_font_sizes/mono_font_size = 35
 theme_override_font_sizes/normal_font_size = 35
 theme_override_font_sizes/bold_font_size = 35
-theme_override_font_sizes/italics_font_size = 35
-theme_override_font_sizes/bold_italics_font_size = 35
-theme_override_font_sizes/mono_font_size = 35
 bbcode_enabled = true
 text = "This is the body of the text text text text loooooooooong"
 visible_characters_behavior = 1
@@ -3616,10 +3542,9 @@ offset_right = 383.0
 offset_bottom = 71.0
 theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 18
-item_count = 3
 selected = 0
+item_count = 3
 popup/item_0/text = "Fullscreen"
-popup/item_0/id = 0
 popup/item_1/text = "Windowed Fullscreen"
 popup/item_1/id = 1
 popup/item_2/text = "Windowed"
@@ -3721,10 +3646,8 @@ offset_top = 6.0
 offset_right = 319.0
 offset_bottom = 22.0
 theme_override_styles/slider = SubResource("StyleBoxLine_cblsy")
-min_value = 0.1
-max_value = 10.0
-step = 0.1
-value = 5.0
+min_value = -80.0
+max_value = 20.0
 
 [node name="Number" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Master"]
 layout_mode = 0
@@ -3734,7 +3657,7 @@ offset_right = 386.0
 offset_bottom = 28.0
 theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/font_size = 25
-text = "50%"
+text = "80%"
 
 [node name="Music" type="Control" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio"]
 anchors_preset = 0
@@ -3760,7 +3683,7 @@ offset_right = 319.0
 offset_bottom = 22.0
 theme_override_styles/slider = SubResource("StyleBoxLine_cblsy")
 min_value = -80.0
-max_value = 10.0
+max_value = 20.0
 
 [node name="Number" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Music"]
 layout_mode = 0
@@ -3770,7 +3693,7 @@ offset_right = 386.0
 offset_bottom = 28.0
 theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/font_size = 25
-text = "50%"
+text = "80%"
 
 [node name="Effects" type="Control" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio"]
 anchors_preset = 0
@@ -3795,10 +3718,8 @@ offset_top = 6.0
 offset_right = 319.0
 offset_bottom = 22.0
 theme_override_styles/slider = SubResource("StyleBoxLine_cblsy")
-min_value = 0.1
-max_value = 10.0
-step = 0.1
-value = 5.0
+min_value = -80.0
+max_value = 20.0
 
 [node name="Number" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Effects"]
 layout_mode = 0
@@ -3808,7 +3729,7 @@ offset_right = 386.0
 offset_bottom = 28.0
 theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/font_size = 25
-text = "50%"
+text = "80%"
 
 [node name="Ambience" type="Control" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio"]
 anchors_preset = 0
@@ -3833,10 +3754,8 @@ offset_top = 7.0
 offset_right = 345.0
 offset_bottom = 23.0
 theme_override_styles/slider = SubResource("StyleBoxLine_cblsy")
-min_value = 0.1
-max_value = 10.0
-step = 0.1
-value = 5.0
+min_value = -80.0
+max_value = 20.0
 
 [node name="Number" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Ambience"]
 layout_mode = 0
@@ -3846,7 +3765,7 @@ offset_right = 412.0
 offset_bottom = 29.0
 theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/font_size = 25
-text = "50%"
+text = "80%"
 
 [node name="UI" type="Control" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio"]
 anchors_preset = 0
@@ -3871,10 +3790,8 @@ offset_top = 7.0
 offset_right = 345.0
 offset_bottom = 23.0
 theme_override_styles/slider = SubResource("StyleBoxLine_cblsy")
-min_value = 0.1
-max_value = 10.0
-step = 0.1
-value = 5.0
+min_value = -80.0
+max_value = 20.0
 
 [node name="Number" type="Label" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/UI"]
 layout_mode = 0
@@ -3884,7 +3801,7 @@ offset_right = 412.0
 offset_bottom = 29.0
 theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/font_size = 25
-text = "50%"
+text = "80%"
 
 [node name="Menu" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer" node_paths=PackedStringArray("managers")]
 visible = false
@@ -4141,11 +4058,13 @@ theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 25
 text = "No"
 
-[node name="MenuManager" type="Node2D" parent="UI/PartyMenuLayer/PartyMenu" node_paths=PackedStringArray("managers", "tabs", "menuPanels")]
+[node name="MenuManager" type="Node2D" parent="UI/PartyMenuLayer/PartyMenu" node_paths=PackedStringArray("managers", "tabs", "menuPanels", "openSound", "closeSound")]
 script = ExtResource("35_dwed3")
 managers = NodePath("../../../../ManagerReferenceHolder")
 tabs = [NodePath("../MenuContainer/Additional/TabsContainer/PartyButton"), NodePath("../MenuContainer/Additional/TabsContainer/ItemButton"), NodePath("../MenuContainer/Additional/TabsContainer/SettingsButton"), NodePath("../MenuContainer/Additional/TabsContainer/SaveButton"), NodePath("../MenuContainer/Additional/TabsContainer/QuitButton")]
 menuPanels = [NodePath("../MenuContainer/Party"), NodePath("../MenuContainer/Items"), NodePath("../MenuContainer/Settings")]
+openSound = NodePath("../../../../AudioPlayers/UI_SFX/UIOpen")
+closeSound = NodePath("../../../../AudioPlayers/UI_SFX/UIClose")
 
 [node name="ItemPickup" type="CanvasGroup" parent="UI"]
 visible = false
@@ -4223,11 +4142,10 @@ offset_right = 950.0
 offset_bottom = 850.0
 theme = SubResource("Theme_oe3fy")
 theme_override_font_sizes/font_size = 30
-item_count = 6
 selected = 0
 fit_to_longest_item = false
+item_count = 6
 popup/item_0/text = "1"
-popup/item_0/id = 0
 popup/item_1/text = "5"
 popup/item_1/id = 1
 popup/item_2/text = "10"
@@ -4301,7 +4219,7 @@ offset_bottom = 498.0
 [node name="PartyMembers" type="Node3D" parent="."]
 
 [node name="Member1" type="CharacterBody3D" parent="PartyMembers"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.922, 0.613, -24.508)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.922, 161.774, -24.508)
 collision_layer = 2
 input_ray_pickable = false
 axis_lock_angular_x = true
@@ -4355,7 +4273,6 @@ libraries = {
 [node name="MethodsTree" type="AnimationTree" parent="PartyMembers/Member1"]
 tree_root = SubResource("AnimationNodeBlendTree_h7jng")
 anim_player = NodePath("../AnimationMethods")
-active = true
 parameters/Movement/blend_position = 0
 
 [node name="dirtFootsteps" type="Node3D" parent="PartyMembers/Member1"]
@@ -4564,8 +4481,8 @@ theme = SubResource("Theme_0ac0l")
 theme_override_colors/default_color = Color(0.133333, 0.117647, 0.0196078, 1)
 theme_override_constants/outline_size = 10
 theme_override_fonts/italics_font = ExtResource("58_bw31p")
-theme_override_font_sizes/normal_font_size = 175
 theme_override_font_sizes/italics_font_size = 150
+theme_override_font_sizes/normal_font_size = 175
 bbcode_enabled = true
 text = "[i][center]Untitled[/center]"
 
@@ -4667,17 +4584,9 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager/UIManager" method="OnHoverOverFighterPanel" binds= [3, true]]
 [connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager/UIManager" method="OnStopHoverOverFighterPanel" binds= [3, true]]
 [connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [0, false]]
-[connection signal="mouse_entered" from="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [0, false]]
-[connection signal="mouse_exited" from="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [0, false]]
 [connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [1, false]]
-[connection signal="mouse_entered" from="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [1, false]]
-[connection signal="mouse_exited" from="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [1, false]]
 [connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [2, false]]
-[connection signal="mouse_entered" from="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [2, false]]
-[connection signal="mouse_exited" from="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [2, false]]
 [connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [3, false]]
-[connection signal="mouse_entered" from="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnHoverOverFighterPanel" binds= [3, false]]
-[connection signal="mouse_exited" from="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnStopHoverOverFighterPanel" binds= [3, false]]
 [connection signal="button_down" from="UI/Options/Choices/AttackButton" to="CombatManager" method="OnAttackButtonDown"]
 [connection signal="mouse_entered" from="UI/Options/Choices/AttackButton" to="CombatManager/UIManager" method="HoverOverInformation" binds= ["Attack an enemy with equipped weapon. Deals physical damage."]]
 [connection signal="mouse_exited" from="UI/Options/Choices/AttackButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
@@ -4714,11 +4623,11 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="item_selected" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Video/Resolution/ResolutionButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSelectResolution"]
 [connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Controls/Sensitivity/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideSensitivity"]
 [connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Controls/Sensitivity/SpinBox" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnEnterSensitivity"]
-[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Master/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideSensitivity"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Master/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideMasterVolume"]
 [connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Music/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideMusicVolume"]
-[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Effects/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideSensitivity"]
-[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Ambience/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideSensitivity"]
-[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/UI/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideSensitivity"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Effects/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideEffectsVolume"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/Ambience/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideAmbienceVolume"]
+[connection signal="value_changed" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/Audio/UI/Slider" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings" method="OnSlideUIVolume"]
 [connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu/SaveAndQuit" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu" method="OnSaveQuitButtonDown"]
 [connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu/QuitNoSave" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu" method="OnQuitNoSaveButtonDown"]
 [connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu/ConfirmationWindow/Confirmation/YesButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Menu" method="OnConfirmButtonDown"]

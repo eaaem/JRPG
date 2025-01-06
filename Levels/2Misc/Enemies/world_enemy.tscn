@@ -61,9 +61,9 @@ emission_ring_radius = 0.2
 emission_ring_inner_radius = 0.0
 direction = Vector3(0, 1, 0)
 spread = 180.0
-gravity = Vector3(0, 13, 0)
 initial_velocity_min = 1.5
 initial_velocity_max = 1.5
+gravity = Vector3(0, 13, 0)
 linear_accel_min = 7.04
 linear_accel_max = 9.05
 radial_accel_min = -13.07
@@ -105,12 +105,12 @@ colors = PackedColorArray(1, 0.0431373, 0.160784, 1, 0.639216, 0, 0.0470588, 0)
 gradient = SubResource("Gradient_sk80y")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vmx7g"]
+particle_flag_align_y = true
 emission_shape = 6
 emission_ring_axis = Vector3(0, 1, 0)
 emission_ring_height = 1.0
 emission_ring_radius = 1.2
 emission_ring_inner_radius = 0.7
-particle_flag_align_y = true
 gravity = Vector3(0, 0, 0)
 linear_accel_min = -9.05
 linear_accel_max = -9.05
@@ -158,9 +158,9 @@ emission_ring_radius = 0.2
 emission_ring_inner_radius = 0.0
 direction = Vector3(0, 1, 0)
 spread = 180.0
-gravity = Vector3(0, 17, 0)
 initial_velocity_min = 1.5
 initial_velocity_max = 1.5
+gravity = Vector3(0, 17, 0)
 linear_accel_min = 7.04
 linear_accel_max = 9.05
 radial_accel_min = -13.07
@@ -181,12 +181,12 @@ section_segments = 5
 curve = SubResource("Curve_s4p2g")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_c22c1"]
+particle_flag_align_y = true
 emission_shape = 6
 emission_ring_axis = Vector3(0, 1, 0)
 emission_ring_height = 1.0
 emission_ring_radius = 1.2
 emission_ring_inner_radius = 0.7
-particle_flag_align_y = true
 gravity = Vector3(0, 0, 0)
 linear_accel_min = -9.05
 linear_accel_max = -9.05
@@ -203,12 +203,12 @@ size = 0.1
 curve = SubResource("Curve_nb0mq")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_lk0t6"]
+particle_flag_align_y = true
 emission_shape = 6
 emission_ring_axis = Vector3(0, 1, 0)
 emission_ring_height = 1.0
 emission_ring_radius = 1.2
 emission_ring_inner_radius = 0.7
-particle_flag_align_y = true
 gravity = Vector3(0, 0, 0)
 linear_accel_min = -9.05
 linear_accel_max = -9.05

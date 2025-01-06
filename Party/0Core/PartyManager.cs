@@ -321,6 +321,7 @@ public partial class Member : Node
    public string[] serializableEquipment = new string[6];
 
    public Node3D model;
+   public Node3D weapon;
 
    public int index;
 

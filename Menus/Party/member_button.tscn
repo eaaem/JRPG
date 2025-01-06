@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dl1uyhuu43vfo"]
+[gd_scene load_steps=11 format=3 uid="uid://dl1uyhuu43vfo"]
 
 [ext_resource type="Script" path="res://Menus/Party/MemberButton.cs" id="1_tar3v"]
 [ext_resource type="Theme" uid="uid://b1ndyocqpom7" path="res://Menus/0Core/small_button.tres" id="1_xobhq"]
@@ -6,21 +6,25 @@
 [ext_resource type="Texture2D" uid="uid://c4qlde51dy5va" path="res://Menus/0Core/medium_button.png" id="2_l5vmd"]
 [ext_resource type="Texture2D" uid="uid://cwod8jg274urr" path="res://Menus/0Core/medium_button_hover.png" id="3_t16t4"]
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_03k3u"]
-texture = ExtResource("2_l5vmd")
-
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l7eyr"]
 texture = ExtResource("3_t16t4")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ktjil"]
+texture = ExtResource("3_t16t4")
+modulate_color = Color(1, 0.41, 0.41, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_03k3u"]
+texture = ExtResource("2_l5vmd")
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7h28f"]
-bg_color = Color(0.435294, 0.662745, 0.478431, 0.603922)
+bg_color = Color(0.687486, 0.593533, 0.252644, 0.603922)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oj4vq"]
-bg_color = Color(0.439216, 0.615686, 0.788235, 0.603922)
+bg_color = Color(0.845972, 0.494134, 0.293272, 0.603922)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
@@ -32,8 +36,9 @@ offset_right = 300.0
 offset_bottom = 170.0
 size_flags_horizontal = 4
 theme = ExtResource("1_xobhq")
-theme_override_styles/normal = SubResource("StyleBoxTexture_03k3u")
 theme_override_styles/hover = SubResource("StyleBoxTexture_l7eyr")
+theme_override_styles/pressed = SubResource("StyleBoxTexture_ktjil")
+theme_override_styles/normal = SubResource("StyleBoxTexture_03k3u")
 
 [node name="Highlight" type="Panel" parent="."]
 visible = false

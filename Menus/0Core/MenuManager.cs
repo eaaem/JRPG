@@ -9,6 +9,10 @@ public partial class MenuManager : Node
    private Button[] tabs = new Button[0];
    [Export]
    private Panel[] menuPanels = new Panel[0];
+   [Export]
+   private AudioStreamPlayer openSound;
+   [Export]
+   private AudioStreamPlayer closeSound;
 
    public Control menu;
    public CharacterController controller;
@@ -28,9 +32,12 @@ public partial class MenuManager : Node
 
    public bool canTakeInput = true;
 
+   [Signal]
+   public delegate void FadeToBlackCompletedEventHandler();
+
    Node3D baseNode;
 
-   ColorRect blackScreen;
+   private ColorRect blackScreen;
    public bool BlackScreenIsVisible { get; set; } = false;
 
    public override void _Ready()
@@ -112,7 +119,7 @@ public partial class MenuManager : Node
 
       Popup popup = GD.Load<PackedScene>("res://Core/popup.tscn").Instantiate<Popup>();
       GetNode<CanvasLayer>("/root/BaseNode/UI/Overlay").AddChild(popup);
-      popup.ReceiveInfo(4, "Save successful!");
+      popup.ReceiveInfo(2.5f, "Save successful!");
 
       for(int i = 0; i < 5; i++)
       {
@@ -175,14 +182,17 @@ public partial class MenuManager : Node
             if (managers.PartyMenuManager.isReequipping)
             {
                managers.PartyMenuManager.CancelReequip();
+               closeSound.Play();
             }
             else if (managers.PartyMenuManager.isSwapping)
             {
                managers.PartyMenuManager.CancelSwap();
+               closeSound.Play();
             }
             else if (managers.ItemMenuManager.isUsingItem)
             {
                managers.ItemMenuManager.CancelItemUsage();
+               closeSound.Play();
             }
             else if (isSaving)
             {
@@ -193,6 +203,7 @@ public partial class MenuManager : Node
                managers.PartyMenuManager.EnableMenu();
                EnableTabs();
                isSaving = false;
+               closeSound.Play();
             }
             else if (isQuitting)
             {
@@ -200,6 +211,7 @@ public partial class MenuManager : Node
                EnableTabs();
                quitConfirmation.Visible = false;
                isQuitting = false;
+               closeSound.Play();
             }
             else
             {
@@ -215,6 +227,7 @@ public partial class MenuManager : Node
 
    public void OpenMenu()
    {
+      openSound.Play();
       menu.Visible = true;
       controller.DisableMovement = true;
       controller.DisableCamera = true;
@@ -222,9 +235,13 @@ public partial class MenuManager : Node
       controller.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Idle");
       EnableTabs();
       Input.MouseMode = Input.MouseModeEnum.Visible;
-      //container.CurrentTab = 0;
       managers.PartyMenuManager.LoadPartyMenu();
       tabs[0].Disabled = true;
+
+      for (int i = 1; i < menuPanels.Length; i++)
+      {
+         menuPanels[i].Visible = false;
+      }
 
       if (baseNode.HasNode("WorldMap"))
       {
@@ -233,10 +250,12 @@ public partial class MenuManager : Node
 
       GetNode<Label>("../MenuContainer/Additional/GoldHolder/Label").Text = "Gold: " + managers.PartyManager.Gold;
       GetNode<Label>("../MenuContainer/Additional/LocationHolder/Label").Text = managers.LevelManager.location;
+      activeTabID = 0;
    }
 
    public void CloseMenu()
    {
+      closeSound.Play();
       menu.Visible = false;
       controller.DisableMovement = false;
       controller.DisableCamera = false;
@@ -266,7 +285,6 @@ public partial class MenuManager : Node
 
    public async void FadeBlack(float delay)
    {
-
       while (blackScreen.Color.A < 1)
       {
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
@@ -288,34 +306,19 @@ public partial class MenuManager : Node
       }
    }
 
-   public async void FadeFromBlack()
+   public void FadeFromBlack(Tween tween = null)
    {
-      while (blackScreen.Color.A >= 0)
+      if (tween == null)
       {
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-
-         float alpha = blackScreen.Color.A;
-         alpha -= 0.05f;
-         blackScreen.Color = new Color(0, 0, 0, alpha);
+         tween = CreateTween();
       }
-
-      BlackScreenIsVisible = false;
+      
+      tween.TweenProperty(blackScreen, "color", new Color(0, 0, 0, 0), 0.5f);
    }
 
-   public async void FadeToBlack()
+   public void FadeToBlack(Tween tween)
    {
-      blackScreen.Color = new Color(0, 0, 0, 0);
-
-      while (blackScreen.Color.A <= 1)
-      {
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-
-         float alpha = blackScreen.Color.A;
-         alpha += 0.05f;
-         blackScreen.Color = new Color(0, 0, 0, alpha);
-      }
-
-      BlackScreenIsVisible = true;
+      tween.TweenProperty(blackScreen, "color", new Color(0, 0, 0, 1f), 0.5f);
    }
 
    public void SetBlackScreenAlpha(float alpha)

@@ -18,26 +18,37 @@ public partial class CutsceneManager : Node
 
    float totalWaitDuration = 0f;
 
-   bool isCutsceneActive;
+   public bool IsCutsceneActive { get; set; }
 
    [Signal]
    public delegate void CutsceneEndedEventHandler();
 
    public async void InitiateCutscene(CutsceneObject cutsceneObject, int id)
    {
-      if (!isCutsceneActive)
+      if (!IsCutsceneActive)
       {
+         managers.MenuManager.canTakeInput = false;
+
          for (int i = 2; i <= 4; i++)
          {
             GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + i).EnablePathfinding = false;
          }
 
-         isCutsceneActive = true;
+         IsCutsceneActive = true;
 
-         currentCutsceneObject = cutsceneObject;
+         // Copying the cutscene object is necessary to avoid changing the original instance of the object, which messes up the cutscene if the player
+         // quits to the menu and reopens the game
+         currentCutsceneObject = CopyCutsceneObject(cutsceneObject);
          currentID = id;
 
          managers.Controller.DisableMovement = true;
+
+         if (cutsceneObject.fadeBlackIntroTransition)
+         {
+            Tween tween = CreateTween();
+            managers.MenuManager.FadeToBlack(tween);
+            await ToSignal(tween, Tween.SignalName.Finished);
+         }
 
          GetActors(!cutsceneObject.hideParty);
          GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = false;
@@ -52,8 +63,6 @@ public partial class CutsceneManager : Node
 
             managers.Controller.DisableCamera = true;
             Input.MouseMode = Input.MouseModeEnum.Visible;
-
-            managers.MenuManager.FadeToBlack();
          }
 
          for (int i = 0; i < currentCutsceneObject.PreCutsceneCommands.Length; i++)
@@ -65,16 +74,6 @@ public partial class CutsceneManager : Node
                await ToSignal(GetTree().CreateTimer(totalWaitDuration), "timeout");
                totalWaitDuration = 0f;
             }
-         }
-
-         if (cutsceneObject.hideParty)
-         {
-            while (!managers.MenuManager.BlackScreenIsVisible)
-            {
-               await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-            }
-
-            managers.MenuManager.FadeFromBlack();
          }
 
          if (cutsceneObject.items.Length > 0)
@@ -91,8 +90,57 @@ public partial class CutsceneManager : Node
             managers.DialogueManager.InitiateDialogue(dialogueInteraction, true);
          }
 
+         if (cutsceneObject.fadeBlackIntroTransition)
+         {
+            Tween tween = CreateTween();
+            managers.MenuManager.FadeFromBlack(tween);
+            await ToSignal(tween, Tween.SignalName.Finished);
+         }
+
          ProgressCutscene(0);
       }
+   }
+
+   CutsceneObject CopyCutsceneObject(CutsceneObject toCopy)
+   {
+      CutsceneObject result = new CutsceneObject();
+
+      result.hideParty = toCopy.hideParty;
+      result.cameraPosition = toCopy.cameraPosition;
+      result.cameraRotation = toCopy.cameraRotation;
+      result.fadeBlackIntroTransition = toCopy.fadeBlackIntroTransition;
+      result.fadeBlackExitTransition = toCopy.fadeBlackExitTransition;
+
+      result.items = new CutsceneItem[toCopy.items.Length];
+
+      for (int i = 0; i < toCopy.items.Length; i++)
+      {
+         result.items[i] = new CutsceneItem();
+         result.items[i].dialogue = (DialogueObject)toCopy.items[i].dialogue.Duplicate(true);
+
+         result.items[i].commands = new ActorCommand[toCopy.items[i].commands.Length];
+         
+         for (int j = 0; j < result.items[i].commands.Length; j++)
+         {
+            result.items[i].commands[j] = (ActorCommand)toCopy.items[i].commands[j].Duplicate(true);
+         }
+      }
+
+      result.actors = new ActorStatus[toCopy.actors.Length];
+
+      for (int i = 0; i < toCopy.actors.Length; i++)
+      {
+         result.actors[i] = (ActorStatus)toCopy.actors[i].Duplicate();
+      }
+
+      result.PreCutsceneCommands = new ActorCommand[toCopy.PreCutsceneCommands.Length];
+
+      for (int i = 0; i < toCopy.PreCutsceneCommands.Length; i++)
+      {
+         result.PreCutsceneCommands[i] = (ActorCommand)toCopy.PreCutsceneCommands[i].Duplicate(true);
+      }
+
+      return result;
    }
 
    /// <summary>
@@ -102,11 +150,15 @@ public partial class CutsceneManager : Node
    /// </summary>
    public async void ProgressCutscene(int index)
    {
-      ActorCommand[] commands = currentCutsceneObject.items[index].commands;
-
-      for (int i = 0; i < commands.Length; i++)
+      if (index >= currentCutsceneObject.items.Length)
       {
-         ParseCommand(commands[i]);
+         EndCutscene();
+         return;
+      }
+
+      for (int i = 0; i < currentCutsceneObject.items[index].commands.Length; i++)
+      {
+         ParseCommand(currentCutsceneObject.items[index].commands[i]);
 
          if (totalWaitDuration > 0f)
          {
@@ -188,9 +240,10 @@ public partial class CutsceneManager : Node
          actor.StopTracking();
          break;
       case CommandType.FadeBlack:
+         Tween tween = CreateTween();
          if (command.Fade)
          {
-            managers.MenuManager.FadeToBlack();
+            managers.MenuManager.FadeToBlack(tween);
          }
          else
          {
@@ -223,6 +276,14 @@ public partial class CutsceneManager : Node
          }
 
          actor.TurnCharacterToLookAt(targetPosition);
+
+         break;
+      case CommandType.PauseMusic:
+         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").StreamPaused = true;
+         
+         break;
+      case CommandType.ResumeMusic:
+         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").Play();
 
          break;
       default:
@@ -262,17 +323,14 @@ public partial class CutsceneManager : Node
 
    public async void EndCutscene()
    {
-      if (currentCutsceneObject.hideParty)
-      {
-         managers.MenuManager.FadeToBlack();
-
-         while (!managers.MenuManager.BlackScreenIsVisible)
-         {
-            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-         }
-      }
-      
       managers.LevelManager.LocationDatas[managers.LevelManager.ActiveLocationDataID].cutscenesSeen[currentID.ToString()] = true;
+
+      if (currentCutsceneObject.fadeBlackExitTransition)
+      {
+         Tween tween = CreateTween();
+         managers.MenuManager.FadeToBlack(tween);
+         await ToSignal(tween, Tween.SignalName.Finished);
+      }
 
       for (int i = 0; i < currentCutsceneObject.actors.Length; i++)
       {
@@ -312,24 +370,26 @@ public partial class CutsceneManager : Node
       managers.Controller.Rotation = new Vector3(0f, managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y, 0f);
       managers.Controller.GetNode<Node3D>("CameraTarget").RotateY(-managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y);
 
-      if (currentCutsceneObject.hideParty)
-      {
-         while (!managers.MenuManager.BlackScreenIsVisible)
-         {
-            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-         }
-
-         managers.MenuManager.FadeFromBlack();
-      }
-
       GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = true;
       playerCamera.MakeCurrent();
-      isCutsceneActive = false;
+      IsCutsceneActive = false;
 
       for (int i = 2; i <= 4; i++)
       {
          GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + i).EnablePathfinding = true;
       }
+
+      if (currentCutsceneObject.fadeBlackExitTransition)
+      {
+         managers.MenuManager.FadeFromBlack();
+      }
+
+      if (GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").StreamPaused)
+      {
+         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").Play();
+      }
+
+      managers.MenuManager.canTakeInput = true;
    }
 
    Actor GetActor(string actorName)
@@ -366,7 +426,7 @@ public partial class CutsceneManager : Node
       for (int i = 0; i < currentCutsceneObject.actors.Length; i++)
       {
          PackedScene currentActorScene = GD.Load<PackedScene>("res://Cutscenes/Actors/" + currentCutsceneObject.actors[i].actorName + ".tscn");
-         CharacterBody3D actor = currentActorScene.Instantiate<CharacterBody3D>();
+         Actor actor = currentActorScene.Instantiate<Actor>();
          actor.Name = currentCutsceneObject.actors[i].actorName;
          actor.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play(currentCutsceneObject.actors[i].idleAnim);
          GetNode<Node3D>("/root/BaseNode/").AddChild(actor);

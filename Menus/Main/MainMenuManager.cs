@@ -32,6 +32,8 @@ public partial class MainMenuManager : CanvasLayer
       partyMenu = GetNode<Control>("/root/BaseNode/UI/PartyMenuLayer/PartyMenu");
       partyContainer = partyMenu.GetNode<Panel>("MenuContainer");
 
+      managers.MenuManager.canTakeInput = false;
+
       CreateMainMenuLevel();
       CheckLoadGameButtonAvailability();
       CheckNewGameButtonAvailability();
@@ -74,28 +76,27 @@ public partial class MainMenuManager : CanvasLayer
       }
    }
 
-   void OnNewGameButtonDown()
+   async void OnNewGameButtonDown()
    {
       for (int i = 0; i < 5; i++)
       {
          if (!FileAccess.FileExists("user://savegame" + i + ".save"))
          {
-            managers.SaveManager.blackScreen.Color = new Color(0, 0, 0, 1);
-            managers.SaveManager.loadingLabel.Visible = true;
-
-            managers.LevelManager.location = "Athili Copse";
             managers.SaveManager.elapsedTime = 0;
 
             managers.SaveManager.startingTime = Time.GetUnixTimeFromSystem();
             managers.SaveManager.currentSaveIndex = i;
 
-            managers.SaveManager.SaveGame(true, i);
+            Tween tween = CreateTween();
+            managers.MenuManager.FadeToBlack(tween);
+            await ToSignal(tween, Tween.SignalName.Finished);
 
-            managers.SaveManager.blackScreen.Color = new Color(0, 0, 0, 0);
-            managers.SaveManager.loadingLabel.Visible = false;
+            managers.SaveManager.SaveGame(true, i);
 
             Visible = false;
             DestroyMainMenuLevel();
+
+            managers.MenuManager.canTakeInput = true;
 
             return;
          }
@@ -300,13 +301,19 @@ public partial class MainMenuManager : CanvasLayer
       return index;
    }
 
-   void Load(int index)
+   async void Load(int index)
    {
+      Tween tween = CreateTween();
+      managers.MenuManager.FadeToBlack(tween);
+      await ToSignal(tween, Tween.SignalName.Finished);
+
       managers.SaveManager.currentSaveIndex = index;
-      managers.SaveManager.LoadGame(index);
       Visible = false;
       GetNode<VBoxContainer>("/root/BaseNode/UI/Overlay/Slots").Visible = false;
       DestroyMainMenuLevel();
+
+      managers.SaveManager.LoadGame(index);
+      managers.MenuManager.canTakeInput = true;
    }
 
    void OnDeleteButtonDown()

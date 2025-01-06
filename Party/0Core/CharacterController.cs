@@ -187,7 +187,7 @@ public partial class CharacterController : CharacterBody3D
 
          // Rotates along the x-axis, clamping to prevent too much rotation
          Vector3 clampRotation = cameraTarget.Rotation;
-         clampRotation.X -= mouseMotion.Relative.Y / 50f;
+         clampRotation.X -= (mouseMotion.Relative.Y * HorizontalSensitivity) / 50f;
          clampRotation.X = Mathf.Clamp(clampRotation.X, Mathf.DegToRad(-45f), Mathf.DegToRad(90f));
          cameraTarget.Rotation = clampRotation;
       }
@@ -208,7 +208,7 @@ public partial class CharacterController : CharacterBody3D
       secondaryWeapon.Position = secondaryAnchor.Position;
       secondaryWeapon.Rotation = secondaryAnchor.Rotation;
    }
-
+   
    public void HideWeapon()
    {
       weapon.Visible = false;

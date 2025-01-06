@@ -11,8 +11,6 @@ public partial class CutsceneTrigger : Node
    
    private CutsceneManager cutsceneManager;
 
-   bool hasStartedCutscene = false;
-
    [Signal]
    public delegate void OnCutsceneInitiateEventHandler();
 
@@ -23,13 +21,11 @@ public partial class CutsceneTrigger : Node
 
 	private void OnBodyEntered(Node3D body)
    {
-      if (!hasStartedCutscene)
+      if (!cutsceneManager.IsCutsceneActive)
       {
          cutsceneManager.InitiateCutscene(cutsceneObject, id);
-         hasStartedCutscene = true;
          EmitSignal(SignalName.OnCutsceneInitiate);
-      }
-      
-      QueueFree();
+         QueueFree();
+      }      
    }
 }

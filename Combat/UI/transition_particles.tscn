@@ -6,11 +6,9 @@
 particle_flag_disable_z = true
 direction = Vector3(0, 1, 0)
 spread = 180.0
-gravity = Vector3(0, 0, 0)
 initial_velocity_min = 142.96
 initial_velocity_max = 142.96
-orbit_velocity_min = 0.0
-orbit_velocity_max = 0.0
+gravity = Vector3(0, 0, 0)
 linear_accel_min = 22.44
 linear_accel_max = 25.37
 tangential_accel_min = 42.93

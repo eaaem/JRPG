@@ -24,6 +24,8 @@ public partial class LevelManager : Node
    public delegate void SaveLevelProgressionEventHandler();
    [Signal]
    public delegate void LoadLevelProgressionEventHandler();
+   [Signal]
+   public delegate void LevelLoadCompletedEventHandler();
 
    Node3D baseNode;
 
@@ -39,6 +41,10 @@ public partial class LevelManager : Node
 
    public async void OpenWorldMap(string map, Vector3 spawnLocation, bool useSpawnLocation, string spawnPointName = "")
    {  
+      Tween tween = CreateTween();
+      managers.MenuManager.FadeToBlack(tween);
+      await ToSignal(tween, Tween.SignalName.Finished);
+
       EmitSignal(SignalName.SaveLevelProgression);
       DiscardExistingLevel();
 
@@ -92,6 +98,8 @@ public partial class LevelManager : Node
       }
 
       worldMap.GetNode<CharacterController>("Player").DisableMovement = false;
+
+      managers.MenuManager.FadeFromBlack();
    }
 
    public void DiscardExistingLevel()
@@ -105,7 +113,7 @@ public partial class LevelManager : Node
       }
    }
 
-   public void TransitionLevels(string targetLevelInternal, string targetLevelName, string entrancePointName)
+   public async void TransitionLevels(string targetLevelInternal, string targetLevelName, string entrancePointName)
    {
       DiscardExistingLevel();
 
@@ -117,6 +125,10 @@ public partial class LevelManager : Node
       }
 
       int locationDataID = GetLocationDataID(targetLevelInternal);
+
+      Tween tween = CreateTween();
+      managers.MenuManager.FadeToBlack(tween);
+      await ToSignal(tween, Tween.SignalName.Finished);
 
       if (locationDataID == -1)
       {
@@ -144,6 +156,7 @@ public partial class LevelManager : Node
 	public void CreateLevel(string levelName, string internalLevelName, string entrancePointName, bool isLoaded, LocationData locationData = null)
    {
       EmitSignal(SignalName.SaveLevelProgression);
+
       DiscardExistingLevel();
 
       managers.Controller.GlobalPosition = new Vector3(0f, 100f, 0f);
@@ -154,14 +167,6 @@ public partial class LevelManager : Node
       level.Name = "Level";
       location = levelName;
       InternalLocation = internalLevelName;
-
-      managers.Controller.GlobalPosition = level.GetNode<Node3D>(entrancePointName).GlobalPosition;
-      managers.Controller.GlobalRotation = level.GetNode<Node3D>(entrancePointName).GlobalRotation;
-      managers.Controller.DisableMovement = false;
-      managers.Controller.DisableCamera = false;
-
-      managers.Controller.GetNode<Camera3D>("CameraTarget/SpringArm3D/PlayerCamera").MakeCurrent();
-      managers.PartyManager.MovePartyMembersBehindPlayer();
 
       // Only combat levels have arenas
       if (level.HasNode("Arena"))
@@ -253,36 +258,56 @@ public partial class LevelManager : Node
 
       TransitionMusicTracks(level);
 
-      managers.MenuManager.FadeFromBlack();
+      managers.Controller.GlobalPosition = level.GetNode<Node3D>(entrancePointName).GlobalPosition;
+      managers.Controller.GlobalRotation = level.GetNode<Node3D>(entrancePointName).GlobalRotation;
+      managers.Controller.DisableMovement = false;
+      managers.Controller.DisableCamera = false;
+
+      managers.Controller.GetNode<Camera3D>("CameraTarget/SpringArm3D/PlayerCamera").MakeCurrent();
+      managers.PartyManager.MovePartyMembersBehindPlayer();
 
       EmitSignal(SignalName.LoadLevelProgression);
+      
+      managers.MenuManager.FadeFromBlack();
    }
 
    public async void TransitionMusicTracks(Node source)
    {
-      while (musicPlayer.VolumeDb > -80.1f)
+      Tween tween = CreateTween();
+      FadeOutMusic(tween);
+
+      await ToSignal(tween, Tween.SignalName.Finished);
+
+      // Loading in new music changes the paused state of the stream, so save it beforehand to know if the stream should stay paused
+      bool pause = false;
+      if (musicPlayer.StreamPaused)
       {
-         musicPlayer.VolumeDb -= 8f;
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         pause = true;
       }
 
       LoadNewMusic(source);
       musicPlayer.Play();
+
+      musicPlayer.StreamPaused = pause;
       
-      while (musicPlayer.VolumeDb < 0f)
-      {
-         musicPlayer.VolumeDb += 8f;
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-      }
+      FadeInMusic();
    }
 
-   public async void MuteMusic()
+   void FadeOutMusic(Tween tween)
    {
-      while (musicPlayer.VolumeDb > -80.1f)
-      {
-         musicPlayer.VolumeDb -= 8f;
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-      }
+      tween.TweenProperty(musicPlayer, "volume_db", -80f, 0.5f);
+   }
+
+   void FadeInMusic()
+   {
+      Tween tween = CreateTween();
+      tween.TweenProperty(musicPlayer, "volume_db", 0f, 0.5f);
+   }
+
+   public void MuteMusic()
+   {
+      Tween tween = CreateTween();
+      tween.TweenProperty(musicPlayer, "volume_db", -80f, 0.5f);
    }
 
    public void LoadNewMusic(Node source)
@@ -290,8 +315,13 @@ public partial class LevelManager : Node
       musicPlayer.Stream = GD.Load<AudioStreamMP3>(source.GetNode<MusicHolder>("MusicHolder").musicPath);
    }
 
-   public void ResetGameState()
+   public async void ResetGameState()
    {
+      Tween tween = CreateTween();
+      managers.MenuManager.FadeToBlack(tween);
+
+      await ToSignal(tween, Tween.SignalName.Finished);
+
       Node3D baseNode = GetNode<Node3D>("/root/BaseNode");
 
       for (int i = 1; i < 4; i++)
@@ -327,6 +357,7 @@ public partial class LevelManager : Node
       }
 
       DiscardExistingLevel();
+      LocationDatas.Clear();
 
       for (int i = 0; i < mainMenuBack.GetChildCount(); i++)
       {
@@ -339,6 +370,8 @@ public partial class LevelManager : Node
             mainMenuBack.GetChild<Control>(i).Visible = false;
          }
       }
+
+      managers.MenuManager.FadeFromBlack();
    }
 }
 

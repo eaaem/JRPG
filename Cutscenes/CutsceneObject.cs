@@ -17,4 +17,8 @@ public partial class CutsceneObject : Resource
    public Vector3 cameraPosition;
    [Export]
    public Vector3 cameraRotation;
+   [Export]
+   public bool fadeBlackIntroTransition;
+   [Export]
+   public bool fadeBlackExitTransition;
 }

@@ -84,6 +84,7 @@ public partial class PartyMenuManager : Panel
 
       currentMember = managers.PartyManager.Party[0];
       LoadNewPartyScreen(currentMember.characterName);
+      Visible = true;
    }
 
    void LoadMemberButtons()
@@ -414,6 +415,7 @@ public partial class PartyMenuManager : Panel
       {
          if (child.Name != "CameraPositioner")
          {
+            child.Owner = null;
             componentsHolder.RemoveChild(child);
             member.model.AddChild(child);
 
@@ -427,6 +429,11 @@ public partial class PartyMenuManager : Panel
                      child.GetNode<DialogueInteraction>("../DialogueHolder").dialogueList = managers.DialogueManager.dialoguesInThisRegion[i].dialogues;
                   }
                }
+            }
+
+            if (child.Name == "Weapon")
+            {
+               member.weapon = (Node3D)child;
             }
          }
          

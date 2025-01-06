@@ -9,7 +9,7 @@ uniform float BIAS = 1.0;
 
 void fragment() {
 	vec2 uv_offset = (
-		texture(noise, SCREEN_UV + vec2(TIME * speed, 0.0), BIAS).rb - 
+		texture(noise, SCREEN_UV + vec2(TIME * speed, 0.0), BIAS).rb -
 		texture(noise, SCREEN_UV + vec2(0.0, TIME * speed), BIAS).rb
 	);
 	COLOR = texture(SCREEN_TEXTURE, SCREEN_UV + uv_offset * scale);
