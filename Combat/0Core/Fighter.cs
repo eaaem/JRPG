@@ -49,7 +49,12 @@ public partial class Fighter : Node
 
    public int GetMaxHealth()
    {
-	  return stats[0].value * 2 * level;
+      if (level == 0)
+      {
+         return stats[0].value * 2;
+      }
+
+	   return stats[0].value * 2 * level;
    }
 
    public int GetMaxMana()

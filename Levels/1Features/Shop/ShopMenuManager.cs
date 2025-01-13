@@ -6,7 +6,7 @@ public partial class ShopMenuManager : Node
    [Export]
    private PackedScene itemButtonPrefab;
 
-   private CanvasGroup shopCanvasGroup;
+   private Control shopBack;
    [Export]
    private ManagerReferenceHolder managers;
 
@@ -31,7 +31,7 @@ public partial class ShopMenuManager : Node
 
    public override void _Ready()
    {
-      shopCanvasGroup = GetParent<CanvasGroup>();
+      shopBack = GetParent<Control>();
       itemContainer = GetNode<VBoxContainer>("ScrollContainer/ItemContainer");
 
       bulkButton = GetNode<OptionButton>("Buttons/Bulk");
@@ -59,7 +59,7 @@ public partial class ShopMenuManager : Node
       sellButton.Disabled = false;
 
       Input.MouseMode = Input.MouseModeEnum.Visible;
-      shopCanvasGroup.Visible = true;
+      shopBack.Visible = true;
 
       UpdateGoldLabel();
       ClearItemContainer();
@@ -99,7 +99,7 @@ public partial class ShopMenuManager : Node
       {
          Panel itemButton = itemButtonPrefab.Instantiate<Panel>();
 
-         itemButton.GetNode<Button>("Button").Text = currentShopItem.selection[i].name + " (" + currentShopItem.selection[i].price * currentBulk + " g)";
+         itemButton.GetNode<Button>("Button").Text = "   " + currentShopItem.selection[i].name + " (" + currentShopItem.selection[i].price * currentBulk + " g)";
          itemButton.GetNode<Label>("InStock").Visible = false;
          itemButton.GetNode<Button>("Button").TooltipText = currentShopItem.selection[i].description;
 
@@ -116,7 +116,8 @@ public partial class ShopMenuManager : Node
       {
          Panel itemButton = itemButtonPrefab.Instantiate<Panel>();
          
-         itemButton.GetNode<Button>("Button").Text = managers.PartyManager.Items[i].item.name + " (" + (managers.PartyManager.Items[i].item.price * currentBulk) + " g)";
+         itemButton.GetNode<Button>("Button").Text = "   " + managers.PartyManager.Items[i].item.name + " (" + (managers.PartyManager.Items[i].item.price * currentBulk) 
+                                                           + " g)";
          itemButton.GetNode<Label>("InStock").Text = "x" + managers.PartyManager.Items[i].quantity;
 
          itemButton.GetNode<ShopItemHolder>("ItemHolder").item = managers.PartyManager.Items[i].item;
@@ -139,7 +140,7 @@ public partial class ShopMenuManager : Node
 
          int priceToUse = GetMaxQuantity(inventoryItem.quantity, currentBulk) * inventoryItem.item.price;
 
-         child.GetNode<Button>("Button").Text = inventoryItem.item.name + " (" + priceToUse + " g)";
+         child.GetNode<Button>("Button").Text = "   " + inventoryItem.item.name + " (" + priceToUse + " g)";
       }
    }
 
@@ -239,7 +240,7 @@ public partial class ShopMenuManager : Node
 
    void OnExitButtonDown()
    {
-      shopCanvasGroup.Visible = false;
+      shopBack.Visible = false;
       managers.DialogueManager.InitiateDialogue(managers.DialogueManager.CurrentInteraction, false, true);
    }
 }

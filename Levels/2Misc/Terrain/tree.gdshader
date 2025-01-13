@@ -16,10 +16,10 @@ uniform sampler2D tree_texture : source_color;
 
 void vertex() {
 	vec3 world_position = (MODEL_MATRIX * vec4(VERTEX, 1.0)).xyz;
-	
+
 	vec3 wind_texture = texture(wind_noise, world_position.xz * wind_noise_size + normalize(-wind_direction.xz) * (TIME/ 2.5) * wind_noise_speed).rgb;
 	vec3 wind_vector = (vec4(wind_texture * normalize(wind_direction) * wind_strength, 0.0) * MODEL_MATRIX).xyz;
-	
+
 	VERTEX += COLOR.rgb * (wind_vector * (1.0) * (0.7));
 }
 

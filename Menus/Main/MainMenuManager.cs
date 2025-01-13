@@ -156,7 +156,7 @@ public partial class MainMenuManager : CanvasLayer
                Label timeLabel = slot.GetChild<Label>(0);
                timeLabel.Text = string.Empty;
                int minutes = ((int)nodeData["TimeSpent"] / 60) % 60;
-               int hours = (int)nodeData["TimeSpent"] / 360;
+               int hours = (int)nodeData["TimeSpent"] / 3600;
 
                if (hours < 10)
                {

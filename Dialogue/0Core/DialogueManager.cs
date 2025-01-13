@@ -59,6 +59,9 @@ public partial class DialogueManager : Node
    public bool CutsceneReadyForNextDialogue { get; set; }
    public bool LockInput { get; set; }
 
+   [Signal]
+   public delegate void DialogueEndedEventHandler();
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -107,6 +110,7 @@ public partial class DialogueManager : Node
    public async void NextDialogue(int index)
    {
       DialogueObject currentObject = currentDialogueList.dialogues[index];
+      CurrentIndex = index;
 
       if (currentObject.SubstituteDialogues.Length > 0)
       {
@@ -154,7 +158,6 @@ public partial class DialogueManager : Node
 
       CutsceneReadyForNextDialogue = false;
 
-      CurrentIndex = index;
       currentObjectFinished = false;
 
       sprite.Visible = false;
@@ -162,13 +165,6 @@ public partial class DialogueManager : Node
       if (currentObject.characterType != CharacterType.None)
       {
          title.Text = currentObject.characterType + "";
-
-         if (currentObject.emotion != Emotion.None)
-         {
-            Texture2D spriteTexture = GD.Load<Texture2D>("res://Dialogue/UI/" + currentObject.characterType + "/" + currentObject.emotion + ".png");
-            sprite.Texture = spriteTexture;
-            sprite.Visible = true;
-         }
       }
       else
       {
@@ -270,12 +266,6 @@ public partial class DialogueManager : Node
       {
          managers.CutsceneManager.ProgressCutscene(CurrentIndex + 1);
       }
-
-      if (CurrentIndex + 1 >= currentDialogueList.dialogues.Length)
-      {
-         ExitDialogue();
-         return;
-      }
       
       NextDialogue(CurrentIndex + 1);
    }
@@ -363,12 +353,14 @@ public partial class DialogueManager : Node
       currentDialogueList = CurrentInteraction.dialogueList;
    }
 
-   void ExitDialogue()
+   public void ExitDialogue()
    {
       DialogueContainer.Visible = false;
       managers.Controller.DisableMovement = false;
       managers.Controller.DisableCamera = false;
       Input.MouseMode = Input.MouseModeEnum.Captured;
       DialogueIsActive = false;
+      LockInput = false;
+      EmitSignal(SignalName.DialogueEnded);
    }
 }

@@ -150,7 +150,7 @@ public partial class PartyMenuManager : Panel
       }
 
       Sprite2D sprite = GetNode<Sprite2D>("Image");
-      sprite.Texture = GD.Load<Texture2D>("res://Party/" + memberName + "/close_up.png");
+      //sprite.Texture = GD.Load<Texture2D>("res://Party/" + memberName + "/close_up.png");
    }
 
    void LoadMemberButton(Member partyMember)

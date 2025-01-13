@@ -1,4 +1,4 @@
-[gd_scene load_steps=200 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=204 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -36,6 +36,7 @@
 [ext_resource type="Resource" uid="uid://bt2f8yoo0nup8" path="res://Items/Olren/pine_bow.tres" id="19_4kg3f"]
 [ext_resource type="LabelSettings" uid="uid://d3mi4nujst60y" path="res://Combat/0Core/combat_ui_text.tres" id="21_u7sgt"]
 [ext_resource type="Script" path="res://Dialogue/0Core/DialogueManager.cs" id="22_argjw"]
+[ext_resource type="PackedScene" uid="uid://cp13xb1d2yjkf" path="res://Combat/UI/victory_notification.tscn" id="23_s401m"]
 [ext_resource type="PackedScene" uid="uid://b1ub3e88mq513" path="res://Dialogue/0Core/branch_button.tscn" id="26_tb1nj"]
 [ext_resource type="Resource" uid="uid://dr8s71wh2p5yx" path="res://Items/Armor/Medium/worn_robe.tres" id="27_n8681"]
 [ext_resource type="Script" path="res://Menus/Party/PartyMenuManager.cs" id="27_o3g2u"]
@@ -69,6 +70,7 @@
 [ext_resource type="PackedScene" uid="uid://x3lptq4ur4qe" path="res://Combat/UI/target_button.tscn" id="41_51p5x"]
 [ext_resource type="Theme" uid="uid://rhfvy1fs423s" path="res://Combat/UI/combat_text.tres" id="42_jpbmj"]
 [ext_resource type="Script" path="res://Party/0Core/OverworldPartyController.cs" id="42_pt17i"]
+[ext_resource type="Resource" uid="uid://bdxj1v024dfjq" path="res://Items/Athlia/rustic_bell.tres" id="43_jct0e"]
 [ext_resource type="Script" path="res://Core/SaveManager.cs" id="43_n85qj"]
 [ext_resource type="Script" path="res://Levels/0Core/LevelManager.cs" id="44_yvp60"]
 [ext_resource type="Script" path="res://Cutscenes/CutsceneManager.cs" id="45_2ss0b"]
@@ -76,12 +78,10 @@
 [ext_resource type="Texture2D" uid="uid://dhh5y2c86r64c" path="res://Dialogue/UI/dialogue_back.png" id="46_obusw"]
 [ext_resource type="Script" path="res://Menus/Main/MainMenuManager.cs" id="47_k3f71"]
 [ext_resource type="PackedScene" uid="uid://bnl6l7xqjdp2p" path="res://Menus/Other/tutorial_popup.tscn" id="48_a3c2t"]
-[ext_resource type="Texture2D" uid="uid://bg4y1yaayfinc" path="res://Dialogue/UI/Vakthol/Neutral.png" id="50_0sxn0"]
 [ext_resource type="Texture2D" uid="uid://cw6tl38ts70oj" path="res://Menus/0Core/menu_back.png" id="52_ldpry"]
 [ext_resource type="AudioStream" uid="uid://bh73sq4742dhj" path="res://Menus/Main/main_menu.mp3" id="53_icsar"]
 [ext_resource type="Script" path="res://Levels/0Core/MusicHolder.cs" id="54_gsvxg"]
 [ext_resource type="Theme" uid="uid://bv4egxy2hvmih" path="res://Menus/0Core/main_menu_button_theme.tres" id="54_o8lba"]
-[ext_resource type="Texture2D" uid="uid://c8wuab2p5ktgx" path="res://Party/Vakthol/close_up.png" id="54_xi2wh"]
 [ext_resource type="PackedScene" uid="uid://cm85wp3wpxuti" path="res://Combat/UI/transition_particles.tscn" id="55_rp0yf"]
 [ext_resource type="Texture2D" uid="uid://bf6gem1qckp6h" path="res://Menus/0Core/main_menu_back.png" id="57_3sl1u"]
 [ext_resource type="Texture2D" uid="uid://ceoomujjxu6xb" path="res://Menus/Party/stats_back.png" id="57_86m3o"]
@@ -463,8 +463,13 @@ border_width_top = 5
 border_color = Color(0.968627, 1, 0.639216, 1)
 border_blend = true
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_to0hm"]
+texture = ExtResource("67_0gojn")
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qxx6t"]
 texture = ExtResource("46_obusw")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_8ta1u"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_tkfn4"]
 texture = ExtResource("52_ldpry")
@@ -473,6 +478,8 @@ texture = ExtResource("52_ldpry")
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_40ql0"]
 texture = ExtResource("57_86m3o")
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_my0r0"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xesmx"]
 texture = ExtResource("58_wmg7h")
@@ -519,8 +526,11 @@ texture = ExtResource("65_078c4")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_en4rr"]
 texture = ExtResource("67_0gojn")
 
-[sub_resource type="Theme" id="Theme_oe3fy"]
-PopupMenu/font_sizes/font_size = 30
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_blx2h"]
+texture = ExtResource("52_ldpry")
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_d3dj2"]
+texture = ExtResource("57_86m3o")
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_snhpk"]
 
@@ -709,6 +719,7 @@ abilityButton = ExtResource("10_w4nkx")
 effectPrefab = ExtResource("9_67pu3")
 itemPrefab = ExtResource("5_2svhw")
 stackPrefab = ExtResource("11_qyibu")
+victoryNotifPrefab = ExtResource("23_s401m")
 UI = NodePath("../../UI")
 partyList = NodePath("../../UI/CombatPartyList")
 enemyList = NodePath("../../UI/CombatEnemyList")
@@ -753,7 +764,7 @@ script = ExtResource("9_ah2fn")
 baseMembers = [ExtResource("10_7pwb7"), ExtResource("11_wj8pa"), ExtResource("12_h78bi"), ExtResource("13_nnw16")]
 vaktholItems = [ExtResource("32_hw5rl"), ExtResource("33_6gfj8"), ExtResource("34_oa32a")]
 ThalriaItems = [ExtResource("17_vxtna"), ExtResource("27_n8681")]
-AthliaItems = [ExtResource("29_g6fdf"), ExtResource("30_r5v1q")]
+AthliaItems = [ExtResource("29_g6fdf"), ExtResource("30_r5v1q"), ExtResource("43_jct0e")]
 OlrenItems = [ExtResource("31_1d5xq"), ExtResource("30_r5v1q"), ExtResource("32_m7fip"), ExtResource("19_4kg3f")]
 experienceThreshholds = PackedInt32Array(10, 20, 40, 99999, 160, 320, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 managers = NodePath("../ManagerReferenceHolder")
@@ -762,15 +773,6 @@ managers = NodePath("../ManagerReferenceHolder")
 
 [node name="Overlay" type="CanvasLayer" parent="UI"]
 layer = 2
-
-[node name="BlackScreen" type="ColorRect" parent="UI/Overlay"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 0)
 
 [node name="LoadingText" type="Label" parent="UI/Overlay"]
 visible = false
@@ -1088,6 +1090,15 @@ offset_right = 300.0
 offset_bottom = 100.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_01vuf")
+
+[node name="BlackScreen" type="ColorRect" parent="UI/Overlay"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
 
 [node name="OverwriteMessage" type="Panel" parent="UI/Overlay"]
 visible = false
@@ -2947,64 +2958,49 @@ theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "Select an option."
 
-[node name="VictoryScreen" type="CanvasGroup" parent="UI"]
+[node name="VictoryScreen" type="Control" parent="UI"]
 visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Back" type="Panel" parent="UI/VictoryScreen"]
-offset_left = 640.0
-offset_top = 280.0
-offset_right = 1200.0
-offset_bottom = 760.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -280.0
+offset_top = -240.0
+offset_right = 280.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_to0hm")
 
 [node name="Title" type="Label" parent="UI/VictoryScreen/Back"]
 layout_mode = 0
+offset_top = 9.0
 offset_right = 560.0
-offset_bottom = 41.6
-theme_override_font_sizes/font_size = 20
+offset_bottom = 54.0
+theme = ExtResource("38_6i0oi")
+theme_override_fonts/font = ExtResource("58_bw31p")
+theme_override_font_sizes/font_size = 35
 text = "Victory!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ExpNotif1" type="Label" parent="UI/VictoryScreen/Back"]
-visible = false
+[node name="NotificationContainer" type="VBoxContainer" parent="UI/VictoryScreen/Back"]
 layout_mode = 0
-offset_top = 41.6
-offset_right = 560.0
-offset_bottom = 83.2
-text = "### gains # EXP"
-
-[node name="ExpNotif2" type="Label" parent="UI/VictoryScreen/Back"]
-visible = false
-layout_mode = 0
-offset_top = 83.2
-offset_right = 560.0
-offset_bottom = 124.8
-text = "### gains # EXP"
-
-[node name="ExpNotif3" type="Label" parent="UI/VictoryScreen/Back"]
-visible = false
-layout_mode = 0
-offset_top = 124.8
-offset_right = 560.0
-offset_bottom = 166.4
-text = "### gains # EXP"
-
-[node name="ExpNotif4" type="Label" parent="UI/VictoryScreen/Back"]
-visible = false
-layout_mode = 0
-offset_top = 166.4
-offset_right = 560.0
-offset_bottom = 208.0
-text = "### gains # EXP"
-
-[node name="ItemNotif" type="Label" parent="UI/VictoryScreen/Back"]
-visible = false
-layout_mode = 0
-offset_top = 208.0
-offset_right = 560.0
-offset_bottom = 249.6
-text = "Gained # ###"
+offset_left = 13.0
+offset_top = 55.0
+offset_right = 548.0
+offset_bottom = 380.0
 
 [node name="Exit" type="Button" parent="UI/VictoryScreen/Back"]
 layout_mode = 0
@@ -3012,6 +3008,7 @@ offset_left = 200.0
 offset_top = 400.0
 offset_right = 344.0
 offset_bottom = 449.6
+theme = ExtResource("64_xypp5")
 text = "Exit"
 
 [node name="DialogueScreen" type="Control" parent="UI"]
@@ -3098,7 +3095,7 @@ grow_horizontal = 0
 [node name="Sprite" type="Sprite2D" parent="UI/DialogueScreen/Back/SpriteHolder"]
 position = Vector2(0, -134)
 scale = Vector2(0.9, 0.9)
-texture = ExtResource("50_0sxn0")
+texture = SubResource("CanvasTexture_8ta1u")
 
 [node name="PartyMenuLayer" type="CanvasLayer" parent="UI"]
 
@@ -3166,7 +3163,7 @@ layout_mode = 2
 
 [node name="Image" type="Sprite2D" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
 position = Vector2(552, 176)
-texture = ExtResource("54_xi2wh")
+texture = SubResource("CanvasTexture_my0r0")
 
 [node name="ImageBorder" type="Panel" parent="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party"]
 layout_mode = 0
@@ -4087,60 +4084,85 @@ text = "Picked up # ###!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Shop" type="CanvasGroup" parent="UI"]
+[node name="Shop" type="Control" parent="UI"]
 visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Background" type="Panel" parent="UI/Shop" node_paths=PackedStringArray("managers")]
-offset_left = 275.0
-offset_top = 100.0
-offset_right = 1625.0
-offset_bottom = 1000.0
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -675.0
+offset_top = -450.0
+offset_right = 675.0
+offset_bottom = 450.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_blx2h")
 script = ExtResource("37_jygy0")
 itemButtonPrefab = ExtResource("38_xtl2k")
 managers = NodePath("../../../ManagerReferenceHolder")
 
-[node name="Buttons" type="Node2D" parent="UI/Shop/Background"]
+[node name="Buttons" type="Control" parent="UI/Shop/Background"]
+anchors_preset = 0
 
 [node name="Buy" type="Button" parent="UI/Shop/Background/Buttons"]
+layout_mode = 0
 offset_left = 60.0
 offset_top = 800.0
 offset_right = 260.0
 offset_bottom = 850.0
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 25
 text = "Buy"
 
 [node name="Sell" type="Button" parent="UI/Shop/Background/Buttons"]
+layout_mode = 0
 offset_left = 400.0
 offset_top = 800.0
 offset_right = 600.0
 offset_bottom = 850.0
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 25
 text = "Sell"
 
 [node name="Exit" type="Button" parent="UI/Shop/Background/Buttons"]
+layout_mode = 0
 offset_left = 1100.0
 offset_top = 800.0
 offset_right = 1300.0
 offset_bottom = 850.0
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 25
 text = "Exit"
 
 [node name="BulkLabel" type="RichTextLabel" parent="UI/Shop/Background/Buttons"]
+layout_mode = 0
 offset_left = 750.0
 offset_top = 750.0
 offset_right = 950.0
 offset_bottom = 800.0
+theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/normal_font_size = 30
 bbcode_enabled = true
 text = "[center]Bulk[/center]"
 
 [node name="Bulk" type="OptionButton" parent="UI/Shop/Background/Buttons"]
+layout_mode = 0
 offset_left = 750.0
 offset_top = 800.0
 offset_right = 950.0
 offset_bottom = 850.0
-theme = SubResource("Theme_oe3fy")
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 30
 selected = 0
 fit_to_longest_item = false
@@ -4158,8 +4180,12 @@ popup/item_5/text = "100"
 popup/item_5/id = 5
 
 [node name="GoldDisplay" type="RichTextLabel" parent="UI/Shop/Background/Buttons"]
-offset_right = 900.0
-offset_bottom = 50.0
+layout_mode = 0
+offset_left = 31.0
+offset_top = 4.0
+offset_right = 931.0
+offset_bottom = 54.0
+theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/normal_font_size = 30
 theme_override_font_sizes/bold_font_size = 26
 bbcode_enabled = true
@@ -4173,6 +4199,7 @@ offset_bottom = 750.0
 
 [node name="ItemContainer" type="VBoxContainer" parent="UI/Shop/Background/ScrollContainer"]
 layout_mode = 2
+theme_override_constants/separation = 15
 
 [node name="Notification" type="Panel" parent="UI/Shop/Background"]
 visible = false
@@ -4181,11 +4208,13 @@ offset_left = 410.0
 offset_top = 300.0
 offset_right = 910.0
 offset_bottom = 550.0
+theme_override_styles/panel = SubResource("StyleBoxTexture_d3dj2")
 
 [node name="Body" type="RichTextLabel" parent="UI/Shop/Background/Notification"]
 layout_mode = 0
 offset_right = 500.0
 offset_bottom = 200.0
+theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/normal_font_size = 35
 bbcode_enabled = true
 text = " [center]Are you sure you want to buy/sell # item(s)?[/center]"
@@ -4196,6 +4225,7 @@ offset_left = 300.0
 offset_top = 175.0
 offset_right = 425.0
 offset_bottom = 225.0
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 30
 text = "Yes"
 
@@ -4205,6 +4235,7 @@ offset_left = 90.0
 offset_top = 175.0
 offset_right = 215.0
 offset_bottom = 225.0
+theme = ExtResource("64_xypp5")
 theme_override_font_sizes/font_size = 30
 text = "No"
 
@@ -4263,7 +4294,7 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 
 
 [node name="SecondaryAnchor" type="Node3D" parent="PartyMembers/Member1"]
 
-[node name="AnimationTree" type="AnimationTree" parent="PartyMembers/Member1"]
+[node name="BaseTree" type="AnimationTree" parent="PartyMembers/Member1"]
 
 [node name="AnimationMethods" type="AnimationPlayer" parent="PartyMembers/Member1"]
 libraries = {
@@ -4555,14 +4586,19 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 
 [connection signal="button_down" from="UI/Overlay/DefeatScreen/LastSave" to="CombatManager" method="OnReloadLastButtonDown"]
 [connection signal="button_down" from="UI/Overlay/DefeatScreen/Quit" to="CombatManager" method="OnQuitToMenuButtonDown"]
+[connection signal="button_down" from="UI/Overlay/Slots/Slot1" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Overlay/Slots/Slot1" to="MainMenu" method="OnSlotDown" binds= [0]]
 [connection signal="mouse_entered" from="UI/Overlay/Slots/Slot1" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Overlay/Slots/Slot2" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Overlay/Slots/Slot2" to="MainMenu" method="OnSlotDown" binds= [1]]
 [connection signal="mouse_entered" from="UI/Overlay/Slots/Slot2" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Overlay/Slots/Slot3" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Overlay/Slots/Slot3" to="MainMenu" method="OnSlotDown" binds= [2]]
 [connection signal="mouse_entered" from="UI/Overlay/Slots/Slot3" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Overlay/Slots/Slot4" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Overlay/Slots/Slot4" to="MainMenu" method="OnSlotDown" binds= [3]]
 [connection signal="mouse_entered" from="UI/Overlay/Slots/Slot4" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Overlay/Slots/Slot5" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Overlay/Slots/Slot5" to="MainMenu" method="OnSlotDown" binds= [4]]
 [connection signal="mouse_entered" from="UI/Overlay/Slots/Slot5" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
 [connection signal="button_down" from="UI/Overlay/OverwriteMessage/YesButton" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnConfirmSave"]
@@ -4587,13 +4623,19 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [1, false]]
 [connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [2, false]]
 [connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [3, false]]
+[connection signal="button_down" from="UI/Options/Choices/AttackButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Options/Choices/AttackButton" to="CombatManager" method="OnAttackButtonDown"]
+[connection signal="mouse_entered" from="UI/Options/Choices/AttackButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
 [connection signal="mouse_entered" from="UI/Options/Choices/AttackButton" to="CombatManager/UIManager" method="HoverOverInformation" binds= ["Attack an enemy with equipped weapon. Deals physical damage."]]
 [connection signal="mouse_exited" from="UI/Options/Choices/AttackButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
+[connection signal="button_down" from="UI/Options/Choices/CastButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Options/Choices/CastButton" to="CombatManager" method="OnCastButtonDown"]
+[connection signal="mouse_entered" from="UI/Options/Choices/CastButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
 [connection signal="mouse_entered" from="UI/Options/Choices/CastButton" to="CombatManager/UIManager" method="HoverOverInformation" binds= ["Cast an ability with mana."]]
 [connection signal="mouse_exited" from="UI/Options/Choices/CastButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
+[connection signal="button_down" from="UI/Options/Choices/ItemButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Options/Choices/ItemButton" to="CombatManager" method="OnItemButtonDown"]
+[connection signal="mouse_entered" from="UI/Options/Choices/ItemButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
 [connection signal="mouse_entered" from="UI/Options/Choices/ItemButton" to="CombatManager/UIManager" method="HoverOverInformation" binds= ["Use an item."]]
 [connection signal="mouse_exited" from="UI/Options/Choices/ItemButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
 [connection signal="button_down" from="UI/Options/CancelButton" to="CombatManager" method="OnCancelButtonDown"]

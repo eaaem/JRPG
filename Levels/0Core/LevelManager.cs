@@ -9,8 +9,10 @@ public partial class LevelManager : Node
    /// The index in the list of LocationDatas that matches the LocationData currently active.
    /// </summary>
    public int ActiveLocationDataID { get; set; }
+   public int ActiveMapDataID { get; set; }
 
    public List<LocationData> LocationDatas { get; set; }
+   public List<MapData> MapDatas { get; set; }
 
    public string location;
    public string InternalLocation { get; set; }
@@ -34,6 +36,7 @@ public partial class LevelManager : Node
    public override void _Ready()
    {
       LocationDatas = new List<LocationData>();
+      MapDatas = new List<MapData>();
 
       baseNode = GetNode<Node3D>("/root/BaseNode");
       musicPlayer = baseNode.GetNode<AudioStreamPlayer>("MusicPlayer");
@@ -55,6 +58,8 @@ public partial class LevelManager : Node
       // We need to move the controller away so that it doesn't reactivate an exit point immediately upon exiting the world map
       managers.Controller.GlobalPosition = new Vector3(0f, 25f, 0f);
 
+      managers.Controller.GetParent<Node3D>().Visible = false;
+
       PackedScene worldMapPrefab = GD.Load<PackedScene>("res://WorldMap/0Core/world_map_base.tscn");
       Node3D worldMap = worldMapPrefab.Instantiate<Node3D>();
 
@@ -62,10 +67,10 @@ public partial class LevelManager : Node
       Node3D specialMap = specialMapPrefab.Instantiate<Node3D>();
 
       baseNode.AddChild(worldMap);
-      baseNode.AddChild(specialMap);
 
       Node3D informationHolder = specialMap.GetNode<Node3D>("InformationHolder");
       specialMap.RemoveChild(informationHolder);
+      informationHolder.Owner = null;
       worldMap.AddChild(informationHolder);
 
       if (!useSpawnLocation)
@@ -77,25 +82,34 @@ public partial class LevelManager : Node
          worldMap.GetNode<CharacterBody3D>("Player").GlobalPosition = spawnLocation;
       }
 
+      int worldMapDataID = GetMapDataID(map);
+
+      if (worldMapDataID == -1)
+      {
+         MapDatas.Add(new MapData(map, 0));
+         ActiveMapDataID = MapDatas.Count - 1;
+      }
+      else
+      {
+         ActiveMapDataID = worldMapDataID;
+      }
+
       location = "World Map";
       InternalLocation = map;
-
-      EmitSignal(SignalName.LoadLevelProgression);
 
       worldMap.GetNode<Camera3D>("Player/CameraTarget/PlayerCamera").MakeCurrent();
       worldMap.GetNode<CharacterController>("Player").DisableMovement = true;
 
-      baseNode.RemoveChild(specialMap);
       specialMap.QueueFree();
+
+      EmitSignal(SignalName.LoadLevelProgression);
 
       TransitionMusicTracks(worldMap);
 
-      managers.MenuManager.FadeFromBlack();
-
-      while (managers.MenuManager.BlackScreenIsVisible)
-      {
-         await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-      }
+      tween.Stop();
+      tween = CreateTween();
+      managers.MenuManager.FadeFromBlack(tween);
+      await ToSignal(tween, Tween.SignalName.Finished);
 
       worldMap.GetNode<CharacterController>("Player").DisableMovement = false;
 
@@ -115,6 +129,7 @@ public partial class LevelManager : Node
 
    public async void TransitionLevels(string targetLevelInternal, string targetLevelName, string entrancePointName)
    {
+      EmitSignal(SignalName.SaveLevelProgression);
       DiscardExistingLevel();
 
       if (baseNode.HasNode("WorldMap"))
@@ -145,6 +160,19 @@ public partial class LevelManager : Node
       for (int i = 0; i < LocationDatas.Count; i++)
       {
          if (LocationDatas[i].locationName == levelName)
+         {
+            return i;
+         }
+      }
+
+      return -1;
+   }
+
+   public int GetMapDataID(string mapName)
+   {
+      for (int i = 0; i < MapDatas.Count; i++)
+      {
+         if (MapDatas[i].mapName == mapName)
          {
             return i;
          }
@@ -259,9 +287,10 @@ public partial class LevelManager : Node
       TransitionMusicTracks(level);
 
       managers.Controller.GlobalPosition = level.GetNode<Node3D>(entrancePointName).GlobalPosition;
-      managers.Controller.GlobalRotation = level.GetNode<Node3D>(entrancePointName).GlobalRotation;
+      managers.Controller.GlobalRotation = new Vector3(0f, level.GetNode<Node3D>(entrancePointName).GlobalRotation.Y, 0f);
       managers.Controller.DisableMovement = false;
       managers.Controller.DisableCamera = false;
+      managers.Controller.GetParent<Node3D>().Visible = true;
 
       managers.Controller.GetNode<Camera3D>("CameraTarget/SpringArm3D/PlayerCamera").MakeCurrent();
       managers.PartyManager.MovePartyMembersBehindPlayer();
@@ -408,6 +437,27 @@ public partial class LocationData : Node
          { "PickedUpItems", pickedUpItems },
          { "CutscenesSeen", cutscenesSeen },
          { "TimeSinceLastVisit", timeSinceLastVisit }
+      };
+   }
+}
+
+public partial class MapData : Node
+{
+   public string mapName;
+   public int progress;
+
+   public MapData(string mapName, int progress)
+   {
+      this.mapName = mapName;
+      this.progress = progress;
+   }
+
+   public Godot.Collections.Dictionary<string, Variant> SaveMapData()
+   {
+      return new Godot.Collections.Dictionary<string, Variant>()
+      {
+         { "MapName", mapName },
+         { "Progress", progress }
       };
    }
 }

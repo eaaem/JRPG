@@ -22,6 +22,8 @@ public partial class CutsceneManager : Node
 
    [Signal]
    public delegate void CutsceneEndedEventHandler();
+   [Signal]
+   public delegate void CutsceneBeganEventHandler();
 
    public async void InitiateCutscene(CutsceneObject cutsceneObject, int id)
    {
@@ -34,13 +36,6 @@ public partial class CutsceneManager : Node
             GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + i).EnablePathfinding = false;
          }
 
-         IsCutsceneActive = true;
-
-         // Copying the cutscene object is necessary to avoid changing the original instance of the object, which messes up the cutscene if the player
-         // quits to the menu and reopens the game
-         currentCutsceneObject = CopyCutsceneObject(cutsceneObject);
-         currentID = id;
-
          managers.Controller.DisableMovement = true;
 
          if (cutsceneObject.fadeBlackIntroTransition)
@@ -50,9 +45,18 @@ public partial class CutsceneManager : Node
             await ToSignal(tween, Tween.SignalName.Finished);
          }
 
+         IsCutsceneActive = true;
+
+         EmitSignal(SignalName.CutsceneBegan);
+
+         // Copying the cutscene object is necessary to avoid changing the original instance of the object, which messes up the cutscene if the player
+         // quits to the menu and reopens the game
+         currentCutsceneObject = CopyCutsceneObject(cutsceneObject);
+         currentID = id;
+
          GetActors(!cutsceneObject.hideParty);
          GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = false;
-         managers.Controller.isInCutscene = true;
+         managers.Controller.IsInCutscene = true;
          managers.Controller.IsSprinting = false;
 
          if (cutsceneObject.hideParty)
@@ -63,17 +67,6 @@ public partial class CutsceneManager : Node
 
             managers.Controller.DisableCamera = true;
             Input.MouseMode = Input.MouseModeEnum.Visible;
-         }
-
-         for (int i = 0; i < currentCutsceneObject.PreCutsceneCommands.Length; i++)
-         {
-            ParseCommand(currentCutsceneObject.PreCutsceneCommands[i]);
-
-            if (totalWaitDuration > 0f)
-            {
-               await ToSignal(GetTree().CreateTimer(totalWaitDuration), "timeout");
-               totalWaitDuration = 0f;
-            }
          }
 
          if (cutsceneObject.items.Length > 0)
@@ -89,6 +82,18 @@ public partial class CutsceneManager : Node
 
             managers.DialogueManager.InitiateDialogue(dialogueInteraction, true);
          }
+
+         for (int i = 0; i < currentCutsceneObject.PreCutsceneCommands.Length; i++)
+         {
+            ParseCommand(currentCutsceneObject.PreCutsceneCommands[i]);
+
+            if (totalWaitDuration > 0f)
+            {
+               await ToSignal(GetTree().CreateTimer(totalWaitDuration), "timeout");
+               totalWaitDuration = 0f;
+            }
+         }
+
 
          if (cutsceneObject.fadeBlackIntroTransition)
          {
@@ -150,12 +155,6 @@ public partial class CutsceneManager : Node
    /// </summary>
    public async void ProgressCutscene(int index)
    {
-      if (index >= currentCutsceneObject.items.Length)
-      {
-         EndCutscene();
-         return;
-      }
-
       for (int i = 0; i < currentCutsceneObject.items[index].commands.Length; i++)
       {
          ParseCommand(currentCutsceneObject.items[index].commands[i]);
@@ -228,7 +227,7 @@ public partial class CutsceneManager : Node
          break;
       case CommandType.PlayAnimation:
          actor = GetActor(command.ActorName);
-         actor.PlayAnimation(command.AnimationName, GetActorStatus(command.ActorName), command.Blend, command.UseAnimationLength, command.WaitTime);
+         actor.PlayAnimation(command.AnimationName, GetActorStatus(command.ActorName), command.Blend, command.UseAnimationLength, command.WaitTime, command.ExitBlend);
          break;
       case CommandType.Track:
          actor = GetActor(command.ActorName);
@@ -258,7 +257,7 @@ public partial class CutsceneManager : Node
          cutsceneCamera.Rotation = command.Destination;
          break;
       case CommandType.CallMethod:
-         LevelProgession script = GetNode<LevelProgession>(command.ObjectPath);
+         Node script = GetNode<Node>(command.ObjectPath);
          script.Call(command.Method);
          break;
       case CommandType.TurnToLookAt:
@@ -285,6 +284,10 @@ public partial class CutsceneManager : Node
       case CommandType.ResumeMusic:
          GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").Play();
 
+         break;
+      case CommandType.EndCutscene:
+         managers.DialogueManager.ExitDialogue();
+         EndCutscene();
          break;
       default:
          GD.Print("Cutscene command invalid.");
@@ -352,8 +355,7 @@ public partial class CutsceneManager : Node
                         Node3D cameraHolder = actor.GetNode<Node3D>("CameraTarget");
                         actor.RemoveChild(cameraHolder);
                         managers.PartyManager.Party[0].model.AddChild(cameraHolder);
-
-                        managers.PartyManager.Party[j].model.GetNode<Node3D>("Model").RotateY(-managers.Controller.Rotation.Y);
+                        managers.PartyManager.Party[0].model.GetNode<Node3D>("Model").RotateY(-cameraHolder.Rotation.Y);
                      }
 
                      break;
@@ -366,7 +368,7 @@ public partial class CutsceneManager : Node
          actor.QueueFree();
       }
 
-      managers.Controller.isInCutscene = false;
+      managers.Controller.IsInCutscene = false;
       managers.Controller.Rotation = new Vector3(0f, managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y, 0f);
       managers.Controller.GetNode<Node3D>("CameraTarget").RotateY(-managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y);
 

@@ -7,10 +7,10 @@ uniform float beer_factor = 0.2;
 
 float generateOffset(float x, float z, float val1, float val2, float time) {
 	float speed = 1.0;
-	
+
 	float radiansX = ((mod(x + z * x * val1, amount) / amount) + (time * speed) * mod(x * 0.8 + z, 1.5)) * 2.0 * 3.14;
 	float radiansZ = ((mod(val2 * (z * x + x * z), amount) / amount) + (time * speed) * 2.0 * mod(x, 2.0)) * 2.0 * 3.14;
-	
+
 	return amount * 0.5 * (sin(radiansZ) + cos(radiansX));
 }
 
@@ -31,13 +31,13 @@ void fragment() {
 	SPECULAR = 0.5;
 	ROUGHNESS = 0.2;
 	ALBEDO = output_color.xyz;
-	
+
 	float depth = texture(DEPTH_TEXTURE, SCREEN_UV).r;
-	
+
 	//depth = depth * 2.0 - 1.0;
 	depth = PROJECTION_MATRIX[3][2] / (depth + PROJECTION_MATRIX[2][2]);
 	depth = depth + VERTEX.z;
-	
+
 	depth = exp(-depth * beer_factor);
 	ALPHA = clamp(1.0 - depth, 0.0, 1.0);
 }

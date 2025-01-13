@@ -1,13 +1,51 @@
-[gd_scene load_steps=9 format=3 uid="uid://dmljiy0iexq6p"]
+[gd_scene load_steps=23 format=3 uid="uid://dmljiy0iexq6p"]
 
 [ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_hh8ba"]
-[ext_resource type="PackedScene" uid="uid://fc771flpqrkl" path="res://Levels/2Misc/Peasants/peasant_male.glb" id="2_nyhe5"]
-[ext_resource type="Material" uid="uid://dhjx8br4ux31j" path="res://Levels/2Misc/Peasants/brown_peasant_cloth.tres" id="3_1rkk4"]
-[ext_resource type="Material" uid="uid://do7lsml0ai83t" path="res://Levels/2Misc/Peasants/mixed_skin.tres" id="4_j5iat"]
-[ext_resource type="Material" uid="uid://pq83id1h8vpu" path="res://Levels/2Misc/Peasants/white_hair.tres" id="5_4727j"]
-[ext_resource type="Material" uid="uid://drkudhfypq11q" path="res://Levels/2Misc/Peasants/brown_eyes.tres" id="6_w7e7r"]
-[ext_resource type="Material" uid="uid://cyxf7jvdetewr" path="res://Levels/2Misc/Peasants/dark_lips.tres" id="7_c232k"]
-[ext_resource type="Material" uid="uid://dwc841okcim5o" path="res://Levels/2Misc/Peasants/tan_peasant_clothes.tres" id="8_x3648"]
+[ext_resource type="PackedScene" uid="uid://fc771flpqrkl" path="res://Levels/2Misc/People/peasant_male.glb" id="2_nyhe5"]
+[ext_resource type="Material" uid="uid://dhjx8br4ux31j" path="res://Levels/2Misc/People/brown_peasant_cloth.tres" id="3_1rkk4"]
+[ext_resource type="Material" uid="uid://do7lsml0ai83t" path="res://Levels/2Misc/People/mixed_skin.tres" id="4_j5iat"]
+[ext_resource type="Material" uid="uid://pq83id1h8vpu" path="res://Levels/2Misc/People/white_hair.tres" id="5_4727j"]
+[ext_resource type="Material" uid="uid://drkudhfypq11q" path="res://Levels/2Misc/People/brown_eyes.tres" id="6_w7e7r"]
+[ext_resource type="Material" uid="uid://cyxf7jvdetewr" path="res://Levels/2Misc/People/dark_lips.tres" id="7_c232k"]
+[ext_resource type="Material" uid="uid://dwc841okcim5o" path="res://Levels/2Misc/People/tan_peasant_clothes.tres" id="8_x3648"]
+[ext_resource type="AudioStream" uid="uid://b7i785pitce5k" path="res://Core/footstep1.wav" id="9_0tsl7"]
+[ext_resource type="AudioStream" uid="uid://bok1x07qalrg5" path="res://Core/footstep2.wav" id="10_nn2uq"]
+[ext_resource type="AudioStream" uid="uid://cssk5x4i0ki51" path="res://Core/footstep3.wav" id="11_6pn2g"]
+[ext_resource type="AudioStream" uid="uid://cti7dd0fwm5ww" path="res://Core/footstep4.wav" id="12_bef02"]
+[ext_resource type="AudioStream" uid="uid://b546dpfrw5vpp" path="res://Core/footstep5.wav" id="13_8lnu5"]
+[ext_resource type="AudioStream" uid="uid://bm3i2wii2wk4f" path="res://Core/footstep6.wav" id="14_tpyuw"]
+[ext_resource type="AudioStream" uid="uid://c1r2wlvij1wh8" path="res://Core/footsteps_grass1.wav" id="15_s25vg"]
+[ext_resource type="AudioStream" uid="uid://cwvfd71mwaj8u" path="res://Core/footsteps_grass2.wav" id="16_tueb0"]
+[ext_resource type="AudioStream" uid="uid://ekeqosutj7gi" path="res://Core/footsteps_grass3.wav" id="17_yrc54"]
+[ext_resource type="AudioStream" uid="uid://d3y8bkl5eaysb" path="res://Core/footsteps_grass4.wav" id="18_iopsl"]
+[ext_resource type="AudioStream" uid="uid://d3besxcv2duhq" path="res://Core/footsteps_grass5.wav" id="19_2drlo"]
+[ext_resource type="AudioStream" uid="uid://ck5donxagp11w" path="res://Core/footsteps_grass6.wav" id="20_xpvpk"]
+
+[sub_resource type="Animation" id="Animation_ouotn"]
+resource_name = "WalkSounds"
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"ActorFootstep"
+}, {
+"args": [],
+"method": &"ActorFootstep"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mmkw8"]
+_data = {
+"WalkSounds": SubResource("Animation_ouotn")
+}
 
 [node name="alrith" type="CharacterBody3D"]
 script = ExtResource("1_hh8ba")
@@ -61,5 +99,56 @@ surface_material_override/0 = ExtResource("8_x3648")
 
 [node name="Tunic_001" parent="Model/Skeleton_001/Skeleton3D" index="15"]
 surface_material_override/0 = ExtResource("8_x3648")
+
+[node name="dirtFootsteps" type="Node3D" parent="."]
+
+[node name="Footstep1" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
+stream = ExtResource("9_0tsl7")
+
+[node name="Footstep2" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
+stream = ExtResource("10_nn2uq")
+
+[node name="Footstep3" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
+stream = ExtResource("11_6pn2g")
+
+[node name="Footstep4" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
+stream = ExtResource("12_bef02")
+
+[node name="Footstep5" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
+stream = ExtResource("13_8lnu5")
+
+[node name="Footstep6" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
+stream = ExtResource("14_tpyuw")
+
+[node name="grassFootsteps" type="Node3D" parent="."]
+
+[node name="Footstep1" type="AudioStreamPlayer3D" parent="grassFootsteps"]
+stream = ExtResource("15_s25vg")
+volume_db = 36.761
+
+[node name="Footstep2" type="AudioStreamPlayer3D" parent="grassFootsteps"]
+stream = ExtResource("16_tueb0")
+volume_db = 36.761
+
+[node name="Footstep3" type="AudioStreamPlayer3D" parent="grassFootsteps"]
+stream = ExtResource("17_yrc54")
+volume_db = 36.761
+
+[node name="Footstep4" type="AudioStreamPlayer3D" parent="grassFootsteps"]
+stream = ExtResource("18_iopsl")
+volume_db = 36.761
+
+[node name="Footstep5" type="AudioStreamPlayer3D" parent="grassFootsteps"]
+stream = ExtResource("19_2drlo")
+volume_db = 36.761
+
+[node name="Footstep6" type="AudioStreamPlayer3D" parent="grassFootsteps"]
+stream = ExtResource("20_xpvpk")
+volume_db = 36.761
+
+[node name="MethodsPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mmkw8")
+}
 
 [editable path="Model"]

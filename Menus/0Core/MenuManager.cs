@@ -257,13 +257,16 @@ public partial class MenuManager : Node
    {
       closeSound.Play();
       menu.Visible = false;
-      controller.DisableMovement = false;
       controller.DisableCamera = false;
       Input.MouseMode = Input.MouseModeEnum.Captured;
 
       if (baseNode.HasNode("WorldMap"))
       {
          baseNode.GetNode<CharacterController>("WorldMap/Player").DisableMovement = false;
+      }
+      else
+      {
+         controller.DisableMovement = false;
       }
    }
 

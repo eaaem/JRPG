@@ -24,6 +24,7 @@ public partial class Actor : CharacterBody3D
    private Node3D secondaryAnchor;
 
    private BoneAttachment3D attachment;
+   private AnimationPlayer methodsPlayer;
 
    private bool isTracking;
    Actor trackingTarget;
@@ -33,6 +34,7 @@ public partial class Actor : CharacterBody3D
    public override void _Ready()
    {
       model = GetNode<Node3D>("Model");
+      methodsPlayer = GetNode<AnimationPlayer>("MethodsPlayer");
 
       if (hasWeapon)
       {
@@ -83,6 +85,43 @@ public partial class Actor : CharacterBody3D
       weapon.Rotation = weaponAnchor.Rotation;
    }
 
+   public void ActorFootstep()
+   {
+      PhysicsDirectSpaceState3D spaceState = GetNode<Node3D>("/root/BaseNode").GetWorld3D().DirectSpaceState;
+
+      Vector3 origin = Position + Vector3.Up;
+      Vector3 end = origin + (Vector3.Down * 5f);
+      // 64 = layer 7, which is where terrain is
+      PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(origin, end, 64);
+      query.CollideWithAreas = true;
+
+      var result = spaceState.IntersectRay(query);
+
+      string groupName = "dirt";
+
+      if (result.Count > 0)
+      {
+         StaticBody3D collided = (StaticBody3D)result["collider"];
+         
+         if (collided.IsInGroup("grass"))
+         {
+            groupName = "grass";
+         }
+         else if (collided.IsInGroup("stone"))
+         {
+            groupName = "stone";
+         }
+         else if (collided.IsInGroup("wood"))
+         {
+            groupName = "wood";
+         }
+      }
+
+      Node3D group = GetNode<Node3D>(groupName + "Footsteps");
+      AudioStreamPlayer3D toPlay = group.GetChild<AudioStreamPlayer3D>(GD.RandRange(0, 5));
+      toPlay.Play();
+   }
+
    /*public void PlaceSecondaryWeaponOnBack()
    {
       secondaryAttachment.BoneName = "torso";
@@ -104,7 +143,7 @@ public partial class Actor : CharacterBody3D
    public async void MoveCharacter(ActorStatus actorStatus, Vector3 destination, bool turnToDestination)
    {
       Vector3 direction = GlobalPosition.DirectionTo(destination);
-      float distance = GlobalPosition.DistanceTo(destination);
+      float distance = GlobalPosition.DistanceSquaredTo(destination);
 
       currentMoveSpeed = actorStatus.moveSpeed;
       currentDestination = destination;
@@ -116,22 +155,25 @@ public partial class Actor : CharacterBody3D
          Node3D model = GetNode<Node3D>("Model");
          model.LookAt(destination);
          model.RotateY(Mathf.DegToRad(180));
+         model.Rotation = new Vector3(0f, model.Rotation.Y, 0f);
       }
 
       AnimationPlayer player = GetNode<AnimationPlayer>("Model/AnimationPlayer");
       player.Play(actorStatus.walkAnim, 0.5f);
+      methodsPlayer.Play("WalkSounds", 0.5f);
 
-      while (distance > 0.25f)
+      while (distance > 0.5f)
       {
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
 
-         distance = GlobalPosition.DistanceTo(destination); 
+         distance = GlobalPosition.DistanceSquaredTo(destination); 
       }
 
       isMoving = false;
 
       Velocity = Vector3.Zero;
       player.Play(actorStatus.idleAnim);
+      methodsPlayer.Stop();
    }
 
    public void RotateCharacter(float targetRotation)
@@ -160,10 +202,10 @@ public partial class Actor : CharacterBody3D
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
 
          Vector3 rotation = model.Rotation;
-         rotation.Y = Mathf.Lerp(rotation.Y, currentTargetRotation, 0.25f);
+         rotation.Y = Mathf.LerpAngle(rotation.Y, currentTargetRotation, 0.25f);
          model.Rotation = rotation;
 
-         if (Mathf.Abs(model.Rotation.Y - currentTargetRotation) < 0.05f)
+         if (Mathf.Abs(Mathf.AngleDifference(model.Rotation.Y, currentTargetRotation)) < 0.01f)
          {
             isRotating = false;
          }
@@ -175,6 +217,7 @@ public partial class Actor : CharacterBody3D
 
          model.LookAt(trackingTarget.GlobalPosition);
          model.RotateY(Mathf.DegToRad(180f));
+         model.Rotation = new Vector3(0f, model.Rotation.Y, 0f);
       }
    }
 
@@ -190,7 +233,7 @@ public partial class Actor : CharacterBody3D
       }
    }
 
-   public async void PlayAnimation(string animationName, ActorStatus actorStatus, float blend, bool useLength, float waitTime = 0f)
+   public async void PlayAnimation(string animationName, ActorStatus actorStatus, float blend, bool useLength, float waitTime = 0f, float exitBlend = 0f)
    {
       AnimationPlayer player = GetNode<AnimationPlayer>("Model/AnimationPlayer");
 
@@ -207,7 +250,7 @@ public partial class Actor : CharacterBody3D
 
       if (player.CurrentAnimation == animationName) // Avoid interrupting other animation plays, in case they have started playing since
       {
-         player.Play(actorStatus.idleAnim, 1f);
+         player.Play(actorStatus.idleAnim, exitBlend);
       }
    }
 

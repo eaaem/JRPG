@@ -178,4 +178,4 @@ affinity = 6
 passiveName = "Kind"
 passiveDescription = "Athlia’s attacks deal only 10% damage. Athlia’s heals and buffs are increased in strength by 50%."
 itemCategoryWorn = 1
-itemCategoryWielded = 0
+itemCategoryWielded = 7

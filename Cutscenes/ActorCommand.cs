@@ -95,6 +95,8 @@ public enum CommandType
    /// <br></br>
    /// <c>Blend</c> (int) : the blend amount between the previous animation and this one (-1 is no blend, 1 is slowest possible blend)
    /// <br></br>
+   /// <c>ExitBlend</c> (int) : the blend amount between this animation and the idle animation, after finishing (-1 is no blend, 1 is slowest possible blend)
+   /// <br></br>
    /// <c>UseAnimationLength</c> (bool) : whether to wait the length of the animation before playing the default animation again or not
    /// <br></br>
    /// <c>WaitTime</c> (float) : if UseAnimationLength is false, the amount of time to wait before playing the default animation
@@ -156,7 +158,11 @@ public enum CommandType
    /// <summary>
    /// Resumes the music track.
    /// </summary>
-   ResumeMusic
+   ResumeMusic,
+   /// <summary>
+   /// Prematurely terminates the cutscene.
+   /// </summary>
+   EndCutscene
 }
 
 /// <summary>
@@ -196,6 +202,7 @@ public partial class ActorCommand : Resource
    public string TargetAnimation { get; set; }
 
    public float Blend { get; set; }
+   public float ExitBlend { get; set; }
 
    public string Method { get; set;}
    public string ObjectPath { get; set;}
@@ -211,7 +218,7 @@ public partial class ActorCommand : Resource
          { "hint", (int)PropertyHint.Enum },
          { "hint_string", "None,Move,Rotate,QuickRotate,ChangeDialogueVisibility,ChangeWeaponVisibility,ChangeDialogueLock,SpeakNext,SetIdleAnimation," + 
                           "SetWalkAnimation,Pause,Place,PlayAnimation,Track,StopTrack,FadeBlack,PlaceCamera,QuickRotateCamera,CallMethod,TurnToLookAt,PauseMusic," + 
-                          "ResumeMusic" }
+                          "ResumeMusic,EndCutscene" }
       });
 
       switch (commandType)
@@ -337,6 +344,12 @@ public partial class ActorCommand : Resource
             result.Add(new Dictionary()
             {
                { "name", $"Blend" },
+               { "type", (int)Variant.Type.Float }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"ExitBlend" },
                { "type", (int)Variant.Type.Float }
             });
 

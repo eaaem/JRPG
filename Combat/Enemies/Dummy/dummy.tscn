@@ -1,10 +1,25 @@
-[gd_scene load_steps=4 format=3 uid="uid://dujjbf8g10f8l"]
+[gd_scene load_steps=10 format=3 uid="uid://dujjbf8g10f8l"]
 
 [ext_resource type="Script" path="res://Combat/0Core/EnemyDataHolder.cs" id="1_305km"]
 [ext_resource type="PackedScene" uid="uid://bpvi8ok4d3vr7" path="res://Combat/Enemies/Dummy/dummy.glb" id="2_i3xst"]
+[ext_resource type="PackedScene" uid="uid://btvgyb2kh78pv" path="res://Abilities/0Core/attack_preferences.tscn" id="3_ogy2t"]
+[ext_resource type="PackedScene" uid="uid://bdbi8yvqbpttm" path="res://Abilities/0Core/animation_preferences.tscn" id="4_jsk0s"]
+[ext_resource type="Script" path="res://Abilities/0Core/WaitTimeEvent.cs" id="5_ddu1d"]
+[ext_resource type="Script" path="res://Abilities/0Core/AnimationPreference.cs" id="6_ersx2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_816vj"]
 size = Vector3(2, 4, 3)
+
+[sub_resource type="Resource" id="Resource_b2lyu"]
+script = ExtResource("5_ddu1d")
+eventName = "AttackWait"
+waitTime = 0.0
+projectilePath = ""
+
+[sub_resource type="Resource" id="Resource_pxioi"]
+script = ExtResource("6_ersx2")
+animationName = "Attack"
+events = [SubResource("Resource_b2lyu")]
 
 [node name="dummy" type="Node3D"]
 
@@ -19,3 +34,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9864, 0)
 shape = SubResource("BoxShape3D_816vj")
 
 [node name="Model" parent="." instance=ExtResource("2_i3xst")]
+
+[node name="AttackPreferences" parent="." instance=ExtResource("3_ogy2t")]
+IsRanged = true
+FighterSize = 1.0
+
+[node name="AnimationPreferences" parent="." instance=ExtResource("4_jsk0s")]
+preferences = [SubResource("Resource_pxioi")]

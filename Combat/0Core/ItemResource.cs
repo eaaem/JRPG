@@ -21,7 +21,9 @@ public enum ItemCategory
    Heavy,
    Bow,
    Staff,
-   Battleaxe
+   Battleaxe,
+   Bell,
+   Whip
 }
 
 [GlobalClass]

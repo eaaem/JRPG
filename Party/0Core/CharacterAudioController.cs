@@ -4,21 +4,18 @@ using System;
 public partial class CharacterAudioController : Node
 {
    private bool isLeft = false;
-   private Camera3D camera;
-   private CharacterController characterController;
+   private CharacterBody3D parent;
 
    public override void _Ready()
    {
-      camera = GetNode<Camera3D>("/root/BaseNode/PartyMembers/Member1/CameraTarget/SpringArm3D/PlayerCamera");
-      characterController = GetParent<CharacterController>();
+      parent = GetParent<CharacterBody3D>();
    }
 
    public void PlayFootstep()
    {
       PhysicsDirectSpaceState3D spaceState = GetNode<Node3D>("/root/BaseNode").GetWorld3D().DirectSpaceState;
-      Vector2 mousePosition = GetViewport().GetMousePosition();
 
-      Vector3 origin = characterController.Position + Vector3.Up;
+      Vector3 origin = parent.Position + Vector3.Up;
       Vector3 end = origin + (Vector3.Down * 5f);
       // 64 = layer 7, which is where terrain is
       PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(origin, end, 64);

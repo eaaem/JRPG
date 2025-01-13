@@ -135,9 +135,7 @@ public partial class CombatManager : Node
       {
          IsInCombat = true;
          ResetNodes();
-         managers.LevelManager.MuteMusic();
-
-         //managers.MenuManager.FadeToBlack();
+         managers.LevelManager.TransitionMusicTracks(this);
 
          managers.MenuManager.CloseMenu();
          managers.MenuManager.canTakeInput = false;
@@ -183,8 +181,6 @@ public partial class CombatManager : Node
 
          await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
 
-         //returnPosition = location;
-         //returnRotation = rotation;
          Fighters.Clear();
          currentEnemyScript = enemyScript;
 
@@ -239,7 +235,6 @@ public partial class CombatManager : Node
          await ToSignal(GetTree().CreateTimer(1f), "timeout");
 
          ResetCamera();
-         managers.LevelManager.TransitionMusicTracks(this);
 
          uiManager.ShowLists();
          SelectNextTurn();
@@ -550,7 +545,7 @@ public partial class CombatManager : Node
    /// </summary>
    public void ResetCamera() 
    {
-      arenaCamera.Position = new Vector3(-9.529f, 3.486f, 3.529f);
+      arenaCamera.Position = new Vector3(-6.038f, 2.914f, 2.896f);
       arenaCamera.Rotation = new Vector3(Mathf.DegToRad(-13f), Mathf.DegToRad(-73.4f), Mathf.DegToRad(0.4f));
    }
 
@@ -998,9 +993,7 @@ public partial class CombatManager : Node
             }
             else
             {
-               Label3D missBillboard = targets[i].placementNode.GetNode<Label3D>("CritLabel");
-               missBillboard.Text = "MISS";
-               missBillboard.Visible = true;
+               uiManager.ProjectMissText(targets[i]);
 
                player.Play("Dodge");
             }
@@ -1378,6 +1371,8 @@ public partial class CombatManager : Node
    {
       ResetCombat();
       PointCameraAtParty();
+      uiManager.ClearVictoryNotifications();
+      managers.LevelManager.TransitionMusicTracks(GetNode<Node3D>("/root/BaseNode/Level"));
 
       int expGain = 0;
 
@@ -1391,7 +1386,7 @@ public partial class CombatManager : Node
          }
          else
          {
-            Fighters[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Victory");
+            //Fighters[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Victory");
          }
       }
 
@@ -1402,15 +1397,20 @@ public partial class CombatManager : Node
          if (managers.PartyManager.Party[i].isInParty)
          {
             managers.PartyManager.Party[i].experience += expGain;
-            int oldLevel = managers.PartyManager.Party[i].level;
-            int oldAbilityCount = managers.PartyManager.Party[i].abilities.Count;
-
-            Fighter fighter = GetFighterFromMember(managers.PartyManager.Party[i]);
-            managers.PartyManager.Party[i].currentHealth = Mathf.Clamp(fighter.currentHealth, 1, 9999);
-            managers.PartyManager.Party[i].currentMana = fighter.currentMana;
-            managers.PartyManager.LevelUp(expGain, managers.PartyManager.Party[i]);
-            uiManager.UpdateVictoryExp(managers.PartyManager.Party[i], i, oldLevel, oldAbilityCount);
          }
+         else
+         {
+            managers.PartyManager.Party[i].experience += (int)(expGain * 0.5f);
+         }
+
+         int oldLevel = managers.PartyManager.Party[i].level;
+         int oldAbilityCount = managers.PartyManager.Party[i].abilities.Count;
+
+         Fighter fighter = GetFighterFromMember(managers.PartyManager.Party[i]);
+         managers.PartyManager.Party[i].currentHealth = Mathf.Clamp(fighter.currentHealth, 1, 9999);
+         managers.PartyManager.Party[i].currentMana = fighter.currentMana;
+         managers.PartyManager.LevelUp(expGain, managers.PartyManager.Party[i]);
+         uiManager.UpdateVictoryExp(managers.PartyManager.Party[i], expGain, oldLevel, oldAbilityCount);
       }
 
       uiManager.SetVictoryScreenVisible(true);
@@ -1483,6 +1483,10 @@ public partial class CombatManager : Node
    {
       for (int i = 0; i < Fighters.Count; i++)
       {
+         Control panel = Fighters[i].UIPanel;
+         panel.GetParent().RemoveChild(panel);
+         panel.QueueFree();
+
          if (Fighters[i].isEnemy)
          {
             baseNode.RemoveChild(Fighters[i].model);
@@ -1491,15 +1495,13 @@ public partial class CombatManager : Node
 
          if (Fighters[i].companion != null)
          {
-            Fighters[i].UIPanel.GetNode<Panel>("CompanionHolder").Visible = false;
-
             baseNode.RemoveChild(Fighters[i].companion.model);
             Fighters[i].companion.model.QueueFree();
             
             Fighters[i].companion = null;
          }
 
-         uiManager.ResetStacksAndStatuses(Fighters[i]);
+         //uiManager.ResetStacksAndStatuses(Fighters[i]);
       }
 
       IsInCombat = false;

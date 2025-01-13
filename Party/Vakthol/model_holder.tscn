@@ -76,21 +76,21 @@ _data = {
 "WalkEvents": SubResource("Animation_vnoh0")
 }
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_d4p7v"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_8563a"]
 animation = &"WalkEvents"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vqwxf"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_83r7j"]
 animation = &"RunMethods"
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7ameu"]
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_islru"]
 animation = &"Blank"
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_76xkv"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_d4p7v")
+blend_point_0/node = SubResource("AnimationNodeAnimation_8563a")
 blend_point_0/pos = 0.0
-blend_point_1/node = SubResource("AnimationNodeAnimation_vqwxf")
+blend_point_1/node = SubResource("AnimationNodeAnimation_83r7j")
 blend_point_1/pos = 1.0
-blend_point_2/node = SubResource("AnimationNodeAnimation_7ameu")
+blend_point_2/node = SubResource("AnimationNodeAnimation_islru")
 blend_point_2/pos = -1.0
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_wdjpd"]
@@ -112,11 +112,14 @@ shape = SubResource("CapsuleShape3D_snhpk")
 
 [node name="Model" parent="." instance=ExtResource("1_ypitp")]
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="BaseTree" type="AnimationTree" parent="."]
 root_node = NodePath("../Model")
 tree_root = ExtResource("2_qiuoa")
 anim_player = NodePath("../Model/AnimationPlayer")
 parameters/BasicMovement/blend_position = 0.0
+parameters/BlinkControl/active = false
+parameters/BlinkControl/internal_active = false
+parameters/BlinkControl/request = 0
 parameters/Combat/Attack/active = false
 parameters/Combat/Attack/internal_active = false
 parameters/Combat/Attack/request = 0
@@ -133,6 +136,13 @@ parameters/Combat/Hit/request = 0
 parameters/Combat/IdleOrActive/blend_position = -1.0
 parameters/Combat/ResetDeath/seek_request = -1.0
 parameters/CombatControl/blend_amount = 0.0
+parameters/DistortFall/blend_amount = 0
+parameters/EndDistort/blend_amount = 0
+parameters/EndMidDistort/active = false
+parameters/EndMidDistort/internal_active = false
+parameters/EndMidDistort/request = 0
+parameters/MidDistort/blend_amount = 0.0
+parameters/TimeSeek/seek_request = -1.0
 
 [node name="AnimationMethods" type="AnimationPlayer" parent="."]
 libraries = {
@@ -146,7 +156,6 @@ parameters/Movement/blend_position = 0
 
 [node name="Weapon" parent="." instance=ExtResource("2_nf168")]
 transform = Transform3D(0.898183, 0.439561, 0.00737566, -0.43852, 0.89699, -0.0557531, -0.031123, 0.0468421, 0.998417, -0.358005, 0.5934, -0.192246)
-visible = false
 
 [node name="a" type="Node3D" parent="."]
 transform = Transform3D(-0.843351, -0.537334, -0.00571331, 0.537274, -0.843356, 0.00932315, -0.009828, 0.00479307, 0.99994, 0.416, -0.5, -0.129)

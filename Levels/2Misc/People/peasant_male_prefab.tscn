@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://ijtcae1101l1"]
+
+[ext_resource type="PackedScene" uid="uid://fc771flpqrkl" path="res://Levels/2Misc/People/peasant_male.glb" id="2_kwq1q"]
+
+[node name="PeasantMale" type="CharacterBody3D"]
+collision_layer = 0
+collision_mask = 0
+
+[node name="Model" parent="." instance=ExtResource("2_kwq1q")]
+
+[editable path="Model"]

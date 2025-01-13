@@ -17,7 +17,7 @@ public partial class TheralinProgress : LevelProgession
    public override void LoadLevel()
    {
       progress = managers.LevelManager.LocationDatas[managers.LevelManager.ActiveLocationDataID].levelProgress;
-      for (int i = 0; i < (progress < 4 ? progress : 4); i++)
+      for (int i = 0; i < (progress < 4 ? progress : 3); i++)
       {
          Call(((TheralinProgressMarkers)i).ToString());
       }
@@ -69,8 +69,10 @@ public partial class TheralinProgress : LevelProgession
    /// <summary>
    /// Thelren/Athlia/Arthon cutscene (removes Thelren and Athlia from world, adds Athlia, deletes the block preventing access to the Olren cutscene)
    /// </summary>
-   public void SecondCutsceneInitiated()
+   public async void SecondCutsceneInitiated()
    {
+      await ToSignal(managers.CutsceneManager, CutsceneManager.SignalName.CutsceneBegan);
+
       SecondTheralinCutscene();
 
       GetNode<AnimatedBeing>("/root/BaseNode/Level/arthon").Visible = false;
@@ -91,11 +93,11 @@ public partial class TheralinProgress : LevelProgession
       {
          if (managers.PartyManager.Party[i].characterType == CharacterType.Vakthol)
          {
-            managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(-11.899f, 0, 14.437f);
+            managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(-21f, 0, 12f);
          }
          else
          {
-            managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(-10.411f, 0, 13.643f);
+            managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(-17f, 0, 10f);
          }
       }
 
@@ -103,13 +105,15 @@ public partial class TheralinProgress : LevelProgession
       athlia.currentHealth = athlia.GetMaxHealth();
       athlia.currentMana = athlia.GetMaxMana();
 
-      athlia.model.GlobalPosition = new Vector3(-14.393f, 0, 12.987f);
+      athlia.model.GlobalPosition = new Vector3(-24f, 0, 9.5f);
 
       progress++;
    }
 
-   public void ThirdCutsceneInitiated()
+   public async void ThirdCutsceneInitiated()
    {
+      await ToSignal(managers.CutsceneManager, CutsceneManager.SignalName.CutsceneBegan);
+
       ThirdTheralinCutscene();
 
       string[] olrenEquipment = new string[6];
@@ -174,6 +178,8 @@ public partial class TheralinProgress : LevelProgession
       Node3D items = GetNode<Node3D>("/root/BaseNode/Level/cutscene5_items");
       GetNode<Node3D>("/root/BaseNode/Level").CallDeferred(Node3D.MethodName.RemoveChild, items);
       items.CallDeferred(Node3D.MethodName.QueueFree);
+      GetNode<CollisionShape3D>("../EarlyExitBox/CollisionShape3D").Disabled = true;
+      GetNode<CollisionShape3D>("../ExitPoint/CollisionShape3D").Disabled = false;
 
       StartDistortionTimer();
    }
@@ -191,9 +197,10 @@ public partial class TheralinProgress : LevelProgession
       GetNode<Button>("/root/BaseNode/UI/Shop/Background/Buttons/Exit").Disabled = true;
       Node dummyButton = GetNode<Button>("/root/BaseNode/UI/Shop/Background/Buttons/Exit").Duplicate();
       dummyButton.Name = "Dummy";
-      GetNode<Node2D>("/root/BaseNode/UI/Shop/Background/Buttons").AddChild(dummyButton);
+      GetNode<Control>("/root/BaseNode/UI/Shop/Background/Buttons").AddChild(dummyButton);
       GetNode<Button>("/root/BaseNode/UI/Shop/Background/Buttons/Exit").Visible = false;
 
+      managers.PartyManager.Gold = 3;
       managers.ShopMenuManager.OpenShop(shopItem);
 
       GetNode<Button>("/root/BaseNode/UI/Shop/Background/Notification/YesButton").ButtonDown += OnPurchase;
@@ -205,7 +212,7 @@ public partial class TheralinProgress : LevelProgession
       if (managers.ShopMenuManager.IsBuying)
       {
          Button dummy = GetNode<Button>("/root/BaseNode/UI/Shop/Background/Buttons/Dummy");
-         GetNode<Node2D>("/root/BaseNode/UI/Shop/Background/Buttons").RemoveChild(dummy);
+         GetNode<Control>("/root/BaseNode/UI/Shop/Background/Buttons").RemoveChild(dummy);
          dummy.QueueFree();
          GetNode<Button>("/root/BaseNode/UI/Shop/Background/Buttons/Exit").Visible = true;
 
@@ -293,7 +300,7 @@ public partial class TheralinProgress : LevelProgession
 
    public async void StartDistortionTimer()
    {
-      while (managers.Controller.isInCutscene)
+      while (managers.CutsceneManager.IsCutsceneActive)
       {
          await ToSignal(GetTree().CreateTimer(10f), "timeout");
       }
@@ -309,8 +316,10 @@ public partial class TheralinProgress : LevelProgession
       if (progress <= 63)
       {
          material.SetShaderParameter("scale", 0.002);
+         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").VolumeDb = -10f;
          await ToSignal(GetTree().CreateTimer(2f), "timeout");
          material.SetShaderParameter("scale", 0);
+         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").VolumeDb = 0f;
       }
 
       while (progress < 123)
@@ -324,8 +333,58 @@ public partial class TheralinProgress : LevelProgession
          material.SetShaderParameter("scale", 0.005);
          managers.Controller.RegularSpeed = 3.5f;
          managers.Controller.SprintSpeed = 7f;
+         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").VolumeDb = -15f;
+         float distortValue = 0f;
+         while (distortValue < 1f)
+         {
+            distortValue += 0.1f;
+
+            for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+            {
+               if (managers.PartyManager.Party[i].isInParty)
+               {
+                  managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/MidDistort/blend_amount", distortValue);
+               }
+            }
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         }
+
+         managers.DialogueManager.InitiateDialogue(GetNode<DialogueInteraction>("MidDistortionDialogue"), false);
          await ToSignal(GetTree().CreateTimer(6f), "timeout");
+         
+         for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+         {
+            if (managers.PartyManager.Party[i].isInParty)
+            {
+               managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/EndMidDistort/request", 
+                                                                                                (int)AnimationNodeOneShot.OneShotRequest.Fire);
+            }
+         }
+
+         while (distortValue > 0f)
+         {
+            distortValue -= 0.1f;
+
+            for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+            {
+               if (managers.PartyManager.Party[i].isInParty)
+               {
+                  managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/MidDistort/blend_amount", distortValue);
+               }
+            }
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         }
+
+         for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+         {
+            if (managers.PartyManager.Party[i].isInParty)
+            {
+               managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/MidDistort/blend_amount", 0f);
+            }
+         }
+
          material.SetShaderParameter("scale", 0);
+         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").VolumeDb = 0f;
          managers.Controller.RegularSpeed = 5f;
          managers.Controller.SprintSpeed = 10f;
       }
@@ -341,10 +400,59 @@ public partial class TheralinProgress : LevelProgession
          material.SetShaderParameter("scale", 0.007);
          managers.Controller.RegularSpeed = 1.5f;
          managers.Controller.SprintSpeed = 3f;
+         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").VolumeDb = -20f;
+
+         float distortValue = 0f;
+         while (distortValue < 1f)
+         {
+            distortValue += 0.1f;
+
+            for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+            {
+               if (managers.PartyManager.Party[i].isInParty)
+               {
+                  managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/MidDistort/blend_amount", distortValue);
+               }
+            }
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         }
+
          await ToSignal(GetTree().CreateTimer(10f), "timeout");
          material.SetShaderParameter("scale", 0);
          managers.Controller.RegularSpeed = 5f;
          managers.Controller.SprintSpeed = 10f;
+         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").VolumeDb = 0f;
+
+         for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+         {
+            if (managers.PartyManager.Party[i].isInParty)
+            {
+               managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/EndMidDistort/request", 
+                                                                                                (int)AnimationNodeOneShot.OneShotRequest.Fire);
+            }
+         }
+
+         while (distortValue > 0f)
+         {
+            distortValue -= 0.1f;
+
+            for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+            {
+               if (managers.PartyManager.Party[i].isInParty)
+               {
+                  managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/MidDistort/blend_amount", distortValue);
+               }
+            }
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         }
+
+         for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+         {
+            if (managers.PartyManager.Party[i].isInParty)
+            {
+               managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/MidDistort/blend_amount", 0f);
+            }
+         }
       }
    
       while (progress < 183)
@@ -358,10 +466,53 @@ public partial class TheralinProgress : LevelProgession
          material.SetShaderParameter("scale", 0.01);
          managers.Controller.RegularSpeed = 1f;
          managers.Controller.SprintSpeed = 2f;
+         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").VolumeDb = -30f;
+
+         float distortValue = 0f;
+         while (distortValue < 1f)
+         {
+            distortValue += 0.1f;
+
+            for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+            {
+               if (managers.PartyManager.Party[i].isInParty)
+               {
+                  managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/EndDistort/blend_amount", distortValue);
+               }
+            }
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         }
+
          await ToSignal(GetTree().CreateTimer(10f), "timeout");
+
+         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").VolumeDb = -80f;
+
+         for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+         {
+            if (managers.PartyManager.Party[i].isInParty)
+            {
+               managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/TimeSeek/seek_request", 0.0f);
+            }
+         }
+
+         distortValue = 0f;
+         while (distortValue < 1f)
+         {
+            distortValue += 0.1f;
+
+            for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+            {
+               if (managers.PartyManager.Party[i].isInParty)
+               {
+                  managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/DistortFall/blend_amount", distortValue);
+               }
+            }
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         }
 
          managers.Controller.DisableMovement = true;
          managers.Controller.DisableCamera = true;
+         await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
          Tween tween = CreateTween();
          managers.MenuManager.FadeToBlack(tween);
 
@@ -376,39 +527,59 @@ public partial class TheralinProgress : LevelProgession
          {
             if (managers.PartyManager.Party[i].characterType == CharacterType.Vakthol)
             {
-               managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(-1.591f, 0, 71.755f);
-               managers.PartyManager.Party[i].model.GetNode<Node3D>("Model").GlobalRotation = new Vector3(0f, Mathf.DegToRad(-162.4f), 0f);
+               managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(5.629f, 0.344f, 86.696f);
+               managers.PartyManager.Party[i].model.GetNode<Node3D>("Model").GlobalRotation = new Vector3(0f, Mathf.DegToRad(-90.5f), 0f);
             }
             else if (managers.PartyManager.Party[i].characterType == CharacterType.Thalria)
             {
-               managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(-0.152f, 0, 72.25f);
-               managers.PartyManager.Party[i].model.GetNode<Node3D>("Model").GlobalRotation = new Vector3(0f, Mathf.DegToRad(-94.6f), 0f);
+               managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(5.63f, 0.344f, 84.841f);
+               managers.PartyManager.Party[i].model.GetNode<Node3D>("Model").GlobalRotation = new Vector3(0f, Mathf.DegToRad(-90.2f), 0f);
             }
             else if (managers.PartyManager.Party[i].characterType == CharacterType.Athlia)
             {
-               managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(-1.576f, 0f, 73.312f);
-               managers.PartyManager.Party[i].model.GetNode<Node3D>("Model").GlobalRotation = new Vector3(0f, Mathf.DegToRad(-63.6f), 0f);
+               managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(5.63f, 0.344f, 90.205f);
+               managers.PartyManager.Party[i].model.GetNode<Node3D>("Model").GlobalRotation = new Vector3(0f, Mathf.DegToRad(-90.2f), 0f);
             }
             else
             {
-               managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(-3.144f, 0f, 72.6f);
-               managers.PartyManager.Party[i].model.GetNode<Node3D>("Model").GlobalRotation = new Vector3(0f, Mathf.DegToRad(-97f), 0f);
+               managers.PartyManager.Party[i].model.GlobalPosition = new Vector3(5.627f, 0.318f, 88.445f);
+               managers.PartyManager.Party[i].model.GetNode<Node3D>("Model").GlobalRotation = new Vector3(0f, Mathf.DegToRad(-109.6f), 0f);
             }
          }
 
-         GetNode<Node3D>("/root/BaseNode/Level/cutscene6_objects").Visible = true;
+         //GetNode<Node3D>("/root/BaseNode/Level/cutscene6_objects").Visible = true;
 
          await ToSignal(GetTree().CreateTimer(5f), "timeout");
 
-         managers.MenuManager.FadeFromBlack();
          managers.Controller.DisableCamera = false;
          CutsceneTrigger trigger = GetNode<CutsceneTrigger>("cutscene6");
          managers.CutsceneManager.InitiateCutscene(trigger.cutsceneObject, trigger.id);
+         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").VolumeDb = 0f;
+
+         for (int i = 0; i < managers.PartyManager.Party.Count; i++)
+         {
+            if (managers.PartyManager.Party[i].isInParty)
+            {
+               managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/DistortFall/blend_amount", 0f);
+               managers.PartyManager.Party[i].model.GetNode<AnimationTree>("BaseTree").Set("parameters/EndDistort/blend_amount", 0f);
+            }
+         }
+
+         managers.LevelManager.MapDatas[managers.LevelManager.GetMapDataID("theralin_map")].progress = 1;
+         progress = 184;
       }
    }
 
    public void HideObjects()
    {
       GetNode<Node3D>("/root/BaseNode/Level/cutscene6_objects").Visible = false;
+   }
+
+   public override void _ExitTree()
+   {
+      ShaderMaterial material = (ShaderMaterial)GetNode<ColorRect>("/root/BaseNode/UI/Overlay/Distortion").Material;
+      material.SetShaderParameter("scale", 0);
+      GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").VolumeDb = 0f;
+      base._ExitTree();
    }
 }

@@ -93,7 +93,20 @@ public partial class SaveManager : Node
 
          saveGame.StoreLine(jsonString);
       }
+      
+      // Map datas
+      for (int i = 0; i < managers.LevelManager.MapDatas.Count; i++)
+      {
+         managers.LevelManager.EmitSignal(LevelManager.SignalName.SaveLevelProgression);
 
+         var nodeData = managers.LevelManager.MapDatas[i].Call("SaveMapData");
+
+         jsonString = Json.Stringify(nodeData);
+
+         saveGame.StoreLine(jsonString);
+      }
+
+      // Basic data
       jsonString = Json.Stringify(Save());
 
       saveGame.StoreLine(jsonString);
@@ -201,6 +214,10 @@ public partial class SaveManager : Node
                                     (Godot.Collections.Dictionary<string, bool>)nodeData["DefeatedEnemies"],
                                     (Godot.Collections.Dictionary<string, bool>)nodeData["PickedUpItems"],
                                     (Godot.Collections.Dictionary<string, bool>)nodeData["CutscenesSeen"], (double)nodeData["TimeSinceLastVisit"]));
+         }
+         else if (nodeData.ContainsKey("MapName")) // Map data
+         {
+            managers.LevelManager.MapDatas.Add(new MapData((string)nodeData["MapName"], (int)nodeData["Progress"]));
          }
       }
 

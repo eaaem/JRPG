@@ -6,6 +6,8 @@ public partial class CharacterController : CharacterBody3D
    public float SprintSpeed = 10.0f;
    public const float JumpVelocity = 4.5f;
    public float HorizontalSensitivity = 0.5f;
+   float sensitivityModifier = 1f;
+   float maxClamp = 90f;
 
    public bool IsSprinting { get; set; }
 
@@ -32,18 +34,26 @@ public partial class CharacterController : CharacterBody3D
 
    public bool DisableMovement { get; set; }
    public bool DisableCamera { get; set; }
-   public bool isInCutscene { get; set; }
+   public bool IsInCutscene { get; set; }
 
    public int MovementBlend { get; set; } = 0;
+   public Vector3 OverridenTargetLocation { get; set; } = Vector3.Zero;
+   public bool IsOverridingMovement { get; set; }
+   public float TargetOverridenRotation { get; set; }
+   private int overrideTimeoutTimer = 0;
 
    public override void _Ready()
    {
       if (!isWorldMap)
       {
+         sensitivityModifier = 1f;
+         maxClamp = 90f;
          ResetNodes();
       }
       else
       {
+         sensitivityModifier = 0.5f;
+         maxClamp = 45f;
          GetWorldMapNodes();
       }
    }
@@ -53,7 +63,7 @@ public partial class CharacterController : CharacterBody3D
       cameraTarget = GetNode<Node3D>("CameraTarget");
       model = GetNode<Node3D>("Model");
       animationPlayer = GetNode<AnimationPlayer>("Model/AnimationPlayer");
-      animationTree = GetNode<AnimationTree>("AnimationTree");
+      animationTree = GetNode<AnimationTree>("BaseTree");
       methodsTree = GetNode<AnimationTree>("MethodsTree");
 
       weapon = GetNode<Node3D>("Weapon");
@@ -93,26 +103,48 @@ public partial class CharacterController : CharacterBody3D
 	{
       Vector3 velocity = Velocity;
 
-      // Add the gravity; gravity should stay, even in combat
+      // Add the gravity
       if (!IsOnFloor()) {
          velocity.Y -= gravity * (float)delta;
       }
 
-      // This disables movement in combat (the mouse is unlocked in combat)
       if (!DisableMovement)
       {
-         Vector2 inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
+         Vector3 direction;
+         Vector2 inputDir;
+
+         if (!IsOverridingMovement)
+         {
+            inputDir = Input.GetVector("move_left", "move_right", "move_forward", "move_backward");
+            direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
+         }
+         else
+         {
+            direction = GlobalPosition.DirectionTo(OverridenTargetLocation);
+            inputDir = new Vector2(direction.X, direction.Y);
+
+            float distance = new Vector3(GlobalPosition.X, 0f, GlobalPosition.Z).DistanceSquaredTo(new Vector3(OverridenTargetLocation.X, 0f, OverridenTargetLocation.Z));
+            overrideTimeoutTimer++;
+
+            if (distance < 0.5f || overrideTimeoutTimer > 120)
+            {
+               IsOverridingMovement = false;
+               RotateY(cameraTarget.Rotation.Y);
+               model.RotateY(-cameraTarget.Rotation.Y);
+               cameraTarget.RotateY(-cameraTarget.Rotation.Y);
+               overrideTimeoutTimer = 0;
+               return;
+            }
+         }
 
          float speedToUse = IsSprinting ? SprintSpeed : RegularSpeed;
-
-         Vector3 direction = (Transform.Basis * new Vector3(inputDir.X, 0, inputDir.Y)).Normalized();
 
          if (Input.IsActionPressed("sprint") && !isWorldMap)
          {
             IsSprinting = true;
          }
 
-         if (Input.IsActionJustReleased("sprint"))
+         if (Input.IsActionJustReleased("sprint") || IsOverridingMovement)
          {
             IsSprinting = false;
          }
@@ -129,11 +161,22 @@ public partial class CharacterController : CharacterBody3D
             }
             
             Vector3 modelRotation = model.Rotation;
-            modelRotation.Y = Mathf.LerpAngle(model.Rotation.Y, Mathf.Atan2(-inputDir.X, -inputDir.Y), 0.25f);
-            model.Rotation = modelRotation;
 
-            velocity.X = -direction.X * speedToUse;
-            velocity.Z = -direction.Z * speedToUse;
+            if (!IsOverridingMovement)
+            {
+               velocity.X = -direction.X * speedToUse;
+               velocity.Z = -direction.Z * speedToUse;
+               modelRotation.Y = Mathf.LerpAngle(model.Rotation.Y, Mathf.Atan2(-inputDir.X, -inputDir.Y), 0.25f);
+            }
+            else
+            {
+               direction = new Vector3(direction.X, 0f, direction.Z);
+               velocity = direction * speedToUse;
+
+               modelRotation.Y = Mathf.Lerp(modelRotation.Y, TargetOverridenRotation - Rotation.Y, 0.25f);
+            }
+
+            model.Rotation = modelRotation;
          }
          else
          {
@@ -159,7 +202,9 @@ public partial class CharacterController : CharacterBody3D
       }
       else
       {
+         Velocity = Vector3.Zero;
          animationTree.Set("parameters/BasicMovement/blend_position", -1f);
+         MovementBlend = -10;
 
          if (!isWorldMap)
          {
@@ -173,22 +218,25 @@ public partial class CharacterController : CharacterBody3D
       if (@event is InputEventMouseMotion mouseMotion && Input.MouseMode == Input.MouseModeEnum.Captured && !DisableCamera)
       {
          // Rotates the character controller, which in turn rotates the camera
-         if (!isInCutscene)
+         if (!IsInCutscene && !IsOverridingMovement)
          {
-            RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * HorizontalSensitivity));
+            RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * HorizontalSensitivity * sensitivityModifier));
          }
          else
          {
-            cameraTarget.RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * HorizontalSensitivity));
+            cameraTarget.RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * HorizontalSensitivity * sensitivityModifier));
          }
 
          // Rotate the model accordingly
-         model.RotateY(Mathf.DegToRad(mouseMotion.Relative.X * HorizontalSensitivity));
+         if (!IsInCutscene && !IsOverridingMovement)
+         {
+            model.RotateY(Mathf.DegToRad(mouseMotion.Relative.X * HorizontalSensitivity * sensitivityModifier));
+         }
 
          // Rotates along the x-axis, clamping to prevent too much rotation
          Vector3 clampRotation = cameraTarget.Rotation;
-         clampRotation.X -= (mouseMotion.Relative.Y * HorizontalSensitivity) / 50f;
-         clampRotation.X = Mathf.Clamp(clampRotation.X, Mathf.DegToRad(-45f), Mathf.DegToRad(90f));
+         clampRotation.X -= (mouseMotion.Relative.Y * HorizontalSensitivity * sensitivityModifier) / 50f;
+         clampRotation.X = Mathf.Clamp(clampRotation.X, Mathf.DegToRad(-45f), Mathf.DegToRad(maxClamp));
          cameraTarget.Rotation = clampRotation;
       }
    }

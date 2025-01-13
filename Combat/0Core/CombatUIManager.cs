@@ -16,6 +16,8 @@ public partial class CombatUIManager : Node
    private PackedScene itemPrefab;
    [Export]
    private PackedScene stackPrefab;
+   [Export]
+   private PackedScene victoryNotifPrefab;
 
    [Export]
    private CanvasLayer UI;
@@ -44,7 +46,7 @@ public partial class CombatUIManager : Node
    [Export]
    private VBoxContainer itemsContainer;
    [Export]
-   private CanvasGroup victoryScreen;
+   private Control victoryScreen;
 
    [Export]
    private StyleBoxTexture baseHighlight;
@@ -609,26 +611,35 @@ public partial class CombatUIManager : Node
    public void ExitVictoryScreen() 
    {
       victoryScreen.Visible = false;
+   }
 
-      for (int i = 0; i < 4; i++)
+   public void ClearVictoryNotifications()
+   {
+      VBoxContainer container = victoryScreen.GetNode<VBoxContainer>("Back/NotificationContainer");
+
+      foreach (Node child in container.GetChildren())
       {
-         victoryScreen.GetNode<Label>("Back/ExpNotif" + (i + 1)).Visible = false;
+         container.RemoveChild(child);
+         child.QueueFree();
       }
    }
 
-   public void UpdateVictoryExp(Member partyMember, int index, int oldLevel, int oldAbilityCount) 
+   public void UpdateVictoryExp(Member partyMember, int expGain, int oldLevel, int oldAbilityCount) 
    {
+      RichTextLabel notification = victoryNotifPrefab.Instantiate<RichTextLabel>();
+      notification.Text = "[b][i]" + partyMember.characterName + "[/i][/b] gains [b]" + expGain + "[/b] EXP";
+
       if (oldLevel != partyMember.level)
       {
-         victoryScreen.GetNode<Label>("Back/ExpNotif" + (index + 1)).Text += "; level up to soul grade " + partyMember.level + "!";
+         notification.Text += ". Level up to level " + partyMember.level + "!";
       }
 
       if (oldAbilityCount != partyMember.abilities.Count)
       {
-         victoryScreen.GetNode<Label>("Back/ExpNotif" + (index + 1)).Text += "Learns " + partyMember.abilities[oldAbilityCount].name;
+         notification.Text += " Learns " + partyMember.abilities[oldAbilityCount].name + "!";
       }
 
-      victoryScreen.GetNode<Label>("Back/ExpNotif" + (index + 1)).Visible = true;
+      victoryScreen.GetNode<VBoxContainer>("Back/NotificationContainer").AddChild(notification);
    }
 
    public void UpdateUI()
@@ -979,6 +990,14 @@ public partial class CombatUIManager : Node
                                                (float)GD.RandRange(damageText.GlobalPosition.Y - 25f, damageText.GlobalPosition.Y + 25f)));
    }
 
+   public void ProjectMissText(Fighter target)
+   {
+      RichTextLabel damageText = GD.Load<PackedScene>("res://Combat/UI/damage_indicator.tscn").Instantiate<RichTextLabel>();
+      target.UIPanel.AddChild(damageText);
+      damageText.Name = "DamageIndicator";
+      damageText.Text = "[center]MISS";
+   }
+
    public void MoveDamageTexts(Fighter target)
    {
       foreach (Node child in target.UIPanel.GetChildren())
@@ -1013,24 +1032,6 @@ public partial class CombatUIManager : Node
       partyPanels.Clear();
       enemyPanels.Clear();
       SetMessageTextVisible(false);
-
-      for (int i = 0; i < combatManager.Fighters.Count; i++)
-      {
-         Control panel = combatManager.Fighters[i].UIPanel;
-         VBoxContainer container = null;
-         
-         if (combatManager.Fighters[i].isEnemy)
-         {
-            container = UI.GetNode<VBoxContainer>("CombatEnemyList/VBoxContainer");
-         }
-         else
-         {
-            container = UI.GetNode<VBoxContainer>("CombatPartyList/VBoxContainer");
-         }
-         
-         container.RemoveChild(panel);
-         panel.QueueFree();
-      }
    }
 
    public void ResetStacksAndStatuses(Fighter fighter)

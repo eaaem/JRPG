@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cp13xb1d2yjkf"]
+
+[ext_resource type="Theme" uid="uid://cfmeoqvxshi43" path="res://Menus/0Core/basic_label_text.tres" id="1_41a5n"]
+
+[node name="VictoryNotification" type="RichTextLabel"]
+custom_minimum_size = Vector2(0, 32)
+offset_right = 200.0
+offset_bottom = 32.0
+theme = ExtResource("1_41a5n")
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+bbcode_enabled = true
+text = "[b][i]Blank[/i][/b] gained [b]#[/b] EXP"

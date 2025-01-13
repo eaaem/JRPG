@@ -14,6 +14,7 @@ public partial class OverworldPartyController : CharacterBody3D
    private AnimationPlayer animationPlayer;
    private NavigationAgent3D navigationAgent;
    private AnimationTree animationTree;
+   private AnimationTree methodsTree;
 
    private CharacterController player;
    private Node3D playerModel;
@@ -38,6 +39,7 @@ public partial class OverworldPartyController : CharacterBody3D
    public bool EnablePathfinding { get; set; }
 
    public bool IsActive { get; set; }
+   private bool isSynced = false;
 
    private Member assignedPartyMember;
 
@@ -73,7 +75,8 @@ public partial class OverworldPartyController : CharacterBody3D
    {
       animationPlayer = GetNode<AnimationPlayer>("Model/AnimationPlayer");
       navigationAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
-      animationTree = GetNode<AnimationTree>("AnimationTree");
+      animationTree = GetNode<AnimationTree>("BaseTree");
+      methodsTree = GetNode<AnimationTree>("MethodsTree");
 
       model = GetNode<Node3D>("Model");
 
@@ -117,12 +120,19 @@ public partial class OverworldPartyController : CharacterBody3D
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _PhysicsProcess(double delta)
 	{
-      if (EnablePathfinding && IsActive)
+      if (!EnablePathfinding && IsActive)
+      {
+         movementBlend = -10;
+         methodsTree.Set("parameters/Movement/blend_position", movementBlend / 10f);
+      }
+
+      if (EnablePathfinding && IsActive && isSynced)
       {
          animationTree.Set("parameters/BasicMovement/blend_position", movementBlend / 10f);
-
+         methodsTree.Set("parameters/Movement/blend_position", movementBlend / 10f);
+         
          Vector3 velocity = Velocity;
-         distance = Position.DistanceTo(player.Position);
+         distance = GlobalPosition.DistanceTo(player.GlobalPosition);
 
          if (!IsOnFloor())
          {
@@ -131,7 +141,7 @@ public partial class OverworldPartyController : CharacterBody3D
 
          if (distance >= DistanceThreshold)
          {
-            targetPosition = player.Position - (playerModel.GlobalTransform.Basis.Z * (1.5f * index));
+            targetPosition = player.GlobalPosition - (playerModel.GlobalTransform.Basis.Z * (1.5f * index));
             MovementTarget = targetPosition;
          }
 
@@ -160,8 +170,8 @@ public partial class OverworldPartyController : CharacterBody3D
 
          float speed = player.IsSprinting ? managers.Controller.SprintSpeed : managers.Controller.RegularSpeed;
 
-         velocity.X = currentAgentPosition.DirectionTo(nextPathPosition).X * speed;
-         velocity.Z = currentAgentPosition.DirectionTo(nextPathPosition).Z * speed;
+         velocity.X = currentAgentPosition.DirectionTo(nextPathPosition).X * speed * 1.1f;
+         velocity.Z = currentAgentPosition.DirectionTo(nextPathPosition).Z * speed * 1.1f;
 
          if ((player.IsSprinting && movementBlend < 10) || (!player.IsSprinting && movementBlend < 0)) 
          {
@@ -187,8 +197,10 @@ public partial class OverworldPartyController : CharacterBody3D
       // Wait for the first physics frame so the NavigationServer can sync.
       await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
 
+
       // Now that the navigation map is no longer empty, set the movement target.
       MovementTarget = targetPosition;
+      isSynced = true;
    }
 
    public void PlaceWeaponOnBack()
