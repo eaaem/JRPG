@@ -71,6 +71,26 @@ public partial class CombatStackStatusManager : Node
                combatManager.ApplyStatModifier(StatType.Evasion, Mathf.CeilToInt(target.stats[(int)StatType.Evasion].baseValue * 0.75f), duration, 
                                                target, combatManager.CurrentFighter, StatusEffect.Stealth);
             }
+            else if (statusEffect == StatusEffect.Taunting)
+            {
+               combatManager.ApplyStatModifier(StatType.Threat, Mathf.CeilToInt(target.stats[(int)StatType.Threat].baseValue), duration, 
+                                               target, combatManager.CurrentFighter, StatusEffect.Taunting);
+               combatManager.ApplyStatModifier(StatType.Fortitude, Mathf.CeilToInt(target.stats[(int)StatType.Fortitude].baseValue * -0.25f), duration, 
+                                               target, combatManager.CurrentFighter, StatusEffect.Taunting);
+               combatManager.ApplyStatModifier(StatType.Willpower, Mathf.CeilToInt(target.stats[(int)StatType.Willpower].baseValue * -0.25f), duration, 
+                                               target, combatManager.CurrentFighter, StatusEffect.Taunting);
+
+               for (int i = 0; i < combatManager.Fighters.Count; i++)
+               {
+                  if (!combatManager.Fighters[i].isEnemy && !combatManager.Fighters[i].isDead && combatManager.Fighters[i] != combatManager.CurrentFighter)
+                  {
+                     combatManager.ApplyStatModifier(StatType.Willpower, Mathf.CeilToInt(target.stats[(int)StatType.Willpower].baseValue * 0.25f), duration, 
+                                                     combatManager.Fighters[i], combatManager.CurrentFighter, StatusEffect.Taunting);
+                     combatManager.ApplyStatModifier(StatType.Fortitude, Mathf.CeilToInt(target.stats[(int)StatType.Fortitude].baseValue * 0.25f), duration, 
+                                                     combatManager.Fighters[i], combatManager.CurrentFighter, StatusEffect.Taunting);
+                  }
+               }
+            }
          }
       }
    }

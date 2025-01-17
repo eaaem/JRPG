@@ -1,0 +1,113 @@
+[gd_scene load_steps=16 format=3 uid="uid://cxns4vvrv0pru"]
+
+[ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Core/puff.png" id="1_mafe4"]
+[ext_resource type="Script" path="res://Abilities/0Core/Projectile.cs" id="2_31w40"]
+[ext_resource type="Script" path="res://Abilities/0Core/ProjectilePathPoint.cs" id="3_q4sja"]
+
+[sub_resource type="Curve3D" id="Curve3D_kllcw"]
+_data = {
+"points": PackedVector3Array(0, -1.32745, -4.06794, 0, 1.32745, 4.06794, 0, 0.413537, 0.000688529, 0, 0, 0, 0, -1.58588, 3.99263, 0, 0.0442215, 7.68415),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_p4vuc"]
+offsets = PackedFloat32Array(0, 0.126829, 1)
+colors = PackedColorArray(1, 1, 0, 1, 1, 0.494, 0.08, 1, 0.78, 0, 0.0129998, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h27s2"]
+gradient = SubResource("Gradient_p4vuc")
+
+[sub_resource type="Curve" id="Curve_o6p0u"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.389224), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_x3ee4"]
+curve = SubResource("Curve_o6p0u")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_y66sw"]
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_x3ee4")
+color_initial_ramp = SubResource("GradientTexture1D_h27s2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_em5c3"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_mafe4")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_544ij"]
+material = SubResource("StandardMaterial3D_em5c3")
+size = Vector2(0.25, 0.25)
+orientation = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qv1u1"]
+emission_shape = 1
+emission_sphere_radius = 0.1
+gravity = Vector3(0, 1, 0)
+scale_curve = SubResource("CurveTexture_x3ee4")
+color_ramp = SubResource("GradientTexture1D_h27s2")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ya0bl"]
+radius = 0.1
+
+[sub_resource type="Resource" id="Resource_t5ebp"]
+script = ExtResource("3_q4sja")
+Path = ""
+OverridePath = 2
+PointIndex = 0
+Offset = Vector3(0, 1.5, 0)
+
+[sub_resource type="Resource" id="Resource_yigva"]
+script = ExtResource("3_q4sja")
+Path = ""
+OverridePath = 4
+PointIndex = 1
+Offset = Vector3(0, 0.75, 0)
+
+[node name="BoltProjectile" type="Node3D"]
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_kllcw")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(1, -2.71197e-08, 8.31078e-08, 0, 0.950642, 0.310213, -8.74228e-08, -0.310213, 0.950642, 0, 0.413537, 0.000688529)
+use_model_front = true
+loop = false
+
+[node name="Ball" type="GPUParticles3D" parent="Path3D/PathFollow3D"]
+amount = 24
+lifetime = 0.75
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_y66sw")
+draw_pass_1 = SubResource("PlaneMesh_544ij")
+
+[node name="Fire" type="GPUParticles3D" parent="Path3D/PathFollow3D/Ball"]
+amount = 24
+lifetime = 0.75
+process_material = SubResource("ParticleProcessMaterial_qv1u1")
+draw_pass_1 = SubResource("PlaneMesh_544ij")
+
+[node name="StaticBody3D" type="Area3D" parent="Path3D/PathFollow3D/Ball"]
+transform = Transform3D(1, -7.10543e-15, 0, 0, -0.350633, 0.936513, 0, -0.936514, -0.350633, 0, 0, 0)
+collision_layer = 128
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/Ball/StaticBody3D"]
+shape = SubResource("SphereShape3D_ya0bl")
+
+[node name="MiddleIndicator" type="Node3D" parent="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.17009, 3.98754)
+
+[node name="Projectile" type="Node3D" parent="." node_paths=PackedStringArray("projectile", "pathToFollow")]
+script = ExtResource("2_31w40")
+projectile = NodePath("../Path3D/PathFollow3D/Ball")
+usePath = true
+pathToFollow = NodePath("../Path3D/PathFollow3D")
+pathSpeed = 9.0
+points = [SubResource("Resource_t5ebp"), SubResource("Resource_yigva")]
+doNotDeleteOnFinish = true

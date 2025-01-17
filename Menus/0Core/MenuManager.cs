@@ -64,6 +64,9 @@ public partial class MenuManager : Node
          tabs[activeTabID].Disabled = false;
          tabs[ID].Disabled = true;
 
+         tabs[activeTabID].MouseFilter = Control.MouseFilterEnum.Stop;
+         tabs[ID].MouseFilter = Control.MouseFilterEnum.Ignore;
+
          activeTabID = ID;
       }
 
@@ -101,6 +104,7 @@ public partial class MenuManager : Node
          Button slot = slots.GetNode<Button>("Slot" + (i + 1));
          managers.MainMenuManager.PopulateSlotInformation(slot, i);
          slot.Disabled = false;
+         slot.MouseFilter = Control.MouseFilterEnum.Stop;
       }
       slots.Visible = true;
       GetNode<Panel>("/root/BaseNode/UI/Overlay/SlotsBackground").Visible = true;
@@ -121,10 +125,11 @@ public partial class MenuManager : Node
       GetNode<CanvasLayer>("/root/BaseNode/UI/Overlay").AddChild(popup);
       popup.ReceiveInfo(2.5f, "Save successful!");
 
-      for(int i = 0; i < 5; i++)
+      for (int i = 0; i < 5; i++)
       {
          Button slot = GetNode<Button>("/root/BaseNode/UI/Overlay/Slots/Slot" + (i + 1));
          slot.Disabled = false;
+         slot.MouseFilter = Control.MouseFilterEnum.Stop;
       }
    }
 
@@ -134,6 +139,7 @@ public partial class MenuManager : Node
       {
          Button slot = GetNode<Button>("/root/BaseNode/UI/Overlay/Slots/Slot" + (i + 1));
          slot.Disabled = false;
+         slot.MouseFilter = Control.MouseFilterEnum.Stop;
       }
       GetNode<Panel>("/root/BaseNode/UI/Overlay/OverwriteMessage").Visible = false;;
    }
@@ -237,6 +243,7 @@ public partial class MenuManager : Node
       Input.MouseMode = Input.MouseModeEnum.Visible;
       managers.PartyMenuManager.LoadPartyMenu();
       tabs[0].Disabled = true;
+      tabs[0].MouseFilter = Control.MouseFilterEnum.Ignore;
 
       for (int i = 1; i < menuPanels.Length; i++)
       {
@@ -255,7 +262,11 @@ public partial class MenuManager : Node
 
    public void CloseMenu()
    {
-      closeSound.Play();
+      if (menu.Visible)
+      {
+         closeSound.Play();
+      }
+
       menu.Visible = false;
       controller.DisableCamera = false;
       Input.MouseMode = Input.MouseModeEnum.Captured;
@@ -275,6 +286,7 @@ public partial class MenuManager : Node
       for (int i = 0; i < tabs.Length; i++)
       {
          tabs[i].Disabled = true;
+         tabs[i].MouseFilter = Control.MouseFilterEnum.Ignore;
       }
    }
 
@@ -283,6 +295,7 @@ public partial class MenuManager : Node
       for (int i = 0; i < tabs.Length; i++)
       {
          tabs[i].Disabled = false;
+         tabs[i].MouseFilter = Control.MouseFilterEnum.Stop;
       }
    }
 

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://dbcuvabocierf"]
+
+[ext_resource type="Script" path="res://Combat/0Core/AbilityResource.cs" id="1_fohu0"]
+
+[resource]
+script = ExtResource("1_fohu0")
+name = "Inspire"
+description = "Increases the damage of the target's next spell or attack by 10%."
+manaCost = 0
+scriptPath = "res://Abilities/Party/Inspire/Inspire.cs"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = true
+onlyHitsTeam = true
+onlyHitsSelf = false
+bypassesDeaths = false
+graphicPath = "res://Abilities/Party/Inspire/inspire_camera_directions.tscn"
+requiredLevel = 1

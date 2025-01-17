@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://brlsehheor2q6"]
+
+[ext_resource type="Script" path="res://Combat/0Core/FighterID.cs" id="1_jy5lp"]
+[ext_resource type="Texture2D" uid="uid://cqasr4thnmtf5" path="res://Combat/Enemies/DireWolf/dire_wolf.png" id="2_2kg3g"]
+[ext_resource type="Theme" uid="uid://cfmeoqvxshi43" path="res://Menus/0Core/basic_label_text.tres" id="3_hcmx3"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ja0h"]
+bg_color = Color(0.899893, 0.714766, 0.207627, 0.605)
+
+[node name="Portrait" type="Control"]
+custom_minimum_size = Vector2(110, 85)
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Highlight" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 110.0
+offset_bottom = 85.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0ja0h")
+
+[node name="FighterID" type="Node" parent="."]
+script = ExtResource("1_jy5lp")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(55, 30)
+texture = ExtResource("2_2kg3g")
+
+[node name="Text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_top = 60.0
+offset_right = 110.0
+offset_bottom = 85.0
+theme = ExtResource("3_hcmx3")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[center]Dire Wolf"

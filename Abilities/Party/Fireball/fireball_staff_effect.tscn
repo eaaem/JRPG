@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://c85f52p32frf7"]
+
+[ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Core/puff.png" id="1_vv72j"]
+[ext_resource type="Script" path="res://Abilities/0Core/TerminatingEffect.cs" id="2_d6qth"]
+
+[sub_resource type="Gradient" id="Gradient_dd4gl"]
+offsets = PackedFloat32Array(0, 0.126829, 1)
+colors = PackedColorArray(1, 1, 0, 1, 1, 0.494, 0.08, 1, 0.78, 0, 0.0129998, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h27s2"]
+gradient = SubResource("Gradient_dd4gl")
+
+[sub_resource type="Curve" id="Curve_ry6a5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.389224), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_x3ee4"]
+curve = SubResource("Curve_ry6a5")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mtdmh"]
+emission_shape = 1
+emission_sphere_radius = 0.1
+gravity = Vector3(0, 1, 0)
+scale_curve = SubResource("CurveTexture_x3ee4")
+color_ramp = SubResource("GradientTexture1D_h27s2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_em5c3"]
+render_priority = 1
+transparency = 1
+no_depth_test = true
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_vv72j")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_28b48"]
+material = SubResource("StandardMaterial3D_em5c3")
+size = Vector2(0.25, 0.25)
+orientation = 2
+
+[node name="FireballStaffEffect" type="BoneAttachment3D"]
+bone_name = "weapon_holder"
+
+[node name="Fire" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.437215, 0)
+amount = 24
+lifetime = 0.75
+process_material = SubResource("ParticleProcessMaterial_mtdmh")
+draw_pass_1 = SubResource("PlaneMesh_28b48")
+script = ExtResource("2_d6qth")
+duration = 1.4

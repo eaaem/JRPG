@@ -91,6 +91,8 @@ public partial class AbilityCommandInstance : Node
  
    void ParseCommand(AbilityCommand command)
    {
+      Camera3D camera = GetViewport().GetCamera3D();
+
       switch (command.CommandType)
       {
          case AbilityCommandType.None:
@@ -123,14 +125,30 @@ public partial class AbilityCommandInstance : Node
             {
                newNode.QueueFree();
 
-               for (int i = 0; i < allParsed.Count; i++)
+               for (int i = 0; i < (command.CreateMultiple ? allParsed.Count : 1); i++)
                {
                   Node3D currentNode = command.PathToScene.Length > 0 ? GD.Load<PackedScene>(command.PathToScene).Instantiate<Node3D>() : new Node3D();
 
                   currentNode.Name = command.NodeName;
-                  // Node not showing up in tree
-                  allParsed[i].AddChild(currentNode);
+
+                  if (command.Path.Length > 0)
+                  {
+                     allParsed[i].GetNode<Node>(command.Path).AddChild(currentNode);
+                  }
+                  else
+                  {
+                     allParsed[i].AddChild(currentNode);
+                  }
+
                   currentNode.Position = command.Target;
+
+                  if (command.IsProjectile)
+                  {
+                     currentNode.GetNode<Projectile>("Projectile").OnProjectileEnded += ReceiveProjectileReached;
+                     currentNode.GetNode<Projectile>("Projectile").ReceiveAbilityCommandInstanceInfo(allParsed[i], 
+                                                                                                   ParseSpecialPath(SpecialCodeOverride.TargetsModel, ""), createdNodes);
+                     isWaitingForProjectiles = true;
+                  }
 
                   createdNodes.Add(currentNode);
                }
@@ -153,32 +171,40 @@ public partial class AbilityCommandInstance : Node
          case AbilityCommandType.CameraSetParent:
             List<Node3D> parsedNodes = ParseSpecialPath(command.SpecialCodeOverride, command.Path);
 
-            Node3D parent = arenaCamera.GetParent<Node3D>();
-            parent.RemoveChild(arenaCamera);
+            Node3D parent = camera.GetParent<Node3D>();
+            parent.RemoveChild(camera);
 
             if (parsedNodes.Count == 0)
             {
-               GetNode<Node3D>(command.Path).AddChild(arenaCamera);
+               GetNode<Node3D>(command.Path).AddChild(camera);
             }
             else
             {
-               parsedNodes[0].AddChild(arenaCamera);
+               parsedNodes[0].AddChild(camera);
             }
             
             break;
          case AbilityCommandType.CameraPlace:
+            if (command.RelativeToSelf)
+            {
+               camera.GlobalPosition += camera.GlobalTransform.Basis.X * command.Target.X;
+               camera.GlobalPosition += camera.GlobalTransform.Basis.Y * command.Target.Y;
+               camera.GlobalPosition += camera.GlobalTransform.Basis.Z * command.Target.Z;
+               break;
+            }
+
             if (command.UseLocal)
             {
-               arenaCamera.Position = command.Target;
+               camera.Position = command.Target;
             }
             else
             {
-               arenaCamera.GlobalPosition = command.Target;
+               camera.GlobalPosition = command.Target;
             }
 
             break;
          case AbilityCommandType.CameraRotateInstantly:
-            arenaCamera.Rotation = new Vector3(Mathf.DegToRad(command.Target.X), Mathf.DegToRad(command.Target.Y), Mathf.DegToRad(command.Target.Z));
+            camera.Rotation = new Vector3(Mathf.DegToRad(command.Target.X), Mathf.DegToRad(command.Target.Y), Mathf.DegToRad(command.Target.Z));
             break;
          case AbilityCommandType.CameraPan:
             targetPosition = command.Target;
@@ -186,7 +212,7 @@ public partial class AbilityCommandInstance : Node
             isPanning = true;
             break;
          case AbilityCommandType.CameraOrbit:
-            Vector3 parentRotation = arenaCamera.GetParent<Node3D>().Rotation;
+            Vector3 parentRotation = camera.GetParent<Node3D>().Rotation;
             targetRotation = new Vector3(Mathf.DegToRad(command.Target.X) + parentRotation.X, Mathf.DegToRad(command.Target.Y) + parentRotation.Y, 
                                          Mathf.DegToRad(command.Target.Z) + parentRotation.Z);
             orbitSpeed = command.Speed;
@@ -201,7 +227,7 @@ public partial class AbilityCommandInstance : Node
 
             if (command.LookImmediately)
             {
-               arenaCamera.LookAt(cameraTarget.GlobalPosition);
+               camera.LookAt(cameraTarget.GlobalPosition);
             }
             else
             {
@@ -393,8 +419,8 @@ public partial class AbilityCommandInstance : Node
 
             break;
          case AbilityCommandType.Reset:
-            arenaCamera.GetParent<Node3D>().RemoveChild(arenaCamera);
-            GetNode<Node3D>("/root/BaseNode/Level/Arena").AddChild(arenaCamera);
+            camera.GetParent<Node3D>().RemoveChild(camera);
+            GetNode<Node3D>("/root/BaseNode/Level/Arena").AddChild(camera);
             combatManager.ResetCamera();
             break;
          default:
@@ -505,7 +531,7 @@ public partial class AbilityCommandInstance : Node
 
             return new List<Node3D>();
          default:
-            GD.Print("Special code invalid");
+            GD.PrintErr("Special code invalid");
             return new List<Node3D>();
       }
    }
@@ -525,7 +551,7 @@ public partial class AbilityCommandInstance : Node
 
       if (isOrbiting)
       {
-         Node3D parent = arenaCamera.GetParent<Node3D>();
+         Node3D parent = GetViewport().GetCamera3D().GetParent<Node3D>();
          Vector3 rotation = parent.Rotation;
          rotation.X = Mathf.Lerp(rotation.X, targetRotation.X, orbitSpeed);
          rotation.Y = Mathf.Lerp(rotation.Y, targetRotation.Y, orbitSpeed);
@@ -541,7 +567,7 @@ public partial class AbilityCommandInstance : Node
 
       if (isTracking)
       {
-         arenaCamera.LookAt(cameraTarget.GlobalPosition);
+         GetViewport().GetCamera3D().LookAt(cameraTarget.GlobalPosition);
       }
    }
 

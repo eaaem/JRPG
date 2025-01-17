@@ -23,15 +23,15 @@ script = ExtResource("2_6dtsa")
 CommandType = 12
 InvolvedFighter = ""
 SpecialCodeOverride = 2
-TargetName = "Attack"
+TargetName = "BiteCast"
 
 [sub_resource type="Resource" id="Resource_o74b8"]
 script = ExtResource("2_6dtsa")
 CommandType = 10
-Amount = 0.0
-PauseAnimation = "AttackWait"
+Amount = 0.6
+PauseAnimation = ""
 Path = ""
-SpecialCodeOverride = 2
+SpecialCodeOverride = 0
 
 [sub_resource type="Resource" id="Resource_ge81g"]
 script = ExtResource("2_6dtsa")
@@ -41,6 +41,8 @@ Path = ""
 SpecialCodeOverride = 4
 Target = Vector3(0, 1, 0)
 PathToScene = "res://Abilities/Enemy/Bite/bite_target.tscn"
+IsProjectile = false
+CreateMultiple = false
 
 [sub_resource type="Resource" id="Resource_uem74"]
 script = ExtResource("2_6dtsa")

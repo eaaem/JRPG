@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://dkv8ppnb0xemb"]
+
+[ext_resource type="Script" path="res://Combat/0Core/AbilityResource.cs" id="1_c8gy0"]
+
+[resource]
+script = ExtResource("1_c8gy0")
+name = "Provoke"
+description = "Decrease damage taken by allies, increase damage taken by Vakthol, and increase the chance of enemies targeting Vakthol."
+manaCost = 4
+scriptPath = "res://Abilities/Party/Provoke/Provoke.cs"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = true
+hitsTeam = false
+onlyHitsTeam = false
+onlyHitsSelf = true
+bypassesDeaths = false
+graphicPath = "res://Abilities/Party/Provoke/provoke_camera_directions.tscn"
+requiredLevel = 2

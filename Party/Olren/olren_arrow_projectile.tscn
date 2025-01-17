@@ -73,12 +73,12 @@ libraries = {
 curve = SubResource("Curve3D_i7tkr")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(1, 0, 0, 0, 0.97538, 0.220457, 0, -0.220457, 0.97538, 0, 0.413537, 0.000688529)
+transform = Transform3D(1, -1.92729e-08, 8.52704e-08, 0, 0.97538, 0.220457, -8.74228e-08, -0.220457, 0.97538, 0, 0.413537, 0.000688529)
 use_model_front = true
 loop = false
 
 [node name="Arrow" parent="Path3D/PathFollow3D" instance=ExtResource("1_hw453")]
-transform = Transform3D(-0.993743, -0.110846, -0.0137399, -0.0292173, 0.139241, 0.989828, -0.107805, 0.984036, -0.141608, 0, 0, 0)
+transform = Transform3D(1, -1.04621e-07, 6.63459e-08, 6.59181e-08, -0.00408401, -0.999992, 1.04891e-07, 0.999993, -0.00408399, 0, 0, 0)
 
 [node name="StaticBody3D" type="Area3D" parent="Path3D/PathFollow3D/Arrow"]
 transform = Transform3D(1, 0, 0, 0, 1, 2.98023e-08, 0, -2.98023e-08, 1, 0, 0.200785, 0)

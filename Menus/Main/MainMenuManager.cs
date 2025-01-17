@@ -46,13 +46,18 @@ public partial class MainMenuManager : CanvasLayer
          if (FileAccess.FileExists("user://savegame" + i + ".save"))
          {
             mainScreen.GetNode<Button>("LoadGame").Disabled = false;
+            mainScreen.GetNode<Button>("LoadGame").MouseFilter = Control.MouseFilterEnum.Stop;
             mainScreen.GetNode<Button>("Continue").Disabled = false;
+            mainScreen.GetNode<Button>("Continue").MouseFilter = Control.MouseFilterEnum.Stop;
+
             return;
          }
       }
 
       mainScreen.GetNode<Button>("LoadGame").Disabled = true;
+      mainScreen.GetNode<Button>("LoadGame").MouseFilter = Control.MouseFilterEnum.Ignore;
       mainScreen.GetNode<Button>("Continue").Disabled = true;
+      mainScreen.GetNode<Button>("Continue").MouseFilter = Control.MouseFilterEnum.Ignore;
    }
 
    public void CheckNewGameButtonAvailability()
@@ -69,10 +74,12 @@ public partial class MainMenuManager : CanvasLayer
       if (fillCounter >= 5)
       {
          mainScreen.GetNode<Button>("NewGame").Disabled = true;
+         mainScreen.GetNode<Button>("NewGame").MouseFilter = Control.MouseFilterEnum.Ignore;
       }
       else
       {
          mainScreen.GetNode<Button>("NewGame").Disabled = false;
+         mainScreen.GetNode<Button>("NewGame").MouseFilter = Control.MouseFilterEnum.Stop;
       }
    }
 
@@ -179,6 +186,7 @@ public partial class MainMenuManager : CanvasLayer
          slot.GetChild<Label>(0).Visible = true;
          slot.GetChild<Label>(1).Visible = true;
          slot.Disabled = false;
+         slot.MouseFilter = Control.MouseFilterEnum.Stop;
       }
       else
       {
@@ -186,6 +194,7 @@ public partial class MainMenuManager : CanvasLayer
          slot.GetChild<Label>(1).Visible = false;
          slot.Text = "Empty";
          slot.Disabled = true;
+         slot.MouseFilter = Control.MouseFilterEnum.Ignore;
       }
    }
 
@@ -369,11 +378,17 @@ public partial class MainMenuManager : CanvasLayer
          if (slot.Text != "Empty")
          {
             slot.Disabled = false;
+            slot.MouseFilter = Control.MouseFilterEnum.Stop;
+         }
+         else
+         {
+            slot.MouseFilter = Control.MouseFilterEnum.Ignore;
          }
       }
 
       loadGameSlots.GetNode<Button>("Back").Disabled = false;
       deleteButton.Disabled = false;
+      deleteButton.MouseFilter = Control.MouseFilterEnum.Stop;
       deleteButton.Text = "Delete";
    }
 

@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://bddsqfx7ce22k"]
+
+[ext_resource type="FontFile" uid="uid://cu53hbuj171ub" path="res://Menus/0Core/Merriweather-Regular.ttf" id="1_7gyir"]
+
+[node name="DamageText" type="Label3D"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0, 0)
+visible = false
+billboard = 1
+double_sided = false
+no_depth_test = true
+fixed_size = true
+render_priority = 3
+outline_render_priority = 2
+text = "99999"
+font = ExtResource("1_7gyir")
+outline_size = 16

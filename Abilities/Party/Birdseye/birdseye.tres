@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_h8s7w")
 name = "Bird's-eye"
-description = "Increases the accuracy of self and allies by 25% for 3 turns."
+description = "Increase the accuracy of self and allies by 25% for 3 turns."
 manaCost = 3
 scriptPath = "res://Abilities/Party/Birdseye/Birdseye.cs"
 hitsAll = true
@@ -16,4 +16,4 @@ onlyHitsTeam = true
 onlyHitsSelf = false
 bypassesDeaths = false
 graphicPath = "res://Abilities/Party/Birdseye/birdseye_camera_directions.tscn"
-requiredLevel = 1
+requiredLevel = 2

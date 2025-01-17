@@ -191,12 +191,11 @@ public partial class SaveManager : Node
                managers.Controller.Rotation = new Vector3(0f, (float)nodeData["PlayerControllerRotation"], 0f);
                managers.Controller.GetNode<Node3D>("Model").Rotation = new Vector3(0f, (float)nodeData["PlayerModelRotation"], 0f);
                managers.Controller.GetNode<Node3D>("CameraTarget").Rotation = new Vector3((float)nodeData["CameraRotationX"], 0f, 0f);
-
-               managers.LevelManager.MainMenuScreenName = (string)nodeData["MainMenuScreen"];        
             }
             
             elapsedTime = (float)nodeData["TimeSpent"];
             managers.PartyManager.Gold = (int)nodeData["Gold"];
+            managers.LevelManager.MainMenuScreenName = (string)nodeData["MainMenuScreen"];        
          }
          else if (nodeData.ContainsKey("CharacterType"))
          {

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://cikhdcha1qans"]
+
+[ext_resource type="Script" path="res://Combat/0Core/AbilityResource.cs" id="1_ftr5r"]
+
+[resource]
+script = ExtResource("1_ftr5r")
+name = "Magic Bolt"
+description = "Shoot a weak bolt of magic at a target. Deals Magic damage."
+manaCost = 2
+scriptPath = "res://Abilities/Party/MagicBolt/MagicBolt.cs"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+onlyHitsTeam = false
+onlyHitsSelf = false
+bypassesDeaths = false
+graphicPath = "res://Abilities/Party/MagicBolt/magic_bolt_camera_directions.tscn"
+requiredLevel = 1

@@ -1,0 +1,123 @@
+[gd_scene load_steps=12 format=3 uid="uid://dpl0rcc27klc8"]
+
+[ext_resource type="PackedScene" uid="uid://c11giyurtxndd" path="res://Party/Athlia/athlia.glb" id="1_1tdxl"]
+[ext_resource type="PackedScene" uid="uid://btvgyb2kh78pv" path="res://Abilities/0Core/attack_preferences.tscn" id="6_eprxw"]
+[ext_resource type="PackedScene" uid="uid://bvgwlnnpo2k18" path="res://Party/Athlia/athlia_bell.glb" id="6_wxgmp"]
+[ext_resource type="Script" path="res://Abilities/0Core/AnimationPreferences.cs" id="7_py2bh"]
+[ext_resource type="Script" path="res://Abilities/0Core/WaitTimeEvent.cs" id="8_cmr0p"]
+[ext_resource type="Script" path="res://Abilities/0Core/AnimationPreference.cs" id="9_aq1rt"]
+
+[sub_resource type="Resource" id="Resource_k0q4u"]
+script = ExtResource("8_cmr0p")
+eventName = "AttackWait"
+waitTime = 0.8
+projectilePath = ""
+
+[sub_resource type="Resource" id="Resource_k3ui1"]
+script = ExtResource("9_aq1rt")
+animationName = "Attack"
+events = [SubResource("Resource_k0q4u")]
+
+[sub_resource type="Resource" id="Resource_eyati"]
+script = ExtResource("8_cmr0p")
+eventName = "ShowEffect"
+waitTime = 1.1
+projectilePath = ""
+
+[sub_resource type="Resource" id="Resource_t0xfq"]
+script = ExtResource("9_aq1rt")
+animationName = "InspireCast"
+events = [SubResource("Resource_eyati")]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ucp8p"]
+
+[node name="combat_actor" type="Node3D"]
+
+[node name="Model" parent="." instance=ExtResource("1_1tdxl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000228912, -0.00379461, 0.000628829)
+
+[node name="Skeleton3D" parent="Model/Armature" index="0"]
+bones/0/rotation = Quaternion(0.707107, -5.33851e-08, -5.33851e-08, 0.707107)
+bones/1/rotation = Quaternion(-0.707107, 5.33851e-08, 5.33851e-08, 0.707107)
+bones/6/position = Vector3(0.0127904, 0.103606, 0.094117)
+bones/6/rotation = Quaternion(-0.10778, 0.101495, -0.678023, 0.719977)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/rotation = Quaternion(-0.21526, -0.0317751, 0.142561, 0.965572)
+bones/10/position = Vector3(5.55896e-08, 8.16669e-09, 1.40484e-08)
+bones/10/rotation = Quaternion(0.703248, 0.0737554, -0.679929, -0.194163)
+bones/11/position = Vector3(-0.0127905, 0.103606, 0.094117)
+bones/11/rotation = Quaternion(-0.10778, -0.101496, 0.678023, 0.719977)
+bones/12/rotation = Quaternion(-0.210499, -0.00970655, 0.0173713, 0.977392)
+bones/16/rotation = Quaternion(0.797636, 3.59499e-07, 6.65599e-07, 0.60314)
+bones/18/rotation = Quaternion(-0.21526, -0.0317745, 0.142565, 0.965572)
+bones/19/position = Vector3(8.04427e-08, 5.09757e-09, -7.4731e-09)
+bones/19/rotation = Quaternion(0.703249, 0.0737581, -0.679928, -0.19416)
+bones/20/position = Vector3(-0.100978, 0.0882602, 1.51091e-07)
+bones/20/rotation = Quaternion(-0.116398, -0.141976, 0.895428, 0.405589)
+bones/21/rotation = Quaternion(0.309958, 0.000228655, 0.0502832, 0.94942)
+bones/22/rotation = Quaternion(-0.138734, 0.00214801, -0.00524651, 0.990313)
+bones/23/rotation = Quaternion(-8.45731e-09, 7.62319e-07, 0.00577878, 0.999983)
+bones/24/rotation = Quaternion(-9.38754e-09, -1.3485e-06, 0.0151973, 0.999885)
+bones/25/rotation = Quaternion(-6.56206e-09, 8.07678e-07, 0.013455, 0.999909)
+bones/27/rotation = Quaternion(0.0944101, 6.34116e-06, -0.1105, 0.989382)
+bones/28/rotation = Quaternion(-0.0207716, 0.0100779, 0.115759, 0.993009)
+bones/29/position = Vector3(0.100978, 0.0882601, 2.03406e-07)
+bones/29/rotation = Quaternion(0.116398, -0.141976, 0.895428, -0.405589)
+bones/30/rotation = Quaternion(0.309959, -0.000228811, -0.0502834, 0.949419)
+bones/31/rotation = Quaternion(-0.138734, -0.00214786, 0.00524647, 0.990313)
+bones/32/rotation = Quaternion(-8.96246e-09, -7.6117e-07, -0.00577877, 0.999983)
+bones/33/rotation = Quaternion(-3.99121e-09, 1.34683e-06, -0.0151973, 0.999885)
+bones/34/rotation = Quaternion(-3.83166e-09, -8.0477e-07, -0.013455, 0.99991)
+bones/35/rotation = Quaternion(0.536279, -0.112653, -0.168373, 0.819369)
+bones/36/rotation = Quaternion(0.0944102, -6.50045e-06, 0.1105, 0.989382)
+bones/37/rotation = Quaternion(-0.0207716, -0.0100775, -0.115759, 0.993009)
+bones/38/rotation = Quaternion(-0.0107431, 0.214363, 0.976467, -0.0210823)
+bones/39/rotation = Quaternion(-0.4362, 0.00012915, -0.00679133, 0.899824)
+bones/40/rotation = Quaternion(0.544458, 0.0027799, 0.0600614, 0.836631)
+bones/41/rotation = Quaternion(0.352649, -0.00205173, -0.018223, 0.935576)
+bones/42/rotation = Quaternion(0.0107431, 0.214363, 0.976467, 0.0210823)
+bones/43/rotation = Quaternion(-0.4362, -0.000129149, 0.00679134, 0.899824)
+bones/44/rotation = Quaternion(0.544458, -0.0027799, -0.0600614, 0.836631)
+bones/45/rotation = Quaternion(0.352649, 0.00205173, 0.018223, 0.935576)
+bones/46/position = Vector3(0.101976, 0.00681837, -0.0840473)
+bones/46/rotation = Quaternion(0.998925, 5.52601e-09, -1.19083e-07, -0.0463543)
+bones/47/rotation = Quaternion(0.00447303, 7.97732e-14, -1.06651e-09, 0.99999)
+bones/48/position = Vector3(0.101976, 0.0094124, 0.0975364)
+bones/48/rotation = Quaternion(0.999998, 2.55915e-10, -1.19209e-07, -0.00214677)
+bones/49/position = Vector3(-0.101976, 0.00681837, -0.0840473)
+bones/49/rotation = Quaternion(0.998925, -5.52601e-09, 1.19083e-07, -0.0463543)
+bones/50/rotation = Quaternion(0.00447303, -8.12713e-14, 1.06648e-09, 0.99999)
+bones/51/position = Vector3(-0.101976, 0.0094124, 0.0975364)
+bones/51/rotation = Quaternion(0.999998, -2.55915e-10, 1.19209e-07, -0.00214677)
+bones/52/position = Vector3(0.0855062, -0.0259016, -0.0962339)
+bones/53/position = Vector3(0.0671366, 0.683737, -0.291495)
+bones/54/position = Vector3(-0.0855063, -0.0259016, -0.0962339)
+bones/57/position = Vector3(-0.440935, -1.18385e-15, -0.976078)
+bones/59/position = Vector3(0.440935, 2.36887e-15, -0.976078)
+bones/60/position = Vector3(-0.440935, 0.976078, 7.74751e-08)
+bones/60/rotation = Quaternion(0.262012, 0.656772, -0.656772, -0.262012)
+
+[node name="AttackPreferences" parent="." instance=ExtResource("6_eprxw")]
+FighterSize = 0.5
+
+[node name="AnimationPreferences" type="Node3D" parent="."]
+script = ExtResource("7_py2bh")
+preferences = [SubResource("Resource_k3ui1"), SubResource("Resource_t0xfq")]
+
+[node name="StaticBody3D" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.801581, 0)
+collision_layer = 256
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("CapsuleShape3D_ucp8p")
+
+[node name="BackAnchor" type="Node3D" parent="."]
+transform = Transform3D(0.87339, -0.487022, 0, 0.487022, 0.87339, 0, 0, 0, 1, 0.405872, -0.481838, -0.155067)
+
+[node name="IdleCombatAnchor" type="Node3D" parent="."]
+transform = Transform3D(-0.725399, -1.32241e-07, 0.688329, -8.42647e-08, 1, 1.03316e-07, -0.688329, 1.69434e-08, -0.725399, -0.0188532, -0.1857, 0.0493389)
+
+[node name="Weapon" parent="." instance=ExtResource("6_wxgmp")]
+
+[editable path="Model"]

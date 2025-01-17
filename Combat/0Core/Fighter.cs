@@ -44,6 +44,7 @@ public partial class Fighter : Node
    public Node3D model;
    public Node3D placementNode;
    public Button targetButton;
+   public string turnOrderSpritePath;
 
    public Companion companion;
 

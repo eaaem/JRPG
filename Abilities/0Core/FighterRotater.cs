@@ -55,16 +55,15 @@ public partial class FighterRotater : Node
 
          Vector3 rotation = model.Rotation;
 
-         rotation.Y = Mathf.Lerp(rotation.Y, target.Y, (float)delta * rotateSpeed);
-         rotation.X = Mathf.Lerp(rotation.X, target.X, (float)delta * rotateSpeed);
-         rotation.Z = Mathf.Lerp(rotation.Z, target.Z, (float)delta * rotateSpeed);
+         rotation.Y = Mathf.LerpAngle(rotation.Y, target.Y, (float)delta * rotateSpeed);
+         rotation.X = Mathf.LerpAngle(rotation.X, target.X, (float)delta * rotateSpeed);
+         rotation.Z = Mathf.LerpAngle(rotation.Z, target.Z, (float)delta * rotateSpeed);
 
          model.Rotation = rotation;
 
-         if (model.Rotation.DistanceSquaredTo(target) < 0.001f)
+         if (Mathf.Abs(Mathf.AngleDifference(model.Rotation.Y, target.Y)) < 0.01f)
          {
             isRotating = false;
-            GD.Print("Deleting rotater");
             EmitSignal(SignalName.RotationFinished);
             GetParent().RemoveChild(this);
             QueueFree();

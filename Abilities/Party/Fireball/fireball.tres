@@ -5,12 +5,15 @@
 [resource]
 script = ExtResource("1_6qn7a")
 name = "Fireball"
-description = "Lob a fireball at a target, dealing damage to the target and surrounding enemies.
-Mana Cost: 4"
+description = "Lob a fireball at a target, dealing Fire damage to the target and surrounding enemies."
 manaCost = 4
-scriptName = "Fireball"
+scriptPath = "res://Abilities/Party/Fireball/Fireball.cs"
 hitsAll = false
 hitsSurrounding = true
 hitsSelf = false
 hitsTeam = false
+onlyHitsTeam = false
+onlyHitsSelf = false
+bypassesDeaths = false
+graphicPath = "res://Abilities/Party/Fireball/fireball_camera_directions.tscn"
 requiredLevel = 2

@@ -5,6 +5,7 @@ public partial class OlrenBowBehavior : Node
 {
    private const float TimeUntilDraw = 1.9f;
    private const float TimeUntilGrabArrow = 1f;
+   private const float TimeToHoldArrow = 0.35f;
 
    private AnimationPlayer bowPlayer;
    private CombatManager combatManager;
@@ -28,7 +29,7 @@ public partial class OlrenBowBehavior : Node
 
       attachment.BoneName = "hand.R";
 
-      arrowHolder = GetNode<Node3D>("../SecondaryWeapon/ArrowHolder");
+      arrowHolder = GetNode<Node3D>("../Model/Armature/Skeleton3D/QuiverHolder/SecondaryWeapon/ArrowHolder");
       arrow = arrowHolder.GetNode<Node3D>("Arrow");
 
       combatManager.AttackAnimation += PlayAnimations;
@@ -38,6 +39,11 @@ public partial class OlrenBowBehavior : Node
    {
       if (combatManager.CurrentFighter.fighterName == "Olren" && !combatManager.IsCompanionTurn)
       {
+         while (GetNode<AnimationPlayer>("../Model/AnimationPlayer").CurrentAnimation != "Attack")
+         {
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
+         }
+
          Vector3 oldRotation = arrow.Rotation;
 
          // Move the arrow to the attachment when grabbed; play the draw and release bow animations when necessary; then return everything to the rest state
@@ -49,7 +55,7 @@ public partial class OlrenBowBehavior : Node
          await ToSignal(GetTree().CreateTimer(TimeUntilDraw - TimeUntilGrabArrow), "timeout");
          bowPlayer.Play("Draw");
 
-         await ToSignal(GetTree().CreateTimer(bowPlayer.CurrentAnimationLength), "timeout");
+         await ToSignal(GetTree().CreateTimer(bowPlayer.CurrentAnimationLength + TimeToHoldArrow), "timeout");
          bowPlayer.Play("Release");
          attachment.RemoveChild(arrow);
 

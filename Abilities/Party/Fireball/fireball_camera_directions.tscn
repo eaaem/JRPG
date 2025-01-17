@@ -1,0 +1,181 @@
+[gd_scene load_steps=25 format=3 uid="uid://7khkms8ebflj"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_ie47m"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_bxnv5"]
+
+[sub_resource type="Resource" id="Resource_835hh"]
+script = ExtResource("2_bxnv5")
+CommandType = 3
+Path = ""
+SpecialCodeOverride = 2
+
+[sub_resource type="Resource" id="Resource_tqgcj"]
+script = ExtResource("2_bxnv5")
+CommandType = 4
+Target = Vector3(2, 2, 0.25)
+RelativeToSelf = false
+UseLocal = true
+
+[sub_resource type="Resource" id="Resource_spdda"]
+script = ExtResource("2_bxnv5")
+CommandType = 1
+NodeName = "camera_target"
+Path = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 1, 0)
+PathToScene = ""
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_d1l24"]
+script = ExtResource("2_bxnv5")
+CommandType = 2
+Path = "camera_target"
+SpecialCodeOverride = 5
+
+[sub_resource type="Resource" id="Resource_qverw"]
+script = ExtResource("2_bxnv5")
+CommandType = 8
+LookImmediately = true
+Speed = 0.0
+
+[sub_resource type="Resource" id="Resource_513xx"]
+script = ExtResource("2_bxnv5")
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "FireballCast"
+
+[sub_resource type="Resource" id="Resource_l5k06"]
+script = ExtResource("2_bxnv5")
+CommandType = 10
+Amount = 0.5
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_wbkkf"]
+script = ExtResource("2_bxnv5")
+CommandType = 1
+NodeName = "fireball_staff"
+Path = "Model/Armature/Skeleton3D"
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/Fireball/fireball_staff_effect.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_ewt6c"]
+script = ExtResource("2_bxnv5")
+CommandType = 10
+Amount = 0.8
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_br76k"]
+script = ExtResource("2_bxnv5")
+CommandType = 1
+NodeName = "fireball_hand"
+Path = "Model/Armature/Skeleton3D"
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/Fireball/fireball_hand.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_gtedi"]
+script = ExtResource("2_bxnv5")
+CommandType = 10
+Amount = 1.0
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_1s6ei"]
+script = ExtResource("2_bxnv5")
+CommandType = 15
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+TargetName = ""
+TargetCodeOverride = 4
+Amount = 10.0
+LookImmediately = false
+
+[sub_resource type="Resource" id="Resource_plf50"]
+script = ExtResource("2_bxnv5")
+CommandType = 10
+Amount = 0.5
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_1gowp"]
+script = ExtResource("2_bxnv5")
+CommandType = 4
+Target = Vector3(-1.75, 3, 0)
+RelativeToSelf = false
+UseLocal = true
+
+[sub_resource type="Resource" id="Resource_op8e6"]
+script = ExtResource("2_bxnv5")
+CommandType = 2
+Path = ""
+SpecialCodeOverride = 4
+
+[sub_resource type="Resource" id="Resource_7yy1h"]
+script = ExtResource("2_bxnv5")
+CommandType = 8
+LookImmediately = true
+Speed = 0.0
+
+[sub_resource type="Resource" id="Resource_skt3x"]
+script = ExtResource("2_bxnv5")
+CommandType = 10
+Amount = 1.0
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_831vc"]
+script = ExtResource("2_bxnv5")
+CommandType = 1
+NodeName = "fireball_projectile"
+Path = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/Fireball/fireball_projectile.tscn"
+IsProjectile = true
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_0xihe"]
+script = ExtResource("2_bxnv5")
+CommandType = 1
+NodeName = "fireball_explosion"
+Path = ""
+SpecialCodeOverride = 4
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/Fireball/fireball_explosion.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_pgfon"]
+script = ExtResource("2_bxnv5")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_pajty"]
+script = ExtResource("2_bxnv5")
+CommandType = 10
+Amount = 1.0
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_d4kiw"]
+script = ExtResource("2_bxnv5")
+CommandType = 17
+
+[node name="FireballCameraDirections" type="Node3D"]
+script = ExtResource("1_ie47m")
+commands = [SubResource("Resource_835hh"), SubResource("Resource_tqgcj"), SubResource("Resource_spdda"), SubResource("Resource_d1l24"), SubResource("Resource_qverw"), SubResource("Resource_513xx"), SubResource("Resource_l5k06"), SubResource("Resource_wbkkf"), SubResource("Resource_ewt6c"), SubResource("Resource_br76k"), SubResource("Resource_gtedi"), SubResource("Resource_1s6ei"), SubResource("Resource_plf50"), SubResource("Resource_1gowp"), SubResource("Resource_op8e6"), SubResource("Resource_7yy1h"), SubResource("Resource_skt3x"), SubResource("Resource_831vc"), SubResource("Resource_0xihe"), SubResource("Resource_pgfon"), SubResource("Resource_pajty"), SubResource("Resource_d4kiw")]

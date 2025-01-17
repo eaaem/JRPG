@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=35 format=3 uid="uid://ck7wy6s7wajxw"]
+[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=36 format=3 uid="uid://ck7wy6s7wajxw"]
 
 [ext_resource type="Resource" uid="uid://uhdvsljdtwyn" path="res://Abilities/Party/Fireball/fireball.tres" id="1_5s0wk"]
+[ext_resource type="Resource" uid="uid://cikhdcha1qans" path="res://Abilities/Party/MagicBolt/magic_bolt.tres" id="1_8g1pl"]
 [ext_resource type="Script" path="res://Party/0Core/PartyMemberBase.cs" id="2_7ipl3"]
 [ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="2_tmlbf"]
 [ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="3_s0llh"]
@@ -163,7 +164,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_vu2wb"]
 script = ExtResource("2_tmlbf")
 statType = 8
-value = 8
+value = 6
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_ml2yi"]
@@ -178,10 +179,11 @@ memberName = "Thalria"
 memberType = 2
 stats = [SubResource("Resource_7ejbf"), SubResource("Resource_y83fi"), SubResource("Resource_c1ao5"), SubResource("Resource_esxch"), SubResource("Resource_fobo4"), SubResource("Resource_ll4yj"), SubResource("Resource_b21jt"), SubResource("Resource_umdyc"), SubResource("Resource_vu2wb"), SubResource("Resource_ml2yi")]
 statIncreasesPerLevel = [SubResource("Resource_2ig6e"), SubResource("Resource_fg67n"), SubResource("Resource_7lthp"), SubResource("Resource_twreo"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-abilities = [ExtResource("1_5s0wk")]
+abilities = [ExtResource("1_8g1pl"), ExtResource("1_5s0wk")]
 specialAbility = ExtResource("3_wgvsp")
 affinity = 8
-passiveName = "Perfectionist"
+passiveName = "Precise"
 passiveDescription = "Thalria's abilities and attacks always hit."
 itemCategoryWorn = 2
 itemCategoryWielded = 5
+turnOrderSpritePath = "res://Party/Thalria/thalria.png"

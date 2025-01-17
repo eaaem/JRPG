@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PartyMemberBase" load_steps=36 format=3 uid="uid://b6424vyj7dspo"]
 
-[ext_resource type="Resource" uid="uid://w2syul01fgj0" path="res://Abilities/Party/Rend/rend.tres" id="1_n308e"]
+[ext_resource type="Resource" uid="uid://dkv8ppnb0xemb" path="res://Abilities/Party/Provoke/provoke.tres" id="1_5j7s7"]
 [ext_resource type="Script" path="res://Party/0Core/PartyMemberBase.cs" id="2_xhbsv"]
 [ext_resource type="Resource" uid="uid://c0firmfb658pd" path="res://Abilities/Party/Enrage/enrage.tres" id="3_qxxta"]
 [ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="4_qm4wy"]
@@ -184,10 +184,11 @@ memberName = "Vakthol"
 memberType = 1
 stats = [SubResource("Resource_t25pn"), SubResource("Resource_5gxje"), SubResource("Resource_mupom"), SubResource("Resource_jad1v"), SubResource("Resource_jfa5e"), SubResource("Resource_2kk5y"), SubResource("Resource_j87gw"), SubResource("Resource_rypt4"), SubResource("Resource_i752s"), SubResource("Resource_1114y")]
 statIncreasesPerLevel = [SubResource("Resource_0uxnb"), SubResource("Resource_6ca5y"), SubResource("Resource_3ogae"), SubResource("Resource_qptqt"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-abilities = [ExtResource("1_n308e")]
+abilities = [ExtResource("1_5j7s7")]
 specialAbility = ExtResource("3_qxxta")
 affinity = 5
 passiveName = "Berserker"
 passiveDescription = "Vakthol’s damage scales up the more health he has, up to 100% more damage at maximum health. His physical and magical defense scale up the less health he has, up to 100% more defense at 1 health."
 itemCategoryWorn = 3
 itemCategoryWielded = 6
+turnOrderSpritePath = "res://Party/Vakthol/vakthol.png"

@@ -39,7 +39,7 @@ public partial class AbilityRunner : Node
 
       parent.GetNode<Node3D>("Model").LookAt(target.Position, Vector3.Up, true);
       runningToTarget = true;
-      player.Play("Run", 0.25f);
+      player.Play("CombatRun", 0.25f);
    }
 
    public void ReceiveWaitingInformation(bool waitAtTarget)
@@ -53,12 +53,11 @@ public partial class AbilityRunner : Node
       await ToSignal(GetTree().CreateTimer(waitTime), "timeout");
       runningBack = true;
       parent.GetNode<Node3D>("Model").LookAt(origin, Vector3.Up, true);
-      player.Play("Run", 0.25f);
+      player.Play("CombatRun", 0.25f);
    }
 
    void Terminate()
    {
-      //parent.CallDeferred("remove_child", this);
       parent.RemoveChild(this);
       CallDeferred("queue_free");
    }
@@ -117,12 +116,12 @@ public partial class AbilityRunner : Node
 
             if (!waitForOthers || waitAtTarget)
             {
-               GD.Print("TERMINATING");
                Terminate();
                return;
             }
 
             player.Play("CombatIdle", 0.25f);
+            parent.GlobalPosition = origin;
          }
       }
 	}

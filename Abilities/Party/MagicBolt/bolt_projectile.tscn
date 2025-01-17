@@ -1,0 +1,92 @@
+[gd_scene load_steps=12 format=3 uid="uid://mvd5m1lrxsrc"]
+
+[ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Core/puff.png" id="1_8vkjq"]
+[ext_resource type="Script" path="res://Abilities/0Core/Projectile.cs" id="2_pexgu"]
+[ext_resource type="Script" path="res://Abilities/0Core/ProjectilePathPoint.cs" id="3_jkqog"]
+
+[sub_resource type="Curve3D" id="Curve3D_kllcw"]
+_data = {
+"points": PackedVector3Array(0, -0.781424, -3.4573, 0, 0, 0, 0, 0.413537, 0.000688529, 0, 0, 0, 0, -1.58588, 3.99263, 0, 0.414, 7.673),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_7ife1"]
+emission_shape = 1
+emission_sphere_radius = 0.1
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q62yh"]
+transparency = 1
+albedo_texture = ExtResource("1_8vkjq")
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_i5fvl"]
+material = SubResource("StandardMaterial3D_q62yh")
+size = Vector2(0.15, 0.15)
+orientation = 2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_42wdq"]
+size = Vector3(0.15, 0.5, 0.15)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipdm0"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 1.4
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_e3rh5"]
+material = SubResource("StandardMaterial3D_ipdm0")
+radius = 0.02
+height = 0.15
+
+[sub_resource type="Resource" id="Resource_yigva"]
+script = ExtResource("3_jkqog")
+Path = ""
+OverridePath = 4
+PointIndex = 1
+Offset = Vector3(0, 1, 0)
+
+[node name="BoltProjectile" type="Node3D"]
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_kllcw")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(1, -5.27571e-12, 8.74214e-08, 0, 0.999984, 6.03471e-05, -8.74228e-08, -6.03471e-05, 0.999984, 0, 0.413537, 0.000688529)
+use_model_front = true
+loop = false
+
+[node name="Projectile" type="GPUParticles3D" parent="Path3D/PathFollow3D"]
+amount = 16
+lifetime = 0.19
+process_material = SubResource("ParticleProcessMaterial_7ife1")
+draw_pass_1 = SubResource("PlaneMesh_i5fvl")
+
+[node name="StaticBody3D" type="Area3D" parent="Path3D/PathFollow3D/Projectile"]
+transform = Transform3D(1, -7.10543e-15, -3.55271e-15, 0, -0.350633, 0.936513, 0, -0.936514, -0.350633, 0, 0, 0)
+collision_layer = 128
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/Projectile/StaticBody3D"]
+shape = SubResource("BoxShape3D_42wdq")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/PathFollow3D/Projectile"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_e3rh5")
+
+[node name="MiddleIndicator" type="Node3D" parent="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.17009, 3.98754)
+
+[node name="Projectile" type="Node3D" parent="." node_paths=PackedStringArray("pathToFollow")]
+script = ExtResource("2_pexgu")
+signalOnCollision = true
+deleteOnCollision = true
+usePath = true
+pathToFollow = NodePath("../Path3D/PathFollow3D")
+pathSpeed = 15.0
+points = [SubResource("Resource_yigva")]

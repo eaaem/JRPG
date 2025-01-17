@@ -16,6 +16,8 @@ public partial class Enemy : Resource
    public Affinity affinity;
    [Export]
    public AbilityResource[] abilities = new AbilityResource[10];
+   [Export]
+   public string turnOrderSpritePath;
 
    public Enemy() : this(null, new Stat[10], null) {}
 

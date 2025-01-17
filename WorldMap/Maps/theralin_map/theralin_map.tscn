@@ -149,7 +149,7 @@ shape = SubResource("BoxShape3D_adico")
 
 [node name="ChaseExit" parent="InformationHolder" instance=ExtResource("1_mns67")]
 transform = Transform3D(0.953248, 0, -0.302187, 0, 1, 0, 0.302187, 0, 0.953248, 6.72743, 0.582916, 12.1247)
-textLabelName = ""
+textLabelName = "Lost"
 locationName = "copse_chase"
 entrancePointName = "SpawnPoint"
 forceOpens = true

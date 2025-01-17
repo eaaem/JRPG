@@ -1,15 +1,15 @@
 [gd_scene load_steps=5 format=3 uid="uid://c5yikq1y5un0d"]
 
+[ext_resource type="Theme" uid="uid://b1ndyocqpom7" path="res://Menus/0Core/small_button.tres" id="1_0wxuj"]
 [ext_resource type="Script" path="res://Core/CustomTooltipButton.cs" id="1_76vnk"]
 [ext_resource type="Script" path="res://Combat/0Core/ResourceHolder.cs" id="1_k6upr"]
-[ext_resource type="Theme" uid="uid://dxlsms8vreux4" path="res://Combat/UI/combat_button_theme.tres" id="1_wjm2i"]
 [ext_resource type="Theme" uid="uid://rhfvy1fs423s" path="res://Combat/UI/combat_text.tres" id="3_q36hs"]
 
 [node name="AbilityButton" type="Button"]
 custom_minimum_size = Vector2(325, 66)
 offset_right = 325.0
 offset_bottom = 66.0
-theme = ExtResource("1_wjm2i")
+theme = ExtResource("1_0wxuj")
 theme_override_font_sizes/font_size = 15
 script = ExtResource("1_76vnk")
 

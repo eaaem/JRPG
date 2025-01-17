@@ -157,7 +157,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_c4ysg"]
 script = ExtResource("2_3od8h")
 statType = 8
-value = 11
+value = 9
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_scx8b"]
@@ -176,6 +176,7 @@ abilities = [ExtResource("1_4jh0q")]
 specialAbility = ExtResource("3_ak54c")
 affinity = 4
 passiveName = "Arrow Master"
-passiveDescription = ""
+passiveDescription = "Whenever Olren makes an attack, he may choose an effect for his arrow. He gains more effects with higher levels."
 itemCategoryWorn = 1
 itemCategoryWielded = 4
+turnOrderSpritePath = "res://Party/Olren/olren.png"

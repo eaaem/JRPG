@@ -23,6 +23,10 @@ public enum AbilityCommandType
    /// <c>Target</c> (Vector3) : the location of the node, relative to its parent
    /// <br></br>
    /// <c>PathToScene</c> (string) : the path to the packed scene to instantiate from; leave blank if creating an empty node
+   /// <br></br>
+   /// <c>IsProjectile</c> (bool) : whether to mark the created node as a projectile; if so, the commands will wait until the projectile reaches its target
+   /// <br></br>
+   /// <c>CreateMultiple</c> (bool) : whether to create a projectile for each possible model (if applicable) or always only create one
    /// </summary>
    CreateNode,
    /// <summary>
@@ -42,11 +46,13 @@ public enum AbilityCommandType
    /// </summary>
    CameraSetParent,
    /// <summary>
-   /// Places the camera at a certain position.
+   /// Places the camera at a certain position, relative to the parent.
    /// <br></br><br></br>
    /// <c>Target</c> (Vector3) : the position
    /// <br></br>
-   /// <c>UseLocal</c> (bool) : whether to use a position local to the parent or a global position
+   /// <c>RelativeToSelf</c> (bool) : whether to move the camera relative to the camera itself (takes into account rotation) or to the parent
+   /// <br></br>
+   /// <c>UseLocal</c> (bool) : if moving relative to the parent, whether to use a position local to the parent or a global position
    /// </summary>
    CameraPlace,
    /// <summary>
@@ -214,8 +220,11 @@ public partial class AbilityCommand : Resource
    public string Path { get; set; }
    public string PathToScene { get; set; }
    public string NodeName { get; set; }
+   public bool RelativeToSelf { get; set; }
    public bool UseLocal { get; set; }
    public bool LookImmediately { get; set; }
+   public bool IsProjectile { get; set; }
+   public bool CreateMultiple { get; set; }
    public string Method { get; set;}
    public float Amount { get; set; }
    public string PauseAnimation { get; set; }
@@ -275,6 +284,18 @@ public partial class AbilityCommand : Resource
                { "type", (int)Variant.Type.String }
             });
 
+            result.Add(new Dictionary()
+            {
+               { "name", $"IsProjectile" },
+               { "type", (int)Variant.Type.Bool }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"CreateMultiple" },
+               { "type", (int)Variant.Type.Bool }
+            });
+
             break;
          case AbilityCommandType.CameraSetTarget:
             result.Add(new Dictionary()
@@ -313,6 +334,12 @@ public partial class AbilityCommand : Resource
             {
                { "name", $"Target" },
                { "type", (int)Variant.Type.Vector3 }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"RelativeToSelf" },
+               { "type", (int)Variant.Type.Bool }
             });
 
             result.Add(new Dictionary()
@@ -524,7 +551,7 @@ public partial class AbilityCommand : Resource
 
             result.Add(new Dictionary()
             {
-               { "name", $"RotateImmediately" },
+               { "name", $"LookImmediately" },
                { "type", (int)Variant.Type.Bool }
             });
 

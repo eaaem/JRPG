@@ -19,9 +19,9 @@ public partial class Heal : PlayerAbilityBehavior
             multiplier = 1.5f;
          }
 
-         combatManager.CurrentTarget.currentHealth += Mathf.CeilToInt(combatManager.CurrentTarget.maxHealth * (0.20f * multiplier));
-
-         combatManager.CurrentFighter.currentMana -= resource.manaCost;
+         int healAmount = Mathf.CeilToInt(combatManager.CurrentTarget.maxHealth * (0.20f * multiplier));
+         combatManager.CurrentTarget.currentHealth += healAmount;
+         uiManager.ProjectDamageText(combatManager.CurrentTarget, healAmount, DamageType.None, false, true);
          combatManager.RegularCast(new System.Collections.Generic.List<Fighter>() { combatManager.CurrentTarget }, false);
       }
    }

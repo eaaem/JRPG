@@ -33,4 +33,6 @@ public partial class ManagerReferenceHolder : Node
    public MainMenuManager MainMenuManager { get; set;}
    [Export]
    public AudioManager AudioManager { get; set; }
+   [Export]
+   public ButtonSounds ButtonSoundManager { get; set; }
 }

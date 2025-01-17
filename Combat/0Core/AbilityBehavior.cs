@@ -42,11 +42,13 @@ public abstract partial class AbilityBehavior : Node
       resource = button.GetNode<ResourceHolder>("ResourceHolder").abilityResource;
       button.ButtonDown += OnButtonDown;
       abilityManager.AbilityCast += OnCast;
+      GD.Print(resource.name + " is initializing");
    }
 
    public void EnemyAbilityReadySetup()
    {
       abilityManager.EnemyAbilityCast += OnEnemyCast;
+      button = null;
    }
 
    public void SetTeamOnCast(Button buttonToDisable)
@@ -74,9 +76,10 @@ public abstract partial class AbilityBehavior : Node
 
    public override void _ExitTree()
    {
-      if (!combatManager.CurrentFighter.isEnemy)
+      if (button != null)
       {
          abilityManager.AbilityCast -= OnCast;
+         GD.Print(resource.name + " is desubscribing");
       }
       else
       {

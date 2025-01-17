@@ -6,7 +6,7 @@ public partial class OverworldPartyController : CharacterBody3D
    [Export]
    private int index;
 
-   private const float DistanceThreshold = 5f;
+   private const float DistanceThreshold = 10f;
 
    [Export]
    private ManagerReferenceHolder managers;
@@ -132,14 +132,14 @@ public partial class OverworldPartyController : CharacterBody3D
          methodsTree.Set("parameters/Movement/blend_position", movementBlend / 10f);
          
          Vector3 velocity = Velocity;
-         distance = GlobalPosition.DistanceTo(player.GlobalPosition);
+         distance = GlobalPosition.DistanceSquaredTo(player.GlobalPosition);
 
          if (!IsOnFloor())
          {
             velocity.Y -= gravity * (float)delta;
          }
 
-         if (distance >= DistanceThreshold)
+         if (distance >= DistanceThreshold + (3f * index))
          {
             targetPosition = player.GlobalPosition - (playerModel.GlobalTransform.Basis.Z * (1.5f * index));
             MovementTarget = targetPosition;

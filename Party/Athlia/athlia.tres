@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=34 format=3 uid="uid://0y8iemdigx00"]
+[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=35 format=3 uid="uid://0y8iemdigx00"]
 
 [ext_resource type="Resource" uid="uid://lx78kbhd5261" path="res://Abilities/Party/Heal/minor_heal.tres" id="1_3b551"]
+[ext_resource type="Resource" uid="uid://dbcuvabocierf" path="res://Abilities/Party/Inspire/inspire.tres" id="1_vr0p4"]
 [ext_resource type="Script" path="res://Party/0Core/PartyMemberBase.cs" id="2_5tm02"]
 [ext_resource type="Resource" uid="uid://bpy8me6753noe" path="res://Abilities/Party/Heartburst/heartburst.tres" id="3_bxp0c"]
 [ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="4_fk4sf"]
@@ -157,7 +158,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_kjkpx"]
 script = ExtResource("5_0lmme")
 statType = 8
-value = 9
+value = 8
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_u3gn0"]
@@ -172,10 +173,11 @@ memberName = "Athlia"
 memberType = 3
 stats = [SubResource("Resource_1bqk1"), SubResource("Resource_2hvwu"), SubResource("Resource_hfgig"), SubResource("Resource_cl4vs"), SubResource("Resource_58gc1"), SubResource("Resource_fc1q7"), SubResource("Resource_ec5ms"), SubResource("Resource_sbkv1"), SubResource("Resource_kjkpx"), SubResource("Resource_u3gn0")]
 statIncreasesPerLevel = [SubResource("Resource_lqttl"), SubResource("Resource_ijsi1"), SubResource("Resource_pscef"), SubResource("Resource_rq8gw"), null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null]
-abilities = [ExtResource("1_3b551")]
+abilities = [ExtResource("1_vr0p4"), ExtResource("1_3b551")]
 specialAbility = ExtResource("3_bxp0c")
 affinity = 6
 passiveName = "Kind"
-passiveDescription = "Athlia’s attacks deal only 10% damage. Athlia’s heals and buffs are increased in strength by 50%."
+passiveDescription = "Athlia’s attacks deal only 10% damage."
 itemCategoryWorn = 1
 itemCategoryWielded = 7
+turnOrderSpritePath = "res://Party/Athlia/athlia.png"

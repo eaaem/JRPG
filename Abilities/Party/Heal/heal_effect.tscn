@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://bwper8yv7jwak"]
+
+[ext_resource type="Texture2D" uid="uid://ceyn4vs6p0fv7" path="res://Abilities/Shared/Heal/sparkle.png" id="1_rw48m"]
+[ext_resource type="Script" path="res://Abilities/0Core/TerminatingEffect.cs" id="2_ieycp"]
+
+[sub_resource type="Gradient" id="Gradient_e4g5f"]
+colors = PackedColorArray(0.261826, 0.675277, 3.85046e-07, 1, 0.623329, 0.93299, 0.490714, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_t3m50"]
+gradient = SubResource("Gradient_e4g5f")
+
+[sub_resource type="Curve" id="Curve_tvaae"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_iu2ud"]
+curve = SubResource("Curve_tvaae")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_f0xeh"]
+emission_shape = 1
+emission_sphere_radius = 0.3
+gravity = Vector3(0, 3, 0)
+scale_curve = SubResource("CurveTexture_iu2ud")
+color_initial_ramp = SubResource("GradientTexture1D_t3m50")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ins5n"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_rw48m")
+emission_enabled = true
+emission = Color(5.29438e-07, 0.548288, 0.11191, 1)
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_x6dim"]
+material = SubResource("StandardMaterial3D_ins5n")
+size = Vector2(0.15, 0.15)
+orientation = 2
+
+[node name="HealEffect" type="GPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.534121, 0)
+amount = 48
+lifetime = 1.25
+process_material = SubResource("ParticleProcessMaterial_f0xeh")
+draw_pass_1 = SubResource("PlaneMesh_x6dim")
+script = ExtResource("2_ieycp")
+duration = 2.35

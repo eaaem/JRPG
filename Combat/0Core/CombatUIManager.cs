@@ -18,6 +18,8 @@ public partial class CombatUIManager : Node
    private PackedScene stackPrefab;
    [Export]
    private PackedScene victoryNotifPrefab;
+   [Export]
+   private PackedScene turnOrderPicturePrefab;
 
    [Export]
    private CanvasLayer UI;
@@ -47,6 +49,8 @@ public partial class CombatUIManager : Node
    private VBoxContainer itemsContainer;
    [Export]
    private Control victoryScreen;
+   [Export]
+   private VBoxContainer turnOrderContainer;
 
    [Export]
    private StyleBoxTexture baseHighlight;
@@ -60,20 +64,7 @@ public partial class CombatUIManager : Node
    private List<Control> enemyPanels = new List<Control>();
 
    private bool uiIsUpdated = false;
-	
-	public override void _Ready()
-	{
-      /*for (int i = 0; i < 4; i++)
-      {
-         partyPanels.Add(UI.GetNode<Node2D>("CombatPartyList/HBoxContainer/Panel" + (i + 1) + "/Holder"));
-      }
 
-      for (int i = 0; i < 4; i++)
-      {
-         enemyPanels.Add(UI.GetNode<Node2D>("CombatEnemyList/HBoxContainer/Panel" + (i + 1) + "/Holder"));
-      }*/
-	}
-   
    public void HidePanels() 
    {
       for (int i = 0; i < partyPanels.Count; i++)
@@ -94,6 +85,7 @@ public partial class CombatUIManager : Node
       partyList.Visible = true;
       enemyList.Visible = true;
       messageText.GetParent<Control>().Visible = true;
+      turnOrderContainer.GetParent().GetParent<Control>().Visible = true;
    }
 
    public void InitializePartyPanel(Fighter fighter, int index) 
@@ -121,7 +113,7 @@ public partial class CombatUIManager : Node
       UI.GetNode<VBoxContainer>("CombatEnemyList/VBoxContainer").AddChild(fighter.UIPanel);
    }
 
-   public void SetHightlightVisibility(Fighter fighter, bool visible, bool isCompanion) 
+   public void SetHighlightVisibility(Fighter fighter, bool visible, bool isCompanion) 
    {
       if (!isCompanion) 
       {
@@ -271,44 +263,6 @@ public partial class CombatUIManager : Node
       return UI.GetNode<Control>("Combat" + root + "List/HBoxContainer/Panel" + (index + 1) + "/Holder");
    }
 
-   public void EnablePanels()
-   {
-      /*if (combatManager.CurrentAbility != null && combatManager.CurrentAbility.onlyHitsSelf)
-      {
-         combatManager.CurrentFighter.UIPanel.GetNode<Button>("Selection").Disabled = false;
-         combatManager.CurrentFighter.UIPanel.GetNode<Button>("Selection").MouseFilter = Control.MouseFilterEnum.Stop;
-         return;
-      }
-
-      for (int i = 0; i < combatManager.Fighters.Count; i++)
-      {
-         if (combatManager.Fighters[i] != combatManager.CurrentFighter)
-         {
-            if (combatManager.CurrentAbility == null || !combatManager.CurrentAbility.onlyHitsTeam 
-                || (combatManager.CurrentAbility.onlyHitsTeam && !combatManager.Fighters[i].isEnemy))
-            {
-               combatManager.Fighters[i].UIPanel.GetNode<Button>("Selection").Disabled = false;
-               combatManager.Fighters[i].UIPanel.GetNode<Button>("Selection").MouseFilter = Control.MouseFilterEnum.Stop;
-            }
-         }
-      }
-
-      if (combatManager.CurrentAbility != null && combatManager.CurrentAbility.hitsSelf)
-      {
-         combatManager.CurrentFighter.UIPanel.GetNode<Button>("Selection").Disabled = false;
-         combatManager.CurrentFighter.UIPanel.GetNode<Button>("Selection").MouseFilter = Control.MouseFilterEnum.Stop;
-      }*/
-   }
-
-   public void DisablePanels()
-   {
-      for (int i = 0; i < combatManager.Fighters.Count; i++)
-      {
-         //combatManager.Fighters[i].UIPanel.GetNode<Button>("Selection").Disabled = true;
-        // combatManager.Fighters[i].UIPanel.GetNode<Button>("Selection").MouseFilter = Control.MouseFilterEnum.Ignore;
-      }
-   }
-
    public void GenerateAbilityUI()
    {
       Member member = combatManager.GetCurrentMember();
@@ -359,6 +313,7 @@ public partial class CombatUIManager : Node
          if (combatManager.CurrentFighter.specialCooldown > 0)
          {
             specialButton.Disabled = true;
+            specialButton.MouseFilter = Control.MouseFilterEnum.Ignore;
          }
 
          abilityButtonContainer.AddChild(specialButton);
@@ -382,13 +337,18 @@ public partial class CombatUIManager : Node
       button.MouseExited += StopHoveringOverInformation;
       button.MouseEntered += () => HoverOverInformation("Costs " + ability.manaCost + " mana. " + ability.description);
 
+      button.MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+      button.ButtonDown += managers.ButtonSoundManager.OnClick;
+
       if (mana < ability.manaCost)
       {
          button.Disabled = true;
+         button.MouseFilter = Control.MouseFilterEnum.Ignore;
       }
       else
       {
          button.MouseEntered += () => SetManaBarLossIndicator(ability.manaCost);
+         button.MouseFilter = Control.MouseFilterEnum.Stop;
       }
 
       return button;
@@ -398,20 +358,20 @@ public partial class CombatUIManager : Node
    {
       foreach (Button child in abilityButtonContainer.GetChildren())
       {
-         if (child.Name != "Special")
-         {
+         //if (child.Name != "Special")
+        // {
             abilityButtonContainer.RemoveChild(child);
             child.QueueFree();
-         }
+         //}
       }
 
       // Special button is present
-      if (abilityButtonContainer.HasNode("Special"))
+      /*if (abilityButtonContainer.HasNode("Special"))
       {
          Control specialButton = abilityButtonContainer.GetNode<Control>("Special");
          abilityButtonContainer.RemoveChild(specialButton);
          specialButton.QueueFree();
-      }
+      }*/
    }
 
    public void DisableOtherAbilities()
@@ -452,10 +412,12 @@ public partial class CombatUIManager : Node
          if (abilitiesToUse[i].manaCost <= manaToUse)
          {
             abilityButtonContainer.GetChild<Button>(i + offset).Disabled = false;
+            abilityButtonContainer.GetChild<Button>(i + offset).MouseFilter = Control.MouseFilterEnum.Stop;
          }
          else
          {
             abilityButtonContainer.GetChild<Button>(i + offset).Disabled = true;
+            abilityButtonContainer.GetChild<Button>(i + offset).MouseFilter = Control.MouseFilterEnum.Ignore;
          }
       }
 
@@ -464,10 +426,12 @@ public partial class CombatUIManager : Node
          if (member.specialAbility.manaCost <= combatManager.CurrentFighter.currentMana && combatManager.CurrentFighter.specialCooldown <= 0)
          {
             abilityButtonContainer.GetNode<Button>("Special").Disabled = false;
+            abilityButtonContainer.GetNode<Button>("Special").MouseFilter = Control.MouseFilterEnum.Stop;
          }
          else
          {
             abilityButtonContainer.GetNode<Button>("Special").Disabled = true;
+            abilityButtonContainer.GetNode<Button>("Special").MouseFilter = Control.MouseFilterEnum.Ignore;
          }
       }
    }
@@ -782,6 +746,9 @@ public partial class CombatUIManager : Node
                break;
             }
          }
+
+         button.MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+         button.ButtonDown += managers.ButtonSoundManager.OnClick;
       }
 
       options.GetNode<ScrollContainer>("Targets").Visible = true;
@@ -829,13 +796,27 @@ public partial class CombatUIManager : Node
       {
          possibleTargets.AddRange(GetEnemies());
       }
+      
+      for (int i = 0; i < combatManager.Fighters.Count; i++)
+      {
+         if (!possibleTargets.Contains(combatManager.Fighters[i]) && combatManager.Fighters[i] != combatManager.CurrentFighter && !combatManager.Fighters[i].isDead)
+         {
+            if (combatManager.Fighters[i].isEnemy)
+            {
+               possibleTargets.Add(combatManager.Fighters[i]);
+            }
+         } 
+      }
 
       for (int i = 0; i < combatManager.Fighters.Count; i++)
       {
          if (!possibleTargets.Contains(combatManager.Fighters[i]) && combatManager.Fighters[i] != combatManager.CurrentFighter && !combatManager.Fighters[i].isDead)
          {
-            possibleTargets.Add(combatManager.Fighters[i]);
-         }
+            if (!combatManager.Fighters[i].isEnemy)
+            {
+               possibleTargets.Add(combatManager.Fighters[i]);
+            }
+         } 
       }
 
       return possibleTargets;
@@ -915,6 +896,60 @@ public partial class CombatUIManager : Node
       }
    }
 
+   public void CreateTurnOrderPortrait(Fighter fighter, int id, int index = -1)
+   {
+      Control portrait = GD.Load<PackedScene>("res://Combat/UI/turn_order_portrait.tscn").Instantiate<Control>();
+      portrait.GetNode<Sprite2D>("Sprite").Texture = GD.Load<Texture2D>(fighter.turnOrderSpritePath);
+      portrait.GetNode<RichTextLabel>("Text").Text = "[center]" + fighter.fighterName;
+      portrait.GetNode<FighterID>("FighterID").id = id;
+
+      turnOrderContainer.AddChild(portrait);
+
+      if (index != -1)
+      {
+         turnOrderContainer.MoveChild(portrait, index);
+      }
+   }
+
+   public void HighlightTurnOrderPortrait()
+   {
+      if (turnOrderContainer.GetChildCount() > 0)
+      {
+         turnOrderContainer.GetChild<Control>(0).GetNode<Panel>("Highlight").Visible = true;
+      }
+   }
+
+   public void DeleteTurnOrderPortrait()
+   {
+      if (turnOrderContainer.GetChildCount() > 0)
+      {
+         Control child = turnOrderContainer.GetChild<Control>(0);
+         turnOrderContainer.RemoveChild(child);
+         child.QueueFree();
+      }
+   }
+
+   public void ClearAllTurnOrderPortraits()
+   {
+      foreach (Control child in turnOrderContainer.GetChildren())
+      {
+         turnOrderContainer.RemoveChild(child);
+         child.QueueFree();
+      }
+   }
+
+   public void ClearTurnOrderPortraitsOfFighter(int fighterID)
+   {
+      foreach (Control child in turnOrderContainer.GetChildren())
+      {
+         if (child.GetNode<FighterID>("FighterID").id == fighterID)
+         {
+            turnOrderContainer.RemoveChild(child);
+            child.QueueFree();
+         }
+      }
+   }
+
    public bool IsEquivalentToMessageText(string toCompare)
    {
       return messageText.Text == toCompare;
@@ -970,32 +1005,45 @@ public partial class CombatUIManager : Node
    /// <summary>
    /// This creates the damage indicator texts, but doesn't show or move them; they're simply stored until they're ready to be shown with MoveDamageTexts.
    /// </summary>
-   public void ProjectDamageText(Fighter target, int damage, DamageType damageType, bool isCrit)
+   public void ProjectDamageText(Fighter target, int damage, DamageType damageType, bool isCrit, bool isHeal = false)
    {
-      RichTextLabel damageText = GD.Load<PackedScene>("res://Combat/UI/damage_indicator.tscn").Instantiate<RichTextLabel>();
+      Label3D damageText = GD.Load<PackedScene>("res://Combat/UI/damage_text.tscn").Instantiate<Label3D>();
       target.UIPanel.AddChild(damageText);
       damageText.Name = "DamageIndicator";
-      damageText.Text = "[center]" + damage.ToString();
-      damageText.AddThemeColorOverride("font_color", damageTypeColors[(int)damageType]);
+      damageText.Text = damage.ToString();
 
       if (isCrit)
       {
-         damageText.AddThemeColorOverride("font_shadow_color", new Color(1, 0, 0));
-         damageText.AddThemeColorOverride("font_outline_color", new Color(1, 0, 0));
+         damageText.Modulate = new Color(1, 0, 0);
+         damageText.OutlineModulate = new Color(1, 0, 0);
       }
 
-      damageText.GlobalPosition = GetNode<Camera3D>("/root/BaseNode/Level/Arena/ArenaCamera").UnprojectPosition(target.model.GlobalPosition + Vector3.Up);
-      damageText.SetGlobalPosition(new Vector2(damageText.GlobalPosition.X - 50f, damageText.GlobalPosition.Y));
-      damageText.SetGlobalPosition(new Vector2((float)GD.RandRange(damageText.GlobalPosition.X - 5f, damageText.GlobalPosition.X + 5f), 
-                                               (float)GD.RandRange(damageText.GlobalPosition.Y - 25f, damageText.GlobalPosition.Y + 25f)));
+      if (isHeal)
+      {
+         damageText.Modulate = new Color(0, 1f, 0.017f);
+      }
+      else
+      {
+         damageText.Modulate = damageTypeColors[(int)damageType];
+      }
+
+      damageText.GlobalPosition = target.model.GlobalPosition + (Vector3.Up * 0.5f);
+      damageText.GlobalPosition = new Vector3((float)GD.RandRange(damageText.GlobalPosition.X - 0.25f, damageText.GlobalPosition.X + 0.25f), 
+                                              (float)GD.RandRange(damageText.GlobalPosition.Y - 0.5f, damageText.GlobalPosition.Y + 0.5f),
+                                              (float)GD.RandRange(damageText.GlobalPosition.Z - 0.25f, damageText.GlobalPosition.Z + 0.25f));
    }
 
    public void ProjectMissText(Fighter target)
    {
-      RichTextLabel damageText = GD.Load<PackedScene>("res://Combat/UI/damage_indicator.tscn").Instantiate<RichTextLabel>();
+      Label3D damageText = GD.Load<PackedScene>("res://Combat/UI/damage_text.tscn").Instantiate<Label3D>();
       target.UIPanel.AddChild(damageText);
       damageText.Name = "DamageIndicator";
-      damageText.Text = "[center]MISS";
+      damageText.Text = "MISS";
+
+      damageText.GlobalPosition = target.model.GlobalPosition + (Vector3.Up * 0.5f);
+      damageText.GlobalPosition = new Vector3((float)GD.RandRange(damageText.GlobalPosition.X - 0.25f, damageText.GlobalPosition.X + 0.25f), 
+                                              (float)GD.RandRange(damageText.GlobalPosition.Y - 0.5f, damageText.GlobalPosition.Y + 0.5f),
+                                              (float)GD.RandRange(damageText.GlobalPosition.Z - 0.25f, damageText.GlobalPosition.Z + 0.25f));
    }
 
    public void MoveDamageTexts(Fighter target)
@@ -1004,24 +1052,28 @@ public partial class CombatUIManager : Node
       {
          if (child.Name == "DamageIndicator")
          {
-            ShiftDamageTextUpward((RichTextLabel)child, target);
+            ShiftDamageTextUpward((Label3D)child, target);
          }
       }
    }
 
-   async void ShiftDamageTextUpward(RichTextLabel text, Fighter owner)
+   async void ShiftDamageTextUpward(Label3D text, Fighter owner)
    {
-      Vector2 target = text.GlobalPosition + (Vector2.Up * 25);
+      Vector3 target = text.GlobalPosition + (Vector3.Up * 0.75f);
       text.Visible = true;
 
-      while (text.GlobalPosition.Y > target.Y)
+      while (text.GlobalPosition.Y < target.Y)
       {
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
-         text.SetGlobalPosition(text.GlobalPosition + (Vector2.Up * 0.65f));
+         text.SetGlobalPosition(text.GlobalPosition + (Vector3.Up * 0.025f));
+      }
+
+      if (combatManager.IsInCombat)
+      {
+         owner.UIPanel.RemoveChild(text);
       }
 
       text.QueueFree();
-      owner.UIPanel.RemoveChild(text);
    }
 
    public void EndOfCombatHiding()
@@ -1032,6 +1084,7 @@ public partial class CombatUIManager : Node
       partyPanels.Clear();
       enemyPanels.Clear();
       SetMessageTextVisible(false);
+      turnOrderContainer.GetParent().GetParent<Control>().Visible = false;
    }
 
    public void ResetStacksAndStatuses(Fighter fighter)

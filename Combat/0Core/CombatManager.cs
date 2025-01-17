@@ -42,7 +42,9 @@ public enum StatusEffect
    Disease,
    MegaBuff,
    KeenEye,
-   Stealth
+   Stealth,
+   Inspired,
+   Taunting
 }
 
 /*
@@ -85,6 +87,7 @@ public partial class CombatManager : Node
    private Node3D baseNode;
 
    public List<Fighter> Fighters { get; set; }
+   private List<int> fighterTurnOrders = new List<int>();
 
    public bool IsAttacking { get; set; }
    private bool isCasting;
@@ -110,9 +113,6 @@ public partial class CombatManager : Node
 
    public bool IsInCombat { get; set; }
 
-   //private Vector3 returnPosition;
-   //private Vector3 returnRotation;
-
    private WorldEnemy currentEnemyScript;
 
 	// Called when the node enters the scene tree for the first time.
@@ -135,7 +135,10 @@ public partial class CombatManager : Node
       {
          IsInCombat = true;
          ResetNodes();
-         managers.LevelManager.TransitionMusicTracks(this);
+         AudioStreamPlayer musicPlayer = GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer");
+         musicPlayer.Stream = GD.Load<AudioStreamMP3>("res://Combat/0Core/battle.mp3");
+         musicPlayer.Play();
+         fighterTurnOrders.Clear();
 
          managers.MenuManager.CloseMenu();
          managers.MenuManager.canTakeInput = false;
@@ -201,13 +204,20 @@ public partial class CombatManager : Node
          uiManager.ClearItemUI();
          uiManager.GenerateItemUI();
          uiManager.EnableOptions();
-         uiManager.DisablePanels();
 
          Input.MouseMode = Input.MouseModeEnum.Visible;
          MovePartyToArena();
          uiManager.UpdateUI();
          playerCamera.Current = false;
          arenaCamera.MakeCurrent();
+         uiManager.ClearAllTurnOrderPortraits();
+
+         // Only populate 9 to start, since the first gets improperly clipped
+         PopulateTurnOrder(1);
+
+         // When the next turn is selected, the first fighter will be deleted off, so this duplicates the first fighter, preventing them from losing their turn
+         fighterTurnOrders.Insert(0, fighterTurnOrders[0]);
+         uiManager.CreateTurnOrderPortrait(Fighters[fighterTurnOrders[0]], fighterTurnOrders[0], 0);
 
          enemyScript.QueueFree();
 
@@ -238,6 +248,7 @@ public partial class CombatManager : Node
 
          uiManager.ShowLists();
          SelectNextTurn();
+         GD.Print(fighterTurnOrders.Count);
       }
    }
 
@@ -439,7 +450,7 @@ public partial class CombatManager : Node
             BoneAttachment3D attachment = new BoneAttachment3D();
             newFighter.model.GetNode<Skeleton3D>("Model/Armature/Skeleton3D").AddChild(attachment);
             attachment.Name = "WeaponAttachment";
-            attachment.BoneName = "hand.L";
+            attachment.BoneName = "weapon_holder";
 
             Node3D weapon = newFighter.model.GetNode<Node3D>("Weapon");
             newFighter.model.RemoveChild(weapon);
@@ -449,6 +460,8 @@ public partial class CombatManager : Node
 
             passiveManager.ApplyPassives(newFighter);
 
+            newFighter.turnOrderSpritePath = managers.PartyManager.Party[i].baseMember.turnOrderSpritePath;
+
             Fighters.Add(newFighter);
          }
       }
@@ -457,7 +470,7 @@ public partial class CombatManager : Node
    void SetWeaponAttachmentToIdle(Fighter fighter)
    {
       BoneAttachment3D attachment = fighter.model.GetNode<BoneAttachment3D>("Model/Armature/Skeleton3D/WeaponAttachment");
-      attachment.BoneName = "hand.L";
+      attachment.BoneName = "weapon_holder";
 
       Node3D idleCombatAnchor = fighter.model.GetNode<Node3D>("IdleCombatAnchor");
       attachment.GetChild<Node3D>(0).Position = idleCombatAnchor.Position;
@@ -514,6 +527,8 @@ public partial class CombatManager : Node
 
          uiManager.InitializeEnemyPanel(newFighter, i);
 
+         newFighter.turnOrderSpritePath = enemyDatas[i].turnOrderSpritePath;
+
 		   Fighters.Add(newFighter);
       }
    }
@@ -545,8 +560,8 @@ public partial class CombatManager : Node
    /// </summary>
    public void ResetCamera() 
    {
-      arenaCamera.Position = new Vector3(-6.038f, 2.914f, 2.896f);
-      arenaCamera.Rotation = new Vector3(Mathf.DegToRad(-13f), Mathf.DegToRad(-73.4f), Mathf.DegToRad(0.4f));
+      arenaCamera.Position = new Vector3(-5.24f, 3.08f, 4.582f);
+      arenaCamera.Rotation = new Vector3(Mathf.DegToRad(-20.8f), Mathf.DegToRad(-49.8f), Mathf.DegToRad(0.4f));
    }
 
    public void PointCameraAtParty()
@@ -580,7 +595,7 @@ public partial class CombatManager : Node
    {
       if (CurrentFighter != null)
       {
-         uiManager.SetHightlightVisibility(CurrentFighter, false, false);
+         uiManager.SetHighlightVisibility(CurrentFighter, false, false);
 
          if (CurrentFighter.companion != null && !CurrentFighter.companion.hadTurn)
          {
@@ -595,7 +610,7 @@ public partial class CombatManager : Node
             {
                IsCompanionTurn = true;
                CurrentFighter.companion.hadTurn = true;
-               uiManager.SetHightlightVisibility(CurrentFighter, true, true);
+               uiManager.SetHighlightVisibility(CurrentFighter, true, true);
                uiManager.ClearAbilityUI();
                uiManager.GenerateAbilityUI();
                PlayerTurn();
@@ -604,13 +619,57 @@ public partial class CombatManager : Node
          }
          else if (CurrentFighter.companion != null)
          {
-            uiManager.SetHightlightVisibility(CurrentFighter, false, true);
+            uiManager.SetHighlightVisibility(CurrentFighter, false, true);
          }
       }
 
       IsCompanionTurn = false;
+
+      if (fighterTurnOrders.Count > 0)
+      {
+         fighterTurnOrders.Remove(fighterTurnOrders[0]);
+         uiManager.DeleteTurnOrderPortrait();
+         InitializeTurn(Fighters[fighterTurnOrders[0]]);
+      }
       
-      while (true) 
+      PopulateTurnOrder();
+   }
+
+   void InitializeTurn(Fighter nextFighter)
+   {
+      CurrentFighter = nextFighter;
+      stacksAndStatusManager.IncrementAppliedStatuses();
+      IncrementStatModifiers();
+      uiManager.SetHighlightVisibility(CurrentFighter, true, false);
+
+      uiManager.ClearAbilityUI();
+
+      if (CurrentFighter.isEnemy)
+      {
+         EnemyTurn();
+      }
+      else
+      {
+         uiManager.GenerateAbilityUI();
+         PlayerTurn();
+
+         if (CurrentFighter.specialCooldown > 0)
+         {
+            CurrentFighter.specialCooldown--;
+         }
+
+         if (CurrentFighter.companion != null)
+         {
+            CurrentFighter.companion.hadTurn = false;
+         }
+      }
+
+      uiManager.HighlightTurnOrderPortrait();
+   }
+
+   void PopulateTurnOrder(int populateAmount = 10)
+   {
+      while (fighterTurnOrders.Count < populateAmount) 
       {
          for (int i = 0; i < Fighters.Count; i++) 
          {
@@ -620,37 +679,16 @@ public partial class CombatManager : Node
 
                if (Fighters[i].actionLevel >= 100) 
                {
-                  CurrentFighter = Fighters[i];
-                  stacksAndStatusManager.IncrementAppliedStatuses();
-                  IncrementStatModifiers();
-                  uiManager.SetHightlightVisibility(CurrentFighter, true, false);
-
-                  uiManager.ClearAbilityUI();
-
-                  if (Fighters[i].isEnemy)
-                  {
-                     EnemyTurn();
-                  }
-                  else
-                  {
-                     uiManager.GenerateAbilityUI();
-                     PlayerTurn();
-
-                     if (Fighters[i].specialCooldown > 0)
-                     {
-                        Fighters[i].specialCooldown--;
-                     }
-
-                     if (Fighters[i].companion != null)
-                     {
-                        Fighters[i].companion.hadTurn = false;
-                     }
-                  }
-
+                  fighterTurnOrders.Add(i);
+                  uiManager.CreateTurnOrderPortrait(Fighters[i], i);
                   Fighters[i].actionLevel = 0;
-                  return;
+
+                  if (fighterTurnOrders.Count >= 10)
+                  {
+                     return;
+                  }
                }
-            }
+            }            
          }
       }
    }
@@ -750,24 +788,19 @@ public partial class CombatManager : Node
       if (IsCompanionTurn)
       {
          uiManager.SetItemButtonVisible(true);
-         //FocusCameraOnFighter(CurrentFighter.companion.model);
       }
       else
       {
          uiManager.SetItemButtonVisible(false);
-         //FocusCameraOnFighter(CurrentFighter.model);
       }
 
-      CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatActive");
       uiManager.SetChoicesVisible(true);
-
-      if (CurrentFighter.model.HasNode("ActiveCombatAnchor"))
-      {
-         BoneAttachment3D weaponAttachment = CurrentFighter.model.GetNode<BoneAttachment3D>("Model/Armature/Skeleton3D/WeaponAttachment");
-         Node3D activeCombatAnchor = CurrentFighter.model.GetNode<Node3D>("ActiveCombatAnchor");
-         weaponAttachment.GetChild<Node3D>(0).Position = activeCombatAnchor.Position;
-         weaponAttachment.GetChild<Node3D>(0).Rotation = activeCombatAnchor.Rotation;
-      }
+      
+      Decal turnHighlight = (Decal)CurrentFighter.placementNode.GetNode<Decal>("SelectionHighlight").Duplicate();
+      CurrentFighter.placementNode.AddChild(turnHighlight);
+      turnHighlight.Modulate = new Color(0.906f, 0.515f, 0.234f);
+      turnHighlight.Name = "TurnHighlight";
+      turnHighlight.Visible = true;
    }
 
    public void OnFighterPanelDown(Fighter target)
@@ -910,6 +943,13 @@ public partial class CombatManager : Node
       AttackPreferences attackPreferences = CurrentFighter.model.GetNode<AttackPreferences>("AttackPreferences");
       AbilityCommandHolder holder;
 
+      if (CurrentFighter.placementNode.HasNode("TurnHighlight"))
+      {
+         Decal turnHighlight = CurrentFighter.placementNode.GetNode<Decal>("TurnHighlight");
+         CurrentFighter.placementNode.RemoveChild(turnHighlight);
+         turnHighlight.QueueFree();
+      }
+
       if (attackPreferences.OverrideCopy)
       {
          holder = CurrentFighter.model.GetNode<AbilityCommandHolder>(attackPreferences.PathToOverride);
@@ -941,6 +981,7 @@ public partial class CombatManager : Node
 
       // Olren's attacks have special effects
       passiveManager.ApplyOlrenPassive();
+      EmitSignal(SignalName.AttackAnimation);
 
       abilityManager.AddChild(abilityCommandInstance);
       abilityCommandInstance.UpdateData(new List<Fighter> { target }, true);
@@ -1057,14 +1098,6 @@ public partial class CombatManager : Node
 
    public void ProcessAttack(List<DamagingEntity> damagers, Fighter target, bool isCrit = false)
    {
-      for (int i = 0; i < CurrentFighter.currentStatuses.Count; i++)
-      {
-         if (CurrentFighter.currentStatuses[i].effect == StatusEffect.Stealth)
-         {
-            stacksAndStatusManager.RemoveStatus(CurrentFighter, i);
-         }
-      }
-
       if (HitAttack(target))
       {
          for (int i = 0; i < damagers.Count; i++)
@@ -1077,6 +1110,14 @@ public partial class CombatManager : Node
          if (!target.isEnemy)
          {
             passiveManager.ApplyPassives(target);
+         }
+      }
+
+      for (int i = 0; i < CurrentFighter.currentStatuses.Count; i++)
+      {
+         if (CurrentFighter.currentStatuses[i].effect == StatusEffect.Stealth)
+         {
+            stacksAndStatusManager.RemoveStatus(CurrentFighter, i);
          }
       }
    }
@@ -1181,6 +1222,7 @@ public partial class CombatManager : Node
    public async void ProcessValues()
    {
       List<Fighter> deadFighters = new List<Fighter>();
+      List<int> deadFighterIDs = new List<int>();
 
       for (int i = 0; i < Fighters.Count; i++)
       {
@@ -1191,6 +1233,7 @@ public partial class CombatManager : Node
             if (!Fighters[i].isDead)
             {
                deadFighters.Add(Fighters[i]);
+               deadFighterIDs.Add(i);
             }
             
             Fighters[i].isDead = true;
@@ -1210,6 +1253,16 @@ public partial class CombatManager : Node
          stacksAndStatusManager.ClearStatuses(deadFighters[i]);
          stacksAndStatusManager.ClearStacks(deadFighters[i]);
          uiManager.ChangeEffectUIWithDeath(deadFighters[i]);
+         uiManager.ClearTurnOrderPortraitsOfFighter(deadFighterIDs[i]);
+
+         for (int j = 0; j < fighterTurnOrders.Count; j++)
+         {
+            if (fighterTurnOrders[j] == deadFighterIDs[i])
+            {
+               fighterTurnOrders.Remove(fighterTurnOrders[j]);
+               j--;
+            }
+         }
 
          await ToSignal(GetTree().CreateTimer(player.CurrentAnimationLength + 0.35f), "timeout");
       }
@@ -1329,7 +1382,20 @@ public partial class CombatManager : Node
          defenseApplier = 1;
       }
 
-      return Mathf.Clamp((int)(((damager.baseDamage * (attackStat / 2)) / defenseApplier) * modifier), 1, 99999);
+      int damage = (int)((damager.baseDamage * (attackStat / 2)) / defenseApplier * modifier);
+
+      for (int i = 0; i < CurrentFighter.currentStatuses.Count; i++)
+      {
+         if (CurrentFighter.currentStatuses[i].effect == StatusEffect.Inspired)
+         {
+            damage += (int)Mathf.Clamp(damage * 0.1f, 1, 99999);
+            stacksAndStatusManager.RemoveStatus(CurrentFighter, i);
+            break;
+         }
+      }
+
+
+      return Mathf.Clamp(damage, 1, 99999);
    }
 
    public void ApplyStatModifier(StatType statType, int modifier, int duration, Fighter affectedFighter, Fighter applier, StatusEffect attachedStatus)
@@ -1372,7 +1438,10 @@ public partial class CombatManager : Node
       ResetCombat();
       PointCameraAtParty();
       uiManager.ClearVictoryNotifications();
-      managers.LevelManager.TransitionMusicTracks(GetNode<Node3D>("/root/BaseNode/Level"));
+      
+      AudioStreamPlayer musicPlayer = GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer");
+      musicPlayer.Stream = GD.Load<AudioStreamMP3>("res://Combat/0Core/victory.mp3");
+      musicPlayer.Play();
 
       int expGain = 0;
 
@@ -1386,7 +1455,7 @@ public partial class CombatManager : Node
          }
          else
          {
-            //Fighters[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Victory");
+            Fighters[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Victory");
          }
       }
 
@@ -1442,6 +1511,8 @@ public partial class CombatManager : Node
       
       managers.MenuManager.FadeFromBlack();
 
+      managers.LevelManager.TransitionMusicTracks(GetNode<Node3D>("/root/BaseNode/Level"));
+
       if (currentEnemyScript.postBattleCutsceneName.Length > 0)
       {
          GetNode<CutsceneManager>("/root/BaseNode/CutsceneManager").CutsceneSignalReceiver(currentEnemyScript.postBattleCutsceneName);
@@ -1481,6 +1552,8 @@ public partial class CombatManager : Node
 
    void ResetCombat()
    {
+      IsInCombat = false;
+
       for (int i = 0; i < Fighters.Count; i++)
       {
          Control panel = Fighters[i].UIPanel;
@@ -1500,11 +1573,8 @@ public partial class CombatManager : Node
             
             Fighters[i].companion = null;
          }
-
-         //uiManager.ResetStacksAndStatuses(Fighters[i]);
       }
 
-      IsInCombat = false;
       uiManager.EndOfCombatHiding();
 
       CurrentItem = null;
@@ -1521,45 +1591,28 @@ public partial class CombatManager : Node
       if (IsCompanionTurn)
       {
          player = CurrentFighter.companion.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-         //ReverseFocusOnTarget(CurrentFighter.companion.model);
       }
       else
       {
          player = CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-         //ReverseFocusOnTarget(CurrentFighter.model);
       }
 
       if (targets.Count == 1)
       {
-         //ReverseFocusOnTarget(targets[0].model);
          if (CurrentFighter.isEnemy)
          {
             CurrentFighter.model.GetNode<Node3D>("Model").LookAt(targets[0].model.GlobalPosition, Vector3.Up, true);
-            //targets[0].model.GetNode<Node3D>("Model").LookAt(CurrentFighter.model.GlobalPosition, Vector3.Up, true);
-            //FocusCameraOnFighter(targets[0].model);
          }
       }
-      else
+
+      if (CurrentFighter.placementNode.HasNode("TurnHighlight"))
       {
-         if (targets[0].isEnemy)
-         {
-            //PointCameraAtEnemies();
-            //ResetCamera();
-
-            for (int i = 0; i < targets.Count; i++)
-            {
-               //targets[i].model.GetNode<Node3D>("Model").LookAt(CurrentFighter.model.GlobalPosition, Vector3.Up, true);
-            }
-         }
-         else
-         {
-            //PointCameraAtParty();
-         }
+         Decal turnHighlight = CurrentFighter.placementNode.GetNode<Decal>("TurnHighlight");
+         CurrentFighter.placementNode.RemoveChild(turnHighlight);
+         turnHighlight.QueueFree();
       }
 
-      abilityManager.CreateAbilityGraphicController(targets, playHitAnimation);
-
-      //player.Play("Cast");      
+      abilityManager.CreateAbilityGraphicController(targets, playHitAnimation);     
    }
 
    public async void FinishCastingProcess(List<Fighter> targets, bool playHitAnimation = true)

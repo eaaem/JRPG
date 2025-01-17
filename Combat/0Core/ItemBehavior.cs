@@ -44,7 +44,6 @@ public abstract partial class ItemBehavior : Node
       cancelButton.Visible = true;
       combatManager.PointCameraAtParty();
       uiManager.DisableItems();
-      uiManager.EnablePanels();
    }
 
    public void OutOfCombatItemSelect()

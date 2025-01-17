@@ -208,7 +208,7 @@ public partial class SettingsMenuManager : Panel
    {
       managers.AudioManager.MasterVolume = value;
       GetNode<Label>("Audio/Master/Number").Text = (value + 80).ToString() + "%";
-      configFile.SetValue("audio", "master", managers.AudioManager.MasterVolume);
+      configFile.SetValue("audio", "master", value);
    }
 
    void OnSlideMusicVolume(float value)

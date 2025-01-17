@@ -23,7 +23,7 @@ events = [SubResource("Resource_vm6um")]
 [node name="Model" parent="." instance=ExtResource("1_0qle1")]
 
 [node name="IdleCombatAnchor" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.0211008, 0.0529301, -1.23596)
+transform = Transform3D(-0.0232961, 0.00229039, 0.999726, -8.74225e-08, -0.999997, 0.00229101, 0.999729, 5.32841e-05, 0.0232961, 0.0402622, 0.39356, 0.0780159)
 
 [node name="ActiveCombatAnchor" type="Node3D" parent="."]
 transform = Transform3D(0.251531, 5.73318e-05, -0.967849, -0.967439, -0.0291096, -0.251426, -0.0281881, 0.999576, -0.00726648, 0.029447, 0.055098, -0.517589)
@@ -34,10 +34,11 @@ transform = Transform3D(-0.158533, -0.487022, 0.858881, -0.0884016, 0.87339, 0.4
 [node name="SecondaryWeapon" type="Node3D" parent="."]
 transform = Transform3D(-0.158533, -0.487022, 0.858881, -0.0884016, 0.87339, 0.478932, -0.983388, 2.23517e-08, -0.181515, 0.303228, -0.2582, -0.144977)
 
-[node name="Weapon" parent="." instance=ExtResource("2_1ib11")]
-
 [node name="AttackPreferences" parent="." instance=ExtResource("3_xgsyj")]
 FighterSize = 1.0
 
 [node name="AnimationPreferences" parent="." instance=ExtResource("4_ho1ca")]
 preferences = [SubResource("Resource_dboyi")]
+
+[node name="Weapon" parent="." instance=ExtResource("2_1ib11")]
+transform = Transform3D(0.999999, 0, 0, 0, 0.999999, 0, 0, 0, 0.999999, 0, 0, 0)

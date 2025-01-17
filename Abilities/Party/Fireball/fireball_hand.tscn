@@ -1,0 +1,84 @@
+[gd_scene load_steps=13 format=3 uid="uid://c5hdgcotb64em"]
+
+[ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Core/puff.png" id="1_w24v8"]
+[ext_resource type="Script" path="res://Abilities/0Core/TerminatingEffect.cs" id="2_wjy83"]
+
+[sub_resource type="Gradient" id="Gradient_smeam"]
+offsets = PackedFloat32Array(0, 0.126829, 1)
+colors = PackedColorArray(1, 1, 0, 1, 1, 0.494, 0.08, 1, 0.78, 0, 0.0129998, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_h27s2"]
+gradient = SubResource("Gradient_smeam")
+
+[sub_resource type="Curve" id="Curve_6mtua"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.389224), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_x3ee4"]
+curve = SubResource("Curve_6mtua")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6tpki"]
+emission_shape = 1
+emission_sphere_radius = 0.1
+gravity = Vector3(0, 1, 0)
+scale_curve = SubResource("CurveTexture_x3ee4")
+color_ramp = SubResource("GradientTexture1D_h27s2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_em5c3"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_w24v8")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_qhbgk"]
+material = SubResource("StandardMaterial3D_em5c3")
+size = Vector2(0.25, 0.25)
+orientation = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jwqn8"]
+gravity = Vector3(0, 0, 0)
+scale_curve = SubResource("CurveTexture_x3ee4")
+color_initial_ramp = SubResource("GradientTexture1D_h27s2")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j6h4q"]
+transparency = 1
+albedo_color = Color(1, 0.65, 0, 0.376471)
+emission_enabled = true
+emission = Color(0.803123, 0.468388, 0, 1)
+emission_energy_multiplier = 2.79
+
+[sub_resource type="SphereMesh" id="SphereMesh_qd21o"]
+material = SubResource("StandardMaterial3D_j6h4q")
+radius = 0.05
+height = 0.1
+radial_segments = 16
+rings = 8
+
+[node name="FireballHand" type="BoneAttachment3D"]
+bone_name = "hand.R"
+
+[node name="Fire" type="GPUParticles3D" parent="."]
+amount = 24
+lifetime = 0.75
+process_material = SubResource("ParticleProcessMaterial_6tpki")
+draw_pass_1 = SubResource("PlaneMesh_qhbgk")
+script = ExtResource("2_wjy83")
+duration = 2.5
+
+[node name="Ball" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0422971)
+amount = 24
+lifetime = 0.75
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_jwqn8")
+draw_pass_1 = SubResource("PlaneMesh_qhbgk")
+script = ExtResource("2_wjy83")
+duration = 2.5
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("SphereMesh_qd21o")

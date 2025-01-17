@@ -1,0 +1,54 @@
+[gd_scene load_steps=10 format=3 uid="uid://bx1n8xhr30uhj"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_1yl0j"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_eux7o"]
+
+[sub_resource type="Resource" id="Resource_qevw1"]
+script = ExtResource("2_eux7o")
+CommandType = 15
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+TargetName = ""
+TargetCodeOverride = 4
+Amount = 8.0
+LookImmediately = false
+
+[sub_resource type="Resource" id="Resource_5s00o"]
+script = ExtResource("2_eux7o")
+CommandType = 16
+
+[sub_resource type="Resource" id="Resource_kuq0o"]
+script = ExtResource("2_eux7o")
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "BasicBoltCast"
+
+[sub_resource type="Resource" id="Resource_jiyvq"]
+script = ExtResource("2_eux7o")
+CommandType = 10
+Amount = 0.0
+PauseAnimation = "Fire"
+Path = ""
+SpecialCodeOverride = 2
+
+[sub_resource type="Resource" id="Resource_va8ma"]
+script = ExtResource("2_eux7o")
+CommandType = 10
+Amount = 0.0
+PauseAnimation = "Projectile"
+Path = ""
+SpecialCodeOverride = 2
+
+[sub_resource type="Resource" id="Resource_ywhim"]
+script = ExtResource("2_eux7o")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_mnt78"]
+script = ExtResource("2_eux7o")
+CommandType = 17
+
+[node name="MagicBoltCameraDirections" type="Node3D"]
+script = ExtResource("1_1yl0j")
+commands = [SubResource("Resource_qevw1"), SubResource("Resource_5s00o"), SubResource("Resource_kuq0o"), SubResource("Resource_jiyvq"), SubResource("Resource_va8ma"), SubResource("Resource_ywhim"), SubResource("Resource_mnt78")]

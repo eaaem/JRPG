@@ -5,8 +5,15 @@
 [resource]
 script = ExtResource("1_labcr")
 name = "Rend"
-description = "Slash at a target, dealing significant physical damage.
-Mana Cost: 2"
+description = "Slash at a target, dealing Physical damage with a chance to cause Bleed."
 manaCost = 2
-scriptName = "Rend"
+scriptPath = ""
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+onlyHitsTeam = false
+onlyHitsSelf = false
+bypassesDeaths = false
+graphicPath = ""
 requiredLevel = 2

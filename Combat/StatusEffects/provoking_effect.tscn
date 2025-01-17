@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://f4geg0jxtdcy"]
+
+[ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Core/puff.png" id="1_68esd"]
+
+[sub_resource type="Gradient" id="Gradient_m0bkp"]
+colors = PackedColorArray(0.321103, 0.0148291, 1.20327e-08, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ty4dr"]
+gradient = SubResource("Gradient_m0bkp")
+
+[sub_resource type="Curve" id="Curve_td4ou"]
+_data = [Vector2(0, 0.843103), 0.0, 0.0, 0, 0, Vector2(1, 0.478879), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3jmrm"]
+curve = SubResource("Curve_td4ou")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8y75e"]
+angle_min = 12.0
+angle_max = 189.0
+gravity = Vector3(0, 1, 0)
+linear_accel_min = 0.999998
+linear_accel_max = 0.999998
+radial_accel_min = -0.500002
+radial_accel_max = -0.500002
+tangential_accel_min = 2.0
+tangential_accel_max = 2.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_3jmrm")
+color_ramp = SubResource("GradientTexture1D_ty4dr")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3nto4"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_68esd")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_uq1n1"]
+material = SubResource("StandardMaterial3D_3nto4")
+size = Vector2(0.5, 0.5)
+orientation = 2
+
+[node name="ProvokingEffect" type="GPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.53731, 0)
+amount = 12
+lifetime = 0.75
+process_material = SubResource("ParticleProcessMaterial_8y75e")
+draw_pass_1 = SubResource("PlaneMesh_uq1n1")

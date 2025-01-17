@@ -232,6 +232,7 @@ radial_segments = 4
 rings = 2
 
 [node name="WorldEnemy" type="CharacterBody3D"]
+collision_mask = 0
 script = ExtResource("1_wd6ct")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
