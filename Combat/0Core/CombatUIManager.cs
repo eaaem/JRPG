@@ -442,7 +442,7 @@ public partial class CombatUIManager : Node
 
       for (int i = 0; i < managers.PartyManager.Items.Count; i++)
       {
-         if (managers.PartyManager.Items[i].item.itemType == ItemType.None && managers.PartyManager.Items[i].item.itemType == ItemType.Consumable)
+         if (managers.PartyManager.Items[i].item.itemCategory == ItemCategory.None && managers.PartyManager.Items[i].item.itemType == ItemType.Consumable)
          {
             // This is much like GenerateAbilities (creates buttons that have scripts inside them), but with items instead
             InventoryItem thisItem = managers.PartyManager.Items[i];
@@ -453,9 +453,14 @@ public partial class CombatUIManager : Node
             Node2D scriptHolder = currentButton.GetNode<Node2D>("ScriptHolder");
             scriptHolder.SetScript(GD.Load<CSharpScript>(thisItem.item.scriptPath));
 
-            currentButton.Text = thisItem.item.name + " (" + thisItem.quantity + "x)";
-            currentButton.TooltipText = thisItem.item.description;
-            currentButton.Name = "ItemButton" + (i + 1);
+            currentButton.Text = "   " + thisItem.item.name + " (" + thisItem.quantity + "x)";
+            currentButton.Name = thisItem.item.name;
+
+            currentButton.ButtonDown += managers.ButtonSoundManager.OnClick;
+            currentButton.MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+            currentButton.MouseExited += StopHoveringOverInformation;
+            currentButton.MouseEntered += () => HoverOverInformation(thisItem.item.description);
+
             itemsContainer.AddChild(currentButton);
          }
       }
@@ -463,12 +468,10 @@ public partial class CombatUIManager : Node
    
    public void ClearItemUI()
    {
-      int size = itemsContainer.GetChildCount();
-      for (int i = 0; i < size; i++)
+      foreach (Control child in itemsContainer.GetChildren())
       {
-         Control button = itemsContainer.GetNode<Control>("ItemButton" + (i + 1));
-         itemsContainer.RemoveChild(button);
-         button.QueueFree();
+         itemsContainer.RemoveChild(child);
+         child.QueueFree();
       }
    }
 
@@ -484,31 +487,15 @@ public partial class CombatUIManager : Node
             if (managers.PartyManager.Items[i].quantity <= 0)
             {
                managers.PartyManager.Items.Remove(managers.PartyManager.Items[i]);
-               Control button = itemsContainer.GetNode<Control>("ItemButton" + (i + 1));
+               Control button = itemsContainer.GetNode<Control>(changedItem.item.name);
                itemsContainer.RemoveChild(button);
                button.QueueFree();
             }
             else
             {
-               itemsContainer.GetNode<Button>("ItemButton" + (i + 1)).Text = changedItem.item.name + " (" + changedItem.quantity + "x)";
+               itemsContainer.GetNode<Button>(changedItem.item.name).Text = changedItem.item.name + " (" + changedItem.quantity + "x)";
             }
          }
-      }
-   }
-
-   public void DisableItems()
-   {
-      for (int i = 0; i < itemsContainer.GetChildCount(); i++)
-      {
-         itemsContainer.GetNode<Button>("ItemButton" + (i + 1)).Disabled = true;
-      }
-   }
-
-   public void EnableItems()
-   {
-      for (int i = 0; i < itemsContainer.GetChildCount(); i++)
-      {
-         itemsContainer.GetNode<Button>("ItemButton" + (i + 1)).Disabled = false;
       }
    }
 
@@ -545,11 +532,6 @@ public partial class CombatUIManager : Node
    public void ShowSelectionBox()
    {
       options.Visible = true;
-   }
-
-	public void MoveSecondaryOptionsToLeft()
-   {
-      secondaryOptions.Position = new Vector2(250, 500);
    }
 
    public void MoveSecondaryOptionsToRight()
@@ -704,6 +686,7 @@ public partial class CombatUIManager : Node
       StopHoveringOverInformation();
       itemsList.Visible = true;
       SetChoicesVisible(false);
+      SetCancelButtonVisible(true);
    }
 
    public void GenerateTargets()
@@ -752,6 +735,7 @@ public partial class CombatUIManager : Node
       }
 
       options.GetNode<ScrollContainer>("Targets").Visible = true;
+      options.GetNode<ScrollContainer>("Targets").ScrollVertical = 0;
 
       if (combatManager.CurrentAbility != null)
       {
@@ -782,14 +766,19 @@ public partial class CombatUIManager : Node
       }
       else if (combatManager.CurrentItem != null)
       {
-         if (combatManager.CurrentItem.item.hitsSelf)
+         if (combatManager.CurrentItem.item.onlyHitsSelf || combatManager.CurrentItem.item.hitsSelf)
          {
             possibleTargets.Add(combatManager.CurrentFighter);
          }
          
-         if (combatManager.CurrentItem.item.hitsTeam)
+         if (combatManager.CurrentItem.item.onlyHitsTeam || combatManager.CurrentItem.item.hitsTeam)
          {
             possibleTargets.AddRange(GetTeam(false));
+         }
+
+         if (combatManager.CurrentItem.item.onlyHitsSelf || combatManager.CurrentItem.item.onlyHitsTeam)
+         {
+            return possibleTargets;
          }
       }
       else
@@ -1005,7 +994,7 @@ public partial class CombatUIManager : Node
    /// <summary>
    /// This creates the damage indicator texts, but doesn't show or move them; they're simply stored until they're ready to be shown with MoveDamageTexts.
    /// </summary>
-   public void ProjectDamageText(Fighter target, int damage, DamageType damageType, bool isCrit, bool isHeal = false)
+   public void ProjectDamageText(Fighter target, int damage, DamageType damageType, bool isCrit, bool isHeal = false, bool isMana = false)
    {
       Label3D damageText = GD.Load<PackedScene>("res://Combat/UI/damage_text.tscn").Instantiate<Label3D>();
       target.UIPanel.AddChild(damageText);
@@ -1021,6 +1010,10 @@ public partial class CombatUIManager : Node
       if (isHeal)
       {
          damageText.Modulate = new Color(0, 1f, 0.017f);
+      }
+      else if (isMana)
+      {
+         damageText.Modulate = new Color(0.192f, 0.192f, 0.996f);
       }
       else
       {
@@ -1166,11 +1159,6 @@ public partial class CombatUIManager : Node
    public void SetCastButtonVisible(bool visible) 
    {
       options.GetNode<VBoxContainer>("Choices").GetNode<Button>("CastButton").Disabled = visible;
-   }
-
-   public void SetActionBar(Fighter fighter, int value)
-   {
-      //fighter.UIPanel.GetNode<ProgressBar>("ActionBar").Value = value;
    }
 
    public void SetTargetsVisible(bool visible)

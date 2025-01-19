@@ -12,7 +12,7 @@ albedo_color = Color(0.376471, 0.337255, 0.184314, 1)
 material = SubResource("StandardMaterial3D_x7h6u")
 top_radius = 8.0
 bottom_radius = 8.0
-height = 0.25
+height = 0.1
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_ej4sg"]
 
@@ -125,6 +125,21 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.63004, 0, 2.647)
 [node name="EnemyPlacement4" parent="EnemyGroup4" instance=ExtResource("2_as176")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.56304, 0, 6.523)
 
+[node name="VictoryPlacements" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.61495, 0, 0)
+
+[node name="1" type="Node3D" parent="VictoryPlacements"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.925122, 0, 0)
+
+[node name="2" type="Node3D" parent="VictoryPlacements"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.362658, 0, 1.08982)
+
+[node name="3" type="Node3D" parent="VictoryPlacements"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.164129, 0, 2.1785)
+
+[node name="4" type="Node3D" parent="VictoryPlacements"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.638348, 0, 3.24988)
+
 [node name="ArenaCamera" type="Camera3D" parent="."]
 transform = Transform3D(0.645071, 0.271408, -0.714298, 7.14614e-09, 0.934795, 0.355189, 0.764123, -0.229122, 0.603009, -5.24341, 3.07948, 4.58194)
 
@@ -141,3 +156,6 @@ multimesh = SubResource("MultiMesh_vpgv0")
 transform = Transform3D(25, 0, 0, 0, 0.01, 0, 0, 0, 25, 0, 0, 0)
 visible = false
 mesh = ExtResource("4_ctf17")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, -3.80079, 1.14241, -1.90277)

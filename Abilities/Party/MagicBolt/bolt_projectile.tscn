@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://mvd5m1lrxsrc"]
+[gd_scene load_steps=13 format=3 uid="uid://mvd5m1lrxsrc"]
 
 [ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Core/puff.png" id="1_8vkjq"]
 [ext_resource type="Script" path="res://Abilities/0Core/Projectile.cs" id="2_pexgu"]
+[ext_resource type="AudioStream" uid="uid://c3y5fbn2fpmri" path="res://Abilities/Party/MagicBolt/thalria_magic_bolt.wav" id="2_vfnrk"]
 [ext_resource type="Script" path="res://Abilities/0Core/ProjectilePathPoint.cs" id="3_jkqog"]
 
 [sub_resource type="Curve3D" id="Curve3D_kllcw"]
@@ -78,6 +79,11 @@ shape = SubResource("BoxShape3D_42wdq")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/PathFollow3D/Projectile"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
 mesh = SubResource("CapsuleMesh_e3rh5")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Path3D/PathFollow3D/Projectile"]
+stream = ExtResource("2_vfnrk")
+autoplay = true
+bus = &"Effects"
 
 [node name="MiddleIndicator" type="Node3D" parent="Path3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.17009, 3.98754)

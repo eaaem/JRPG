@@ -21,11 +21,10 @@ public partial class HealingPotion : ItemBehavior
    {
       if (combatManager.CurrentItem == resource) // Combat
       {
-         combatManager.CurrentTarget.currentHealth += (int)(BaseHealthGain * resource.item.specialModifier);
-         combatManager.ProcessValues();
-         uiManager.UpdateSingularUIPanel(combatManager.CurrentTarget);
-         combatManager.CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
-         RegularInCombatUse(combatManager.CurrentTarget);
+         int regainAmount = (int)(BaseHealthGain * resource.item.specialModifier);
+         combatManager.CurrentTarget.currentHealth += regainAmount;
+         uiManager.ProjectDamageText(combatManager.CurrentTarget, regainAmount, DamageType.None, false, true);
+         combatManager.RegularCast(new System.Collections.Generic.List<Fighter> { combatManager.CurrentTarget }, false );
       }
    }
 

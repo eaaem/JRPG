@@ -1,0 +1,69 @@
+[gd_scene load_steps=11 format=3 uid="uid://c82r4amt2gxc"]
+
+[ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Core/puff.png" id="1_poka0"]
+[ext_resource type="Script" path="res://Abilities/0Core/TerminatingEffect.cs" id="2_kwvag"]
+
+[sub_resource type="Gradient" id="Gradient_eqjxd"]
+colors = PackedColorArray(0.203922, 0.564706, 0.0745098, 1, 0.0942242, 0.295685, 0.0238594, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_73j7k"]
+gradient = SubResource("Gradient_eqjxd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o52hu"]
+emission_shape_scale = Vector3(1, 0.75, 1)
+emission_shape = 1
+emission_sphere_radius = 0.1
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -2.23517e-06
+radial_accel_max = -2.23517e-06
+color_ramp = SubResource("GradientTexture1D_73j7k")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ai76a"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_poka0")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vbdcf"]
+material = SubResource("StandardMaterial3D_ai76a")
+size = Vector2(0.25, 0.25)
+orientation = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_kr3q1"]
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rxauj"]
+render_priority = 1
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+albedo_texture = ExtResource("1_poka0")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_iba08"]
+material = SubResource("StandardMaterial3D_rxauj")
+size = Vector2(0.15, 0.35)
+orientation = 2
+
+[node name="BirdseyeHandEffect" type="BoneAttachment3D"]
+bone_name = "hand.R"
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount = 64
+process_material = SubResource("ParticleProcessMaterial_o52hu")
+draw_pass_1 = SubResource("PlaneMesh_vbdcf")
+script = ExtResource("2_kwvag")
+duration = 2.0
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="GPUParticles3D"]
+visible = false
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_kr3q1")
+draw_pass_1 = SubResource("PlaneMesh_iba08")

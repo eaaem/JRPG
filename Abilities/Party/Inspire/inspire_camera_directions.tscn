@@ -1,18 +1,7 @@
-[gd_scene load_steps=20 format=3 uid="uid://bjq5cp1m8mk8n"]
+[gd_scene load_steps=21 format=3 uid="uid://bjq5cp1m8mk8n"]
 
 [ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_q5k4p"]
 [ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_c1rda"]
-
-[sub_resource type="Resource" id="Resource_5nwkp"]
-script = ExtResource("2_c1rda")
-CommandType = 15
-InvolvedFighter = ""
-SpecialCodeOverride = 2
-Target = Vector3(0, 0, 0)
-TargetName = ""
-TargetCodeOverride = 4
-Amount = 0.0
-LookImmediately = true
 
 [sub_resource type="Resource" id="Resource_ehc2f"]
 script = ExtResource("2_c1rda")
@@ -33,6 +22,8 @@ Path = ""
 SpecialCodeOverride = 4
 Target = Vector3(0, 1, 0)
 PathToScene = ""
+IsProjectile = false
+CreateMultiple = false
 
 [sub_resource type="Resource" id="Resource_0qdft"]
 script = ExtResource("2_c1rda")
@@ -83,6 +74,15 @@ InvolvedFighter = ""
 SpecialCodeOverride = 2
 TargetName = "InspireCast"
 
+[sub_resource type="Resource" id="Resource_amtu5"]
+script = ExtResource("2_c1rda")
+CommandType = 18
+PathToSound = "res://Abilities/Party/Inspire/athlia_inspire_bells.wav"
+Is3DSound = true
+Path = ""
+SpecialCodeOverride = 2
+NodeName = ""
+
 [sub_resource type="Resource" id="Resource_7nl6j"]
 script = ExtResource("2_c1rda")
 CommandType = 10
@@ -94,6 +94,17 @@ SpecialCodeOverride = 0
 [sub_resource type="Resource" id="Resource_3y08u"]
 script = ExtResource("2_c1rda")
 CommandType = 11
+
+[sub_resource type="Resource" id="Resource_yuwne"]
+script = ExtResource("2_c1rda")
+CommandType = 1
+NodeName = "inspire_effect"
+Path = ""
+SpecialCodeOverride = 4
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/Inspire/inspire_apply_effect.tscn"
+IsProjectile = false
+CreateMultiple = false
 
 [sub_resource type="Resource" id="Resource_xghnc"]
 script = ExtResource("2_c1rda")
@@ -124,4 +135,4 @@ CommandType = 17
 
 [node name="InspireCameraDirections" type="Node3D"]
 script = ExtResource("1_q5k4p")
-commands = [SubResource("Resource_5nwkp"), SubResource("Resource_ehc2f"), SubResource("Resource_aou6h"), SubResource("Resource_0qdft"), SubResource("Resource_gpc0i"), SubResource("Resource_1f4jo"), SubResource("Resource_rksh2"), SubResource("Resource_dh5qw"), SubResource("Resource_1wcxn"), SubResource("Resource_fcqct"), SubResource("Resource_oa0na"), SubResource("Resource_7nl6j"), SubResource("Resource_3y08u"), SubResource("Resource_xghnc"), SubResource("Resource_3tah5"), SubResource("Resource_mk6ia"), SubResource("Resource_pfci8")]
+commands = [SubResource("Resource_ehc2f"), SubResource("Resource_aou6h"), SubResource("Resource_0qdft"), SubResource("Resource_gpc0i"), SubResource("Resource_1f4jo"), SubResource("Resource_rksh2"), SubResource("Resource_dh5qw"), SubResource("Resource_1wcxn"), SubResource("Resource_fcqct"), SubResource("Resource_oa0na"), SubResource("Resource_amtu5"), SubResource("Resource_7nl6j"), SubResource("Resource_3y08u"), SubResource("Resource_yuwne"), SubResource("Resource_xghnc"), SubResource("Resource_3tah5"), SubResource("Resource_mk6ia"), SubResource("Resource_pfci8")]

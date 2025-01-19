@@ -1,7 +1,8 @@
-[gd_scene load_steps=16 format=3 uid="uid://cxns4vvrv0pru"]
+[gd_scene load_steps=17 format=3 uid="uid://cxns4vvrv0pru"]
 
 [ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Core/puff.png" id="1_mafe4"]
 [ext_resource type="Script" path="res://Abilities/0Core/Projectile.cs" id="2_31w40"]
+[ext_resource type="AudioStream" uid="uid://cf3jolwm7iksv" path="res://Abilities/Party/Fireball/thalria_fireball_projectile.wav" id="2_jirbj"]
 [ext_resource type="Script" path="res://Abilities/0Core/ProjectilePathPoint.cs" id="3_q4sja"]
 
 [sub_resource type="Curve3D" id="Curve3D_kllcw"]
@@ -99,6 +100,11 @@ collision_mask = 256
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/Ball/StaticBody3D"]
 shape = SubResource("SphereShape3D_ya0bl")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Path3D/PathFollow3D/Ball"]
+stream = ExtResource("2_jirbj")
+autoplay = true
+bus = &"Effects"
 
 [node name="MiddleIndicator" type="Node3D" parent="Path3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.17009, 3.98754)

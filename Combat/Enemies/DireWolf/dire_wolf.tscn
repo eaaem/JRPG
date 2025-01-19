@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://blvh7ndsywplh"]
+[gd_scene load_steps=11 format=3 uid="uid://blvh7ndsywplh"]
 
 [ext_resource type="Script" path="res://Combat/0Core/EnemyDataHolder.cs" id="1_x1bd4"]
 [ext_resource type="PackedScene" uid="uid://dhemfskwxo13i" path="res://Combat/Enemies/DireWolf/dire_wolf.glb" id="2_c15d0"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bdbi8yvqbpttm" path="res://Abilities/0Core/animation_preferences.tscn" id="4_83er1"]
 [ext_resource type="Script" path="res://Abilities/0Core/WaitTimeEvent.cs" id="5_j3moo"]
 [ext_resource type="Script" path="res://Abilities/0Core/AnimationPreference.cs" id="6_y6j54"]
+[ext_resource type="PackedScene" uid="uid://dvruf8jujbtvi" path="res://Combat/0Core/audio_data_holder.tscn" id="7_jke26"]
 
 [sub_resource type="Resource" id="Resource_luc20"]
 script = ExtResource("5_j3moo")
@@ -29,43 +30,46 @@ size = Vector3(2, 2, 3)
 bones/0/rotation = Quaternion(0.707107, -1.37679e-07, -1.37679e-07, 0.707107)
 bones/1/position = Vector3(0.195429, 0.114327, -0.181159)
 bones/2/position = Vector3(-0.19543, 0.114327, -0.181159)
+bones/3/position = Vector3(-3.93777e-07, 0.384768, -1.0112)
 bones/3/rotation = Quaternion(0.998669, 1.00418e-08, -1.94454e-07, 0.0515743)
-bones/4/position = Vector3(-1.61806e-22, 0.481774, -8.72735e-08)
+bones/4/position = Vector3(6.48497e-22, 0.481774, -3.20649e-08)
 bones/4/rotation = Quaternion(0.104445, 5.5725e-16, 5.28825e-15, 0.994531)
-bones/5/rotation = Quaternion(-0.0418354, -3.37719e-20, 9.2711e-18, 0.999125)
-bones/6/rotation = Quaternion(-0.0200983, 0.000886635, 0.0440715, 0.998826)
-bones/7/rotation = Quaternion(0.541026, 0.464785, -0.533244, -0.454881)
-bones/7/scale = Vector3(1, 0.999998, 1)
-bones/8/rotation = Quaternion(0.00280755, -0.0161183, -0.383048, 0.923584)
-bones/8/scale = Vector3(1, 1, 1)
-bones/9/rotation = Quaternion(0.00970705, -9.78789e-08, 0.310825, 0.950418)
-bones/9/scale = Vector3(1.00003, 0.999974, 1)
-bones/10/rotation = Quaternion(0.0230007, 2.58142e-08, 0.736496, 0.67605)
-bones/11/rotation = Quaternion(0.541026, -0.464785, 0.533244, -0.454881)
-bones/11/scale = Vector3(1, 0.999998, 1)
-bones/12/rotation = Quaternion(0.00280755, 0.0161183, 0.383048, 0.923584)
-bones/12/scale = Vector3(1, 1, 1)
-bones/13/rotation = Quaternion(0.00970705, 9.85219e-08, -0.310825, 0.950418)
-bones/13/scale = Vector3(1.00003, 0.999974, 1)
-bones/14/rotation = Quaternion(0.0230007, -2.776e-08, -0.736496, 0.67605)
-bones/15/rotation = Quaternion(-0.669521, 0.0182861, 0.0160875, 0.742394)
-bones/15/scale = Vector3(1, 1, 1)
-bones/16/rotation = Quaternion(-2.06335e-07, -2.06556e-08, -0.00517469, 0.999987)
-bones/17/rotation = Quaternion(-0.0564372, 0.00251242, -0.00978734, 0.998355)
-bones/18/rotation = Quaternion(-0.64461, 0.00977564, -0.0114792, 0.764363)
-bones/19/rotation = Quaternion(-0.669521, -0.0182861, -0.0160876, 0.742394)
-bones/20/rotation = Quaternion(-2.06345e-07, 2.05388e-08, 0.00517469, 0.999987)
-bones/21/rotation = Quaternion(-0.0564372, -0.00251242, 0.00978734, 0.998355)
-bones/21/scale = Vector3(1, 0.999999, 1)
-bones/22/rotation = Quaternion(-0.64461, -0.00977564, 0.0114792, 0.764363)
+bones/5/rotation = Quaternion(-0.531363, -0.172854, -0.0869927, 0.824746)
+bones/6/rotation = Quaternion(-0.229277, -0.048264, -0.147301, 0.96094)
+bones/7/rotation = Quaternion(0.660345, 0.39849, -0.483143, -0.414394)
+bones/7/scale = Vector3(1, 0.999996, 1)
+bones/8/rotation = Quaternion(0.00703176, -0.0124008, -0.588786, 0.808163)
+bones/8/scale = Vector3(1.00001, 0.99998, 1)
+bones/9/rotation = Quaternion(0.0157049, 0.00140716, 0.372222, 0.92801)
+bones/9/scale = Vector3(1.00003, 0.999975, 1)
+bones/10/rotation = Quaternion(-0.0942498, -0.190133, 0.700932, 0.680926)
+bones/11/rotation = Quaternion(0.665474, -0.399716, 0.471849, -0.418007)
+bones/11/scale = Vector3(1, 0.999996, 1)
+bones/12/rotation = Quaternion(0.00687185, 0.0125594, 0.582165, 0.812944)
+bones/12/scale = Vector3(1.00001, 0.99998, 1)
+bones/13/rotation = Quaternion(0.0154966, -0.00134536, -0.370999, 0.928503)
+bones/13/scale = Vector3(1.00003, 0.999975, 1)
+bones/14/rotation = Quaternion(-0.0326724, 0.0904578, -0.723216, 0.683892)
+bones/15/rotation = Quaternion(-0.602196, 0.0332744, -0.109598, 0.790089)
+bones/15/scale = Vector3(0.999999, 0.999999, 1)
+bones/16/rotation = Quaternion(-0.0893368, -0.00139728, -0.0359773, 0.99535)
+bones/17/rotation = Quaternion(-0.341938, 0.00134244, -0.0722938, 0.936937)
+bones/18/rotation = Quaternion(-0.298223, -0.178945, -0.178681, 0.920388)
+bones/19/rotation = Quaternion(-0.609629, -0.042541, 0.0453834, 0.790242)
+bones/20/rotation = Quaternion(-0.0951285, 0.001507, 0.0377129, 0.994749)
+bones/21/rotation = Quaternion(-0.356875, -0.00124747, 0.0756965, 0.931079)
+bones/21/scale = Vector3(1, 1, 0.999999)
+bones/22/rotation = Quaternion(-0.254597, 0.186483, 0.237639, 0.918658)
 bones/23/rotation = Quaternion(-3.13894e-07, -0.0120759, 0.999927, 3.79083e-09)
 bones/24/rotation = Quaternion(-0.112612, 8.05595e-12, -7.07027e-08, 0.993639)
 bones/25/rotation = Quaternion(-0.220001, -2.82077e-12, -1.38127e-07, 0.9755)
-bones/26/rotation = Quaternion(-0.202814, -3.4429e-12, -1.27335e-07, 0.979217)
-bones/28/rotation = Quaternion(-0.132047, 0.451952, 0.84681, 0.247417)
-bones/29/rotation = Quaternion(0.132046, 0.451952, 0.84681, -0.247417)
-bones/30/position = Vector3(0.170061, 0.434321, -0.0333824)
-bones/31/position = Vector3(0.195429, -0.877387, -0.0349788)
+bones/26/rotation = Quaternion(-0.0659848, -4.80149e-12, -4.14274e-08, 0.997821)
+bones/28/rotation = Quaternion(-0.240054, -0.045062, 0.958812, 0.14499)
+bones/29/rotation = Quaternion(0.245074, -0.0792502, 0.956594, -0.136331)
+bones/30/position = Vector3(0.414835, 0.627984, -0.0333825)
+bones/31/position = Vector3(0.404052, -0.877387, -0.0349789)
+bones/32/position = Vector3(-0.308462, 0.642656, -0.0333822)
+bones/33/position = Vector3(-0.426367, -0.877387, -0.0349786)
 
 [node name="ScriptHolder" type="Node3D" parent="."]
 script = ExtResource("1_x1bd4")
@@ -73,9 +77,14 @@ script = ExtResource("1_x1bd4")
 [node name="AttackPreferences" type="Node3D" parent="."]
 script = ExtResource("3_rbtdb")
 FighterSize = 2.0
+PathToAttackSound = "res://Combat/Enemies/DireWolf/wolf_attack.wav"
 
 [node name="AnimationPreferences" parent="." instance=ExtResource("4_83er1")]
 preferences = [SubResource("Resource_p5db2")]
+
+[node name="AudioData" parent="." instance=ExtResource("7_jke26")]
+HitSoundPath = "res://Combat/Enemies/DireWolf/wolf_hurt.wav"
+DeathSoundPath = "res://Combat/Enemies/DireWolf/wolf_death.wav"
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 256

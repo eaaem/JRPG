@@ -18,6 +18,8 @@ public partial class Enemy : Resource
    public AbilityResource[] abilities = new AbilityResource[10];
    [Export]
    public string turnOrderSpritePath;
+   [Export]
+   public string hitSoundPath;
 
    public Enemy() : this(null, new Stat[10], null) {}
 

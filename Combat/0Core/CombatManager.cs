@@ -148,6 +148,8 @@ public partial class CombatManager : Node
          managers.Controller.DisableCamera = true;
          managers.Controller.IsSprinting = false;
 
+         enemyScript.GetNode<AudioStreamPlayer3D>("Active").Stop();
+
          for (int i = 0; i < Fighters.Count; i++)
          {
             if (!Fighters[i].isEnemy)
@@ -212,7 +214,7 @@ public partial class CombatManager : Node
          arenaCamera.MakeCurrent();
          uiManager.ClearAllTurnOrderPortraits();
 
-         // Only populate 9 to start, since the first gets improperly clipped
+         // Only populate 1 to start, since the first gets improperly clipped
          PopulateTurnOrder(1);
 
          // When the next turn is selected, the first fighter will be deleted off, so this duplicates the first fighter, preventing them from losing their turn
@@ -255,6 +257,8 @@ public partial class CombatManager : Node
    async void CreateEnemySpawnEffects()
    {
       List<Fighter> enemies = new List<Fighter>();
+
+      GetNode<AudioStreamPlayer>("/root/BaseNode/AudioPlayers/Combat/EnemySpawns").Play();
 
       for (int i = 0; i < Fighters.Count; i++)
       {
@@ -855,6 +859,7 @@ public partial class CombatManager : Node
          uiManager.SetChoicesVisible(true);
          uiManager.SetTargetsVisible(false);
          uiManager.SetCancelButtonVisible(false);
+         uiManager.SetSecondaryOptionsVisible(false);
       }
       else if (uiManager.GetAbilityContainerVisible())
       {
@@ -862,6 +867,7 @@ public partial class CombatManager : Node
          uiManager.SetChoicesVisible(true);
          uiManager.SetCancelButtonVisible(false);
          uiManager.ResetManaBarLossIndicator();
+         uiManager.SetSecondaryOptionsVisible(false);
       }
       else if (uiManager.GetItemListVisible())
       {
@@ -884,7 +890,6 @@ public partial class CombatManager : Node
       }
       else if (CurrentItem != null)
       {
-         uiManager.EnableItems();
          uiManager.SetTargetsVisible(false);
          uiManager.SetItemListVisible(true);
 
@@ -903,6 +908,7 @@ public partial class CombatManager : Node
       
       IsAttacking = false;
       uiManager.StopHoveringOverInformation();
+      GetNode<AudioStreamPlayer>("/root/BaseNode/AudioPlayers/UI_SFX/UIClose").Play();
    }
 
    public override void _Input(InputEvent @event)
@@ -1023,6 +1029,12 @@ public partial class CombatManager : Node
             if (targets[i].wasHit)
             {
                player.Play("Hit");
+               AudioDataHolder audioDataHolder = targets[i].model.GetNode<AudioDataHolder>("AudioData");
+
+               if (audioDataHolder.HitSoundPath.Length > 0)
+               {
+                  CreateAudioOnFighter(targets[i], audioDataHolder.HitSoundPath);
+               }
 
                for (int j = 0; j < targets[i].currentStatuses.Count; j++)
                {
@@ -1062,6 +1074,17 @@ public partial class CombatManager : Node
       return longestDuration;
    }
 
+   void CreateAudioOnFighter(Fighter fighter, string pathToAudio)
+   {
+      Node3D parent = new Node3D();
+      fighter.model.AddChild(parent);
+      AudioStreamPlayer3D audioPlayer = GD.Load<PackedScene>("res://Core/self_destructing_3d_audio_player.tscn").Instantiate<AudioStreamPlayer3D>();
+      parent.AddChild(audioPlayer);
+
+      audioPlayer.Stream = GD.Load<AudioStream>(pathToAudio);
+      audioPlayer.Play();
+   }
+
    void EnemyTurn()
    {
       Fighter target = SelectEnemyTarget(false, false);
@@ -1096,7 +1119,7 @@ public partial class CombatManager : Node
       }
    }
 
-   public void ProcessAttack(List<DamagingEntity> damagers, Fighter target, bool isCrit = false)
+   public void ProcessAttack(List<DamagingEntity> damagers, Fighter target, bool isCrit = false, bool isLastOfMulti = true)
    {
       if (HitAttack(target))
       {
@@ -1113,11 +1136,15 @@ public partial class CombatManager : Node
          }
       }
 
-      for (int i = 0; i < CurrentFighter.currentStatuses.Count; i++)
+      if (isLastOfMulti)
       {
-         if (CurrentFighter.currentStatuses[i].effect == StatusEffect.Stealth)
+         for (int i = 0; i < CurrentFighter.currentStatuses.Count; i++)
          {
-            stacksAndStatusManager.RemoveStatus(CurrentFighter, i);
+            if (CurrentFighter.currentStatuses[i].effect == StatusEffect.Stealth || CurrentFighter.currentStatuses[i].effect == StatusEffect.Inspired)
+            {
+               stacksAndStatusManager.RemoveStatus(CurrentFighter, i);
+               i--;
+            }
          }
       }
    }
@@ -1249,6 +1276,9 @@ public partial class CombatManager : Node
       {
          AnimationPlayer player = deadFighters[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
          player.Play("Death");
+
+         AudioDataHolder audioDataHolder = deadFighters[i].model.GetNode<AudioDataHolder>("AudioData");
+         CreateAudioOnFighter(deadFighters[i], audioDataHolder.DeathSoundPath);
 
          stacksAndStatusManager.ClearStatuses(deadFighters[i]);
          stacksAndStatusManager.ClearStacks(deadFighters[i]);
@@ -1389,7 +1419,6 @@ public partial class CombatManager : Node
          if (CurrentFighter.currentStatuses[i].effect == StatusEffect.Inspired)
          {
             damage += (int)Mathf.Clamp(damage * 0.1f, 1, 99999);
-            stacksAndStatusManager.RemoveStatus(CurrentFighter, i);
             break;
          }
       }
@@ -1447,6 +1476,10 @@ public partial class CombatManager : Node
 
       managers.LevelManager.LocationDatas[managers.LevelManager.ActiveLocationDataID].defeatedEnemies[currentEnemyScript.id.ToString()] = true;
 
+      int victoryPositionIndex = 1;
+      arenaCamera.Position = new Vector3(-3.801f, 1.75f, -1.903f);
+      arenaCamera.Rotation = new Vector3(0f, Mathf.DegToRad(-180f), 0f);
+
       for (int i = 0; i < Fighters.Count; i++)
       {
          if (Fighters[i].isEnemy)
@@ -1455,11 +1488,17 @@ public partial class CombatManager : Node
          }
          else
          {
+            stacksAndStatusManager.ClearStatuses(Fighters[i]);
+
+            Fighters[i].model.GetNode<Node3D>("Model").Rotation = new Vector3(0f, Mathf.DegToRad(90f), 0f);
+            Fighters[i].model.GlobalPosition = arena.GetNode<Node3D>("VictoryPlacements/" + victoryPositionIndex).GlobalPosition;
+            victoryPositionIndex++;
+
             Fighters[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Victory");
          }
       }
 
-      await ToSignal(GetTree().CreateTimer(2f), "timeout");
+      await ToSignal(GetTree().CreateTimer(2.5f), "timeout");
       
       for (int i = 0; i < managers.PartyManager.Party.Count; i++)
       {
@@ -1524,6 +1563,7 @@ public partial class CombatManager : Node
    void Loss()
    {
       Tween tween = CreateTween();
+      managers.LevelManager.MuteMusic();
       managers.MenuManager.FadeToBlack(tween);
       uiManager.SetDefeatScreenVisible(true);
       IsInCombat = false;
@@ -1586,17 +1626,6 @@ public partial class CombatManager : Node
 
    public void RegularCast(List<Fighter> targets, bool playHitAnimation = true)
    {
-      AnimationPlayer player;
-
-      if (IsCompanionTurn)
-      {
-         player = CurrentFighter.companion.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-      }
-      else
-      {
-         player = CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer");
-      }
-
       if (targets.Count == 1)
       {
          if (CurrentFighter.isEnemy)

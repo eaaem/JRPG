@@ -36,6 +36,8 @@ public partial class ItemResource : Resource
    [Export]
    public string scriptPath;
    [Export]
+   public string combatGraphicsPath;
+   [Export]
    public float specialModifier;
    [Export]
    public bool hitsAll;
@@ -45,6 +47,10 @@ public partial class ItemResource : Resource
    public bool hitsSelf;
    [Export]
    public bool hitsTeam;
+   [Export]
+   public bool onlyHitsTeam;
+   [Export]
+   public bool onlyHitsSelf;
    [Export]
    public ItemType itemType;
    [Export]
@@ -57,6 +63,8 @@ public partial class ItemResource : Resource
    public bool usableOutsideCombat;
    [Export(PropertyHint.MultilineText)]
    public string outOfCombatUseMessage;
+   [Export]
+   public string outOfCombatAudioPath;
 }
 
 public partial class InventoryItem : Node

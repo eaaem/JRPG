@@ -23,6 +23,7 @@ public partial class WorldEnemy : CharacterBody3D
 
    private AnimationPlayer animationPlayer;
    private NavigationAgent3D navigationAgent;
+   private RandomAudioSelector detectionSoundPlayer;
 
    //private Vector3 targetPosition;
    private float distance;
@@ -53,6 +54,7 @@ public partial class WorldEnemy : CharacterBody3D
       model = GetNode<Node3D>("Model");
 
       combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManager");
+      detectionSoundPlayer = GetNode<RandomAudioSelector>("Detection");
 
       originalPosition = GlobalPosition;
       originalRotation = GlobalRotation;
@@ -96,32 +98,25 @@ public partial class WorldEnemy : CharacterBody3D
       Vector3 velocity = Velocity;
       distance = GlobalPosition.DistanceTo(player.GlobalPosition);
 
-      //float distanceFromOriginalPosition = Position.DistanceTo(originalPosition);
-
       if (distance < DistanceThreshhold)
       {
-         //ActorSetup();
-         isChasingPlayer = true;
+         if (!isChasingPlayer)
+         {
+            detectionSoundPlayer.PlayRandomAudio();
+            isChasingPlayer = true;
+         }
+
+         MovementTarget = player.GlobalPosition;
          GlobalRotation = Vector3.Zero;
       }
       else
       {
          isChasingPlayer = false;
+         MovementTarget = originalPosition;
       }
-
-      ActorSetup();
       
       if (navigationAgent.IsNavigationFinished())
       {
-         /*if (animationPlayer.CurrentAnimation != "Idle")
-         {
-            animationPlayer.Play("Idle");
-         }*/
-         // When the enemy is placed, it needs to have a certain rotation, but when it moves, that rotation has to be Vector3.Zero, or else movement looks strange
-         if (!isChasingPlayer)
-         {
-            GlobalRotation = originalRotation;
-         }
          return;
       }
 
@@ -136,11 +131,6 @@ public partial class WorldEnemy : CharacterBody3D
       velocity = currentAgentPosition.DirectionTo(nextPathPosition) * Speed;
       velocity.Y = 0f;
 
-      /*if (animationPlayer.CurrentAnimation != "Run")
-      {
-         animationPlayer.Play("Run");
-      }*/
-
       if (!IsOnFloor())
       {
          velocity.Y -= gravity * (float)delta;
@@ -149,6 +139,14 @@ public partial class WorldEnemy : CharacterBody3D
       Velocity = velocity;
       MoveAndSlide();
 	}
+
+   private void OnVisibilityChange()
+   {
+      if (Visible)
+      {
+         GetNode<AudioStreamPlayer3D>("Active").Play();
+      }
+   }
 
    private async void ActorSetup()
    {

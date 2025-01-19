@@ -42,7 +42,6 @@ public abstract partial class AbilityBehavior : Node
       resource = button.GetNode<ResourceHolder>("ResourceHolder").abilityResource;
       button.ButtonDown += OnButtonDown;
       abilityManager.AbilityCast += OnCast;
-      GD.Print(resource.name + " is initializing");
    }
 
    public void EnemyAbilityReadySetup()
@@ -79,7 +78,6 @@ public abstract partial class AbilityBehavior : Node
       if (button != null)
       {
          abilityManager.AbilityCast -= OnCast;
-         GD.Print(resource.name + " is desubscribing");
       }
       else
       {

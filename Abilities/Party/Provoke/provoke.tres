@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_c8gy0")
 name = "Provoke"
-description = "Decrease damage taken by allies, increase damage taken by Vakthol, and increase the chance of enemies targeting Vakthol."
+description = "Decrease damage taken by allies, increase damage taken by Vakthol, and increase the chance of enemies targeting Vakthol for 3 turns."
 manaCost = 4
 scriptPath = "res://Abilities/Party/Provoke/Provoke.cs"
 hitsAll = false

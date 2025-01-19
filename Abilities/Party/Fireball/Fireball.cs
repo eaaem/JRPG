@@ -20,7 +20,7 @@ public partial class Fireball : PlayerAbilityBehavior
 
          for (int i = 0; i < targets.Count; i++)
          {
-            combatManager.ProcessAttack(new List<DamagingEntity>() { damager }, targets[i]);
+            combatManager.ProcessAttack(new List<DamagingEntity>() { damager }, targets[i], false, i == targets.Count - 1);
 
             stacksAndStatusManager.AddStack(targets[i], new Stack("Elemental Rot (Fire)", 1, "elemental_explosion"));
          }

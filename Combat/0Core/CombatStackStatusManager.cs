@@ -97,45 +97,40 @@ public partial class CombatStackStatusManager : Node
 
    public void IncrementAppliedStatuses()
    {
-      for (int i = 0; i < combatManager.Fighters.Count; i++)
+      for (int i = 0; i < combatManager.CurrentFighter.currentStatuses.Count; i++)
       {
-         for (int j = 0; j < combatManager.Fighters[i].currentStatuses.Count; j++)
-         {
-            if (combatManager.Fighters[i].currentStatuses[j].applier == combatManager.CurrentFighter)
-            {
-               combatManager.Fighters[i].currentStatuses[j].remainingTurns--;
-               uiManager.DecrementEffectUI(combatManager.Fighters[i], combatManager.Fighters[i].currentStatuses[j].effect.ToString());
+       //  for (int j = 0; j < combatManager.Fighters[i].currentStatuses.Count; j++)
+        // {
+           // if (combatManager.Fighters[i].currentStatuses[j].applier == combatManager.CurrentFighter)
+           // {
+               combatManager.CurrentFighter.currentStatuses[i].remainingTurns--;
+               uiManager.DecrementEffectUI(combatManager.CurrentFighter, combatManager.CurrentFighter.currentStatuses[i].effect.ToString());
 
-               if (combatManager.Fighters[i].currentStatuses[j].displayRemainingTurns)
+               if (combatManager.CurrentFighter.currentStatuses[i].remainingTurns <= 0)
                {
-                  //uiManager.UpdateStatusTurns(combatManager.Fighters[i], combatManager.Fighters[i].currentStatuses[j], j);
-               }
-
-               if (combatManager.Fighters[i].currentStatuses[j].remainingTurns <= 0)
-               {
-                  RemoveStatus(combatManager.Fighters[i], j);
+                  RemoveStatus(combatManager.CurrentFighter, i);
                }
                else
                {
-                  if (combatManager.Fighters[i].currentStatuses[j].effect == StatusEffect.Poison)
+                  if (combatManager.CurrentFighter.currentStatuses[i].effect == StatusEffect.Poison)
                   {
-                     combatManager.Fighters[i].currentHealth -= (int)(combatManager.Fighters[i].currentHealth * 0.05f);
-                     uiManager.UpdateSingularUIPanel(combatManager.Fighters[i]);
+                     combatManager.CurrentFighter.currentHealth -= Mathf.Clamp((int)(combatManager.CurrentFighter.currentHealth * 0.05f), 1, 99999);
+                     uiManager.UpdateSingularUIPanel(combatManager.CurrentFighter);
                   }
-                  else if (combatManager.Fighters[i].currentStatuses[j].effect == StatusEffect.Bleed)
+                  else if (combatManager.CurrentFighter.currentStatuses[i].effect == StatusEffect.Bleed)
                   {
-                     combatManager.Fighters[i].currentHealth -= (int)(combatManager.Fighters[i].maxHealth * 0.03f);
-                     uiManager.UpdateSingularUIPanel(combatManager.Fighters[i]);
+                     combatManager.CurrentFighter.currentHealth -= Mathf.Clamp((int)(combatManager.CurrentFighter.maxHealth * 0.03f), 1, 99999);
+                     uiManager.UpdateSingularUIPanel(combatManager.CurrentFighter);
                   }
-                  else if (combatManager.Fighters[i].currentStatuses[j].effect == StatusEffect.Burn)
+                  else if (combatManager.CurrentFighter.currentStatuses[i].effect == StatusEffect.Burn)
                   {
-                     combatManager.Fighters[i].currentHealth -= (int)(combatManager.Fighters[i].maxHealth * 0.02f);
-                     uiManager.UpdateSingularUIPanel(combatManager.Fighters[i]);
+                     combatManager.CurrentFighter.currentHealth -= Mathf.Clamp((int)(combatManager.CurrentFighter.maxHealth * 0.02f), 1, 99999);
+                     uiManager.UpdateSingularUIPanel(combatManager.CurrentFighter);
                   }
                }
             }
-         }
-      }
+        // }
+      //}
    }
 
    public void AddStatusGraphic(Fighter target, StatusEffect statusEffect)

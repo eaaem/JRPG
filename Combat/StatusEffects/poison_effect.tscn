@@ -1,0 +1,51 @@
+[gd_scene load_steps=8 format=3 uid="uid://teth4o40x06n"]
+
+[sub_resource type="Gradient" id="Gradient_yk572"]
+colors = PackedColorArray(1.09798e-07, 0.110142, 0.0310231, 1, 1.59433e-07, 0.194987, 0.0304235, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_foqs3"]
+gradient = SubResource("Gradient_yk572")
+
+[sub_resource type="Curve" id="Curve_qk0us"]
+_data = [Vector2(0, 0.5125), 0.0, 0.0, 0, 0, Vector2(0.890411, 0.5125), 0.0, 0.0, 0, 0, Vector2(0.954338, 1), 0.0, 0.0, 0, 0, Vector2(0.997717, 1), 0.794041, 0.794041, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_8613c"]
+curve = SubResource("Curve_qk0us")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hye1c"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.25
+emission_ring_radius = 0.5
+emission_ring_inner_radius = 0.0
+gravity = Vector3(0, 1.5, 0)
+radial_accel_min = -0.250002
+radial_accel_max = 0.249998
+tangential_accel_min = -0.250002
+tangential_accel_max = 0.249998
+scale_min = 2.0
+scale_max = 2.0
+scale_curve = SubResource("CurveTexture_8613c")
+color_initial_ramp = SubResource("GradientTexture1D_foqs3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n546j"]
+shading_mode = 0
+vertex_color_use_as_albedo = true
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="SphereMesh" id="SphereMesh_rmbda"]
+material = SubResource("StandardMaterial3D_n546j")
+radius = 0.05
+height = 0.1
+radial_segments = 8
+rings = 4
+
+[node name="PoisonEffect" type="GPUParticles3D"]
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_hye1c")
+draw_pass_1 = SubResource("SphereMesh_rmbda")

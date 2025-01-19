@@ -324,74 +324,80 @@ public partial class CutsceneManager : Node
       managers.DialogueManager.ReplaceDialogueInteraction(newInteraction);
    }
 
-   public async void EndCutscene()
+   public async void EndCutscene(bool countAsCompleted = true)
    {
-      managers.LevelManager.LocationDatas[managers.LevelManager.ActiveLocationDataID].cutscenesSeen[currentID.ToString()] = true;
-
-      if (currentCutsceneObject.fadeBlackExitTransition)
+      if (IsCutsceneActive)
       {
-         Tween tween = CreateTween();
-         managers.MenuManager.FadeToBlack(tween);
-         await ToSignal(tween, Tween.SignalName.Finished);
-      }
-
-      for (int i = 0; i < currentCutsceneObject.actors.Length; i++)
-      {
-         CharacterBody3D actor = GetNode<CharacterBody3D>("/root/BaseNode/" + currentCutsceneObject.actors[i].actorName);
-
-         if (!currentCutsceneObject.hideParty)
+         if (countAsCompleted)
          {
-            for (int j = 0; j < managers.PartyManager.Party.Count; j++)
+            managers.LevelManager.LocationDatas[managers.LevelManager.ActiveLocationDataID].cutscenesSeen[currentID.ToString()] = true;
+         }
+
+         if (currentCutsceneObject.fadeBlackExitTransition)
+         {
+            Tween tween = CreateTween();
+            managers.MenuManager.FadeToBlack(tween);
+            await ToSignal(tween, Tween.SignalName.Finished);
+         }
+
+         for (int i = 0; i < currentCutsceneObject.actors.Length; i++)
+         {
+            CharacterBody3D actor = GetNode<CharacterBody3D>("/root/BaseNode/" + currentCutsceneObject.actors[i].actorName);
+
+            if (!currentCutsceneObject.hideParty)
             {
-               if (managers.PartyManager.Party[j].characterType.ToString() == currentCutsceneObject.actors[i].tiedMember)
+               for (int j = 0; j < managers.PartyManager.Party.Count; j++)
                {
-                  if (managers.PartyManager.Party[j].model != null)
+                  if (managers.PartyManager.Party[j].characterType.ToString() == currentCutsceneObject.actors[i].tiedMember)
                   {
-                     managers.PartyManager.Party[j].model.GlobalPosition = actor.GlobalPosition;
-                     managers.PartyManager.Party[j].model.GetNode<Node3D>("Model").Rotation = actor.GetNode<Node3D>("Model").Rotation;
-
-                     if (j == 0)
+                     if (managers.PartyManager.Party[j].model != null)
                      {
-                        Node3D cameraHolder = actor.GetNode<Node3D>("CameraTarget");
-                        actor.RemoveChild(cameraHolder);
-                        managers.PartyManager.Party[0].model.AddChild(cameraHolder);
-                        managers.PartyManager.Party[0].model.GetNode<Node3D>("Model").RotateY(-cameraHolder.Rotation.Y);
-                     }
+                        managers.PartyManager.Party[j].model.GlobalPosition = actor.GlobalPosition;
+                        managers.PartyManager.Party[j].model.GetNode<Node3D>("Model").Rotation = actor.GetNode<Node3D>("Model").Rotation;
 
-                     break;
+                        if (j == 0)
+                        {
+                           Node3D cameraHolder = actor.GetNode<Node3D>("CameraTarget");
+                           actor.RemoveChild(cameraHolder);
+                           managers.PartyManager.Party[0].model.AddChild(cameraHolder);
+                           managers.PartyManager.Party[0].model.GetNode<Node3D>("Model").RotateY(-cameraHolder.Rotation.Y);
+                        }
+
+                        break;
+                     }
                   }
                }
             }
+
+            GetNode<Node3D>("/root/BaseNode").RemoveChild(actor);
+            actor.QueueFree();
          }
 
-         GetNode<Node3D>("/root/BaseNode").RemoveChild(actor);
-         actor.QueueFree();
+         managers.Controller.IsInCutscene = false;
+         managers.Controller.Rotation = new Vector3(0f, managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y, 0f);
+         managers.Controller.GetNode<Node3D>("CameraTarget").RotateY(-managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y);
+
+         GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = true;
+         playerCamera.MakeCurrent();
+         IsCutsceneActive = false;
+
+         for (int i = 2; i <= 4; i++)
+         {
+            GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + i).EnablePathfinding = true;
+         }
+
+         if (currentCutsceneObject.fadeBlackExitTransition)
+         {
+            managers.MenuManager.FadeFromBlack();
+         }
+
+         if (GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").StreamPaused)
+         {
+            GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").Play();
+         }
+
+         managers.MenuManager.canTakeInput = true;
       }
-
-      managers.Controller.IsInCutscene = false;
-      managers.Controller.Rotation = new Vector3(0f, managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y, 0f);
-      managers.Controller.GetNode<Node3D>("CameraTarget").RotateY(-managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y);
-
-      GetNode<Node3D>("/root/BaseNode/PartyMembers").Visible = true;
-      playerCamera.MakeCurrent();
-      IsCutsceneActive = false;
-
-      for (int i = 2; i <= 4; i++)
-      {
-         GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + i).EnablePathfinding = true;
-      }
-
-      if (currentCutsceneObject.fadeBlackExitTransition)
-      {
-         managers.MenuManager.FadeFromBlack();
-      }
-
-      if (GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").StreamPaused)
-      {
-         GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").Play();
-      }
-
-      managers.MenuManager.canTakeInput = true;
    }
 
    Actor GetActor(string actorName)

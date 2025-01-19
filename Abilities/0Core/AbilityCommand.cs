@@ -167,7 +167,21 @@ public enum AbilityCommandType
    /// <summary>
    /// Resets the camera to the combat manager's default position and rotation. This also resets the camera's target and parent. 
    /// </summary>
-   Reset
+   Reset,
+   /// <summary>
+   /// Creates a sound effect.
+   /// <br></br><br></br>
+   /// <c>PathToSound</c> (string) : the path to the sound clip to play
+   /// <br></br>
+   /// <c>Is3DSound</c> (bool) : if true, the sound is played from a location in the 3D world; if false, it isn't directional
+   /// <br></br>
+   /// <c>Path</c> (string) : the path to the parent
+   /// <br></br>
+   /// <c>SpecialCodeOverride</c> (SpecialCodeOverride) : overrides the path for the parent
+   /// <br></br>
+   /// <c>NodeName</c> (string) : if CreatedNode is used for SpecialCodeOverride, the name of the created node
+   /// </summary>
+   CreateSound
 }
 
 /// <summary>
@@ -219,6 +233,8 @@ public partial class AbilityCommand : Resource
    public Vector3 Target { get; set; }
    public string Path { get; set; }
    public string PathToScene { get; set; }
+   public string PathToSound { get; set; }
+   public bool Is3DSound { get; set;}
    public string NodeName { get; set; }
    public bool RelativeToSelf { get; set; }
    public bool UseLocal { get; set; }
@@ -246,7 +262,7 @@ public partial class AbilityCommand : Resource
          { "type", (int)Variant.Type.Int },
          { "hint", (int)PropertyHint.Enum },
          { "hint_string", "None,CreateNode,CameraSetTarget,CameraSetParent,CameraPlace,CameraRotateInstantly,CameraPan,CameraOrbit,CameraLookAtTarget,"
-                           + "TriggerEffect,Pause,ShowDamage,PlayAnimation,RunToFighter,PauseDuringRun,RotateFighter,PauseDuringRotate,Reset" }
+                           + "TriggerEffect,Pause,ShowDamage,PlayAnimation,RunToFighter,PauseDuringRun,RotateFighter,PauseDuringRotate,Reset,CreateSound" }
       });
 
       switch (commandType)
@@ -528,7 +544,6 @@ public partial class AbilityCommand : Resource
                { "type", (int)Variant.Type.Vector3 }
             });
 
-
             result.Add(new Dictionary()
             {
                { "name", $"TargetName" },
@@ -555,6 +570,41 @@ public partial class AbilityCommand : Resource
                { "type", (int)Variant.Type.Bool }
             });
 
+            break;
+         case AbilityCommandType.CreateSound:
+            result.Add(new Dictionary()
+            {
+               { "name", $"PathToSound" },
+               { "type", (int)Variant.Type.String }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"Is3DSound" },
+               { "type", (int)Variant.Type.Bool }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"Path" },
+               { "type", (int)Variant.Type.String }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"SpecialCodeOverride" },
+               { "type", (int)Variant.Type.Int },
+               { "hint", (int)PropertyHint.Enum },
+               { "hint_string", "None,CasterPlacement,CasterModel,TargetsPlacement,TargetsModel,CreatedNode" }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"NodeName" },
+               { "type", (int)Variant.Type.String }
+            });
+
+         
             break;
       }
 

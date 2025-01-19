@@ -1,7 +1,10 @@
-[gd_scene load_steps=32 format=3 uid="uid://cixq4hpp7hgrg"]
+[gd_scene load_steps=35 format=3 uid="uid://cixq4hpp7hgrg"]
 
 [ext_resource type="Script" path="res://Combat/0Core/WorldEnemy.cs" id="1_wd6ct"]
+[ext_resource type="AudioStream" uid="uid://cdbhg1x67qcve" path="res://Levels/2Misc/Enemies/enemy_active.wav" id="3_nnnh4"]
 [ext_resource type="ArrayMesh" uid="uid://c11bgcbkw8rjg" path="res://Levels/2Misc/Enemies/anomaly_face.res" id="3_yy4wi"]
+[ext_resource type="AudioStream" uid="uid://klsfmdp6vakr" path="res://Levels/2Misc/Enemies/DetectSounds/enemy_detect2.wav" id="4_sq046"]
+[ext_resource type="Script" path="res://Core/RandomAudioSelector.cs" id="5_y5rjm"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_e35sy"]
 radius = 1.5
@@ -316,4 +319,21 @@ local_coords = true
 process_material = SubResource("ParticleProcessMaterial_lk0t6")
 draw_pass_1 = SubResource("SphereMesh_ea1ij")
 
+[node name="Active" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_nnnh4")
+volume_db = -5.647
+autoplay = true
+max_distance = 50.0
+bus = &"Effects"
+
+[node name="Detection" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("4_sq046")
+volume_db = 5.0
+bus = &"Effects"
+script = ExtResource("5_y5rjm")
+directoryLocation = "res://Levels/2Misc/Enemies/DetectSounds/"
+startOfSoundName = "enemy_detect"
+numberOfTracks = 4
+
+[connection signal="visibility_changed" from="." to="." method="OnVisibilityChange"]
 [connection signal="body_entered" from="Area3D" to="." method="OnBodyEntered"]

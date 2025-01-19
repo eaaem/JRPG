@@ -14,7 +14,7 @@ public partial class Provoke : PlayerAbilityBehavior
       if (combatManager.CurrentAbility == resource)
       {
          combatManager.CurrentFighter.wasHit = true;
-         stacksAndStatusManager.ApplyStatus(100, combatManager.CurrentFighter, StatusEffect.Taunting, 1, 1);
+         stacksAndStatusManager.ApplyStatus(100, combatManager.CurrentFighter, StatusEffect.Taunting, 3, 3);
          combatManager.RegularCast(new List<Fighter>() { combatManager.CurrentTarget }, false);
       }
    }

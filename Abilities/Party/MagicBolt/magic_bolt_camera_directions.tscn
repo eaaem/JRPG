@@ -28,18 +28,21 @@ TargetName = "BasicBoltCast"
 [sub_resource type="Resource" id="Resource_jiyvq"]
 script = ExtResource("2_eux7o")
 CommandType = 10
-Amount = 0.0
-PauseAnimation = "Fire"
+Amount = 0.6
+PauseAnimation = ""
 Path = ""
-SpecialCodeOverride = 2
+SpecialCodeOverride = 0
 
 [sub_resource type="Resource" id="Resource_va8ma"]
 script = ExtResource("2_eux7o")
-CommandType = 10
-Amount = 0.0
-PauseAnimation = "Projectile"
+CommandType = 1
+NodeName = "bolt_projectile"
 Path = ""
 SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/MagicBolt/bolt_projectile.tscn"
+IsProjectile = true
+CreateMultiple = false
 
 [sub_resource type="Resource" id="Resource_ywhim"]
 script = ExtResource("2_eux7o")

@@ -73,7 +73,7 @@ public partial class CombatPassiveManager : Node
 
    void LoadOlrenPassive()
    {
-      uiManager.MoveSecondaryOptionsToLeft();
+      //uiManager.MoveSecondaryOptionsToLeft();
       for (int i = 0; i < olrenSpecialArrows.Count; i++)
       {
          if (combatManager.CurrentFighter.level >= olrenSpecialArrows[i].requiredLevel)

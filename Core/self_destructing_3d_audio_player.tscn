@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://dr2o0g71tyb56"]
+
+[ext_resource type="Script" path="res://Core/SelfDestructingAudioPlayer.cs" id="1_62xl4"]
+
+[node name="SelfDestructing3dAudioPlayer" type="AudioStreamPlayer3D"]
+bus = &"Effects"
+
+[node name="ScriptHolder" type="Node" parent="."]
+script = ExtResource("1_62xl4")
+
+[connection signal="finished" from="." to="ScriptHolder" method="OnFinish"]

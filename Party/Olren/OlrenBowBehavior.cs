@@ -46,7 +46,7 @@ public partial class OlrenBowBehavior : Node
 
          Vector3 oldRotation = arrow.Rotation;
 
-         // Move the arrow to the attachment when grabbed; play the draw and release bow animations when necessary; then return everything to the rest state
+         // Move the arrow to the attachment when grabbed, play the draw and release bow animations when necessary, then return everything to the rest state
          await ToSignal(GetTree().CreateTimer(TimeUntilGrabArrow), "timeout");
          arrowHolder.RemoveChild(arrow);
          arrow.Rotation = new Vector3(0, 0, Mathf.DegToRad(-30f));

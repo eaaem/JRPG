@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://ckedm10t8we8h"]
+[gd_scene load_steps=11 format=3 uid="uid://ckedm10t8we8h"]
 
 [ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_l7uoy"]
 [ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_pfuqe"]
@@ -13,7 +13,35 @@ TargetName = "ProvokeCast"
 [sub_resource type="Resource" id="Resource_kh10h"]
 script = ExtResource("2_pfuqe")
 CommandType = 10
-Amount = 1.2
+Amount = 0.9
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_d7fp8"]
+script = ExtResource("2_pfuqe")
+CommandType = 1
+NodeName = "provoke_effect"
+Path = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/Provoke/provoke_initiate_effect.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_bwjvs"]
+script = ExtResource("2_pfuqe")
+CommandType = 18
+PathToSound = "res://Abilities/Party/Provoke/vakthol_provoke.wav"
+Is3DSound = true
+Path = ""
+SpecialCodeOverride = 2
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_3sm0d"]
+script = ExtResource("2_pfuqe")
+CommandType = 10
+Amount = 0.3
 PauseAnimation = ""
 Path = ""
 SpecialCodeOverride = 0
@@ -36,4 +64,4 @@ CommandType = 17
 
 [node name="ProvokeCameraDirections" type="Node3D"]
 script = ExtResource("1_l7uoy")
-commands = [SubResource("Resource_25wi1"), SubResource("Resource_kh10h"), SubResource("Resource_hfj8i"), SubResource("Resource_41b1y"), SubResource("Resource_d5fr5")]
+commands = [SubResource("Resource_25wi1"), SubResource("Resource_kh10h"), SubResource("Resource_d7fp8"), SubResource("Resource_bwjvs"), SubResource("Resource_3sm0d"), SubResource("Resource_hfj8i"), SubResource("Resource_41b1y"), SubResource("Resource_d5fr5")]

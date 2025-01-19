@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://65uxdcgar786"]
+
+[ext_resource type="Theme" uid="uid://b1ndyocqpom7" path="res://Menus/0Core/small_button.tres" id="1_useuq"]
+[ext_resource type="Script" path="res://Combat/0Core/ItemResourceHolder.cs" id="3_0efyv"]
+
+[node name="ItemButton" type="Button"]
+custom_minimum_size = Vector2(500, 60)
+theme = ExtResource("1_useuq")
+theme_override_font_sizes/font_size = 25
+text = "This is an item"
+alignment = 0
+
+[node name="ScriptHolder" type="Node2D" parent="."]
+
+[node name="ResourceHolder" type="Node2D" parent="."]
+script = ExtResource("3_0efyv")

@@ -14,10 +14,6 @@ public partial class CombatItemManager : Node
    public void UseItem(Fighter target)
    {
       ItemResource item = combatManager.CurrentItem.item;
-      if (item.hitsSelf && !item.hitsAll && !item.hitsSurrounding && !item.hitsTeam && target != combatManager.CurrentFighter)
-      {
-         return;
-      }
 
       for (int i = 0; i < combatManager.Fighters.Count; i++)
       {
@@ -28,7 +24,6 @@ public partial class CombatItemManager : Node
       uiManager.SetItemListVisible(false);
       EmitSignal(SignalName.ItemUse);
       uiManager.UpdateItems(combatManager.CurrentItem);
-      uiManager.EnableItems();
       combatManager.CurrentItem = null;
    }
 }

@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://ci5djtp676mlx"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_upgxp"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_0wbf4"]
+
+[sub_resource type="Resource" id="Resource_7jqd2"]
+script = ExtResource("2_0wbf4")
+CommandType = 1
+NodeName = "mana_effect"
+Path = ""
+SpecialCodeOverride = 4
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Items/Consumables/ManaPotion/mana_regain_effect.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_s83dm"]
+script = ExtResource("2_0wbf4")
+CommandType = 18
+PathToSound = "res://Items/Consumables/ManaPotion/recover_mana.wav"
+Is3DSound = true
+Path = ""
+SpecialCodeOverride = 4
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_7yudm"]
+script = ExtResource("2_0wbf4")
+CommandType = 10
+Amount = 0.5
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_gtp46"]
+script = ExtResource("2_0wbf4")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_igdyl"]
+script = ExtResource("2_0wbf4")
+CommandType = 10
+Amount = 0.5
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[node name="ManaPotionCameraDirections" type="Node3D"]
+script = ExtResource("1_upgxp")
+commands = [SubResource("Resource_7jqd2"), SubResource("Resource_s83dm"), SubResource("Resource_7yudm"), SubResource("Resource_gtp46"), SubResource("Resource_igdyl")]

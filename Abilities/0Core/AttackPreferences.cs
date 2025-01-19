@@ -21,4 +21,6 @@ public partial class AttackPreferences : Node
    public string PathToOverride { get; set;}
    [Export]
    public float FighterSize { get; set;}
+   [Export]
+   public string PathToAttackSound { get; set; }
 }

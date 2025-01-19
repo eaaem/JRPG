@@ -21,11 +21,10 @@ public partial class ManaPotion : ItemBehavior
    {
       if (combatManager.CurrentItem == resource) // Combat
       {
-         combatManager.CurrentTarget.currentMana += (int)(BaseManaGain * resource.item.specialModifier);
-         combatManager.ProcessValues();
-         uiManager.UpdateSingularUIPanel(combatManager.CurrentTarget);
-         combatManager.CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
-         RegularInCombatUse(combatManager.CurrentTarget);
+         int regainAmount = (int)(BaseManaGain * resource.item.specialModifier);
+         combatManager.CurrentTarget.currentMana += regainAmount;
+         uiManager.ProjectDamageText(combatManager.CurrentTarget, regainAmount, DamageType.None, false, false, true);
+         combatManager.RegularCast(new System.Collections.Generic.List<Fighter> { combatManager.CurrentTarget}, false );
       }
    }
 

@@ -1,19 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://b0itiinn5nr7j"]
+[gd_scene load_steps=4 format=3 uid="uid://b0itiinn5nr7j"]
 
+[ext_resource type="Theme" uid="uid://b1ndyocqpom7" path="res://Menus/0Core/small_button.tres" id="1_0hupl"]
 [ext_resource type="Script" path="res://Combat/0Core/OlrenSpecialArrowHolder.cs" id="1_vtjp0"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jtn5s"]
-bg_color = Color(1, 0.6, 0.6, 1)
+bg_color = Color(1, 0.797, 0.648, 1)
 
 [node name="AbilityButton1" type="Button"]
-custom_minimum_size = Vector2(150, 0)
-offset_right = 200.0
-offset_bottom = 25.0
+custom_minimum_size = Vector2(150, 30)
+offset_right = 150.0
+offset_bottom = 30.0
 tooltip_text = "tes t test teset"
+theme = ExtResource("1_0hupl")
 theme_override_font_sizes/font_size = 15
 text = "Test"
 
 [node name="Highlight" type="Panel" parent="."]
+visible = false
 show_behind_parent = true
 layout_mode = 0
 offset_right = 150.0

@@ -3,7 +3,6 @@ using System;
 
 public partial class CharacterAudioController : Node
 {
-   private bool isLeft = false;
    private CharacterBody3D parent;
 
    public override void _Ready()
@@ -46,19 +45,6 @@ public partial class CharacterAudioController : Node
       Node3D group = GetParent().GetNode<Node3D>(groupName + "Footsteps");
       AudioStreamPlayer3D toPlay = group.GetChild<AudioStreamPlayer3D>(GD.RandRange(0, 5));
 
-      /*if (isLeft)
-      {
-         toPlay.Position = new Vector3(2.5f, 0f, 0f);
-      }
-      else
-      {
-         toPlay.Position = new Vector3(-2.5f, 0f, 0f);
-      }*/
-
       toPlay.Play();
-
-      isLeft = !isLeft;
-
-      
    }
 }

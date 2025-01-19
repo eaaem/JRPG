@@ -1,39 +1,66 @@
-[gd_scene load_steps=7 format=3 uid="uid://s6muh2d8bt3p"]
+[gd_scene load_steps=10 format=3 uid="uid://s6muh2d8bt3p"]
 
 [ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Core/puff.png" id="1_7wp4x"]
 
-[sub_resource type="Gradient" id="Gradient_t6lu5"]
-colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 0.584314)
+[sub_resource type="Gradient" id="Gradient_eqjxd"]
+colors = PackedColorArray(0.203922, 0.564706, 0.0745098, 1, 0.0942242, 0.295685, 0.0238594, 1)
 
-[sub_resource type="GradientTexture1D" id="GradientTexture1D_0ibax"]
-gradient = SubResource("Gradient_t6lu5")
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_73j7k"]
+gradient = SubResource("Gradient_eqjxd")
 
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0a5io"]
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_i48hm"]
+emission_shape_scale = Vector3(1, 0.75, 1)
 emission_shape = 1
 emission_sphere_radius = 0.1
 gravity = Vector3(0, 0, 0)
-color_ramp = SubResource("GradientTexture1D_0ibax")
+radial_accel_min = -2.23517e-06
+radial_accel_max = -2.23517e-06
+color_ramp = SubResource("GradientTexture1D_73j7k")
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7dork"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ai76a"]
 transparency = 1
 shading_mode = 0
 vertex_color_use_as_albedo = true
-albedo_color = Color(1, 1, 1, 0.211765)
 albedo_texture = ExtResource("1_7wp4x")
 billboard_mode = 3
 particles_anim_h_frames = 1
 particles_anim_v_frames = 1
 particles_anim_loop = false
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_d4qd7"]
-material = SubResource("StandardMaterial3D_7dork")
-size = Vector2(0.5, 0.5)
+[sub_resource type="PlaneMesh" id="PlaneMesh_1hpk2"]
+material = SubResource("StandardMaterial3D_ai76a")
+size = Vector2(0.25, 0.25)
+orientation = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rh3ky"]
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v73hu"]
+render_priority = 1
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0, 0, 0, 1)
+albedo_texture = ExtResource("1_7wp4x")
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_4pjdp"]
+material = SubResource("StandardMaterial3D_v73hu")
+size = Vector2(0.15, 0.35)
 orientation = 2
 
 [node name="birdseye_effect" type="GPUParticles3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.706694, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.560225, 0)
 amount = 20
 lifetime = 0.75
 randomness = 1.0
-process_material = SubResource("ParticleProcessMaterial_0a5io")
-draw_pass_1 = SubResource("PlaneMesh_d4qd7")
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_i48hm")
+draw_pass_1 = SubResource("PlaneMesh_1hpk2")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_rh3ky")
+draw_pass_1 = SubResource("PlaneMesh_4pjdp")

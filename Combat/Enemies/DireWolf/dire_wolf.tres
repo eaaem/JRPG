@@ -74,3 +74,4 @@ model = ExtResource("1_c620i")
 affinity = 2
 abilities = [ExtResource("1_xhach")]
 turnOrderSpritePath = "res://Combat/Enemies/DireWolf/dire_wolf.png"
+hitSoundPath = "res://Combat/Enemies/DireWolf/wolf_hurt.wav"

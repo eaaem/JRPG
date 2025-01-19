@@ -164,7 +164,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_vu2wb"]
 script = ExtResource("2_tmlbf")
 statType = 8
-value = 6
+value = 8
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_ml2yi"]

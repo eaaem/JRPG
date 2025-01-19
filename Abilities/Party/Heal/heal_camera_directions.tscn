@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://c45xpxmomj3qf"]
+[gd_scene load_steps=22 format=3 uid="uid://c45xpxmomj3qf"]
 
 [ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_kou35"]
 [ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_fwnkd"]
@@ -82,6 +82,15 @@ PauseAnimation = ""
 Path = ""
 SpecialCodeOverride = 0
 
+[sub_resource type="Resource" id="Resource_3qsg5"]
+script = ExtResource("2_fwnkd")
+CommandType = 18
+PathToSound = "res://Abilities/Party/Heal/athlia_minor_heal.wav"
+Is3DSound = true
+Path = ""
+SpecialCodeOverride = 2
+NodeName = ""
+
 [sub_resource type="Resource" id="Resource_oab6e"]
 script = ExtResource("2_fwnkd")
 CommandType = 1
@@ -100,6 +109,17 @@ Amount = 2.35
 PauseAnimation = ""
 Path = ""
 SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_c3wmy"]
+script = ExtResource("2_fwnkd")
+CommandType = 1
+NodeName = "heal_end_effect"
+Path = ""
+SpecialCodeOverride = 4
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/Heal/heal_effect_finish.tscn"
+IsProjectile = false
+CreateMultiple = false
 
 [sub_resource type="Resource" id="Resource_3y08u"]
 script = ExtResource("2_fwnkd")
@@ -126,4 +146,4 @@ CommandType = 17
 
 [node name="HealCameraDirections" type="Node3D"]
 script = ExtResource("1_kou35")
-commands = [SubResource("Resource_ehc2f"), SubResource("Resource_aou6h"), SubResource("Resource_0qdft"), SubResource("Resource_gpc0i"), SubResource("Resource_1f4jo"), SubResource("Resource_rksh2"), SubResource("Resource_dh5qw"), SubResource("Resource_1wcxn"), SubResource("Resource_fcqct"), SubResource("Resource_oa0na"), SubResource("Resource_7nl6j"), SubResource("Resource_oab6e"), SubResource("Resource_xghnc"), SubResource("Resource_3y08u"), SubResource("Resource_3tah5"), SubResource("Resource_tn0re"), SubResource("Resource_pfci8")]
+commands = [SubResource("Resource_ehc2f"), SubResource("Resource_aou6h"), SubResource("Resource_0qdft"), SubResource("Resource_gpc0i"), SubResource("Resource_1f4jo"), SubResource("Resource_rksh2"), SubResource("Resource_dh5qw"), SubResource("Resource_1wcxn"), SubResource("Resource_fcqct"), SubResource("Resource_oa0na"), SubResource("Resource_7nl6j"), SubResource("Resource_3qsg5"), SubResource("Resource_oab6e"), SubResource("Resource_xghnc"), SubResource("Resource_c3wmy"), SubResource("Resource_3y08u"), SubResource("Resource_3tah5"), SubResource("Resource_tn0re"), SubResource("Resource_pfci8")]

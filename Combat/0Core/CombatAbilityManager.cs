@@ -79,7 +79,18 @@ public partial class CombatAbilityManager : Node
 
    public void CreateAbilityGraphicController(List<Fighter> targets, bool playHitAnimation)
    {
-      AbilityCommandInstance abilityGraphic = GD.Load<PackedScene>(combatManager.CurrentAbility.graphicPath).Instantiate<AbilityCommandInstance>();
+      string pathToUse;
+
+      if (combatManager.CurrentAbility != null)
+      {
+         pathToUse = combatManager.CurrentAbility.graphicPath;
+      }
+      else
+      {
+         pathToUse = combatManager.CurrentItem.item.combatGraphicsPath;
+      }
+
+      AbilityCommandInstance abilityGraphic = GD.Load<PackedScene>(pathToUse).Instantiate<AbilityCommandInstance>();
       AddChild(abilityGraphic);
 
       abilityGraphic.UpdateData(targets, playHitAnimation);

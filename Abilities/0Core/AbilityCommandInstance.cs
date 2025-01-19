@@ -70,7 +70,7 @@ public partial class AbilityCommandInstance : Node
 
          while (isWaitingForProjectiles)
          {
-            await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
+            await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
          }
 
          if (waitTime > 0f)
@@ -417,6 +417,54 @@ public partial class AbilityCommandInstance : Node
 
             isWaitingForRotaters = true;
 
+            break;
+         case AbilityCommandType.CreateSound:
+            Node3D audioPlayerParent = new Node3D();
+
+            List<Node3D> possibleParents = ParseSpecialPath(command.SpecialCodeOverride, command.NodeName);
+
+            if (possibleParents.Count > 0)
+            {
+               if (command.Path.Length > 0)
+               {
+                  possibleParents[0].GetNode<Node>(command.Path).AddChild(audioPlayerParent);
+               }
+               else
+               {
+                  possibleParents[0].AddChild(audioPlayerParent);
+               }
+            }
+            else
+            {
+               GetNode<Node>(command.Path).AddChild(audioPlayerParent);
+            }
+
+            AudioStream audio;
+
+            if (command.PathToSound == "ATTACK")
+            {
+               audio = GD.Load<AudioStream>(possibleParents[0].GetNode<AttackPreferences>("AttackPreferences").PathToAttackSound);
+            }
+            else
+            {
+               audio = GD.Load<AudioStream>(command.PathToSound);
+            }
+
+            if (command.Is3DSound)
+            {
+               AudioStreamPlayer3D audioPlayer = GD.Load<PackedScene>("res://Core/self_destructing_3d_audio_player.tscn").Instantiate<AudioStreamPlayer3D>();
+               audioPlayerParent.AddChild(audioPlayer);
+               audioPlayer.Stream = audio;
+               audioPlayer.Play();
+            }
+            else
+            {
+               AudioStreamPlayer audioPlayer = GD.Load<PackedScene>("res://Core/self_destructing_audio_player.tscn").Instantiate<AudioStreamPlayer>();
+               audioPlayerParent.AddChild(audioPlayer);
+               audioPlayer.Stream = audio;
+               audioPlayer.Play();
+            }
+            
             break;
          case AbilityCommandType.Reset:
             camera.GetParent<Node3D>().RemoveChild(camera);

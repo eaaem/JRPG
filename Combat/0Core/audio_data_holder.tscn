@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvruf8jujbtvi"]
+
+[ext_resource type="Script" path="res://Combat/0Core/AudioDataHolder.cs" id="1_ql7e2"]
+
+[node name="AudioData" type="Node3D"]
+script = ExtResource("1_ql7e2")

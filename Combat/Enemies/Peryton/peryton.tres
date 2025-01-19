@@ -73,3 +73,4 @@ stats = [SubResource("Resource_8ghu8"), SubResource("Resource_6eak2"), SubResour
 model = ExtResource("1_fu4kr")
 affinity = 4
 abilities = [ExtResource("1_0of77")]
+turnOrderSpritePath = ""

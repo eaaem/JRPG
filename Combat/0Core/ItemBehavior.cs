@@ -26,6 +26,7 @@ public abstract partial class ItemBehavior : Node
       // This needs to be its own function for scripts that override the ready behavior (those scripts need to call this, or else they'll miss important behaviors)
       combatManager = GetNode<CombatManager>("/root/BaseNode/CombatManager");
       itemManager = combatManager.GetNode<CombatItemManager>("ItemManager");
+      uiManager = combatManager.GetNode<CombatUIManager>("UIManager");
 
       itemMenuManager = GetNode<ItemMenuManager>("/root/BaseNode/UI/PartyMenuLayer/PartyMenu/MenuContainer/Items");
       menuManager = itemMenuManager.GetNode<MenuManager>("../../MenuManager");
@@ -42,8 +43,8 @@ public abstract partial class ItemBehavior : Node
    {
       combatManager.CurrentItem = resource;
       cancelButton.Visible = true;
-      combatManager.PointCameraAtParty();
-      uiManager.DisableItems();
+      uiManager.GenerateTargets();
+      uiManager.SetItemListVisible(false);
    }
 
    public void OutOfCombatItemSelect()
@@ -54,19 +55,6 @@ public abstract partial class ItemBehavior : Node
       itemMenuManager.DisableMenu();
       itemMenuManager.isUsingItem = true;
       itemMenuManager.partyContainer.Visible = true;
-   }
-
-   public async void RegularInCombatUse(Fighter target, bool playHitAnimation = true)
-   {
-      combatManager.ReverseFocusOnTarget(combatManager.CurrentFighter.model);
-
-      await ToSignal(GetTree().CreateTimer(1.35f), "timeout");
-
-      combatManager.ReverseFocusOnTarget(target.model);
-      
-      await ToSignal(GetTree().CreateTimer(1.35f), "timeout");
-
-      combatManager.ProcessValues();
    }
 
    public abstract void OnButtonDown();

@@ -26,7 +26,7 @@ public partial class SpiritAnimal : PlayerAbilityBehavior
       SetEnemyTeamOnCast(button);
 
       secondaryOptions.Visible = true;
-      uiManager.MoveSecondaryOptionsToRight();
+      //uiManager.MoveSecondaryOptionsToRight();
       uiManager.ClearSecondaryOptions();
       InitializeAnimalOptions();
    }
