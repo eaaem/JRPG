@@ -1,6 +1,14 @@
 using Godot;
 using System;
 
+public enum EnemyAIType
+{
+   None,
+   Melee,
+   Caster,
+   Healer
+}
+
 [GlobalClass]
 public partial class Enemy : Resource
 {
@@ -9,17 +17,21 @@ public partial class Enemy : Resource
    [Export]
    public int level;
    [Export]
+   public int baseAttackDamage;
+   [Export]
    public Stat[] stats = new Stat[10];
    [Export]
    public PackedScene model;
    [Export]
    public Affinity affinity;
    [Export]
+   public EnemyAIType enemyAIType;
+   [Export]
+   public int chanceOfUsingAbility;
+   [Export]
    public AbilityResource[] abilities = new AbilityResource[10];
    [Export]
    public string turnOrderSpritePath;
-   [Export]
-   public string hitSoundPath;
 
    public Enemy() : this(null, new Stat[10], null) {}
 

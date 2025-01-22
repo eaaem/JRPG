@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://c5yikq1y5un0d"]
+[gd_scene load_steps=6 format=3 uid="uid://c5yikq1y5un0d"]
 
 [ext_resource type="Theme" uid="uid://b1ndyocqpom7" path="res://Menus/0Core/small_button.tres" id="1_0wxuj"]
 [ext_resource type="Script" path="res://Core/CustomTooltipButton.cs" id="1_76vnk"]
 [ext_resource type="Script" path="res://Combat/0Core/ResourceHolder.cs" id="1_k6upr"]
+[ext_resource type="FontFile" uid="uid://b2twoq48myxmy" path="res://Menus/0Core/Merriweather-Bold.ttf" id="2_rynfh"]
 [ext_resource type="Theme" uid="uid://rhfvy1fs423s" path="res://Combat/UI/combat_text.tres" id="3_q36hs"]
 
 [node name="AbilityButton" type="Button"]
@@ -10,7 +11,9 @@ custom_minimum_size = Vector2(325, 66)
 offset_right = 325.0
 offset_bottom = 66.0
 theme = ExtResource("1_0wxuj")
-theme_override_font_sizes/font_size = 15
+theme_override_fonts/font = ExtResource("2_rynfh")
+theme_override_font_sizes/font_size = 25
+text = "Ability Button"
 script = ExtResource("1_76vnk")
 
 [node name="ScriptHolder" type="Node2D" parent="."]
@@ -19,6 +22,7 @@ script = ExtResource("1_76vnk")
 script = ExtResource("1_k6upr")
 
 [node name="Label" type="Label" parent="."]
+visible = false
 layout_mode = 0
 offset_right = 325.0
 offset_bottom = 66.0

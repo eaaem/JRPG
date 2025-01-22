@@ -189,6 +189,11 @@ public partial class LevelManager : Node
 
       managers.Controller.GlobalPosition = new Vector3(0f, 100f, 0f);
 
+      for (int i = 2; i <= 4; i++)
+      {
+         GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + i).EnablePathfinding = false;
+      }
+
       PackedScene levelScene = GD.Load<PackedScene>("res://Levels/" + internalLevelName + "/" + internalLevelName + ".tscn");
       Node3D level = levelScene.Instantiate<Node3D>();
       baseNode.AddChild(level);
@@ -295,6 +300,12 @@ public partial class LevelManager : Node
       managers.Controller.GetNode<Camera3D>("CameraTarget/SpringArm3D/PlayerCamera").MakeCurrent();
       managers.PartyManager.MovePartyMembersBehindPlayer();
 
+      for (int i = 2; i <= 4; i++)
+      {
+         GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + i).ResetNavigation();
+         GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + i).EnablePathfinding = true;
+      }
+
       EmitSignal(SignalName.LoadLevelProgression);
       
       managers.MenuManager.FadeFromBlack();
@@ -351,6 +362,13 @@ public partial class LevelManager : Node
 
       await ToSignal(tween, Tween.SignalName.Finished);
 
+      ResetGameStateWithoutTransition();
+
+      managers.MenuManager.FadeFromBlack();
+   }
+
+   public void ResetGameStateWithoutTransition()
+   {
       Node3D baseNode = GetNode<Node3D>("/root/BaseNode");
 
       for (int i = 1; i < 4; i++)
@@ -399,8 +417,28 @@ public partial class LevelManager : Node
             mainMenuBack.GetChild<Control>(i).Visible = false;
          }
       }
+   }
 
-      managers.MenuManager.FadeFromBlack();
+   public void SoftResetGameState()
+   {
+      Node3D baseNode = GetNode<Node3D>("/root/BaseNode");
+
+      for (int i = 1; i < 4; i++)
+      {
+         OverworldPartyController partyController = baseNode.GetNode<OverworldPartyController>("PartyMembers/Member" + (i + 1));
+         partyController.IsActive = false;
+         foreach (Node child in partyController.GetChildren())
+         {
+            partyController.RemoveChild(child);
+            child.QueueFree();
+         }
+      }
+
+      DiscardExistingLevel();
+      LocationDatas.Clear();
+      managers.PartyManager.Party.Clear();
+      managers.PartyManager.Items.Clear();
+      baseNode.GetNode<CharacterController>("PartyMembers/Member1").GlobalPosition = new Vector3(0.9f, 0.6f, -50.5f);
    }
 }
 

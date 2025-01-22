@@ -1,0 +1,57 @@
+[gd_scene load_steps=11 format=3 uid="uid://cg48sxo5rymf5"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AutoOneShotEffect.cs" id="1_au81o"]
+
+[sub_resource type="Curve" id="Curve_y2n06"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.901827, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_smdht"]
+curve = SubResource("Curve_y2n06")
+
+[sub_resource type="Curve" id="Curve_2imu2"]
+min_value = 0.99
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_o26xw"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0890411, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="Curve" id="Curve_6mdcp"]
+min_value = 0.99
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_l5fvl"]
+curve_x = SubResource("Curve_2imu2")
+curve_y = SubResource("Curve_o26xw")
+curve_z = SubResource("Curve_6mdcp")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_p5oof"]
+gravity = Vector3(0, 0, 0)
+scale_max = 6.0
+scale_curve = SubResource("CurveXYZTexture_l5fvl")
+alpha_curve = SubResource("CurveTexture_smdht")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_456sv"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_color = Color(0.53, 0.472495, 0.4187, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_p1nd6"]
+material = SubResource("StandardMaterial3D_456sv")
+top_radius = 0.02
+bottom_radius = 0.1
+height = 0.5
+radial_segments = 8
+
+[node name="VineWrapEffect" type="GPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0844932, 0)
+emitting = false
+amount = 1
+lifetime = 2.0
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_p5oof")
+draw_pass_1 = SubResource("CylinderMesh_p1nd6")
+script = ExtResource("1_au81o")

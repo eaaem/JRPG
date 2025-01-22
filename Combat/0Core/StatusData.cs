@@ -18,4 +18,8 @@ public partial class StatusData : Resource
    public string graphicEffectPath;
    [Export]
    public string boneToAttachForGraphic;
+   [Export]
+   public string materialEffectPath;
+   [Export]
+   public int colorIndex;
 }

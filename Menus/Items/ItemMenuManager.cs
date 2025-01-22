@@ -46,6 +46,9 @@ public partial class ItemMenuManager : Panel
          currentButton.TooltipText = currentItem.item.description;
          currentButton.Name = "ItemButton" + (i + 1);
 
+         currentButton.ButtonDown += managers.ButtonSoundManager.OnClick;
+         currentButton.MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+
          if (!currentItem.item.usableOutsideCombat)
          {
             currentButton.Disabled = true;
@@ -80,6 +83,13 @@ public partial class ItemMenuManager : Panel
       popup.ReceiveInfo(1.5f, currentItem.item.outOfCombatUseMessage);
 
       EmitSignal(SignalName.ItemUse);
+
+      AudioStreamPlayer audioPlayer = GD.Load<PackedScene>("res://Core/self_destructing_audio_player.tscn").Instantiate<AudioStreamPlayer>();
+      audioPlayer.Stream = GD.Load<AudioStream>(currentItem.item.outOfCombatAudioPath);
+      Node2D child = new Node2D();
+      child.AddChild(audioPlayer);
+      AddChild(child);
+      audioPlayer.Play();
 
       currentItem.quantity--;
 
@@ -179,6 +189,9 @@ public partial class ItemMenuManager : Panel
       member.GetNode<RichTextLabel>("Mana").Text = "Mana: " + partyMember.currentMana + "/" + partyMember.GetMaxMana();
       member.GetNode<RichTextLabel>("Exp").Text = "Experience: " + partyMember.experience + "/" + managers.PartyManager.GetExperienceAtLevel(partyMember.level - 1);
 
+      member.ButtonDown += managers.ButtonSoundManager.OnClick;
+      member.MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+
       partyContainer.AddChild(member);
    }
 
@@ -196,7 +209,10 @@ public partial class ItemMenuManager : Panel
    {
       foreach (Button child in itemsContainer.GetChildren())
       {
-         child.Disabled = false;
+         if (child.GetNode<ItemResourceHolder>("ResourceHolder").itemResource.item.usableOutsideCombat)
+         {
+            child.Disabled = false;
+         }
       }
    }
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://jrl0ob4f8flr"]
+[gd_scene load_steps=14 format=3 uid="uid://jrl0ob4f8flr"]
 
 [ext_resource type="PackedScene" uid="uid://byhtfco1xbelx" path="res://Party/Thalria/thalria.glb" id="1_no4i5"]
 [ext_resource type="PackedScene" uid="uid://d4hbovi73um7x" path="res://Party/Thalria/thalria_staff.glb" id="2_s4ck3"]
@@ -36,6 +36,8 @@ script = ExtResource("6_joe0x")
 animationName = "BasicBoltCast"
 events = [SubResource("Resource_b5qxh"), SubResource("Resource_p11f3")]
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3t8d8"]
+
 [node name="combat_actor" type="Node3D"]
 
 [node name="Model" parent="." instance=ExtResource("1_no4i5")]
@@ -52,7 +54,6 @@ bones/6/position = Vector3(0.0129373, 0.0994904, 0.0973188)
 bones/6/rotation = Quaternion(-0.107781, 0.101495, -0.678026, 0.719974)
 bones/7/rotation = Quaternion(-0.210499, 0.0097083, -0.0173635, 0.977392)
 bones/9/rotation = Quaternion(-0.217179, 0.0140288, -0.065368, 0.97384)
-bones/9/scale = Vector3(1, 1, 1)
 bones/10/position = Vector3(0.000142597, -0.000752363, 1.92577e-06)
 bones/10/rotation = Quaternion(0.679362, 0.194984, -0.703663, -0.0728438)
 bones/10/scale = Vector3(1, 1, 0.999999)
@@ -64,7 +65,6 @@ bones/14/position = Vector3(0.0331835, 0.0724192, 0.0813888)
 bones/16/rotation = Quaternion(0.792002, 1.92862e-05, 1.49691e-05, 0.610518)
 bones/17/rotation = Quaternion(0.560527, 0.567484, 0.429103, -0.423841)
 bones/18/rotation = Quaternion(-0.220982, 0.0145365, -0.0652106, 0.972987)
-bones/18/scale = Vector3(1, 1, 1)
 bones/19/position = Vector3(-0.000142655, 0.000752452, 5.56712e-07)
 bones/19/rotation = Quaternion(0.67871, 0.197156, -0.703447, -0.0751371)
 bones/19/scale = Vector3(1, 1, 1)
@@ -141,5 +141,14 @@ preferences = [SubResource("Resource_dboyi"), SubResource("Resource_q1bx7")]
 
 [node name="AudioData" parent="." instance=ExtResource("7_btts8")]
 DeathSoundPath = "res://Party/Thalria/thalria_death.wav"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 256
+collision_mask = 128
+input_ray_pickable = false
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13699, 0)
+shape = SubResource("CapsuleShape3D_3t8d8")
 
 [editable path="Model"]

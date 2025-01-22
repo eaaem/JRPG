@@ -1,0 +1,77 @@
+[gd_scene load_steps=14 format=3 uid="uid://c6d5baduqytkl"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AutoOneShotEffect.cs" id="1_bgdsv"]
+
+[sub_resource type="Gradient" id="Gradient_op1gj"]
+colors = PackedColorArray(0.466181, 0.466181, 0.466181, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_fs5ct"]
+gradient = SubResource("Gradient_op1gj")
+
+[sub_resource type="Gradient" id="Gradient_kwj7o"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.4)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_g57f5"]
+gradient = SubResource("Gradient_kwj7o")
+
+[sub_resource type="Curve" id="Curve_1vh5m"]
+
+[sub_resource type="Curve" id="Curve_11oir"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.636986, 0), 0.0, 0.0, 0, 0, Vector2(1, 0.49569), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_xrubk"]
+
+[sub_resource type="CurveXYZTexture" id="CurveXYZTexture_g17db"]
+curve_x = SubResource("Curve_1vh5m")
+curve_y = SubResource("Curve_11oir")
+curve_z = SubResource("Curve_xrubk")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mrov0"]
+flatness = 1.0
+initial_velocity_min = 8.0
+initial_velocity_max = 8.0
+directional_velocity_min = 4.99998
+directional_velocity_max = 4.99998
+directional_velocity_curve = SubResource("CurveXYZTexture_g17db")
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+radial_accel_min = -2.23517e-06
+radial_accel_max = -2.23517e-06
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = -2.23517e-06
+color_ramp = SubResource("GradientTexture1D_g57f5")
+color_initial_ramp = SubResource("GradientTexture1D_fs5ct")
+
+[sub_resource type="Curve" id="Curve_n0mpk"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.506383, 0.399682), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dmbpu"]
+transparency = 1
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+use_particle_trails = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_y666k"]
+material = SubResource("StandardMaterial3D_dmbpu")
+shape = 0
+size = 0.1
+curve = SubResource("Curve_n0mpk")
+
+[node name="GustEndEffect" type="BoneAttachment3D"]
+bone_name = "root"
+
+[node name="GustEffect" type="GPUParticles3D" parent="."]
+transform = Transform3D(-4.34876e-08, -4.41731e-09, -1, -0.0170336, 0.999855, -3.67592e-09, 0.999855, 0.0170336, -4.35565e-08, 0, 0, 0)
+emitting = false
+amount = 128
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_mrov0")
+draw_pass_1 = SubResource("RibbonTrailMesh_y666k")
+script = ExtResource("1_bgdsv")

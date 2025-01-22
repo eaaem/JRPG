@@ -72,7 +72,7 @@ public partial class OverworldPartyController : CharacterBody3D
    }
 
    public void ResetNodes(Member member)
-   {
+   {  
       animationPlayer = GetNode<AnimationPlayer>("Model/AnimationPlayer");
       navigationAgent = GetNode<NavigationAgent3D>("NavigationAgent3D");
       animationTree = GetNode<AnimationTree>("BaseTree");
@@ -141,7 +141,7 @@ public partial class OverworldPartyController : CharacterBody3D
 
          if (distance >= DistanceThreshold + (3f * index))
          {
-            targetPosition = player.GlobalPosition - (playerModel.GlobalTransform.Basis.Z * (1.5f * index));
+            targetPosition = player.GlobalPosition - (playerModel.GlobalTransform.Basis.Z * (1.75f * index));
             MovementTarget = targetPosition;
          }
 
@@ -189,6 +189,7 @@ public partial class OverworldPartyController : CharacterBody3D
 
    public void ResetNavigation()
    {
+      isSynced = false;
       Callable.From(ActorSetup).CallDeferred();
    }
 
@@ -197,9 +198,12 @@ public partial class OverworldPartyController : CharacterBody3D
       // Wait for the first physics frame so the NavigationServer can sync.
       await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
 
-
-      // Now that the navigation map is no longer empty, set the movement target.
-      MovementTarget = targetPosition;
+      // Now that the navigation map is no longer empty, set the movement target. Only set it if it isn't Vector3.Zero (the default) to prevent agents from
+      // walking toward the origin for a few seconds after the game starts
+      if (targetPosition != Vector3.Zero)
+      {
+         MovementTarget = targetPosition;
+      }
       isSynced = true;
    }
 

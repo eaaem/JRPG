@@ -26,7 +26,7 @@ public partial class Bite : AbilityBehavior
 
    void CompleteAbility()
    {
-      DamagingEntity damager = new DamagingEntity(combatManager.CurrentFighter.level * 2, StatType.Strength, StatType.Fortitude, DamageType.Physical);
+      DamagingEntity damager = new DamagingEntity(2, StatType.Strength, StatType.Fortitude, DamageType.Physical);
       combatManager.ProcessAttack(new List<DamagingEntity>() { damager }, combatManager.CurrentTarget);
       stacksAndStatusManager.ApplyStatus(100, combatManager.CurrentTarget, StatusEffect.Bleed, 2, 3);
 

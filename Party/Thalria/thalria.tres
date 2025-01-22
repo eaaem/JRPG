@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=36 format=3 uid="uid://ck7wy6s7wajxw"]
+[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=37 format=3 uid="uid://ck7wy6s7wajxw"]
 
 [ext_resource type="Resource" uid="uid://uhdvsljdtwyn" path="res://Abilities/Party/Fireball/fireball.tres" id="1_5s0wk"]
 [ext_resource type="Resource" uid="uid://cikhdcha1qans" path="res://Abilities/Party/MagicBolt/magic_bolt.tres" id="1_8g1pl"]
@@ -31,9 +31,15 @@ statType = 5
 value = 2
 baseValue = 0
 
+[sub_resource type="Resource" id="Resource_rop6m"]
+script = ExtResource("2_tmlbf")
+statType = 0
+value = 1
+baseValue = 0
+
 [sub_resource type="Resource" id="Resource_2ig6e"]
 script = ExtResource("3_s0llh")
-stats = [SubResource("Resource_2jyjl"), SubResource("Resource_38hit"), SubResource("Resource_gdfcn"), SubResource("Resource_rkx8r")]
+stats = [SubResource("Resource_2jyjl"), SubResource("Resource_38hit"), SubResource("Resource_gdfcn"), SubResource("Resource_rkx8r"), SubResource("Resource_rop6m")]
 
 [sub_resource type="Resource" id="Resource_ui4we"]
 script = ExtResource("2_tmlbf")

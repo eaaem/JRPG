@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=3 uid="uid://ctos4o83ueu6i"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_3ethx"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_6ukn5"]
+
+[sub_resource type="Resource" id="Resource_qm385"]
+script = ExtResource("2_6ukn5")
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "StealthCast"
+
+[sub_resource type="Resource" id="Resource_ebb5b"]
+script = ExtResource("2_6ukn5")
+CommandType = 10
+Amount = 0.9
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_u564f"]
+script = ExtResource("2_6ukn5")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_dtfry"]
+script = ExtResource("2_6ukn5")
+CommandType = 18
+PathToSound = "res://Abilities/Enemy/Stealth/jackalope_stealth.wav"
+Is3DSound = true
+Volume = 0.0
+Path = ""
+SpecialCodeOverride = 2
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_f28oj"]
+script = ExtResource("2_6ukn5")
+CommandType = 1
+NodeName = "effect"
+Path = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Enemy/Stealth/stealth_effect_cast.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_mdasi"]
+script = ExtResource("2_6ukn5")
+CommandType = 10
+Amount = 1.0
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_ien5s"]
+script = ExtResource("2_6ukn5")
+CommandType = 17
+
+[node name="StealthCameraDirections" type="Node3D"]
+script = ExtResource("1_3ethx")
+commands = [SubResource("Resource_qm385"), SubResource("Resource_ebb5b"), SubResource("Resource_u564f"), SubResource("Resource_dtfry"), SubResource("Resource_f28oj"), SubResource("Resource_mdasi"), SubResource("Resource_ien5s")]

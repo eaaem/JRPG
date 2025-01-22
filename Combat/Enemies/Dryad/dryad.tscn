@@ -1,21 +1,182 @@
-[gd_scene load_steps=4 format=3 uid="uid://doxau86eowxvy"]
+[gd_scene load_steps=21 format=3 uid="uid://doxau86eowxvy"]
 
 [ext_resource type="Script" path="res://Combat/0Core/EnemyDataHolder.cs" id="1_yu14q"]
 [ext_resource type="PackedScene" uid="uid://bld2qbdm2gam3" path="res://Combat/Enemies/Dryad/dryad.glb" id="2_orjke"]
+[ext_resource type="Script" path="res://Abilities/0Core/AttackPreferences.cs" id="3_xrxne"]
+[ext_resource type="PackedScene" uid="uid://bdbi8yvqbpttm" path="res://Abilities/0Core/animation_preferences.tscn" id="4_1l0qs"]
+[ext_resource type="Script" path="res://Abilities/0Core/WaitTimeEvent.cs" id="5_sh6hm"]
+[ext_resource type="Script" path="res://Abilities/0Core/AnimationPreference.cs" id="6_bymwo"]
+[ext_resource type="PackedScene" uid="uid://dvruf8jujbtvi" path="res://Combat/0Core/audio_data_holder.tscn" id="7_5qbn0"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandHolder.cs" id="8_hhaxl"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="9_1anut"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_816vj"]
 size = Vector3(2, 4, 3)
 
-[node name="dire_wolf" type="Node3D"]
+[sub_resource type="Resource" id="Resource_luc20"]
+script = ExtResource("5_sh6hm")
+eventName = "AttackWait"
+waitTime = 0.45
+projectilePath = ""
+
+[sub_resource type="Resource" id="Resource_p5db2"]
+script = ExtResource("6_bymwo")
+animationName = "Attack"
+events = [SubResource("Resource_luc20")]
+
+[sub_resource type="Resource" id="Resource_4fi8o"]
+script = ExtResource("9_1anut")
+CommandType = 15
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+TargetName = ""
+TargetCodeOverride = 4
+Amount = 10.0
+LookImmediately = false
+
+[sub_resource type="Resource" id="Resource_qxwn7"]
+script = ExtResource("9_1anut")
+CommandType = 16
+
+[sub_resource type="Resource" id="Resource_w3ky4"]
+script = ExtResource("9_1anut")
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "Attack"
+
+[sub_resource type="Resource" id="Resource_b0pe1"]
+script = ExtResource("9_1anut")
+CommandType = 18
+PathToSound = "res://Combat/Enemies/Dryad/dryad_attack.wav"
+Is3DSound = true
+Volume = 0.0
+Path = ""
+SpecialCodeOverride = 2
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_c4r84"]
+script = ExtResource("9_1anut")
+CommandType = 10
+Amount = 1.1
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_ipi5i"]
+script = ExtResource("9_1anut")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_andwf"]
+script = ExtResource("9_1anut")
+CommandType = 10
+Amount = 0.6
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_svrbe"]
+script = ExtResource("9_1anut")
+CommandType = 17
+
+[node name="dryad" type="Node3D"]
 
 [node name="ScriptHolder" type="Node3D" parent="."]
 script = ExtResource("1_yu14q")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="ScriptHolder"]
+collision_layer = 256
+collision_mask = 128
 input_ray_pickable = false
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="ScriptHolder/StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.9864, 0)
 shape = SubResource("BoxShape3D_816vj")
 
+[node name="AttackPreferences" type="Node3D" parent="."]
+script = ExtResource("3_xrxne")
+OverrideCopy = true
+PathToOverride = "AttackInstructions"
+FighterSize = 1.0
+
+[node name="AnimationPreferences" parent="." instance=ExtResource("4_1l0qs")]
+preferences = [SubResource("Resource_p5db2")]
+
+[node name="AudioData" parent="." instance=ExtResource("7_5qbn0")]
+HitSoundPath = "res://Combat/Enemies/Dryad/dryad_hit.wav"
+DeathSoundPath = "res://Combat/Enemies/Dryad/dryad_death.wav"
+
+[node name="AttackInstructions" type="Node3D" parent="."]
+script = ExtResource("8_hhaxl")
+commands = [SubResource("Resource_4fi8o"), SubResource("Resource_qxwn7"), SubResource("Resource_w3ky4"), SubResource("Resource_b0pe1"), SubResource("Resource_c4r84"), SubResource("Resource_ipi5i"), SubResource("Resource_andwf"), SubResource("Resource_svrbe")]
+
 [node name="Model" parent="." instance=ExtResource("2_orjke")]
+
+[node name="Skeleton3D" parent="Model/Armature" index="0"]
+bones/0/rotation = Quaternion(0.707107, -5.33851e-08, -5.33851e-08, 0.707107)
+bones/1/position = Vector3(-2.2585e-07, -0.0330681, -1.49574)
+bones/1/rotation = Quaternion(-0.662055, 0.14169, -0.0439079, 0.734629)
+bones/2/rotation = Quaternion(0.544265, -0.0673366, 0.0649212, 0.833683)
+bones/3/rotation = Quaternion(0.0353353, 1.071e-05, 0.00921599, 0.999333)
+bones/4/rotation = Quaternion(-0.0425698, -0.0325477, 0.162138, 0.985312)
+bones/5/rotation = Quaternion(-0.47903, 0.166018, -0.0366894, 0.861175)
+bones/6/rotation = Quaternion(5.69993e-15, -1.19209e-07, 2.11758e-22, 1)
+bones/7/position = Vector3(-0.301144, 0.377638, -0.00682071)
+bones/7/rotation = Quaternion(0.0596483, 0.594019, 0.742218, 0.304462)
+bones/7/scale = Vector3(1, 1, 1)
+bones/8/rotation = Quaternion(0.29797, -0.0657933, 0.195693, 0.931981)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/rotation = Quaternion(-0.232893, -0.0132743, -0.0830733, 0.968857)
+bones/9/scale = Vector3(1, 1, 1)
+bones/10/rotation = Quaternion(-0.24208, 0.409435, -0.413332, 0.776477)
+bones/10/scale = Vector3(1, 1, 1)
+bones/11/rotation = Quaternion(-0.203214, 0.0549148, -0.309119, 0.927434)
+bones/12/rotation = Quaternion(-0.118513, 0.0341783, -0.0927508, 0.98802)
+bones/13/rotation = Quaternion(-7.77034e-08, 6.28567e-07, -0.117307, 0.993096)
+bones/14/position = Vector3(0.303553, 0.178702, 0.00974957)
+bones/14/rotation = Quaternion(-0.336537, 0.564065, 0.753735, -0.0213707)
+bones/14/scale = Vector3(1, 1, 1)
+bones/15/rotation = Quaternion(0.00330649, -0.0300564, 0.00174787, 0.999541)
+bones/15/scale = Vector3(1, 1, 1)
+bones/16/rotation = Quaternion(0.165015, -0.0127687, 0.320551, 0.93266)
+bones/16/scale = Vector3(1, 1, 1)
+bones/17/rotation = Quaternion(-0.279634, 0.0284423, -0.423526, 0.861175)
+bones/17/scale = Vector3(1, 1, 1)
+bones/18/rotation = Quaternion(-0.29184, 0.0135925, -0.361434, 0.885444)
+bones/19/rotation = Quaternion(-0.147401, 0.00437806, -0.264389, 0.953075)
+bones/20/rotation = Quaternion(-0.444469, 0.0372223, -0.53393, 0.718318)
+bones/21/rotation = Quaternion(-0.207308, 0.671946, 0.64427, 0.300713)
+bones/22/rotation = Quaternion(-0.954732, -0.0591468, 0.0816019, 0.279874)
+bones/22/scale = Vector3(1, 1, 1)
+bones/23/rotation = Quaternion(0.574371, -0.0415967, 0.0829162, 0.813322)
+bones/23/scale = Vector3(1, 1, 1)
+bones/24/rotation = Quaternion(0.0733184, -0.0310484, -0.17514, 0.981319)
+bones/25/rotation = Quaternion(0.527165, 0.00260401, 0.0292087, 0.849257)
+bones/26/rotation = Quaternion(0.00297691, 0.238292, 0.966443, -0.0958898)
+bones/27/rotation = Quaternion(-0.921994, 0.0463208, -0.0737059, 0.377291)
+bones/27/scale = Vector3(1, 1, 1)
+bones/28/rotation = Quaternion(0.573136, 0.0333991, -0.0700254, 0.81578)
+bones/28/scale = Vector3(1, 1, 1)
+bones/29/rotation = Quaternion(0.496156, 0.0388943, 0.0416817, 0.86636)
+bones/30/rotation = Quaternion(0.527165, -0.00260401, -0.0292087, 0.849257)
+bones/31/position = Vector3(-0.232702, 0.709828, -0.315341)
+bones/31/rotation = Quaternion(-0.0163267, -0.0188795, 0.999688, 0.000308335)
+bones/31/scale = Vector3(1, 1, 1)
+bones/32/position = Vector3(-0.74567, 2.15549, -0.918944)
+bones/32/rotation = Quaternion(-0.707107, -3.09086e-08, 1.52335e-07, 0.707107)
+bones/33/position = Vector3(0.181233, -0.730717, -0.282161)
+bones/33/rotation = Quaternion(0.0163269, -0.0188795, 0.999688, -0.000308339)
+bones/33/scale = Vector3(1, 1, 1)
+bones/34/position = Vector3(1.01526, 2.15549, -0.918944)
+bones/34/rotation = Quaternion(-0.707107, 1.37679e-07, -1.62526e-08, 0.707107)
+bones/35/position = Vector3(1.54839, -1.10812, -2.8285)
+bones/37/position = Vector3(-0.0884639, 0.592094, -0.715031)
+bones/37/rotation = Quaternion(-0.696468, 0.122199, -0.122199, 0.696468)
+bones/38/position = Vector3(-0.162927, 1.37767, -1.13062)
+bones/38/rotation = Quaternion(-0.696468, -0.122199, 0.122199, 0.696468)
+
+[node name="Circle_003" parent="Model/Armature/Skeleton3D" index="0"]
+transform = Transform3D(1.01618, -0.377039, 0.101725, 0.390206, 0.991698, -0.222281, -0.015682, 0.243948, 1.06084, 1.42112, -1.57066, 0.270645)
+
+[editable path="Model"]

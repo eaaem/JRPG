@@ -1,0 +1,104 @@
+[gd_scene load_steps=15 format=3 uid="uid://bokp5cwhexf0g"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_wnouu"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_fddvd"]
+
+[sub_resource type="Resource" id="Resource_vkn3a"]
+script = ExtResource("2_fddvd")
+CommandType = 15
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+TargetName = ""
+TargetCodeOverride = 4
+Amount = 6.0
+LookImmediately = false
+
+[sub_resource type="Resource" id="Resource_vmb6p"]
+script = ExtResource("2_fddvd")
+CommandType = 16
+
+[sub_resource type="Resource" id="Resource_2pumo"]
+script = ExtResource("2_fddvd")
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "HealCast"
+
+[sub_resource type="Resource" id="Resource_yjm2q"]
+script = ExtResource("2_fddvd")
+CommandType = 10
+Amount = 0.4
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_fiko1"]
+script = ExtResource("2_fddvd")
+CommandType = 1
+NodeName = "effect"
+Path = "Model/Armature/Skeleton3D"
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Enemy/DryadHeal/dryad_heal_effect.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_pkuv8"]
+script = ExtResource("2_fddvd")
+CommandType = 18
+PathToSound = "res://Abilities/Enemy/DryadHeal/dryad_heal.wav"
+Is3DSound = true
+Volume = 0.0
+Path = ""
+SpecialCodeOverride = 2
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_qr5cn"]
+script = ExtResource("2_fddvd")
+CommandType = 10
+Amount = 0.5
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_b0pa7"]
+script = ExtResource("2_fddvd")
+CommandType = 1
+NodeName = "effect_end"
+Path = ""
+SpecialCodeOverride = 4
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/Heal/heal_effect_finish.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_eipyv"]
+script = ExtResource("2_fddvd")
+CommandType = 18
+PathToSound = "res://Items/Consumables/HealingPotion/recover.wav"
+Is3DSound = true
+Volume = 0.0
+Path = ""
+SpecialCodeOverride = 4
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_h8cu2"]
+script = ExtResource("2_fddvd")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_niwve"]
+script = ExtResource("2_fddvd")
+CommandType = 10
+Amount = 0.5
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_ht1uc"]
+script = ExtResource("2_fddvd")
+CommandType = 17
+
+[node name="DryadHealCameraDirections" type="Node3D"]
+script = ExtResource("1_wnouu")
+commands = [SubResource("Resource_vkn3a"), SubResource("Resource_vmb6p"), SubResource("Resource_2pumo"), SubResource("Resource_yjm2q"), SubResource("Resource_fiko1"), SubResource("Resource_pkuv8"), SubResource("Resource_qr5cn"), SubResource("Resource_b0pa7"), SubResource("Resource_eipyv"), SubResource("Resource_h8cu2"), SubResource("Resource_niwve"), SubResource("Resource_ht1uc")]

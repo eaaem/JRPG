@@ -17,6 +17,7 @@ public partial class WorldEnemy : CharacterBody3D
 
    private const float DistanceThreshhold = 15f;
    private const float LoseAggroThreshhold = 25f;
+   private const float VisibilityThreshhold = 50f;
    private const float Speed = 7.1f;
 
    public List<Enemy> enemies = new List<Enemy>();
@@ -98,6 +99,19 @@ public partial class WorldEnemy : CharacterBody3D
       Vector3 velocity = Velocity;
       distance = GlobalPosition.DistanceTo(player.GlobalPosition);
 
+      if (distance < VisibilityThreshhold)
+      {
+         Visible = true;
+      }
+      else
+      {
+         if (Visible)
+         {
+            GetNode<AudioStreamPlayer3D>("Active").Stop();
+         }
+         Visible = false;
+      }
+
       if (distance < DistanceThreshhold)
       {
          if (!isChasingPlayer)
@@ -107,7 +121,6 @@ public partial class WorldEnemy : CharacterBody3D
          }
 
          MovementTarget = player.GlobalPosition;
-         GlobalRotation = Vector3.Zero;
       }
       else
       {

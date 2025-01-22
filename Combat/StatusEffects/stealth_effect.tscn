@@ -1,0 +1,52 @@
+[gd_scene load_steps=9 format=3 uid="uid://n61yf1j2yqev"]
+
+[ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Core/puff.png" id="1_n66tv"]
+
+[sub_resource type="Gradient" id="Gradient_awyyl"]
+offsets = PackedFloat32Array(0.25122, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0282345, 0.00487597, 0.0418704, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_kcplq"]
+gradient = SubResource("Gradient_awyyl")
+
+[sub_resource type="Curve" id="Curve_nwpc1"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_m7ukn"]
+curve = SubResource("Curve_nwpc1")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_6uy5f"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.0
+emission_ring_radius = 0.5
+emission_ring_inner_radius = 0.0
+gravity = Vector3(0, 2, 0)
+radial_accel_min = -0.500002
+radial_accel_max = -0.500002
+tangential_accel_min = 0.499998
+tangential_accel_max = 0.499998
+scale_curve = SubResource("CurveTexture_m7ukn")
+color_initial_ramp = SubResource("GradientTexture1D_kcplq")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gsxku"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_color = Color(1, 1, 1, 0.67451)
+albedo_texture = ExtResource("1_n66tv")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_dlqi8"]
+material = SubResource("StandardMaterial3D_gsxku")
+
+[node name="StealthEffect" type="GPUParticles3D"]
+amount = 16
+lifetime = 1.5
+process_material = SubResource("ParticleProcessMaterial_6uy5f")
+draw_pass_1 = SubResource("QuadMesh_dlqi8")

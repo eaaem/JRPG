@@ -18,16 +18,21 @@ stats = [SubResource("Resource_7vhtl")]
 script = ExtResource("2_bhcpk")
 name = "Rustic Bell"
 description = "Bell
+1 damage
 +1 intelligence"
 scriptPath = ""
-specialModifier = 0.0
+combatGraphicsPath = ""
+specialModifier = 1.0
 hitsAll = false
 hitsSurrounding = false
 hitsSelf = false
 hitsTeam = false
+onlyHitsTeam = false
+onlyHitsSelf = false
 itemType = 1
 itemCategory = 7
 price = 0
 affectedStats = SubResource("Resource_huwed")
 usableOutsideCombat = false
 outOfCombatUseMessage = ""
+outOfCombatAudioPath = ""

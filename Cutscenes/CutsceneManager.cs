@@ -94,7 +94,6 @@ public partial class CutsceneManager : Node
             }
          }
 
-
          if (cutsceneObject.fadeBlackIntroTransition)
          {
             Tween tween = CreateTween();

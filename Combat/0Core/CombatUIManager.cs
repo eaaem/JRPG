@@ -297,7 +297,7 @@ public partial class CombatUIManager : Node
          Button specialButton = GenerateAbilityButton(packedSceneButton, member.specialAbility, manaToUse, path);
 
          specialButton.Name = "Special";
-         specialButton.GetNode<Label>("Label").AddThemeColorOverride("font_color", new Color(0.75f, 0.53f, 1f));
+         specialButton.AddThemeColorOverride("font_color", new Color(0.75f, 0.53f, 1f));
 
          string cooldownMessage = "";
 
@@ -333,7 +333,7 @@ public partial class CombatUIManager : Node
       Node2D scriptHolder = button.GetNode<Node2D>("ScriptHolder");
       scriptHolder.SetScript(GD.Load<CSharpScript>(ability.scriptPath));
 
-      button.GetNode<Label>("Label").Text = ability.name;
+      button.Text = ability.name;
       button.MouseExited += StopHoveringOverInformation;
       button.MouseEntered += () => HoverOverInformation("Costs " + ability.manaCost + " mana. " + ability.description);
 
@@ -585,6 +585,13 @@ public partial class CombatUIManager : Node
          notification.Text += " Learns " + partyMember.abilities[oldAbilityCount].name + "!";
       }
 
+      victoryScreen.GetNode<VBoxContainer>("Back/NotificationContainer").AddChild(notification);
+   }
+
+   public void CreateGoldGainLabel(int goldGain)
+   {
+      RichTextLabel notification = victoryNotifPrefab.Instantiate<RichTextLabel>();
+      notification.Text = "Gained [b]" + goldGain + "[/b] Gold.";
       victoryScreen.GetNode<VBoxContainer>("Back/NotificationContainer").AddChild(notification);
    }
 
@@ -994,11 +1001,9 @@ public partial class CombatUIManager : Node
    /// <summary>
    /// This creates the damage indicator texts, but doesn't show or move them; they're simply stored until they're ready to be shown with MoveDamageTexts.
    /// </summary>
-   public void ProjectDamageText(Fighter target, int damage, DamageType damageType, bool isCrit, bool isHeal = false, bool isMana = false)
+   public void ProjectDamageText(Fighter target, int damage, DamageType damageType, bool isCrit, bool isHeal = false, bool isMana = false, bool isStatus = false)
    {
-      Label3D damageText = GD.Load<PackedScene>("res://Combat/UI/damage_text.tscn").Instantiate<Label3D>();
-      target.UIPanel.AddChild(damageText);
-      damageText.Name = "DamageIndicator";
+      Label3D damageText = CreateDamageText(target);
       damageText.Text = damage.ToString();
 
       if (isCrit)
@@ -1019,24 +1024,32 @@ public partial class CombatUIManager : Node
       {
          damageText.Modulate = damageTypeColors[(int)damageType];
       }
+   }
 
-      damageText.GlobalPosition = target.model.GlobalPosition + (Vector3.Up * 0.5f);
-      damageText.GlobalPosition = new Vector3((float)GD.RandRange(damageText.GlobalPosition.X - 0.25f, damageText.GlobalPosition.X + 0.25f), 
-                                              (float)GD.RandRange(damageText.GlobalPosition.Y - 0.5f, damageText.GlobalPosition.Y + 0.5f),
-                                              (float)GD.RandRange(damageText.GlobalPosition.Z - 0.25f, damageText.GlobalPosition.Z + 0.25f));
+   public void ProjectDamageText(Fighter target, int damage, Color color)
+   {
+      Label3D damageText = CreateDamageText(target);
+      damageText.Text = damage.ToString();
+      damageText.Modulate = color;
    }
 
    public void ProjectMissText(Fighter target)
    {
+      Label3D damageText = CreateDamageText(target);
+      damageText.Text = "MISS";
+   }
+
+   Label3D CreateDamageText(Fighter target)
+   {
       Label3D damageText = GD.Load<PackedScene>("res://Combat/UI/damage_text.tscn").Instantiate<Label3D>();
       target.UIPanel.AddChild(damageText);
       damageText.Name = "DamageIndicator";
-      damageText.Text = "MISS";
 
       damageText.GlobalPosition = target.model.GlobalPosition + (Vector3.Up * 0.5f);
       damageText.GlobalPosition = new Vector3((float)GD.RandRange(damageText.GlobalPosition.X - 0.25f, damageText.GlobalPosition.X + 0.25f), 
                                               (float)GD.RandRange(damageText.GlobalPosition.Y - 0.5f, damageText.GlobalPosition.Y + 0.5f),
                                               (float)GD.RandRange(damageText.GlobalPosition.Z - 0.25f, damageText.GlobalPosition.Z + 0.25f));
+      return damageText;
    }
 
    public void MoveDamageTexts(Fighter target)

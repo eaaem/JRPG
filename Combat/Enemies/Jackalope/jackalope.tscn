@@ -1,21 +1,51 @@
-[gd_scene load_steps=4 format=3 uid="uid://iu8354v6nx7l"]
+[gd_scene load_steps=11 format=3 uid="uid://iu8354v6nx7l"]
 
 [ext_resource type="Script" path="res://Combat/0Core/EnemyDataHolder.cs" id="1_fgfj4"]
 [ext_resource type="PackedScene" uid="uid://dgj7l22tjsjmm" path="res://Combat/Enemies/Jackalope/jackalope.glb" id="2_0v7lo"]
+[ext_resource type="Script" path="res://Abilities/0Core/AttackPreferences.cs" id="3_jffnq"]
+[ext_resource type="PackedScene" uid="uid://bdbi8yvqbpttm" path="res://Abilities/0Core/animation_preferences.tscn" id="4_v308h"]
+[ext_resource type="Script" path="res://Abilities/0Core/WaitTimeEvent.cs" id="5_bhr3c"]
+[ext_resource type="Script" path="res://Abilities/0Core/AnimationPreference.cs" id="6_8iwd4"]
+[ext_resource type="PackedScene" uid="uid://dvruf8jujbtvi" path="res://Combat/0Core/audio_data_holder.tscn" id="7_5tbin"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_816vj"]
 size = Vector3(0.5, 0.75, 0.75)
 
-[node name="dire_wolf" type="Node3D"]
+[sub_resource type="Resource" id="Resource_luc20"]
+script = ExtResource("5_bhr3c")
+eventName = "AttackWait"
+waitTime = 0.45
+projectilePath = ""
+
+[sub_resource type="Resource" id="Resource_p5db2"]
+script = ExtResource("6_8iwd4")
+animationName = "Attack"
+events = [SubResource("Resource_luc20")]
+
+[node name="jackalope" type="Node3D"]
 
 [node name="ScriptHolder" type="Node3D" parent="."]
 script = ExtResource("1_fgfj4")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="ScriptHolder"]
+[node name="Model" parent="." instance=ExtResource("2_0v7lo")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 256
+collision_mask = 128
 input_ray_pickable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ScriptHolder/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.390482, 0)
 shape = SubResource("BoxShape3D_816vj")
 
-[node name="Model" parent="." instance=ExtResource("2_0v7lo")]
+[node name="AttackPreferences" type="Node3D" parent="."]
+script = ExtResource("3_jffnq")
+FighterSize = 0.5
+PathToAttackSound = "res://Combat/Enemies/Jackalope/jackalope_attack.wav"
+
+[node name="AnimationPreferences" parent="." instance=ExtResource("4_v308h")]
+preferences = [SubResource("Resource_p5db2")]
+
+[node name="AudioData" parent="." instance=ExtResource("7_5tbin")]
+HitSoundPath = "res://Combat/Enemies/Jackalope/jackalope_hit.wav"
+DeathSoundPath = "res://Combat/Enemies/Jackalope/jackalope_death.wav"

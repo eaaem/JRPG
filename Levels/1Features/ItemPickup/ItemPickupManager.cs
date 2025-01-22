@@ -8,7 +8,10 @@ public partial class ItemPickupManager : Node
    [Export]
    private ManagerReferenceHolder managers;
 
-   public CanvasGroup itemPickupContainer;
+   [Export]
+   private AudioStreamPlayer pickupSound;
+
+   public Control itemPickupContainer;
    private Label itemPickupText;
 
 	// Called when the node enters the scene tree for the first time.
@@ -17,7 +20,7 @@ public partial class ItemPickupManager : Node
       baseNode = GetNode<Node3D>("/root/BaseNode");
       camera = managers.Controller.GetNode<Camera3D>("CameraTarget/SpringArm3D/PlayerCamera");
 
-      itemPickupContainer = GetParent<CanvasGroup>();
+      itemPickupContainer = GetParent<Control>();
       itemPickupText = GetNode<Label>("Text");
 	}
 
@@ -44,6 +47,7 @@ public partial class ItemPickupManager : Node
 
                if (collided.GetParent().HasNode("ItemHolder"))
                {
+                  pickupSound.Play();
                   ItemHolder itemHolder = collided.GetParent().GetNode<ItemHolder>("ItemHolder");
                   managers.Controller.DisableMovement = true;
                   managers.Controller.DisableCamera = true;

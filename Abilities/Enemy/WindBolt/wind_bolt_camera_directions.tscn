@@ -1,0 +1,57 @@
+[gd_scene load_steps=10 format=3 uid="uid://bln7w5jy6jib"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_giq63"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_kr5lt"]
+
+[sub_resource type="Resource" id="Resource_kbf83"]
+script = ExtResource("2_kr5lt")
+CommandType = 15
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+TargetName = ""
+TargetCodeOverride = 4
+Amount = 6.0
+LookImmediately = false
+
+[sub_resource type="Resource" id="Resource_eklpi"]
+script = ExtResource("2_kr5lt")
+CommandType = 16
+
+[sub_resource type="Resource" id="Resource_j6bk1"]
+script = ExtResource("2_kr5lt")
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "WindBoltCast"
+
+[sub_resource type="Resource" id="Resource_3g3tv"]
+script = ExtResource("2_kr5lt")
+CommandType = 10
+Amount = 1.0
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_2bw1f"]
+script = ExtResource("2_kr5lt")
+CommandType = 1
+NodeName = "projectile"
+Path = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Enemy/WindBolt/wind_bolt_projectile.tscn"
+IsProjectile = true
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_ijqts"]
+script = ExtResource("2_kr5lt")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_1hxkj"]
+script = ExtResource("2_kr5lt")
+CommandType = 17
+
+[node name="WindBoltCameraDirections" type="Node3D"]
+script = ExtResource("1_giq63")
+commands = [SubResource("Resource_kbf83"), SubResource("Resource_eklpi"), SubResource("Resource_j6bk1"), SubResource("Resource_3g3tv"), SubResource("Resource_2bw1f"), SubResource("Resource_ijqts"), SubResource("Resource_1hxkj")]

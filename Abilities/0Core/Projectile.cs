@@ -18,14 +18,9 @@ public partial class Projectile : Node
    private float pathSpeed;
    [Export]
    private ProjectilePathPoint[] points = new ProjectilePathPoint[0];
-   /// <summary>
-   /// Mark this for projectiles created by ability command instances (since they try to clean up created nodes at the end, and will try to delete projectiles that
-   /// are already deleted, causing an error)
-   /// </summary>
-   [Export]
-   private bool doNotDeleteOnFinish;
 
    private bool isTraveling;
+   private Node3D source;
 
    [Signal]
    public delegate void OnProjectileEndedEventHandler();
@@ -77,12 +72,13 @@ public partial class Projectile : Node
 
       }
 
+      this.source = source;
       isTraveling = true;
    }
 
    public void OnBodyEntered(Node3D body)
    {
-      if (body.GetParent() == GetParent())
+      if (body.GetParent() == GetParent() || body.GetParent() == source)
       {
          return;
       }
@@ -111,11 +107,8 @@ public partial class Projectile : Node
             isTraveling = false;
             EmitSignal(SignalName.OnProjectileEnded);
 
-            if (!doNotDeleteOnFinish)
-            {
-               GetParent().GetParent().RemoveChild(GetParent());
-               GetParent().QueueFree();
-            }
+            GetParent().GetParent().RemoveChild(GetParent());
+            GetParent().QueueFree();
          }
       }
    }

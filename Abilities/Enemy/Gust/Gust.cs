@@ -6,7 +6,7 @@ public partial class Gust : EnemyAbilityBehavior
    public override void OnEnemyCast()
    {
       System.Collections.Generic.List<DamagingEntity> damagers = new System.Collections.Generic.List<DamagingEntity>();
-      damagers.Add(new DamagingEntity(combatManager.CurrentFighter.level * 3, StatType.Intelligence, StatType.Willpower, DamageType.Air));
+      damagers.Add(new DamagingEntity(2, StatType.Intelligence, StatType.Willpower, DamageType.Air));
       
       System.Collections.Generic.List<Fighter> targets = new System.Collections.Generic.List<Fighter>();
 
@@ -19,7 +19,7 @@ public partial class Gust : EnemyAbilityBehavior
          }
       }
       
-      combatManager.CurrentFighter.currentMana -= 4;
+      combatManager.CurrentFighter.currentMana -= 6;
       combatManager.RegularCast(targets);
    }
 }

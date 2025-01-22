@@ -1,7 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4csy4d0ygagk"]
+[gd_scene load_steps=11 format=3 uid="uid://b4csy4d0ygagk"]
 
 [ext_resource type="Script" path="res://Combat/0Core/EnemyDataHolder.cs" id="1_og1dr"]
 [ext_resource type="PackedScene" uid="uid://dbqvdoeg18mae" path="res://Combat/Enemies/Peryton/peryton.glb" id="2_8ju81"]
+[ext_resource type="Script" path="res://Abilities/0Core/AttackPreferences.cs" id="3_2u4md"]
+[ext_resource type="PackedScene" uid="uid://bdbi8yvqbpttm" path="res://Abilities/0Core/animation_preferences.tscn" id="4_qnm7f"]
+[ext_resource type="Script" path="res://Abilities/0Core/WaitTimeEvent.cs" id="5_kccv5"]
+[ext_resource type="Script" path="res://Abilities/0Core/AnimationPreference.cs" id="6_eeqie"]
+[ext_resource type="PackedScene" uid="uid://dvruf8jujbtvi" path="res://Combat/0Core/audio_data_holder.tscn" id="7_bwtpc"]
+
+[sub_resource type="Resource" id="Resource_luc20"]
+script = ExtResource("5_kccv5")
+eventName = "AttackWait"
+waitTime = 0.45
+projectilePath = ""
+
+[sub_resource type="Resource" id="Resource_p5db2"]
+script = ExtResource("6_eeqie")
+animationName = "Attack"
+events = [SubResource("Resource_luc20")]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_816vj"]
 size = Vector3(1, 2, 2)
@@ -11,10 +27,24 @@ size = Vector3(1, 2, 2)
 [node name="ScriptHolder" type="Node3D" parent="."]
 script = ExtResource("1_og1dr")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="ScriptHolder"]
+[node name="AttackPreferences" type="Node3D" parent="."]
+script = ExtResource("3_2u4md")
+FighterSize = 1.0
+PathToAttackSound = "res://Combat/Enemies/Peryton/peryton_attack.wav"
+
+[node name="AnimationPreferences" parent="." instance=ExtResource("4_qnm7f")]
+preferences = [SubResource("Resource_p5db2")]
+
+[node name="AudioData" parent="." instance=ExtResource("7_bwtpc")]
+HitSoundPath = "res://Combat/Enemies/Peryton/peryton_hit.wav"
+DeathSoundPath = "res://Combat/Enemies/Peryton/peryton_death.wav"
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 256
+collision_mask = 128
 input_ray_pickable = false
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="ScriptHolder/StaticBody3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.13699, 0)
 shape = SubResource("BoxShape3D_816vj")
 

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://d0rxquprowexo"]
+
+[ext_resource type="Script" path="res://Combat/0Core/AbilityResource.cs" id="1_2blih"]
+
+[resource]
+script = ExtResource("1_2blih")
+name = ""
+description = ""
+manaCost = 0
+scriptPath = "res://Abilities/Enemy/WindBolt/WindBolt.cs"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = false
+hitsTeam = false
+onlyHitsTeam = false
+onlyHitsSelf = false
+isEnemyHealingSpell = false
+bypassesDeaths = false
+graphicPath = "res://Abilities/Enemy/WindBolt/wind_bolt_camera_directions.tscn"
+requiredLevel = 0
+abilityWeight = 4

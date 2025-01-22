@@ -8,7 +8,7 @@
 [sub_resource type="Resource" id="Resource_aaays"]
 script = ExtResource("3_qt7x4")
 statType = 0
-value = 9
+value = 8
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_8a1h1"]
@@ -20,7 +20,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_ud11a"]
 script = ExtResource("3_qt7x4")
 statType = 2
-value = 13
+value = 12
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_ip4fy"]
@@ -69,9 +69,11 @@ baseValue = 0
 script = ExtResource("1_1thpf")
 enemyName = "Dire Wolf"
 level = 1
+baseAttackDamage = 3
 stats = [SubResource("Resource_aaays"), SubResource("Resource_8a1h1"), SubResource("Resource_ud11a"), SubResource("Resource_ip4fy"), SubResource("Resource_p2qbh"), SubResource("Resource_a0ao0"), SubResource("Resource_quv8n"), SubResource("Resource_tjwyc"), SubResource("Resource_ng7y6"), SubResource("Resource_1nmug")]
 model = ExtResource("1_c620i")
 affinity = 2
+enemyAIType = 1
+chanceOfUsingAbility = 40
 abilities = [ExtResource("1_xhach")]
 turnOrderSpritePath = "res://Combat/Enemies/DireWolf/dire_wolf.png"
-hitSoundPath = "res://Combat/Enemies/DireWolf/wolf_hurt.wav"

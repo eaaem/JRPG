@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="AbilityResource" load_steps=2 format=3 uid="uid://b3661813p24qo"]
+
+[ext_resource type="Script" path="res://Combat/0Core/AbilityResource.cs" id="1_sm2mm"]
+
+[resource]
+script = ExtResource("1_sm2mm")
+name = "DryadMinorHeal"
+description = ""
+manaCost = 0
+scriptPath = "res://Abilities/Enemy/DryadHeal/EnemyHeal.cs"
+hitsAll = false
+hitsSurrounding = false
+hitsSelf = true
+hitsTeam = true
+onlyHitsTeam = true
+onlyHitsSelf = false
+isEnemyHealingSpell = true
+bypassesDeaths = false
+graphicPath = "res://Abilities/Enemy/DryadHeal/dryad_heal_camera_directions.tscn"
+requiredLevel = 0
+abilityWeight = 0
+notStackingEffectApplied = 0

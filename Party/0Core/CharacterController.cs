@@ -34,6 +34,7 @@ public partial class CharacterController : CharacterBody3D
 
    public bool DisableMovement { get; set; }
    public bool DisableCamera { get; set; }
+   public bool DisableGravity { get; set; }
    public bool IsInCutscene { get; set; }
 
    public int MovementBlend { get; set; } = 0;
@@ -104,7 +105,7 @@ public partial class CharacterController : CharacterBody3D
       Vector3 velocity = Velocity;
 
       // Add the gravity
-      if (!IsOnFloor()) {
+      if (!IsOnFloor() && !DisableGravity) {
          velocity.Y -= gravity * (float)delta;
       }
 

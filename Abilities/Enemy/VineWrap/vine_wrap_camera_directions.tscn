@@ -1,0 +1,93 @@
+[gd_scene load_steps=14 format=3 uid="uid://c74f5a3n01idb"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_dbovr"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_loxbo"]
+
+[sub_resource type="Resource" id="Resource_rv6vc"]
+script = ExtResource("2_loxbo")
+CommandType = 15
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+TargetName = ""
+TargetCodeOverride = 4
+Amount = 10.0
+LookImmediately = false
+
+[sub_resource type="Resource" id="Resource_3cjyt"]
+script = ExtResource("2_loxbo")
+CommandType = 16
+
+[sub_resource type="Resource" id="Resource_0y4rs"]
+script = ExtResource("2_loxbo")
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "VineCast"
+
+[sub_resource type="Resource" id="Resource_25c2j"]
+script = ExtResource("2_loxbo")
+CommandType = 10
+Amount = 0.6
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_5h1ww"]
+script = ExtResource("2_loxbo")
+CommandType = 18
+PathToSound = "res://Abilities/Enemy/VineWrap/dryad_vine_start.wav"
+Is3DSound = true
+Volume = 0.0
+Path = ""
+SpecialCodeOverride = 2
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_20m7x"]
+script = ExtResource("2_loxbo")
+CommandType = 10
+Amount = 0.8
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_otnur"]
+script = ExtResource("2_loxbo")
+CommandType = 1
+NodeName = "effect"
+Path = ""
+SpecialCodeOverride = 4
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Enemy/VineWrap/vine_wrap_effect.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_kptwe"]
+script = ExtResource("2_loxbo")
+CommandType = 18
+PathToSound = "res://Abilities/Enemy/VineWrap/dryad_vine_end.wav"
+Is3DSound = true
+Volume = 0.0
+Path = ""
+SpecialCodeOverride = 4
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_3bxtc"]
+script = ExtResource("2_loxbo")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_8gmii"]
+script = ExtResource("2_loxbo")
+CommandType = 10
+Amount = 1.75
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_am6lu"]
+script = ExtResource("2_loxbo")
+CommandType = 17
+
+[node name="VineWrapCameraDirections" type="Node3D"]
+script = ExtResource("1_dbovr")
+commands = [SubResource("Resource_rv6vc"), SubResource("Resource_3cjyt"), SubResource("Resource_0y4rs"), SubResource("Resource_25c2j"), SubResource("Resource_5h1ww"), SubResource("Resource_20m7x"), SubResource("Resource_otnur"), SubResource("Resource_kptwe"), SubResource("Resource_3bxtc"), SubResource("Resource_8gmii"), SubResource("Resource_am6lu")]

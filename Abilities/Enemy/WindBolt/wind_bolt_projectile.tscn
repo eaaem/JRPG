@@ -1,0 +1,119 @@
+[gd_scene load_steps=15 format=3 uid="uid://dh2pidm8hqmbl"]
+
+[ext_resource type="AudioStream" uid="uid://dhcjv4v5kb4ok" path="res://Abilities/Enemy/WindBolt/peryton_wind_bolt.wav" id="1_pvrfi"]
+[ext_resource type="Script" path="res://Abilities/0Core/Projectile.cs" id="2_h2bgw"]
+[ext_resource type="Script" path="res://Abilities/0Core/ProjectilePathPoint.cs" id="3_lsg48"]
+
+[sub_resource type="Animation" id="Animation_ki8qe"]
+resource_name = "ProjectileAnimation"
+length = 0.9
+
+[sub_resource type="Animation" id="Animation_otn07"]
+resource_name = "new_animation"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2bw51"]
+_data = {
+"ProjectileAnimation": SubResource("Animation_ki8qe"),
+"new_animation": SubResource("Animation_otn07")
+}
+
+[sub_resource type="Curve3D" id="Curve3D_i7tkr"]
+_data = {
+"points": PackedVector3Array(0, -0.781424, -3.4573, 0, 0, 0, 0, 0.413537, 0.000688529, 0, 0, 0, 0, -1.58588, 3.99263, 0, 0.414, 7.673),
+"tilts": PackedFloat32Array(0, 0)
+}
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_fyq20"]
+colors = PackedColorArray(0.2484, 0.2484, 0.2484, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_ccfg6"]
+gradient = SubResource("Gradient_fyq20")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_prrb3"]
+emission_shape_scale = Vector3(0.01, 1, 0.5)
+emission_shape = 1
+emission_sphere_radius = 0.25
+spread = 180.0
+gravity = Vector3(0, 0.15, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+radial_accel_min = -5.0
+radial_accel_max = -5.0
+tangential_accel_min = -1.0
+tangential_accel_max = -1.0
+color_initial_ramp = SubResource("GradientTexture1D_ccfg6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ihcfs"]
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+use_particle_trails = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_157gx"]
+material = SubResource("StandardMaterial3D_ihcfs")
+shape = 0
+size = 0.05
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dne84"]
+size = Vector3(0.15, 0.15, 0.15)
+
+[sub_resource type="Resource" id="Resource_yigva"]
+script = ExtResource("3_lsg48")
+Path = ""
+OverridePath = 4
+PointIndex = 1
+Offset = Vector3(0, 1, 0)
+
+[node name="olren_arrow_projectile" type="Node3D"]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_2bw51")
+}
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_i7tkr")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(1, -5.27567e-12, 8.74208e-08, 0, 0.999977, 6.03466e-05, -8.74228e-08, -6.03466e-05, 0.999977, 0, 0.413537, 0.000688529)
+use_model_front = true
+loop = false
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="Path3D/PathFollow3D"]
+transform = Transform3D(-0.140538, 0.218272, -0.965715, -0.218272, 0.944567, 0.245257, 0.965715, 0.245257, -0.0851051, 0, 0, 0)
+amount = 32
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.15
+process_material = SubResource("ParticleProcessMaterial_prrb3")
+draw_pass_1 = SubResource("RibbonTrailMesh_157gx")
+
+[node name="StaticBody3D" type="Area3D" parent="Path3D/PathFollow3D/GPUParticles3D"]
+transform = Transform3D(-0.140538, 0.9666, 0.214327, 0.218272, 0.241398, -0.945561, -0.965715, -0.086106, -0.244908, 0.194079, 0.048469, -0.0172888)
+collision_layer = 128
+collision_mask = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/GPUParticles3D/StaticBody3D"]
+transform = Transform3D(1, 0, -1.43219e-14, -2.84217e-14, 1, 4.65661e-10, -6.21725e-15, 0, 1, 6.85431e-08, -0.201793, 0.000811815)
+shape = SubResource("BoxShape3D_dne84")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Path3D/PathFollow3D/GPUParticles3D"]
+stream = ExtResource("1_pvrfi")
+volume_db = 8.784
+autoplay = true
+
+[node name="MiddleIndicator" type="Node3D" parent="Path3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.17009, 3.98754)
+
+[node name="Projectile" type="Node3D" parent="." node_paths=PackedStringArray("projectile", "pathToFollow")]
+script = ExtResource("2_h2bgw")
+signalOnCollision = true
+deleteOnCollision = true
+projectile = NodePath("../Path3D/PathFollow3D/GPUParticles3D")
+usePath = true
+pathToFollow = NodePath("../Path3D/PathFollow3D")
+pathSpeed = 10.0
+points = [SubResource("Resource_yigva")]
+
+[connection signal="body_entered" from="Path3D/PathFollow3D/GPUParticles3D/StaticBody3D" to="Projectile" method="OnBodyEntered"]

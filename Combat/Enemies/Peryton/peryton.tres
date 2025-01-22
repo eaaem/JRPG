@@ -1,14 +1,15 @@
-[gd_resource type="Resource" script_class="Enemy" load_steps=15 format=3 uid="uid://bswxdeoulfiay"]
+[gd_resource type="Resource" script_class="Enemy" load_steps=16 format=3 uid="uid://bswxdeoulfiay"]
 
 [ext_resource type="Resource" uid="uid://cq0hkypmj7l5r" path="res://Abilities/Enemy/Gust/gust.tres" id="1_0of77"]
 [ext_resource type="PackedScene" uid="uid://b4csy4d0ygagk" path="res://Combat/Enemies/Peryton/peryton.tscn" id="1_fu4kr"]
+[ext_resource type="Resource" uid="uid://d0rxquprowexo" path="res://Abilities/Enemy/WindBolt/wind_bolt.tres" id="1_l44xg"]
 [ext_resource type="Script" path="res://Combat/0Core/Enemy.cs" id="1_yq1k2"]
 [ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="3_6jsbq"]
 
 [sub_resource type="Resource" id="Resource_8ghu8"]
 script = ExtResource("3_6jsbq")
 statType = 0
-value = 10
+value = 4
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_6eak2"]
@@ -20,7 +21,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_0yvh3"]
 script = ExtResource("3_6jsbq")
 statType = 2
-value = 7
+value = 4
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_a4wud"]
@@ -38,7 +39,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_m340a"]
 script = ExtResource("3_6jsbq")
 statType = 5
-value = 8
+value = 14
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_0acvb"]
@@ -56,7 +57,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_0iq2r"]
 script = ExtResource("3_6jsbq")
 statType = 8
-value = 6
+value = 34
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_f4631"]
@@ -69,8 +70,11 @@ baseValue = 0
 script = ExtResource("1_yq1k2")
 enemyName = "Peryton"
 level = 2
+baseAttackDamage = 1
 stats = [SubResource("Resource_8ghu8"), SubResource("Resource_6eak2"), SubResource("Resource_0yvh3"), SubResource("Resource_a4wud"), SubResource("Resource_wx12f"), SubResource("Resource_m340a"), SubResource("Resource_0acvb"), SubResource("Resource_p5pio"), SubResource("Resource_0iq2r"), SubResource("Resource_f4631")]
 model = ExtResource("1_fu4kr")
 affinity = 4
-abilities = [ExtResource("1_0of77")]
-turnOrderSpritePath = ""
+enemyAIType = 2
+chanceOfUsingAbility = 90
+abilities = [ExtResource("1_l44xg"), ExtResource("1_0of77")]
+turnOrderSpritePath = "res://Combat/Enemies/Peryton/peryton.png"

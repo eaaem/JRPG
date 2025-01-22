@@ -72,3 +72,5 @@ stats = [SubResource("Resource_w6ju7"), SubResource("Resource_twgtt"), SubResour
 model = ExtResource("1_fnxwu")
 affinity = 0
 abilities = []
+turnOrderSpritePath = ""
+hitSoundPath = ""

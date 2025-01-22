@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://lmsavb26vpon"]
+
+[ext_resource type="Texture2D" uid="uid://ceyn4vs6p0fv7" path="res://Abilities/Shared/Heal/sparkle.png" id="1_b1vn2"]
+[ext_resource type="Script" path="res://Abilities/0Core/AutoOneShotEffect.cs" id="2_47end"]
+
+[sub_resource type="Gradient" id="Gradient_yvyi7"]
+colors = PackedColorArray(0, 0.62, 0.155, 1, 0.0405, 0.45, 0.142875, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_deveu"]
+gradient = SubResource("Gradient_yvyi7")
+
+[sub_resource type="Curve" id="Curve_a2w4j"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_1g4xk"]
+curve = SubResource("Curve_a2w4j")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_o0ca3"]
+emission_shape = 1
+emission_sphere_radius = 1.0
+spread = 0.0
+flatness = 1.0
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
+gravity = Vector3(0, -9, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+radial_accel_min = 1.5
+radial_accel_max = 1.5
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = -2.23517e-06
+scale_curve = SubResource("CurveTexture_1g4xk")
+color_initial_ramp = SubResource("GradientTexture1D_deveu")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_maa7u"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_b1vn2")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_jd5qy"]
+material = SubResource("StandardMaterial3D_maa7u")
+size = Vector2(0.5, 0.5)
+
+[node name="DryadHealEffect" type="BoneAttachment3D"]
+bone_name = "head"
+
+[node name="GustEffect" type="GPUParticles3D" parent="."]
+transform = Transform3D(-4.34876e-08, -4.41731e-09, -1, 0.0519525, 0.99865, -6.67063e-09, 0.99865, -0.0519525, -4.31993e-08, 0, 0, 0)
+emitting = false
+amount = 32
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource("ParticleProcessMaterial_o0ca3")
+draw_pass_1 = SubResource("QuadMesh_jd5qy")
+script = ExtResource("2_47end")

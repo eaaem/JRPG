@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=34 format=3 uid="uid://cuw45oxjrj1jr"]
+[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=35 format=3 uid="uid://cuw45oxjrj1jr"]
 
 [ext_resource type="Resource" uid="uid://cvour86yaerwa" path="res://Abilities/Party/Birdseye/birdseye.tres" id="1_4jh0q"]
 [ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="2_3od8h"]
@@ -24,9 +24,15 @@ statType = 7
 value = 1
 baseValue = 0
 
+[sub_resource type="Resource" id="Resource_cc4ca"]
+script = ExtResource("2_3od8h")
+statType = 0
+value = 1
+baseValue = 0
+
 [sub_resource type="Resource" id="Resource_h6s2t"]
 script = ExtResource("4_6w4qv")
-stats = [SubResource("Resource_mhrji"), SubResource("Resource_6ltib"), SubResource("Resource_0kldw")]
+stats = [SubResource("Resource_mhrji"), SubResource("Resource_6ltib"), SubResource("Resource_0kldw"), SubResource("Resource_cc4ca")]
 
 [sub_resource type="Resource" id="Resource_px0vl"]
 script = ExtResource("2_3od8h")

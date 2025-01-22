@@ -33,6 +33,7 @@ public partial class MainMenuManager : CanvasLayer
       partyContainer = partyMenu.GetNode<Panel>("MenuContainer");
 
       managers.MenuManager.canTakeInput = false;
+      managers.Controller.DisableGravity = true;
 
       CreateMainMenuLevel();
       CheckLoadGameButtonAvailability();
@@ -104,6 +105,7 @@ public partial class MainMenuManager : CanvasLayer
             DestroyMainMenuLevel();
 
             managers.MenuManager.canTakeInput = true;
+            managers.Controller.DisableGravity = false;
 
             return;
          }
@@ -323,6 +325,7 @@ public partial class MainMenuManager : CanvasLayer
 
       managers.SaveManager.LoadGame(index);
       managers.MenuManager.canTakeInput = true;
+      managers.Controller.DisableGravity = false;
    }
 
    void OnDeleteButtonDown()

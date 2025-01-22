@@ -13,7 +13,7 @@ public partial class Fireball : PlayerAbilityBehavior
    {
       if (combatManager.CurrentAbility == resource)
       {
-         DamagingEntity damager = new DamagingEntity(combatManager.CurrentFighter.level * 3, StatType.Intelligence, StatType.Willpower, DamageType.Fire);
+         DamagingEntity damager = new DamagingEntity(5, StatType.Intelligence, StatType.Willpower, DamageType.Fire);
          List<Fighter> targets = new List<Fighter>();
          targets.Add(combatManager.CurrentTarget);
          targets.AddRange(combatManager.GetSurrounding(combatManager.CurrentTarget));

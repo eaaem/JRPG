@@ -33,6 +33,8 @@ public partial class PartyMenuManager : Panel
 
    public string firstSwap = null;
 
+   Button currentSelectedButton;
+
    [Signal]
    public delegate void PartySwapEventHandler();
 
@@ -73,9 +75,6 @@ public partial class PartyMenuManager : Panel
    public void LoadPartyMenu()
    {
       ClearMemberButtons();
-
-      LoadMemberButtons();
-
       isActive = true;
 
       isSwapping = false;
@@ -83,6 +82,8 @@ public partial class PartyMenuManager : Panel
       inputDisabled = false;
 
       currentMember = managers.PartyManager.Party[0];
+
+      LoadMemberButtons();
       LoadNewPartyScreen(currentMember.characterName);
       Visible = true;
    }
@@ -92,6 +93,17 @@ public partial class PartyMenuManager : Panel
       for (int i = 0; i < managers.PartyManager.Party.Count; i++)
       {
          LoadMemberButton(managers.PartyManager.Party[i]);
+
+         if (managers.PartyManager.Party[i] == currentMember)
+         {
+            if (currentSelectedButton != null)
+            {
+               currentSelectedButton.GetNode<Panel>("SelectedHighlight").Visible = false;
+            }
+
+            currentSelectedButton = partyList.GetChild<Button>(i);
+            currentSelectedButton.GetNode<Panel>("SelectedHighlight").Visible = true;
+         }
       }
    }
 
@@ -162,12 +174,31 @@ public partial class PartyMenuManager : Panel
       member.GetNode<RichTextLabel>("Mana").Text = "Mana: " + partyMember.currentMana + "/" + partyMember.GetMaxMana();
       member.GetNode<RichTextLabel>("Exp").Text = "Experience: " + partyMember.experience + "/" + managers.PartyManager.GetExperienceAtLevel(partyMember.level - 1);
 
+      member.ButtonDown += managers.ButtonSoundManager.OnClick;
+      member.MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+      member.ButtonDown += () => DisplaySelectionHighlight(partyMember.characterName);
+
       if (partyMember.isInParty)
       {
          member.GetNode<Panel>("Highlight").Visible = true;
       }
 
       partyList.AddChild(member);
+   }
+
+   void DisplaySelectionHighlight(string memberName)
+   {
+      currentSelectedButton.GetNode<Panel>("SelectedHighlight").Visible = false;
+
+      foreach (Button child in partyList.GetChildren())
+      {
+         if (child.GetNode<RichTextLabel>("Title").Text == memberName)
+         {
+            currentSelectedButton = child;
+            currentSelectedButton.GetNode<Panel>("SelectedHighlight").Visible = true;
+            return;
+         }
+      }
    }
 
    void ClearMemberButtons()
@@ -247,9 +278,8 @@ public partial class PartyMenuManager : Panel
       for (int i = 0; i < managers.PartyManager.Items.Count; i++)
       {
          ItemResource item = managers.PartyManager.Items[i].item;
-         if (item.itemType == (ItemType)index 
-            && (item.itemCategory == currentMember.baseMember.itemCategoryWorn || item.itemCategory == currentMember.baseMember.itemCategoryWielded)
-            || item.itemType == ItemType.Accessory)
+         if (item.itemType == (ItemType)index && (item.itemCategory == currentMember.baseMember.itemCategoryWorn 
+            || item.itemCategory == currentMember.baseMember.itemCategoryWielded) || item.itemType == ItemType.Accessory)
          {
             AddReequipButton(managers.PartyManager.Items[i].item);
          }
@@ -332,50 +362,55 @@ public partial class PartyMenuManager : Panel
       managers.PartyManager.Party[secondMemberIndex] = temp;
       managers.PartyManager.Party[secondMemberIndex].isInParty = secondPartyStatus;
 
-      // Swap playability
-      if (firstMemberIndex == 0 || secondMemberIndex == 0)
+      // Swap models
+      Member firstCharacter = managers.PartyManager.Party[firstMemberIndex];
+      Member otherCharacter = managers.PartyManager.Party[secondMemberIndex];
+
+      Node3D tempModel = firstCharacter.model;
+      firstCharacter.model = otherCharacter.model;
+      otherCharacter.model = tempModel;
+
+      if (firstCharacter.isInParty)
       {
-         Member newPlayableCharacter = managers.PartyManager.Party[0];
-         Member otherCharacter = null;
+         AddNewComponentsToModel(firstCharacter);
+      }
 
-         if (firstMemberIndex == 0)
-         {
-            otherCharacter = managers.PartyManager.Party[secondMemberIndex];
-         }
-         else
-         {
-            otherCharacter = managers.PartyManager.Party[firstMemberIndex];
-         }
+      if (otherCharacter.isInParty)
+      {
+         AddNewComponentsToModel(otherCharacter);
+      }
 
-         // We need to always keep the playable character at Member1, which is why the models of the characters are switched
-         if (otherCharacter.model != null)
-         {
-            Node3D tempModel = newPlayableCharacter.model;
-            newPlayableCharacter.model = otherCharacter.model;
-            otherCharacter.model = tempModel;
-         }
-         else
-         {
-            newPlayableCharacter.model = GetNode<Node3D>("/root/BaseNode/PartyMembers/Member1");
-         }
+      Member playableMember = null;
 
-         AddNewComponentsToModel(newPlayableCharacter);
+      if (firstCharacter == managers.PartyManager.Party[0])
+      {
+         playableMember = firstCharacter;
+      }
+      else if (firstCharacter.isInParty)
+      {
+         firstCharacter.model.GetNode<OverworldPartyController>("../" + firstCharacter.model.Name).ResetNodes(firstCharacter);
+      }
+
+      if (otherCharacter == managers.PartyManager.Party[0])
+      {
+         playableMember = otherCharacter;
+      }
+      else if (otherCharacter.isInParty)
+      {
+         otherCharacter.model.GetNode<OverworldPartyController>("../" + otherCharacter.model.Name).ResetNodes(otherCharacter);
+      }
+
+      if (playableMember != null)
+      {
          managers.Controller.ResetNodes();
 
          // The holder prefab comes with the navigator, which we no longer need when we're the playable character
-         NavigationAgent3D navigator = newPlayableCharacter.model.GetNode<NavigationAgent3D>("NavigationAgent3D");
-         newPlayableCharacter.model.RemoveChild(navigator);
+         NavigationAgent3D navigator = playableMember.model.GetNode<NavigationAgent3D>("NavigationAgent3D");
+         playableMember.model.RemoveChild(navigator);
          navigator.QueueFree();
 
          // Remove the dialogue box to prevent talking with self
-         newPlayableCharacter.model.GetNode<StaticBody3D>("DialogueBox").QueueFree();
-
-         // We need to populate the contents of the other party member
-         if (otherCharacter.isInParty)
-         {
-            AddNewComponentsToModel(otherCharacter);
-            otherCharacter.model.GetNode<OverworldPartyController>("../" + otherCharacter.model.Name).ResetNodes(otherCharacter);
-         }
+         playableMember.model.GetNode<StaticBody3D>("DialogueBox").QueueFree();
 
          ResetDialogueHolders();
          EmitSignal(SignalName.PartySwap);
@@ -466,7 +501,6 @@ public partial class PartyMenuManager : Panel
 
    void OnAddPartyButtonDown()
    {
-      //currentMember.isInParty = true;
       AddCharacterToParty(currentMember);
 
       addPartyButton.Disabled = true;
@@ -478,12 +512,14 @@ public partial class PartyMenuManager : Panel
    public void AddCharacterToParty(Member member)
    {
       member.isInParty = true;
+      int index = 1;
       for (int i = 1; i < 4; i++)
       {
          Node3D memberNode = GetNode<Node3D>("/root/BaseNode/PartyMembers/Member" + (i + 1));
          
          if (memberNode.GetChildCount() == 0)
          {
+            index = i;
             member.model = memberNode;
             break;
          }
@@ -491,15 +527,25 @@ public partial class PartyMenuManager : Panel
 
       AddNewComponentsToModel(member);
       member.model.GetNode<OverworldPartyController>("../" + member.model.Name).ResetNodes(member);
-      member.model.Position = managers.Controller.Position - (managers.Controller.GlobalTransform.Basis.Z * 2f);
+      member.model.Position = managers.Controller.Position - (managers.Controller.GlobalTransform.Basis.Z * 2f * index);
       member.model.GetNode<OverworldPartyController>("../" + member.model.Name).IsActive = true;
    }
 
    void OnRemovePartyButtonDown()
    {
-      currentMember.isInParty = false;
       currentMember.model.GetNode<OverworldPartyController>("../" + currentMember.model.Name).IsActive = false;
 
+      currentMember.isInParty = false;
+      RemoveCharacterComponents(currentMember);
+
+      removePartyButton.Disabled = true;
+      addPartyButton.Disabled = false;
+
+      ChangeMemberButtonHighlight(currentMember.characterName, false);
+   }
+
+   void RemoveCharacterComponents(Member member)
+   {
       foreach (Node child in currentMember.model.GetChildren())
       {
          currentMember.model.RemoveChild(child);
@@ -507,11 +553,6 @@ public partial class PartyMenuManager : Panel
       }
 
       currentMember.model = null;
-
-      removePartyButton.Disabled = true;
-      addPartyButton.Disabled = false;
-
-      ChangeMemberButtonHighlight(currentMember.characterName, false);
    }
 
    void ChangeMemberButtonHighlight(string memberName, bool isHighlightOn)

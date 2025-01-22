@@ -175,13 +175,19 @@ public enum AbilityCommandType
    /// <br></br>
    /// <c>Is3DSound</c> (bool) : if true, the sound is played from a location in the 3D world; if false, it isn't directional
    /// <br></br>
+   /// <c>Volume</c> (float) : the volume of the sound; -80 is inaudible, 0 is normal
+   /// <br></br>
    /// <c>Path</c> (string) : the path to the parent
    /// <br></br>
    /// <c>SpecialCodeOverride</c> (SpecialCodeOverride) : overrides the path for the parent
    /// <br></br>
    /// <c>NodeName</c> (string) : if CreatedNode is used for SpecialCodeOverride, the name of the created node
    /// </summary>
-   CreateSound
+   CreateSound,
+   /// <summary>
+   /// Resets the caster's animation to their CombatIdle animation.
+   /// </summary>
+   ResetCasterAnimation
 }
 
 /// <summary>
@@ -234,7 +240,8 @@ public partial class AbilityCommand : Resource
    public string Path { get; set; }
    public string PathToScene { get; set; }
    public string PathToSound { get; set; }
-   public bool Is3DSound { get; set;}
+   public bool Is3DSound { get; set; }
+   public float Volume { get; set; }
    public string NodeName { get; set; }
    public bool RelativeToSelf { get; set; }
    public bool UseLocal { get; set; }
@@ -582,6 +589,12 @@ public partial class AbilityCommand : Resource
             {
                { "name", $"Is3DSound" },
                { "type", (int)Variant.Type.Bool }
+            });
+
+            result.Add(new Dictionary()
+            {
+               { "name", $"Volume" },
+               { "type", (int)Variant.Type.Float }
             });
 
             result.Add(new Dictionary()

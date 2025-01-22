@@ -7,6 +7,8 @@ public partial class CombatStackStatusManager : Node
    private CombatManager combatManager;
    [Export]
    private CombatUIManager uiManager;
+   [Export]
+   private Color[] statusColors = new Color[0];
 
    private List<Node3D> hiddenEffectGraphics = new List<Node3D>();
 
@@ -68,7 +70,7 @@ public partial class CombatStackStatusManager : Node
             }
             else if (statusEffect == StatusEffect.Stealth)
             {
-               combatManager.ApplyStatModifier(StatType.Evasion, Mathf.CeilToInt(target.stats[(int)StatType.Evasion].baseValue * 0.75f), duration, 
+               combatManager.ApplyStatModifier(StatType.Evasion, Mathf.CeilToInt(target.stats[(int)StatType.Evasion].baseValue * 2f), duration, 
                                                target, combatManager.CurrentFighter, StatusEffect.Stealth);
             }
             else if (statusEffect == StatusEffect.Taunting)
@@ -99,38 +101,38 @@ public partial class CombatStackStatusManager : Node
    {
       for (int i = 0; i < combatManager.CurrentFighter.currentStatuses.Count; i++)
       {
-       //  for (int j = 0; j < combatManager.Fighters[i].currentStatuses.Count; j++)
-        // {
-           // if (combatManager.Fighters[i].currentStatuses[j].applier == combatManager.CurrentFighter)
-           // {
-               combatManager.CurrentFighter.currentStatuses[i].remainingTurns--;
-               uiManager.DecrementEffectUI(combatManager.CurrentFighter, combatManager.CurrentFighter.currentStatuses[i].effect.ToString());
+         combatManager.CurrentFighter.currentStatuses[i].remainingTurns--;
+         uiManager.DecrementEffectUI(combatManager.CurrentFighter, combatManager.CurrentFighter.currentStatuses[i].effect.ToString());
 
-               if (combatManager.CurrentFighter.currentStatuses[i].remainingTurns <= 0)
-               {
-                  RemoveStatus(combatManager.CurrentFighter, i);
-               }
-               else
-               {
-                  if (combatManager.CurrentFighter.currentStatuses[i].effect == StatusEffect.Poison)
-                  {
-                     combatManager.CurrentFighter.currentHealth -= Mathf.Clamp((int)(combatManager.CurrentFighter.currentHealth * 0.05f), 1, 99999);
-                     uiManager.UpdateSingularUIPanel(combatManager.CurrentFighter);
-                  }
-                  else if (combatManager.CurrentFighter.currentStatuses[i].effect == StatusEffect.Bleed)
-                  {
-                     combatManager.CurrentFighter.currentHealth -= Mathf.Clamp((int)(combatManager.CurrentFighter.maxHealth * 0.03f), 1, 99999);
-                     uiManager.UpdateSingularUIPanel(combatManager.CurrentFighter);
-                  }
-                  else if (combatManager.CurrentFighter.currentStatuses[i].effect == StatusEffect.Burn)
-                  {
-                     combatManager.CurrentFighter.currentHealth -= Mathf.Clamp((int)(combatManager.CurrentFighter.maxHealth * 0.02f), 1, 99999);
-                     uiManager.UpdateSingularUIPanel(combatManager.CurrentFighter);
-                  }
-               }
+         if (combatManager.CurrentFighter.currentStatuses[i].remainingTurns <= 0)
+         {
+            RemoveStatus(combatManager.CurrentFighter, i);
+         }
+         else
+         {
+            if (combatManager.CurrentFighter.currentStatuses[i].effect == StatusEffect.Poison)
+            {
+               int damage = Mathf.Clamp((int)(combatManager.CurrentFighter.currentHealth * 0.05f), 1, 99999);
+               combatManager.CurrentFighter.currentHealth -= damage;
+               uiManager.UpdateSingularUIPanel(combatManager.CurrentFighter);
+               uiManager.ProjectDamageText(combatManager.CurrentFighter, damage, statusColors[combatManager.StatusDatas[(int)StatusEffect.Poison].colorIndex]);
             }
-        // }
-      //}
+            else if (combatManager.CurrentFighter.currentStatuses[i].effect == StatusEffect.Bleed)
+            {
+               int damage = Mathf.Clamp((int)(combatManager.CurrentFighter.maxHealth * 0.03f), 1, 99999);
+               combatManager.CurrentFighter.currentHealth -= damage;
+               uiManager.UpdateSingularUIPanel(combatManager.CurrentFighter);
+               uiManager.ProjectDamageText(combatManager.CurrentFighter, damage, statusColors[combatManager.StatusDatas[(int)StatusEffect.Bleed].colorIndex]);
+            }
+            else if (combatManager.CurrentFighter.currentStatuses[i].effect == StatusEffect.Burn)
+            {
+               int damage = Mathf.Clamp((int)(combatManager.CurrentFighter.maxHealth * 0.02f), 1, 99999);
+               combatManager.CurrentFighter.currentHealth -= damage;
+               uiManager.UpdateSingularUIPanel(combatManager.CurrentFighter);
+               uiManager.ProjectDamageText(combatManager.CurrentFighter, damage, statusColors[combatManager.StatusDatas[(int)StatusEffect.Burn].colorIndex]);
+            }
+         }
+      }
    }
 
    public void AddStatusGraphic(Fighter target, StatusEffect statusEffect)
@@ -138,33 +140,47 @@ public partial class CombatStackStatusManager : Node
       StatusData statusData = combatManager.StatusDatas[(int)statusEffect];
 
       Node3D graphic = GD.Load<PackedScene>(statusData.graphicEffectPath).Instantiate<Node3D>();
-      BoneAttachment3D boneAttachment = new BoneAttachment3D();
-      AddChild(boneAttachment);
-      boneAttachment.Visible = false;
-      boneAttachment.Name = target.fighterName + statusEffect.ToString();
-      boneAttachment.SetUseExternalSkeleton(true);
-      boneAttachment.SetExternalSkeleton(target.model.GetNode<Node3D>("Model").GetChild(0).GetChild(0).GetPath());
 
-      string boneToAttachTo = statusData.boneToAttachForGraphic;
-
-      if (target.model.HasNode("BoneConversions"))
+      if (statusData.boneToAttachForGraphic.Length > 0)
       {
-         BoneConversionList boneConversionList = target.model.GetNode<BoneConversionList>("BoneConversions");
+         BoneAttachment3D boneAttachment = new BoneAttachment3D();
+         AddChild(boneAttachment);
+         boneAttachment.Visible = false;
+         boneAttachment.Name = target.fighterName + statusEffect.ToString();
+         boneAttachment.SetUseExternalSkeleton(true);
+         boneAttachment.SetExternalSkeleton(target.model.GetNode<Node3D>("Model").GetChild(0).GetChild(0).GetPath());
 
-         for (int i = 0; i < boneConversionList.conversions.Length; i++)
+         string boneToAttachTo = statusData.boneToAttachForGraphic;
+
+         if (target.model.HasNode("BoneConversions"))
          {
-            if (boneConversionList.conversions[i].originalBone == statusData.boneToAttachForGraphic)
+            BoneConversionList boneConversionList = target.model.GetNode<BoneConversionList>("BoneConversions");
+
+            for (int i = 0; i < boneConversionList.conversions.Length; i++)
             {
-               boneToAttachTo = boneConversionList.conversions[i].overrideBone;
-               break;
+               if (boneConversionList.conversions[i].originalBone == statusData.boneToAttachForGraphic)
+               {
+                  boneToAttachTo = boneConversionList.conversions[i].overrideBone;
+                  break;
+               }
             }
          }
+
+         boneAttachment.BoneName = boneToAttachTo;
+         boneAttachment.AddChild(graphic);
+
+         hiddenEffectGraphics.Add(boneAttachment);
       }
+      
+      if (statusData.materialEffectPath.Length > 0)
+      {
+         List<MeshInstance3D> meshes = combatManager.GetMeshes(target.model.GetNode<Node3D>("Model"));
 
-      boneAttachment.BoneName = boneToAttachTo;
-      boneAttachment.AddChild(graphic);
-
-      hiddenEffectGraphics.Add(boneAttachment);
+         for (int i = 0; i < meshes.Count; i++)
+         {
+            meshes[i].MaterialOverlay = GD.Load<Material>(statusData.materialEffectPath);
+         }
+      }
    }
 
    public void ShowEffectGraphics()
@@ -185,8 +201,15 @@ public partial class CombatStackStatusManager : Node
          {
             RemoveChild(child);
             child.QueueFree();
-            return;
+            break;
          }
+      }
+
+      List<MeshInstance3D> meshes = combatManager.GetMeshes(target.model.GetNode<Node3D>("Model"));
+
+      for (int i = 0; i < meshes.Count; i++)
+      {
+         meshes[i].MaterialOverlay = null;
       }
    }
 

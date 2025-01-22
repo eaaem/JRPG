@@ -61,13 +61,14 @@ public partial class FighterRotater : Node
 
          model.Rotation = rotation;
 
-         if (Mathf.Abs(Mathf.AngleDifference(model.Rotation.Y, target.Y)) < 0.01f)
+         if (isRotating && Mathf.Abs(Mathf.AngleDifference(model.Rotation.Y, target.Y)) < 0.01f)
          {
             isRotating = false;
             EmitSignal(SignalName.RotationFinished);
             GetParent().RemoveChild(this);
             QueueFree();
-         } 
+            return;
+         }
       }
    }
 }

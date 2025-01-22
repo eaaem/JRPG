@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dl1uyhuu43vfo"]
+[gd_scene load_steps=12 format=3 uid="uid://dl1uyhuu43vfo"]
 
 [ext_resource type="Script" path="res://Menus/Party/MemberButton.cs" id="1_tar3v"]
 [ext_resource type="Theme" uid="uid://b1ndyocqpom7" path="res://Menus/0Core/small_button.tres" id="1_xobhq"]
@@ -17,18 +17,21 @@ modulate_color = Color(1, 0.41, 0.41, 1)
 texture = ExtResource("2_l5vmd")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7h28f"]
-bg_color = Color(0.687486, 0.593533, 0.252644, 0.603922)
+bg_color = Color(0.69, 0.595815, 0.2553, 0.372549)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oj4vq"]
-bg_color = Color(0.845972, 0.494134, 0.293272, 0.603922)
+bg_color = Color(0.92135, 0.427469, 0.305847, 0.603922)
 corner_radius_top_left = 7
 corner_radius_top_right = 7
 corner_radius_bottom_right = 7
 corner_radius_bottom_left = 7
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_awdif"]
+bg_color = Color(0.774799, 0.491597, 0.182607, 0.482353)
 
 [node name="Member" type="Button"]
 custom_minimum_size = Vector2(300, 170)
@@ -55,6 +58,14 @@ offset_right = 300.0
 offset_bottom = 170.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_oj4vq")
+
+[node name="SelectedHighlight" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 170.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_awdif")
 
 [node name="Title" type="RichTextLabel" parent="."]
 layout_mode = 0

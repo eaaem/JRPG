@@ -1,15 +1,15 @@
-[gd_resource type="Resource" load_steps=16 format=3 uid="uid://b8hjkmgxow1ni"]
+[gd_resource type="Resource" script_class="Enemy" load_steps=16 format=3 uid="uid://b8hjkmgxow1ni"]
 
-[ext_resource type="Resource" uid="uid://b3661813p24qo" path="res://Abilities/Enemy/Heal/enemy_minor_heal.tres" id="1_f30cg"]
+[ext_resource type="Resource" uid="uid://b3661813p24qo" path="res://Abilities/Enemy/DryadHeal/dryad_minor_heal.tres" id="1_f30cg"]
 [ext_resource type="PackedScene" uid="uid://doxau86eowxvy" path="res://Combat/Enemies/Dryad/dryad.tscn" id="1_j4ldm"]
-[ext_resource type="Script" path="res://Combat/Core/Enemy.cs" id="1_tyo8k"]
+[ext_resource type="Script" path="res://Combat/0Core/Enemy.cs" id="1_tyo8k"]
 [ext_resource type="Resource" uid="uid://cqfihfdw05vjc" path="res://Abilities/Enemy/VineWrap/vine_wrap.tres" id="2_47jkp"]
-[ext_resource type="Script" path="res://Combat/Core/Stat.cs" id="4_ei65o"]
+[ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="4_ei65o"]
 
 [sub_resource type="Resource" id="Resource_ra3ca"]
 script = ExtResource("4_ei65o")
 statType = 0
-value = 16
+value = 14
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_eqnrn"]
@@ -21,7 +21,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_fdcnl"]
 script = ExtResource("4_ei65o")
 statType = 2
-value = 5
+value = 8
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_qpe61"]
@@ -39,7 +39,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_toxrn"]
 script = ExtResource("4_ei65o")
 statType = 5
-value = 9
+value = 5
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_jwrdm"]
@@ -51,7 +51,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_fqvs3"]
 script = ExtResource("4_ei65o")
 statType = 7
-value = 4
+value = 2
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_s1g4c"]
@@ -69,8 +69,12 @@ baseValue = 9
 [resource]
 script = ExtResource("1_tyo8k")
 enemyName = "Dryad"
-level = 4
+level = 3
+baseAttackDamage = 5
 stats = [SubResource("Resource_ra3ca"), SubResource("Resource_eqnrn"), SubResource("Resource_fdcnl"), SubResource("Resource_qpe61"), SubResource("Resource_137u8"), SubResource("Resource_toxrn"), SubResource("Resource_jwrdm"), SubResource("Resource_fqvs3"), SubResource("Resource_s1g4c"), SubResource("Resource_3wpfc")]
 model = ExtResource("1_j4ldm")
 affinity = 4
+enemyAIType = 3
+chanceOfUsingAbility = 75
 abilities = [ExtResource("1_f30cg"), ExtResource("2_47jkp")]
+turnOrderSpritePath = "res://Combat/Enemies/Dryad/dryad.png"

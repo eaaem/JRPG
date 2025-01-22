@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://cy3c73xeh3g2j"]
+
+[ext_resource type="AudioStream" uid="uid://7ikip0es245v" path="res://Abilities/Enemy/Gust/peryton_gust_wind.wav" id="1_iypnt"]
+[ext_resource type="Script" path="res://Abilities/0Core/AutoPlayAnimationPlayer.cs" id="1_jmqp2"]
+
+[sub_resource type="Animation" id="Animation_3j3wp"]
+resource_name = "Move"
+length = 1.5
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1.5, 1, 0, 0, 8)
+
+[sub_resource type="Animation" id="Animation_qvjmo"]
+length = 0.001
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fhclc"]
+_data = {
+"Move": SubResource("Animation_3j3wp"),
+"RESET": SubResource("Animation_qvjmo")
+}
+
+[node name="GustMovingSound" type="BoneAttachment3D"]
+bone_name = "root"
+
+[node name="SoundNode" type="Node3D" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SoundNode"]
+libraries = {
+"": SubResource("AnimationLibrary_fhclc")
+}
+script = ExtResource("1_jmqp2")
+animationName = "Move"
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SoundNode"]
+stream = ExtResource("1_iypnt")
+volume_db = 6.344
+autoplay = true
+bus = &"Effects"

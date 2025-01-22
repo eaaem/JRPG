@@ -186,16 +186,9 @@ public partial class CombatManager : Node
 
          await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
 
+         CurrentFighter = null;
          Fighters.Clear();
          currentEnemyScript = enemyScript;
-
-         for (int i = 0; i < managers.PartyManager.Party.Count; i++)
-         {
-            if (managers.PartyManager.Party[i].isInParty)
-            {
-               //managers.PartyManager.Party[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Encounter");
-            }
-         }
 
          await ToSignal(GetTree().CreateTimer(0.75f), "timeout");
 
@@ -250,7 +243,6 @@ public partial class CombatManager : Node
 
          uiManager.ShowLists();
          SelectNextTurn();
-         GD.Print(fighterTurnOrders.Count);
       }
    }
 
@@ -330,7 +322,7 @@ public partial class CombatManager : Node
 
       for (int i = 0; i < enemies.Count; i++)
       {
-         enemyMeshes.AddRange(GetMeshes(enemies[i].model));
+         enemyMeshes.AddRange(GetMeshes(enemies[i].model.GetNode<Node3D>("Model")));
       }
 
       StandardMaterial3D currentTransition = (StandardMaterial3D)transitionMaterial;
@@ -371,10 +363,10 @@ public partial class CombatManager : Node
    }
 
    /// <summary>
-   /// Uses breadth-first search to get all child meshes of a skeleton.
+   /// Gets all the meshes in a model.
    /// </summary>
    /// <returns>All meshes in a model</returns>
-   List<MeshInstance3D> GetMeshes(Node3D root)
+   public List<MeshInstance3D> GetMeshes(Node3D root)
    {
       List<MeshInstance3D> meshes = new List<MeshInstance3D>();
       Queue<Node> visited = new Queue<Node>();
@@ -466,6 +458,15 @@ public partial class CombatManager : Node
 
             newFighter.turnOrderSpritePath = managers.PartyManager.Party[i].baseMember.turnOrderSpritePath;
 
+            if (managers.PartyManager.Party[i].equipment[0] != null)
+            {
+               newFighter.baseAttackDamage = (int)managers.PartyManager.Party[i].equipment[0].specialModifier;
+            }
+            else
+            {
+               newFighter.baseAttackDamage = 1;
+            }
+
             Fighters.Add(newFighter);
          }
       }
@@ -532,6 +533,9 @@ public partial class CombatManager : Node
          uiManager.InitializeEnemyPanel(newFighter, i);
 
          newFighter.turnOrderSpritePath = enemyDatas[i].turnOrderSpritePath;
+         newFighter.enemyAIType = enemyDatas[i].enemyAIType;
+         newFighter.abilityUseChance = enemyDatas[i].chanceOfUsingAbility;
+         newFighter.baseAttackDamage = enemyDatas[i].baseAttackDamage;
 
 		   Fighters.Add(newFighter);
       }
@@ -642,11 +646,26 @@ public partial class CombatManager : Node
    void InitializeTurn(Fighter nextFighter)
    {
       CurrentFighter = nextFighter;
+      int health = CurrentFighter.currentHealth;
       stacksAndStatusManager.IncrementAppliedStatuses();
       IncrementStatModifiers();
       uiManager.SetHighlightVisibility(CurrentFighter, true, false);
 
       uiManager.ClearAbilityUI();
+
+      // Create status effect damage texts
+      if (health != CurrentFighter.currentHealth)
+      {
+         uiManager.MoveDamageTexts(CurrentFighter);
+      }
+
+      // Accounts for deaths by status effects
+      if (CurrentFighter.currentHealth <= 0)
+      {
+         ProcessValues();
+         FinishRound();
+         return;
+      }
 
       if (CurrentFighter.isEnemy)
       {
@@ -780,7 +799,7 @@ public partial class CombatManager : Node
             }
          }
 
-         await ToSignal(GetTree().CreateTimer(0.15f), "timeout");
+         await ToSignal(GetTree().CreateTimer(0.25f), "timeout");
          SelectNextTurn();
       }
    }
@@ -908,7 +927,6 @@ public partial class CombatManager : Node
       
       IsAttacking = false;
       uiManager.StopHoveringOverInformation();
-      GetNode<AudioStreamPlayer>("/root/BaseNode/AudioPlayers/UI_SFX/UIClose").Play();
    }
 
    public override void _Input(InputEvent @event)
@@ -931,16 +949,16 @@ public partial class CombatManager : Node
       return null;
    }
 
-   void CompleteAttack(Fighter target)
+   public void CompleteAttack(Fighter target)
    {
       uiManager.HideAll();
 
       CurrentTarget = target;
-      DamagingEntity damage = new DamagingEntity(CurrentFighter.level, StatType.Strength, StatType.Fortitude, DamageType.Physical);
+      DamagingEntity damage = new DamagingEntity(CurrentFighter.baseAttackDamage, StatType.Strength, StatType.Fortitude, DamageType.Physical);
 
       if (IsCompanionTurn)
       {
-         damage.baseDamage = CurrentFighter.level / 2;
+         damage.baseDamage = CurrentFighter.companion.baseAttackDamage;
       }
 
       // Athlia's attacks deal 10% damage
@@ -1087,7 +1105,6 @@ public partial class CombatManager : Node
 
    void EnemyTurn()
    {
-      Fighter target = SelectEnemyTarget(false, false);
       List<AbilityResource> validAbilities = new List<AbilityResource>();
 
       for (int i = 0; i < CurrentFighter.abilities.Count; i++)
@@ -1098,24 +1115,57 @@ public partial class CombatManager : Node
          }
       }
 
-      int selectedOption;
+      int selectedOption = GD.RandRange(1, 100);
 
       if (validAbilities.Count <= 0)
       {
-         selectedOption = 0;
-      }
-      else
-      {
-         selectedOption = GD.RandRange(0, 2);
+         selectedOption = 101;
       }
 
-      if (selectedOption == 0)
+      // Look for fighters with less than 33% health and try to heal them if possible
+      if (CurrentFighter.enemyAIType == EnemyAIType.Healer)
       {
-         CompleteAttack(target);
+         List<AbilityResource> healingAbilities = new List<AbilityResource>();
+         for (int i = 0; i < validAbilities.Count; i++)
+         {
+            if (validAbilities[i].isEnemyHealingSpell)
+            {
+               healingAbilities.Add(validAbilities[i]);
+               // Cut out healing abilities from the pool, so they aren't used at random
+               validAbilities.Remove(validAbilities[i]);
+               i--;
+            }
+         }
+
+         if (healingAbilities.Count > 0)
+         {
+            List<Fighter> lowHealthFighters = new List<Fighter>();
+            for (int i = 0; i < Fighters.Count; i++)
+            {
+               if (Fighters[i].isEnemy && !Fighters[i].isDead && Fighters[i].currentHealth <= Fighters[i].maxHealth * 0.33f)
+               {
+                  lowHealthFighters.Add(Fighters[i]);
+               }
+            }
+
+            if (lowHealthFighters.Count > 0)
+            {
+               CurrentTarget = lowHealthFighters[GD.RandRange(0, lowHealthFighters.Count - 1)];
+               CurrentAbility = healingAbilities[GD.RandRange(0, healingAbilities.Count - 1)];
+               abilityManager.EnemyCastAbility();
+               return;
+            }
+         }
+      }
+
+      if (selectedOption <= CurrentFighter.abilityUseChance)
+      {
+         abilityManager.SelectEnemyAbility(validAbilities);
       }
       else
       {
-         abilityManager.SelectEnemyAbility(target, validAbilities);
+         Fighter target = SelectEnemyTarget(false, false);
+         CompleteAttack(target);
       }
    }
 
@@ -1248,6 +1298,8 @@ public partial class CombatManager : Node
    // Prevents negative health/mana and processes death
    public async void ProcessValues()
    {
+      isProcessing = true;
+
       List<Fighter> deadFighters = new List<Fighter>();
       List<int> deadFighterIDs = new List<int>();
 
@@ -1332,6 +1384,8 @@ public partial class CombatManager : Node
             {
                hasAlivePartyMember = true;
             }
+
+            Fighters[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle", 0f);
          }
       }
 
@@ -1359,6 +1413,11 @@ public partial class CombatManager : Node
 
    public int CalculateDamage(DamagingEntity damager)
    {
+      if (damager.baseDamage == 0)
+      {
+         GD.PrintErr("Base damage is 0 for damage calculation. Calculation is proceeding, but may be abnormal for this reason.");
+      }
+
       int attackStat = 0;
       int defenseStat = 0;
       for (int j = 0; j < 10; j++)
@@ -1370,7 +1429,7 @@ public partial class CombatManager : Node
 
          if (CurrentTarget.stats[j].statType == damager.scalingDefense)
          {
-            defenseStat = CurrentFighter.stats[j].value;
+            defenseStat = CurrentTarget.stats[j].value;
          }
       }
 
@@ -1405,14 +1464,10 @@ public partial class CombatManager : Node
          modifier += 0.25f;
       }
 
-      int defenseApplier = defenseStat / 3;
+      float defenseApplier = 1 + defenseStat / 200f;
+      float attackApplier = 1 + attackStat / 50f;
 
-      if (defenseApplier <= 0)
-      {
-         defenseApplier = 1;
-      }
-
-      int damage = (int)((damager.baseDamage * (attackStat / 2)) / defenseApplier * modifier);
+      int damage = Mathf.RoundToInt(((damager.baseDamage * attackApplier) / defenseApplier) * modifier);
 
       for (int i = 0; i < CurrentFighter.currentStatuses.Count; i++)
       {
@@ -1473,6 +1528,7 @@ public partial class CombatManager : Node
       musicPlayer.Play();
 
       int expGain = 0;
+      int goldGain = 0;
 
       managers.LevelManager.LocationDatas[managers.LevelManager.ActiveLocationDataID].defeatedEnemies[currentEnemyScript.id.ToString()] = true;
 
@@ -1484,7 +1540,8 @@ public partial class CombatManager : Node
       {
          if (Fighters[i].isEnemy)
          {
-            expGain += Fighters[i].level * 5;
+            expGain += Fighters[i].level * 3;
+            goldGain += Fighters[i].level * 2;
          }
          else
          {
@@ -1499,25 +1556,28 @@ public partial class CombatManager : Node
       }
 
       await ToSignal(GetTree().CreateTimer(2.5f), "timeout");
+
+      managers.PartyManager.Gold += goldGain;
+      uiManager.CreateGoldGainLabel(goldGain);
       
       for (int i = 0; i < managers.PartyManager.Party.Count; i++)
       {
-         if (managers.PartyManager.Party[i].isInParty)
-         {
-            managers.PartyManager.Party[i].experience += expGain;
-         }
-         else
-         {
-            managers.PartyManager.Party[i].experience += (int)(expGain * 0.5f);
-         }
-
          int oldLevel = managers.PartyManager.Party[i].level;
          int oldAbilityCount = managers.PartyManager.Party[i].abilities.Count;
 
          Fighter fighter = GetFighterFromMember(managers.PartyManager.Party[i]);
          managers.PartyManager.Party[i].currentHealth = Mathf.Clamp(fighter.currentHealth, 1, 9999);
          managers.PartyManager.Party[i].currentMana = fighter.currentMana;
-         managers.PartyManager.LevelUp(expGain, managers.PartyManager.Party[i]);
+
+         if (managers.PartyManager.Party[i].isInParty)
+         {
+            managers.PartyManager.LevelUp(expGain, managers.PartyManager.Party[i]);
+         }
+         else
+         {
+            managers.PartyManager.LevelUp((int)(expGain * 0.5f), managers.PartyManager.Party[i]);
+         }
+
          uiManager.UpdateVictoryExp(managers.PartyManager.Party[i], expGain, oldLevel, oldAbilityCount);
       }
 
@@ -1560,34 +1620,52 @@ public partial class CombatManager : Node
       EmitSignal(SignalName.BattleEnd);
    }
 
-   void Loss()
+   async void Loss()
    {
-      Tween tween = CreateTween();
+      // Fail-safe in case this is a scripted battle
+      managers.CutsceneManager.EndCutscene(false);
+      managers.DialogueManager.ExitDialogue();
+      managers.Controller.DisableMovement = true;
+      managers.Controller.DisableGravity = true;
+      Input.MouseMode = Input.MouseModeEnum.Visible;
+      arenaCamera.MakeCurrent();
+
       managers.LevelManager.MuteMusic();
+
+      await ToSignal(GetTree().CreateTimer(1f), "timeout");
+
+      Tween tween = CreateTween();
       managers.MenuManager.FadeToBlack(tween);
+
+      await ToSignal(tween, Tween.SignalName.Finished);
+
+      managers.Controller.GlobalPosition = new Vector3(0f, 0f, 75f);
+
+      await ToSignal(GetTree().CreateTimer(1f), "timeout");
+
       uiManager.SetDefeatScreenVisible(true);
       IsInCombat = false;
    }
 
    void OnReloadLastButtonDown()
    {
-      managers.LevelManager.ResetGameState();
+      managers.LevelManager.SoftResetGameState();
       managers.SaveManager.LoadGame(managers.SaveManager.currentSaveIndex);
-      GetNode<Sprite2D>("/root/BaseNode/MainMenu/Background").Visible = false;
-      managers.MenuManager.FadeFromBlack();
       uiManager.SetDefeatScreenVisible(false);
       Input.MouseMode = Input.MouseModeEnum.Captured;
       managers.Controller.DisableMovement = false;
       managers.Controller.DisableCamera = false;
       ResetCombat();
+
+      managers.MenuManager.FadeFromBlack();
    }
 
    void OnQuitToMenuButtonDown()
    {
-      managers.LevelManager.ResetGameState();
-      managers.MenuManager.FadeFromBlack();
+      managers.LevelManager.ResetGameStateWithoutTransition();
       ResetCombat();
       uiManager.SetDefeatScreenVisible(false);
+      managers.MenuManager.FadeFromBlack();
    }
 
    void ResetCombat()
@@ -1624,16 +1702,8 @@ public partial class CombatManager : Node
       managers.MenuManager.canTakeInput = true;
    }
 
-   public void RegularCast(List<Fighter> targets, bool playHitAnimation = true)
+   public void RegularCast(List<Fighter> targets, bool playHitAnimation = true, string overrideGraphicController = "")
    {
-      if (targets.Count == 1)
-      {
-         if (CurrentFighter.isEnemy)
-         {
-            CurrentFighter.model.GetNode<Node3D>("Model").LookAt(targets[0].model.GlobalPosition, Vector3.Up, true);
-         }
-      }
-
       if (CurrentFighter.placementNode.HasNode("TurnHighlight"))
       {
          Decal turnHighlight = CurrentFighter.placementNode.GetNode<Decal>("TurnHighlight");
@@ -1641,7 +1711,7 @@ public partial class CombatManager : Node
          turnHighlight.QueueFree();
       }
 
-      abilityManager.CreateAbilityGraphicController(targets, playHitAnimation);     
+      abilityManager.CreateAbilityGraphicController(targets, playHitAnimation, overrideGraphicController);     
    }
 
    public async void FinishCastingProcess(List<Fighter> targets, bool playHitAnimation = true)
@@ -1663,7 +1733,7 @@ public partial class CombatManager : Node
       uiManager.UpdateSingularUIPanel(CurrentFighter);
       stacksAndStatusManager.ShowEffectGraphics();
 
-      player.Play("CombatIdle", 0.25f);
+      //player.Play("CombatIdle", 0.25f);
 
       Panel companionUIHolder = CurrentFighter.UIPanel.GetNode<Panel>("CompanionHolder");
       if (CurrentFighter.companion != null && companionUIHolder.Visible == false)
@@ -1716,6 +1786,7 @@ public partial class CombatManager : Node
       newCompanion.currentMana = newCompanion.maxMana;
 
       newCompanion.duration = duration;
+      newCompanion.baseAttackDamage = companionData.baseAttackDamage;
 
       caster.companion = newCompanion;
       InitializeCompanionGraphics(caster);

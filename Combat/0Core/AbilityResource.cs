@@ -25,9 +25,15 @@ public partial class AbilityResource : Resource
    [Export]
    public bool onlyHitsSelf;
    [Export]
+   public bool isEnemyHealingSpell;
+   [Export]
    public bool bypassesDeaths;
    [Export]
    public string graphicPath;
    [Export]
    public int requiredLevel;
+   [Export]
+   public int abilityWeight;
+   [Export]
+   public StatusEffect notStackingEffectApplied;
 }

@@ -55,7 +55,6 @@ curve = SubResource("Curve_c2ae4")
 
 [node name="HealEffectFinish" type="GPUParticles3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00952667, 0)
-emitting = false
 amount = 32
 lifetime = 1.25
 one_shot = true

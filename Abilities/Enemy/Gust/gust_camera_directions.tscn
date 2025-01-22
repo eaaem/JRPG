@@ -1,0 +1,130 @@
+[gd_scene load_steps=19 format=3 uid="uid://dpcij4ro6y47o"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_rft6x"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_lsgde"]
+
+[sub_resource type="Resource" id="Resource_1taia"]
+script = ExtResource("2_lsgde")
+CommandType = 1
+NodeName = "camera_parent"
+Path = "/root/BaseNode/Level/Arena"
+SpecialCodeOverride = 0
+Target = Vector3(0, 1.5, 0)
+PathToScene = ""
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_i0t3k"]
+script = ExtResource("2_lsgde")
+CommandType = 3
+Path = "camera_parent"
+SpecialCodeOverride = 5
+
+[sub_resource type="Resource" id="Resource_erg5l"]
+script = ExtResource("2_lsgde")
+CommandType = 4
+Target = Vector3(-8, 1.75, 0)
+RelativeToSelf = false
+UseLocal = true
+
+[sub_resource type="Resource" id="Resource_fq8m5"]
+script = ExtResource("2_lsgde")
+CommandType = 2
+Path = "camera_parent"
+SpecialCodeOverride = 5
+
+[sub_resource type="Resource" id="Resource_vi5rv"]
+script = ExtResource("2_lsgde")
+CommandType = 8
+LookImmediately = true
+Speed = 0.0
+
+[sub_resource type="Resource" id="Resource_vfhgr"]
+script = ExtResource("2_lsgde")
+CommandType = 15
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+TargetName = "camera_parent"
+TargetCodeOverride = 5
+Amount = 8.0
+LookImmediately = false
+
+[sub_resource type="Resource" id="Resource_lcess"]
+script = ExtResource("2_lsgde")
+CommandType = 16
+
+[sub_resource type="Resource" id="Resource_buck6"]
+script = ExtResource("2_lsgde")
+CommandType = 18
+PathToSound = "res://Abilities/Enemy/Gust/peryton_gust_flap.wav"
+Is3DSound = true
+Volume = 5.0
+Path = ""
+SpecialCodeOverride = 2
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_lrevi"]
+script = ExtResource("2_lsgde")
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "GustCast"
+
+[sub_resource type="Resource" id="Resource_14wu7"]
+script = ExtResource("2_lsgde")
+CommandType = 10
+Amount = 2.3
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_h15ro"]
+script = ExtResource("2_lsgde")
+CommandType = 1
+NodeName = "effect"
+Path = "Model/Armature/Skeleton3D"
+SpecialCodeOverride = 2
+Target = Vector3(0, 1.25, 0)
+PathToScene = "res://Abilities/Enemy/Gust/gust_end_effect.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_0fr61"]
+script = ExtResource("2_lsgde")
+CommandType = 1
+NodeName = "moving_sound"
+Path = "Model/Armature/Skeleton3D"
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Enemy/Gust/gust_moving_sound.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_u4fao"]
+script = ExtResource("2_lsgde")
+CommandType = 10
+Amount = 1.5
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_1qo7e"]
+script = ExtResource("2_lsgde")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_0i2jt"]
+script = ExtResource("2_lsgde")
+CommandType = 10
+Amount = 1.0
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_qytf4"]
+script = ExtResource("2_lsgde")
+CommandType = 17
+
+[node name="GustCameraDirections" type="Node3D"]
+script = ExtResource("1_rft6x")
+commands = [SubResource("Resource_1taia"), SubResource("Resource_i0t3k"), SubResource("Resource_erg5l"), SubResource("Resource_fq8m5"), SubResource("Resource_vi5rv"), SubResource("Resource_vfhgr"), SubResource("Resource_lcess"), SubResource("Resource_buck6"), SubResource("Resource_lrevi"), SubResource("Resource_14wu7"), SubResource("Resource_h15ro"), SubResource("Resource_0fr61"), SubResource("Resource_u4fao"), SubResource("Resource_1qo7e"), SubResource("Resource_0i2jt"), SubResource("Resource_qytf4")]

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=35 format=3 uid="uid://0y8iemdigx00"]
+[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=36 format=3 uid="uid://0y8iemdigx00"]
 
 [ext_resource type="Resource" uid="uid://lx78kbhd5261" path="res://Abilities/Party/Heal/minor_heal.tres" id="1_3b551"]
 [ext_resource type="Resource" uid="uid://dbcuvabocierf" path="res://Abilities/Party/Inspire/inspire.tres" id="1_vr0p4"]
@@ -25,9 +25,15 @@ statType = 5
 value = 1
 baseValue = 0
 
+[sub_resource type="Resource" id="Resource_cvggg"]
+script = ExtResource("5_0lmme")
+statType = 0
+value = 1
+baseValue = 0
+
 [sub_resource type="Resource" id="Resource_lqttl"]
 script = ExtResource("4_fk4sf")
-stats = [SubResource("Resource_is12c"), SubResource("Resource_4t25u"), SubResource("Resource_wttku")]
+stats = [SubResource("Resource_is12c"), SubResource("Resource_4t25u"), SubResource("Resource_wttku"), SubResource("Resource_cvggg")]
 
 [sub_resource type="Resource" id="Resource_em5ir"]
 script = ExtResource("5_0lmme")

@@ -1,0 +1,63 @@
+[gd_scene load_steps=10 format=3 uid="uid://dbv5wijakbv3h"]
+
+[ext_resource type="Texture2D" uid="uid://cdfu70y51a6c" path="res://Core/puff.png" id="1_1syai"]
+[ext_resource type="Script" path="res://Abilities/0Core/AutoOneShotEffect.cs" id="2_bpme8"]
+
+[sub_resource type="Gradient" id="Gradient_3uge3"]
+offsets = PackedFloat32Array(0.487805, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.0810666, 0.0266, 0.19, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_xyrk6"]
+gradient = SubResource("Gradient_3uge3")
+
+[sub_resource type="Curve" id="Curve_es31q"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_a25no"]
+curve = SubResource("Curve_es31q")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jy142"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.0
+emission_ring_radius = 0.35
+emission_ring_inner_radius = 0.0
+angle_min = 1.07288e-05
+angle_max = 1.07288e-05
+spread = 180.0
+flatness = 1.0
+gravity = Vector3(0, 1, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+radial_accel_min = 0.999998
+radial_accel_max = 0.999998
+tangential_accel_min = -2.23517e-06
+tangential_accel_max = -2.23517e-06
+scale_curve = SubResource("CurveTexture_a25no")
+color_ramp = SubResource("GradientTexture1D_xyrk6")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_egh0w"]
+transparency = 1
+shading_mode = 0
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_1syai")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_cf1be"]
+material = SubResource("StandardMaterial3D_egh0w")
+
+[node name="StealthEffect" type="GPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00952667, 0)
+amount = 32
+lifetime = 1.25
+speed_scale = 1.75
+explosiveness = 1.0
+trail_lifetime = 0.2
+process_material = SubResource("ParticleProcessMaterial_jy142")
+draw_pass_1 = SubResource("QuadMesh_cf1be")
+script = ExtResource("2_bpme8")

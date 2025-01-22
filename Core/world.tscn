@@ -1,4 +1,4 @@
-[gd_scene load_steps=213 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=219 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -25,6 +25,7 @@
 [ext_resource type="Script" path="res://Party/0Core/PartyManager.cs" id="9_ah2fn"]
 [ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="10_6pqua"]
 [ext_resource type="Resource" uid="uid://b6424vyj7dspo" path="res://Party/Vakthol/vakthol.tres" id="10_7pwb7"]
+[ext_resource type="AudioStream" uid="uid://dp2d2e680wdxp" path="res://Items/Consumables/HealingPotion/recover.wav" id="10_shswd"]
 [ext_resource type="PackedScene" uid="uid://c5yikq1y5un0d" path="res://Combat/UI/ability_button.tscn" id="10_w4nkx"]
 [ext_resource type="PackedScene" uid="uid://bn35oip147owg" path="res://Combat/0Core/stack_prefab.tscn" id="11_qyibu"]
 [ext_resource type="Resource" uid="uid://ck7wy6s7wajxw" path="res://Party/Thalria/thalria.tres" id="11_wj8pa"]
@@ -93,6 +94,7 @@
 [ext_resource type="Texture2D" uid="uid://b3jk6pqnfnj61" path="res://Menus/0Core/back_light_border.png" id="65_078c4"]
 [ext_resource type="Texture2D" uid="uid://bh8y7yaxgcboy" path="res://Menus/0Core/back_light_border_opaque.png" id="67_0gojn"]
 [ext_resource type="Texture2D" uid="uid://bbapqo1qh5j3c" path="res://Menus/0Core/main_menu_background.png" id="75_4g5gp"]
+[ext_resource type="Texture2D" uid="uid://c4qlde51dy5va" path="res://Menus/0Core/medium_button.png" id="78_tg0m5"]
 [ext_resource type="Script" path="res://Party/0Core/CharacterAudioController.cs" id="79_pr45g"]
 [ext_resource type="AudioStream" uid="uid://b7i785pitce5k" path="res://Core/footstep1.wav" id="80_k0a62"]
 [ext_resource type="AudioStream" uid="uid://bok1x07qalrg5" path="res://Core/footstep2.wav" id="81_fnttl"]
@@ -197,6 +199,8 @@ isNegative = false
 displayRemainingTurns = false
 graphicEffectPath = ""
 boneToAttachForGraphic = ""
+materialEffectPath = ""
+colorIndex = 0
 
 [sub_resource type="Resource" id="Resource_igf5a"]
 script = ExtResource("4_t2qrl")
@@ -207,6 +211,8 @@ isNegative = true
 displayRemainingTurns = true
 graphicEffectPath = ""
 boneToAttachForGraphic = ""
+materialEffectPath = ""
+colorIndex = 0
 
 [sub_resource type="Resource" id="Resource_vj0lt"]
 script = ExtResource("4_t2qrl")
@@ -217,6 +223,8 @@ isNegative = true
 displayRemainingTurns = true
 graphicEffectPath = "res://Combat/StatusEffects/poison_effect.tscn"
 boneToAttachForGraphic = "root"
+materialEffectPath = ""
+colorIndex = 0
 
 [sub_resource type="Resource" id="Resource_h6dwx"]
 script = ExtResource("4_t2qrl")
@@ -227,6 +235,8 @@ isNegative = true
 displayRemainingTurns = true
 graphicEffectPath = "res://Combat/StatusEffects/bleed_effect.tscn"
 boneToAttachForGraphic = "chest"
+materialEffectPath = ""
+colorIndex = 1
 
 [sub_resource type="Resource" id="Resource_5kq13"]
 script = ExtResource("4_t2qrl")
@@ -237,6 +247,8 @@ isNegative = true
 displayRemainingTurns = true
 graphicEffectPath = ""
 boneToAttachForGraphic = ""
+materialEffectPath = ""
+colorIndex = 2
 
 [sub_resource type="Resource" id="Resource_mftyv"]
 script = ExtResource("4_t2qrl")
@@ -247,6 +259,8 @@ isNegative = true
 displayRemainingTurns = true
 graphicEffectPath = ""
 boneToAttachForGraphic = ""
+materialEffectPath = ""
+colorIndex = 0
 
 [sub_resource type="Resource" id="Resource_e01c7"]
 script = ExtResource("4_t2qrl")
@@ -257,6 +271,8 @@ isNegative = true
 displayRemainingTurns = true
 graphicEffectPath = ""
 boneToAttachForGraphic = ""
+materialEffectPath = ""
+colorIndex = 0
 
 [sub_resource type="Resource" id="Resource_au516"]
 script = ExtResource("4_t2qrl")
@@ -267,6 +283,8 @@ isNegative = false
 displayRemainingTurns = true
 graphicEffectPath = ""
 boneToAttachForGraphic = ""
+materialEffectPath = ""
+colorIndex = 0
 
 [sub_resource type="Resource" id="Resource_1u3ta"]
 script = ExtResource("4_t2qrl")
@@ -277,17 +295,20 @@ isNegative = false
 displayRemainingTurns = true
 graphicEffectPath = "res://Combat/StatusEffects/keeneye_effect.tscn"
 boneToAttachForGraphic = "head"
+materialEffectPath = ""
+colorIndex = 0
 
 [sub_resource type="Resource" id="Resource_1rshu"]
 script = ExtResource("4_t2qrl")
 effect = 9
-description = "Evasion increased
-Breaks upon attacking or taking damage"
+description = "Evasion increased; breaks upon attacking or taking damage"
 isCleanseable = false
 isNegative = false
 displayRemainingTurns = true
-graphicEffectPath = ""
-boneToAttachForGraphic = ""
+graphicEffectPath = "res://Combat/StatusEffects/stealth_effect.tscn"
+boneToAttachForGraphic = "root"
+materialEffectPath = "res://Combat/StatusEffects/stealth_material.tres"
+colorIndex = 0
 
 [sub_resource type="Resource" id="Resource_7vgvf"]
 script = ExtResource("4_t2qrl")
@@ -298,6 +319,8 @@ isNegative = false
 displayRemainingTurns = true
 graphicEffectPath = "res://Combat/StatusEffects/inspired_effect.tscn"
 boneToAttachForGraphic = "head"
+materialEffectPath = ""
+colorIndex = 0
 
 [sub_resource type="Resource" id="Resource_48cbu"]
 script = ExtResource("4_t2qrl")
@@ -308,6 +331,8 @@ isNegative = false
 displayRemainingTurns = true
 graphicEffectPath = "res://Combat/StatusEffects/provoking_effect.tscn"
 boneToAttachForGraphic = "head"
+materialEffectPath = ""
+colorIndex = 0
 
 [sub_resource type="Resource" id="Resource_kn2cf"]
 script = ExtResource("10_6pqua")
@@ -329,6 +354,7 @@ script = ExtResource("10_6pqua")
 CommandType = 18
 PathToSound = "ATTACK"
 Is3DSound = true
+Volume = 0.0
 Path = ""
 SpecialCodeOverride = 2
 NodeName = ""
@@ -391,6 +417,7 @@ script = ExtResource("10_6pqua")
 CommandType = 18
 PathToSound = "ATTACK"
 Is3DSound = true
+Volume = 0.0
 Path = ""
 SpecialCodeOverride = 2
 NodeName = ""
@@ -571,6 +598,9 @@ texture = ExtResource("65_078c4")
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_en4rr"]
 texture = ExtResource("67_0gojn")
 
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7s27j"]
+texture = ExtResource("78_tg0m5")
+
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_blx2h"]
 texture = ExtResource("52_ldpry")
 
@@ -588,6 +618,38 @@ corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fkans"]
+bg_color = Color(1, 1, 0.51, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.179076, 0.139786, 0.0157539, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vqmtm"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.329412)
+
+[sub_resource type="Theme" id="Theme_adihd"]
+VScrollBar/icons/decrement = null
+VScrollBar/icons/decrement_highlight = null
+VScrollBar/icons/decrement_pressed = null
+VScrollBar/icons/increment = null
+VScrollBar/icons/increment_highlight = null
+VScrollBar/icons/increment_pressed = null
+VScrollBar/styles/grabber = SubResource("StyleBoxFlat_fkans")
+VScrollBar/styles/grabber_highlight = null
+VScrollBar/styles/grabber_pressed = null
+VScrollBar/styles/scroll = SubResource("StyleBoxFlat_vqmtm")
+VScrollBar/styles/scroll_focus = null
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_snhpk"]
 
@@ -726,6 +788,12 @@ bus = &"UI"
 stream = ExtResource("9_2my3v")
 bus = &"Effects"
 
+[node name="Levels" type="Node3D" parent="AudioPlayers"]
+
+[node name="ItemPickup" type="AudioStreamPlayer" parent="AudioPlayers/Levels"]
+stream = ExtResource("10_shswd")
+bus = &"Effects"
+
 [node name="ManagerReferenceHolder" type="Node3D" parent="." node_paths=PackedStringArray("PartyManager", "Controller", "LevelManager", "SaveManager", "MenuManager", "ItemPickupManager", "DialogueManager", "CutsceneManager", "ShopMenuManager", "PartyMenuManager", "ItemMenuManager", "MainMenuManager", "AudioManager", "ButtonSoundManager")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.15193e-07, 3.72529e-09, 2.97208e-07)
 script = ExtResource("1_7hlfi")
@@ -819,6 +887,7 @@ uiManager = NodePath("../UIManager")
 script = ExtResource("9_1u2nm")
 combatManager = NodePath("..")
 uiManager = NodePath("../UIManager")
+statusColors = PackedColorArray(0.103025, 0.295108, 1.44392e-07, 1, 1, 0.05, 0, 1, 1, 0.45, 0, 1)
 
 [node name="MusicHolder" type="Node3D" parent="CombatManager"]
 script = ExtResource("54_gsvxg")
@@ -831,7 +900,7 @@ vaktholItems = [ExtResource("32_hw5rl"), ExtResource("33_6gfj8"), ExtResource("3
 ThalriaItems = [ExtResource("17_vxtna"), ExtResource("27_n8681")]
 AthliaItems = [ExtResource("29_g6fdf"), ExtResource("30_r5v1q"), ExtResource("43_jct0e")]
 OlrenItems = [ExtResource("31_1d5xq"), ExtResource("30_r5v1q"), ExtResource("32_m7fip"), ExtResource("19_4kg3f")]
-experienceThreshholds = PackedInt32Array(10, 20, 40, 99999, 160, 320, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+experienceThreshholds = PackedInt32Array(10, 20, 40, 80, 160, 320, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 managers = NodePath("../ManagerReferenceHolder")
 
 [node name="UI" type="CanvasLayer" parent="."]
@@ -4144,15 +4213,19 @@ menuPanels = [NodePath("../MenuContainer/Party"), NodePath("../MenuContainer/Ite
 openSound = NodePath("../../../../AudioPlayers/UI_SFX/UIOpen")
 closeSound = NodePath("../../../../AudioPlayers/UI_SFX/UIClose")
 
-[node name="ItemPickup" type="CanvasGroup" parent="UI"]
+[node name="ItemPickup" type="Control" parent="UI"]
 visible = false
+layout_mode = 3
+anchors_preset = 0
 
 [node name="Back" type="Panel" parent="UI/ItemPickup" node_paths=PackedStringArray("managers")]
+layout_mode = 0
 offset_left = 105.0
 offset_top = 900.0
 offset_right = 1805.0
 offset_bottom = 1000.0
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7s27j")
 script = ExtResource("36_qnjxv")
 managers = NodePath("../../../ManagerReferenceHolder")
 
@@ -4160,6 +4233,7 @@ managers = NodePath("../../../ManagerReferenceHolder")
 layout_mode = 0
 offset_right = 1700.0
 offset_bottom = 100.0
+theme = ExtResource("38_6i0oi")
 theme_override_font_sizes/font_size = 40
 text = "Picked up # ###!"
 horizontal_alignment = 1
@@ -4355,11 +4429,16 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_pqu20")
 layout_mode = 0
 offset_right = 115.0
 offset_bottom = 510.0
+theme = SubResource("Theme_adihd")
 horizontal_scroll_mode = 0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/CombatOrderList/ScrollContainer"]
 layout_mode = 2
 theme_override_constants/separation = 0
+
+[node name="Control" type="Control" parent="UI/CombatOrderList/ScrollContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 900)
+layout_mode = 2
 
 [node name="PartyMembers" type="Node3D" parent="."]
 
@@ -4770,10 +4849,13 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Legs" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [4]]
 [connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Arms" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [5]]
 [connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Accessory" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [6]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/SwapButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/SwapButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnSwapButtonDown"]
 [connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/SwapButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/AddPartyButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/AddPartyButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnAddPartyButtonDown"]
 [connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/AddPartyButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/RemovePartyButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/RemovePartyButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnRemovePartyButtonDown"]
 [connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/RemovePartyButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
 [connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Settings/ButtonsContainer/Video" to="AudioPlayers/ButtonSoundController" method="OnClick"]

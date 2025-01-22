@@ -85,8 +85,7 @@ public partial class PartyManager : Node
       for (int i = 1; i < 4; i++)
       {
          OverworldPartyController memberNode = GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + (i + 1));
-         memberNode.Position = controller.Position - (controller.GlobalTransform.Basis.Z * i);
-         memberNode.ResetNavigation();
+         memberNode.GlobalPosition = controller.GlobalPosition - (controller.GetNode<Node3D>("Model").GlobalTransform.Basis.Z * 2f * i);
       }
    }
 
@@ -179,7 +178,6 @@ public partial class PartyManager : Node
       else if (isInParty)
       {
          managers.PartyMenuManager.AddCharacterToParty(newMember);
-         GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + (partyIndex + 1)).IsActive = true;
       }
 
       return newMember;
@@ -338,12 +336,12 @@ public partial class Member : Node
 
    public int GetMaxHealth()
    {
-	  return stats[0].value * 2 * level;
+	  return Mathf.RoundToInt(stats[0].value * 2.5f);
    }
 
    public int GetMaxMana()
    {
-	  return stats[1].value * level;
+	  return Mathf.RoundToInt(stats[1].value * 1.5f);
    }
 
    

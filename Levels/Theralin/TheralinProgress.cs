@@ -512,6 +512,12 @@ public partial class TheralinProgress : LevelProgession
 
          managers.Controller.DisableMovement = true;
          managers.Controller.DisableCamera = true;
+
+         for (int i = 1; i <= 4; i++)
+         {
+            GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + i).EnablePathfinding = false;
+         }
+
          await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
          Tween tween = CreateTween();
          managers.MenuManager.FadeToBlack(tween);

@@ -39,6 +39,11 @@ version_control/autoload_on_startup=true
 
 enabled=PackedStringArray("res://addons/ObjectBrush/plugin.cfg")
 
+[global_group]
+
+enemy="For world enemies."
+item="For items that can be picked up from the world."
+
 [importer_defaults]
 
 wavefront_obj={

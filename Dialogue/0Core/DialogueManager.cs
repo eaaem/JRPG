@@ -103,6 +103,7 @@ public partial class DialogueManager : Node
             currentDialogueList = interaction.exitShopDialogue;
          }
          
+         CurrentIndex = 0;
          NextDialogue(0);
       }
    }
@@ -360,6 +361,7 @@ public partial class DialogueManager : Node
       managers.Controller.DisableCamera = false;
       Input.MouseMode = Input.MouseModeEnum.Captured;
       DialogueIsActive = false;
+      isCurrentlyCutscene = false;
       LockInput = false;
       EmitSignal(SignalName.DialogueEnded);
    }

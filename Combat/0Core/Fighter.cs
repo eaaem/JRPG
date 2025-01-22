@@ -25,6 +25,8 @@ public partial class Fighter : Node
    public int specialCooldown;
    public bool specialActive;
 
+   public int baseAttackDamage;
+
    public bool wasHit;
 
    public int currentHealth;
@@ -39,6 +41,9 @@ public partial class Fighter : Node
 
    public bool isDead;
    public bool isEnemy;
+   public EnemyAIType enemyAIType;
+
+   public int abilityUseChance;
 
    public Control UIPanel;
    public Node3D model;
@@ -50,17 +55,12 @@ public partial class Fighter : Node
 
    public int GetMaxHealth()
    {
-      if (level == 0)
-      {
-         return stats[0].value * 2;
-      }
-
-	   return stats[0].value * 2 * level;
+	   return Mathf.RoundToInt(stats[0].value * 2.5f);
    }
 
    public int GetMaxMana()
    {
-	  return (int)(stats[1].value * 1.5 * level);
+	  return Mathf.RoundToInt(stats[1].value * 1.5f);
    }
 }
 
@@ -72,6 +72,8 @@ public partial class Companion
    public Stat[] stats = new Stat[10];
    public Affinity affinity;
    public List<AbilityResource> abilities = new List<AbilityResource>();
+
+   public int baseAttackDamage;
 
    public int currentHealth;
    public int currentMana;

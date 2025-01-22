@@ -149,8 +149,10 @@ public partial class AbilityCommandInstance : Node
                                                                                                    ParseSpecialPath(SpecialCodeOverride.TargetsModel, ""), createdNodes);
                      isWaitingForProjectiles = true;
                   }
-
-                  createdNodes.Add(currentNode);
+                  else
+                  {
+                     createdNodes.Add(currentNode);
+                  }
                }
             }
 
@@ -389,13 +391,19 @@ public partial class AbilityCommandInstance : Node
             rotaters.Clear();
             for (int i = 0; i < toRotate.Count; i++)
             {
-               FighterRotater rotater = GD.Load<PackedScene>("res://Abilities/0Core/fighter_rotater.tscn").Instantiate<FighterRotater>();
-               toRotate[i].AddChild(rotater);
-
                if (command.TargetCodeOverride != SpecialCodeOverride.None)
                {
                   target = ParseSpecialPath(command.TargetCodeOverride, command.TargetName)[0];
                }
+
+               if (toRotate[i] == target)
+               {
+                  GD.Print("Rotation target is the same as the rotater itself; skipping");
+                  continue;
+               }
+
+               FighterRotater rotater = GD.Load<PackedScene>("res://Abilities/0Core/fighter_rotater.tscn").Instantiate<FighterRotater>();
+               toRotate[i].AddChild(rotater);
 
                rotater.UpdateData(command.Target, command.Amount, command.LookImmediately, target);
 
@@ -453,6 +461,7 @@ public partial class AbilityCommandInstance : Node
             if (command.Is3DSound)
             {
                AudioStreamPlayer3D audioPlayer = GD.Load<PackedScene>("res://Core/self_destructing_3d_audio_player.tscn").Instantiate<AudioStreamPlayer3D>();
+               audioPlayer.VolumeDb = command.Volume;
                audioPlayerParent.AddChild(audioPlayer);
                audioPlayer.Stream = audio;
                audioPlayer.Play();
@@ -460,6 +469,7 @@ public partial class AbilityCommandInstance : Node
             else
             {
                AudioStreamPlayer audioPlayer = GD.Load<PackedScene>("res://Core/self_destructing_audio_player.tscn").Instantiate<AudioStreamPlayer>();
+               audioPlayer.VolumeDb = command.Volume;
                audioPlayerParent.AddChild(audioPlayer);
                audioPlayer.Stream = audio;
                audioPlayer.Play();
@@ -470,6 +480,9 @@ public partial class AbilityCommandInstance : Node
             camera.GetParent<Node3D>().RemoveChild(camera);
             GetNode<Node3D>("/root/BaseNode/Level/Arena").AddChild(camera);
             combatManager.ResetCamera();
+            break;
+         case AbilityCommandType.ResetCasterAnimation:
+            //combatManager.CurrentFighter.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Comba")
             break;
          default:
             GD.Print("Invalid ability command");

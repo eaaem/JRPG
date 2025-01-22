@@ -18,16 +18,21 @@ stats = [SubResource("Resource_rv5hx")]
 script = ExtResource("3_fpjt0")
 name = "Heirloom Staff"
 description = "Staff
+1 damage
 +2 intelligence"
 scriptPath = ""
-specialModifier = 0.0
+combatGraphicsPath = ""
+specialModifier = 1.0
 hitsAll = false
 hitsSurrounding = false
 hitsSelf = false
 hitsTeam = false
+onlyHitsTeam = false
+onlyHitsSelf = false
 itemType = 1
 itemCategory = 5
 price = 0
 affectedStats = SubResource("Resource_1lnan")
 usableOutsideCombat = false
 outOfCombatUseMessage = ""
+outOfCombatAudioPath = ""

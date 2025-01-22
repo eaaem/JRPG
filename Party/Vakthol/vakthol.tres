@@ -121,7 +121,7 @@ stats = [SubResource("Resource_4c5ji"), SubResource("Resource_2x7dt"), SubResour
 [sub_resource type="Resource" id="Resource_t25pn"]
 script = ExtResource("5_w5ef2")
 statType = 0
-value = 10
+value = 9
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_5gxje"]
@@ -169,7 +169,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_i752s"]
 script = ExtResource("5_w5ef2")
 statType = 8
-value = 7
+value = 9
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_1114y"]
