@@ -404,7 +404,7 @@ public partial class MainMenuManager : CanvasLayer
       if (index == -1)
       {
          // No save exists, default to Theralin
-         packedScene = GD.Load<PackedScene>("res://Menus/0Core/theralin.tscn");
+         packedScene = GD.Load<PackedScene>("res://Menus/MainMenuLevels/theralin.tscn");
       }
       else
       {
@@ -425,7 +425,7 @@ public partial class MainMenuManager : CanvasLayer
             }
          }
 
-         packedScene = GD.Load<PackedScene>("res://Menus/0Core/" + location + ".tscn");
+         packedScene = GD.Load<PackedScene>("res://Menus/MainMenuLevels/" + location + ".tscn");
       }
 
       Node3D level = packedScene.Instantiate<Node3D>();

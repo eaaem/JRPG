@@ -1,0 +1,86 @@
+[gd_scene load_steps=8 format=3 uid="uid://c735el5v00jii"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_pwpwj"]
+particle_flag_align_y = true
+emission_shape_scale = Vector3(0.75, 1, 0.75)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 1.0
+emission_ring_radius = 1.2
+emission_ring_inner_radius = 0.7
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -9.05
+linear_accel_max = -9.05
+radial_accel_min = -14.07
+radial_accel_max = -13.07
+tangential_accel_min = 13.07
+tangential_accel_max = 13.07
+color = Color(0, 0, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mb4cb"]
+vertex_color_use_as_albedo = true
+emission_enabled = true
+emission = Color(0.72549, 0, 0.0901961, 1)
+emission_energy_multiplier = 16.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_q315o"]
+material = SubResource("StandardMaterial3D_mb4cb")
+radius = 0.03
+height = 0.06
+radial_segments = 4
+rings = 2
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_a7g1m"]
+particle_flag_align_y = true
+emission_shape_scale = Vector3(0.75, 0.5, 0.75)
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.5
+emission_ring_radius = 1.2
+emission_ring_inner_radius = 0.7
+gravity = Vector3(0, 0, 0)
+linear_accel_min = -9.05
+linear_accel_max = -9.05
+radial_accel_min = -14.07
+radial_accel_max = -13.07
+tangential_accel_min = 13.07
+tangential_accel_max = 13.07
+color = Color(0, 0, 0, 1)
+
+[sub_resource type="Curve" id="Curve_s4p2g"]
+_data = [Vector2(0.0506329, 0), 0.0, 0.0, 0, 0, Vector2(0.496202, 0.968421), 0.0, 0.0, 0, 0, Vector2(0.95443, 0.768421), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t6bjg"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+emission = Color(0.376471, 0.184314, 0.176471, 1)
+emission_energy_multiplier = 0.43
+grow_amount = -7.877
+use_particle_trails = true
+distance_fade_min_distance = 25.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_fkuco"]
+material = SubResource("StandardMaterial3D_t6bjg")
+shape = 0
+size = 0.25
+section_segments = 5
+curve = SubResource("Curve_s4p2g")
+
+[node name="GPUParticles3D2" type="GPUParticles3D"]
+transform = Transform3D(1, 0, 0, 0, 0.134176, -0.990957, 0, 0.990957, 0.134176, 0.0687617, 1.86028, 1.39734)
+amount = 65
+local_coords = true
+process_material = SubResource("ParticleProcessMaterial_pwpwj")
+draw_pass_1 = SubResource("SphereMesh_q315o")
+
+[node name="Base2" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.999411, -0.0343153, 0, 0.0343153, 0.999411, -0.0687617, 0.0191367, -0.0133586)
+amount = 50
+local_coords = true
+trail_enabled = true
+trail_lifetime = 0.25
+process_material = SubResource("ParticleProcessMaterial_a7g1m")
+draw_pass_1 = SubResource("RibbonTrailMesh_fkuco")

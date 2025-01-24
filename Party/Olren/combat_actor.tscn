@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://b6ut8vyjhyc4x" path="res://Party/Olren/olren.glb" id="1_jdxxl"]
 [ext_resource type="PackedScene" uid="uid://ca4cg8yfjvek3" path="res://Party/Olren/olren_bow.glb" id="2_baokr"]
 [ext_resource type="PackedScene" uid="uid://48ss871jtuis" path="res://Party/Olren/olren_quiver.glb" id="3_lnoq2"]
-[ext_resource type="Script" path="res://Party/Olren/OlrenBowBehavior.cs" id="4_tixil"]
+[ext_resource type="PackedScene" uid="uid://vcmknlvqulw5" path="res://Party/Olren/bow_behavior.tscn" id="4_kf0jh"]
 [ext_resource type="PackedScene" uid="uid://bmq5yx3vf54ai" path="res://Party/Olren/olren_arrow.glb" id="5_g188m"]
 [ext_resource type="PackedScene" uid="uid://btvgyb2kh78pv" path="res://Abilities/0Core/attack_preferences.tscn" id="6_0nobb"]
 [ext_resource type="Script" path="res://Abilities/0Core/AnimationPreferences.cs" id="7_eobvi"]
@@ -148,8 +148,7 @@ transform = Transform3D(0.60502, 0.598074, 0.525603, -0.655822, -2.86669e-08, 0.
 [node name="SecondaryAnchor" type="Node3D" parent="."]
 transform = Transform3D(-0.158533, -0.487022, 0.858881, -0.0884016, 0.87339, 0.478932, -0.983388, 2.23517e-08, -0.181515, 0.103, 0, -0.145)
 
-[node name="BowBehavior" type="Node3D" parent="."]
-script = ExtResource("4_tixil")
+[node name="BowBehavior" parent="." instance=ExtResource("4_kf0jh")]
 
 [node name="AttackPreferences" parent="." instance=ExtResource("6_0nobb")]
 IsRanged = true

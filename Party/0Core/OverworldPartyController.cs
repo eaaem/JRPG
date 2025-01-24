@@ -93,7 +93,7 @@ public partial class OverworldPartyController : CharacterBody3D
       attachment.Name = "WeaponAttachment";
       skeleton = model.GetNode<Skeleton3D>("Armature/Skeleton3D");
       skeleton.AddChild(attachment);
-      attachment.BoneName = "torso";
+      attachment.BoneName = weaponAnchor.GetChild(0).Name;
 
       RemoveChild(weapon);
       RemoveChild(secondaryWeapon);
@@ -105,6 +105,9 @@ public partial class OverworldPartyController : CharacterBody3D
 
       skeleton.AddChild(secondaryAttachment);
       secondaryAttachment.AddChild(secondaryWeapon);
+
+      GetNode<RandomAudioSelector>("grass").VolumeDb = -8f;
+      GetNode<RandomAudioSelector>("dirt").VolumeDb = -8f;
 
       PlaceWeaponOnBack();
       PlaceSecondaryWeaponOnBack();

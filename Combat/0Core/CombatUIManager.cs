@@ -304,7 +304,12 @@ public partial class CombatUIManager : Node
          if (combatManager.CurrentFighter.specialCooldown > 0)
          {
             cooldownMessage = "[color=red]On cooldown for " + combatManager.CurrentFighter.specialCooldown + " more turn"
-                              + (combatManager.CurrentFighter.specialCooldown > 1 ? "s" : "") + " [/color]";
+                              + (combatManager.CurrentFighter.specialCooldown > 1 ? "s" : "") + ". [/color]";
+         }
+
+         if (combatManager.CurrentFighter.currentMana < member.specialAbility.manaCost)
+         {
+            cooldownMessage += "[color=red]Not enough mana.[/color] ";
          }
 
          specialButton.MouseEntered += () => HoverOverInformation("[color=#bf87ff](SPECIAL)[/color] " + cooldownMessage 
@@ -313,7 +318,6 @@ public partial class CombatUIManager : Node
          if (combatManager.CurrentFighter.specialCooldown > 0)
          {
             specialButton.Disabled = true;
-            specialButton.MouseFilter = Control.MouseFilterEnum.Ignore;
          }
 
          abilityButtonContainer.AddChild(specialButton);
@@ -335,20 +339,18 @@ public partial class CombatUIManager : Node
 
       button.Text = ability.name;
       button.MouseExited += StopHoveringOverInformation;
-      button.MouseEntered += () => HoverOverInformation("Costs " + ability.manaCost + " mana. " + ability.description);
-
-      button.MouseEntered += managers.ButtonSoundManager.OnHoverOver;
-      button.ButtonDown += managers.ButtonSoundManager.OnClick;
 
       if (mana < ability.manaCost)
       {
+         button.MouseEntered += () => HoverOverInformation("[color=red]Not enough mana.[/color] Costs " + ability.manaCost + " mana. " + ability.description);
          button.Disabled = true;
-         button.MouseFilter = Control.MouseFilterEnum.Ignore;
       }
       else
       {
+         button.MouseEntered += () => HoverOverInformation("Costs " + ability.manaCost + " mana. " + ability.description);
          button.MouseEntered += () => SetManaBarLossIndicator(ability.manaCost);
-         button.MouseFilter = Control.MouseFilterEnum.Stop;
+         button.MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+         button.ButtonDown += managers.ButtonSoundManager.OnClick;
       }
 
       return button;
@@ -389,7 +391,9 @@ public partial class CombatUIManager : Node
 
    public void UpdateAbilities()
    {
-      Member member = combatManager.GetCurrentMember();
+      ClearAbilityUI();
+      GenerateAbilityUI();
+      /*Member member = combatManager.GetCurrentMember();
 
       List<AbilityResource> abilitiesToUse;
       int manaToUse;
@@ -409,15 +413,42 @@ public partial class CombatUIManager : Node
 
       for (int i = 0; i < abilitiesToUse.Count; i++)
       {
+         if (abilityButtonContainer.GetChild<Button>(i + offset).Name == "Special")
+         {
+            continue;
+         }
+
          if (abilitiesToUse[i].manaCost <= manaToUse)
          {
+            if (abilityButtonContainer.GetChild<Button>(i + offset).Disabled)
+            {
+               abilityButtonContainer.GetChild<Button>(i + offset).ButtonDown += managers.ButtonSoundManager.OnClick;
+               abilityButtonContainer.GetChild<Button>(i + offset).MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+
+               abilityButtonContainer.GetChild<Button>(i + offset).MouseEntered -= () => HoverOverInformation("[color=red]Not enough mana. [/color]Costs " 
+                                                                                                              + abilitiesToUse[i].manaCost + " mana. " 
+                                                                                                              + abilitiesToUse[i].description);
+               abilityButtonContainer.GetChild<Button>(i + offset).MouseEntered += () => HoverOverInformation("Costs " + abilitiesToUse[i].manaCost + " mana. " 
+                                                                                                              + abilitiesToUse[i].description); 
+            }
+
             abilityButtonContainer.GetChild<Button>(i + offset).Disabled = false;
-            abilityButtonContainer.GetChild<Button>(i + offset).MouseFilter = Control.MouseFilterEnum.Stop;
          }
          else
          {
+            if (!abilityButtonContainer.GetChild<Button>(i + offset).Disabled)
+            {
+               abilityButtonContainer.GetChild<Button>(i + offset).ButtonDown -= managers.ButtonSoundManager.OnClick;
+               abilityButtonContainer.GetChild<Button>(i + offset).MouseEntered -= managers.ButtonSoundManager.OnHoverOver;
+             
+               abilityButtonContainer.GetChild<Button>(i + offset).MouseEntered -= () => HoverOverInformation("Costs " + abilitiesToUse[i].manaCost + " mana. " 
+                                                                                                              + abilitiesToUse[i].description);
+               abilityButtonContainer.GetChild<Button>(i + offset).MouseEntered += () => HoverOverInformation("[color=red]Not enough mana. [/color]Costs " 
+                                                                                                              + abilitiesToUse[i].manaCost + " mana. " 
+                                                                                                              + abilitiesToUse[i].description);
+            }
+
             abilityButtonContainer.GetChild<Button>(i + offset).Disabled = true;
-            abilityButtonContainer.GetChild<Button>(i + offset).MouseFilter = Control.MouseFilterEnum.Ignore;
          }
       }
 
@@ -425,15 +456,47 @@ public partial class CombatUIManager : Node
       {
          if (member.specialAbility.manaCost <= combatManager.CurrentFighter.currentMana && combatManager.CurrentFighter.specialCooldown <= 0)
          {
+            if (abilityButtonContainer.GetNode<Button>("Special").Disabled)
+            {
+               abilityButtonContainer.GetNode<Button>("Special").ButtonDown += managers.ButtonSoundManager.OnClick;
+               abilityButtonContainer.GetNode<Button>("Special").MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+            }
+
             abilityButtonContainer.GetNode<Button>("Special").Disabled = false;
-            abilityButtonContainer.GetNode<Button>("Special").MouseFilter = Control.MouseFilterEnum.Stop;
          }
          else
          {
+            if (!abilityButtonContainer.GetNode<Button>("Special").Disabled)
+            {
+               Button specialButton = abilityButtonContainer.GetNode<Button>("Special");
+               specialButton.ButtonDown -= managers.ButtonSoundManager.OnClick;
+               specialButton.MouseEntered -= managers.ButtonSoundManager.OnHoverOver;
+
+               specialButton.MouseEntered -= () => HoverOverInformation("[color=#bf87ff](SPECIAL)[/color]  Costs " 
+                                                                                                            + member.specialAbility.manaCost + " mana. " 
+                                                                                                            + member.specialAbility.description);
+               
+               if (member.specialAbility.manaCost > combatManager.CurrentFighter.currentMana)
+               {
+                  specialButton.MouseEntered += () => HoverOverInformation("[color=#bf87ff](SPECIAL)[/color]" + 
+                                                                                                               " [color=red]Not enough mana.[/color] "
+                                                                                                               + "Costs " 
+                                                                                                               + member.specialAbility.manaCost + " mana. " 
+                                                                                                               + member.specialAbility.description);
+               }
+               else
+               {
+                  specialButton.MouseEntered += () => HoverOverInformation("[color=#bf87ff](SPECIAL)[/color] [color=red]On cooldown for " 
+                                                                                                               + combatManager.CurrentFighter.specialCooldown + " more turns.[/color] "
+                                                                                                               + "Costs " 
+                                                                                                               + member.specialAbility.manaCost + " mana. " 
+                                                                                                               + member.specialAbility.description);
+               }
+            }
+
             abilityButtonContainer.GetNode<Button>("Special").Disabled = true;
-            abilityButtonContainer.GetNode<Button>("Special").MouseFilter = Control.MouseFilterEnum.Ignore;
          }
-      }
+      }*/
    }
 
    public void GenerateItemUI()

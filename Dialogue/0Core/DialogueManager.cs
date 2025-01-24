@@ -361,7 +361,6 @@ public partial class DialogueManager : Node
       managers.Controller.DisableCamera = false;
       Input.MouseMode = Input.MouseModeEnum.Captured;
       DialogueIsActive = false;
-      isCurrentlyCutscene = false;
       LockInput = false;
       EmitSignal(SignalName.DialogueEnded);
    }

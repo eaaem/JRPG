@@ -44,7 +44,8 @@ public enum StatusEffect
    KeenEye,
    Stealth,
    Inspired,
-   Taunting
+   Taunting,
+   Enraged
 }
 
 /*
@@ -756,7 +757,8 @@ public partial class CombatManager : Node
                      uiManager.UpdateSingularUIPanel(Fighters[i]);
                   }
                   
-                  Fighters[i].statModifiers.Remove(Fighters[i].statModifiers[j]);
+                  RemoveStatModifier(Fighters[i].statModifiers[j], Fighters[i]);
+                  j--;
                }
             }
          }
@@ -843,7 +845,6 @@ public partial class CombatManager : Node
       }
 
       uiManager.SetCancelButtonVisible(false);
-      uiManager.SetChoicesVisible(false);
       uiManager.SetItemListVisible(false);
       uiManager.SetAbilityContainerVisible(false);
       uiManager.SetTargetsVisible(false);
@@ -1092,8 +1093,13 @@ public partial class CombatManager : Node
       return longestDuration;
    }
 
-   void CreateAudioOnFighter(Fighter fighter, string pathToAudio)
+   public void CreateAudioOnFighter(Fighter fighter, string pathToAudio)
    {
+      if (pathToAudio.Length == 0)
+      {
+         return;
+      }
+
       Node3D parent = new Node3D();
       fighter.model.AddChild(parent);
       AudioStreamPlayer3D audioPlayer = GD.Load<PackedScene>("res://Core/self_destructing_3d_audio_player.tscn").Instantiate<AudioStreamPlayer3D>();
@@ -1491,8 +1497,24 @@ public partial class CombatManager : Node
          if (affectedFighter.stats[i].statType == statType)
          {
             affectedFighter.stats[i].value += modifier;
+            return;
          }
       }
+   }
+
+   public void RemoveStatModifier(StatModifier modifier, Fighter affectedFighter)
+   {
+      affectedFighter.statModifiers.Remove(modifier);
+
+      for (int i = 0; i < affectedFighter.stats.Length; i++)
+      {
+         if (affectedFighter.stats[i].statType == modifier.statType)
+         {
+            affectedFighter.stats[i].value -= modifier.modifier;
+            return;
+         }
+      }
+
    }
 
    bool HitAttack(Fighter target)
@@ -1623,8 +1645,12 @@ public partial class CombatManager : Node
    async void Loss()
    {
       // Fail-safe in case this is a scripted battle
-      managers.CutsceneManager.EndCutscene(false);
-      managers.DialogueManager.ExitDialogue();
+      if (managers.CutsceneManager.IsCutsceneActive)
+      {
+         managers.CutsceneManager.EndCutscene(false);
+         managers.DialogueManager.ExitDialogue();
+      }
+      
       managers.Controller.DisableMovement = true;
       managers.Controller.DisableGravity = true;
       Input.MouseMode = Input.MouseModeEnum.Visible;
@@ -1732,8 +1758,6 @@ public partial class CombatManager : Node
 
       uiManager.UpdateSingularUIPanel(CurrentFighter);
       stacksAndStatusManager.ShowEffectGraphics();
-
-      //player.Play("CombatIdle", 0.25f);
 
       Panel companionUIHolder = CurrentFighter.UIPanel.GetNode<Panel>("CompanionHolder");
       if (CurrentFighter.companion != null && companionUIHolder.Visible == false)

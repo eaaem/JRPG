@@ -1,19 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://80blq8qxjaxw"]
+[gd_scene load_steps=8 format=3 uid="uid://80blq8qxjaxw"]
 
 [ext_resource type="PackedScene" uid="uid://c11giyurtxndd" path="res://Party/Athlia/athlia.glb" id="1_hfclw"]
 [ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_tnugv"]
-[ext_resource type="AudioStream" uid="uid://b7i785pitce5k" path="res://Core/footstep1.wav" id="3_h6amt"]
-[ext_resource type="AudioStream" uid="uid://bok1x07qalrg5" path="res://Core/footstep2.wav" id="4_80tj4"]
-[ext_resource type="AudioStream" uid="uid://cssk5x4i0ki51" path="res://Core/footstep3.wav" id="5_nkk26"]
-[ext_resource type="AudioStream" uid="uid://cti7dd0fwm5ww" path="res://Core/footstep4.wav" id="6_nfiu7"]
-[ext_resource type="AudioStream" uid="uid://b546dpfrw5vpp" path="res://Core/footstep5.wav" id="7_fjtsk"]
-[ext_resource type="AudioStream" uid="uid://bm3i2wii2wk4f" path="res://Core/footstep6.wav" id="8_ib02d"]
-[ext_resource type="AudioStream" uid="uid://c1r2wlvij1wh8" path="res://Core/footsteps_grass1.wav" id="9_15utb"]
-[ext_resource type="AudioStream" uid="uid://cwvfd71mwaj8u" path="res://Core/footsteps_grass2.wav" id="10_bpwr0"]
-[ext_resource type="AudioStream" uid="uid://ekeqosutj7gi" path="res://Core/footsteps_grass3.wav" id="11_c8kdt"]
-[ext_resource type="AudioStream" uid="uid://d3y8bkl5eaysb" path="res://Core/footsteps_grass4.wav" id="12_je4mm"]
-[ext_resource type="AudioStream" uid="uid://d3besxcv2duhq" path="res://Core/footsteps_grass5.wav" id="13_r2qcr"]
-[ext_resource type="AudioStream" uid="uid://ck5donxagp11w" path="res://Core/footsteps_grass6.wav" id="14_5spwf"]
+[ext_resource type="Script" path="res://Core/RandomAudioSelector.cs" id="3_6xy23"]
+[ext_resource type="PackedScene" uid="uid://bvgwlnnpo2k18" path="res://Party/Athlia/athlia_bell.glb" id="4_fw1hq"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x2kqx"]
 
@@ -45,6 +35,7 @@ _data = {
 
 [node name="athlia" type="CharacterBody3D"]
 script = ExtResource("1_tnugv")
+hasWeapon = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.974979, 0)
@@ -52,53 +43,28 @@ shape = SubResource("CapsuleShape3D_x2kqx")
 
 [node name="Model" parent="." instance=ExtResource("1_hfclw")]
 
+[node name="dirt" type="AudioStreamPlayer3D" parent="."]
+bus = &"Effects"
+script = ExtResource("3_6xy23")
+directoryLocation = "res://Core/DirtFootsteps/"
+startOfSoundName = "footstep"
+numberOfTracks = 6
+
+[node name="grass" type="AudioStreamPlayer3D" parent="."]
+bus = &"Effects"
+script = ExtResource("3_6xy23")
+directoryLocation = "res://Core/GrassFootsteps/"
+startOfSoundName = "footsteps_grass"
+numberOfTracks = 6
+
 [node name="MethodsPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_mmkw8")
 }
 
-[node name="dirtFootsteps" type="Node3D" parent="."]
+[node name="BackAnchor" type="Node3D" parent="."]
+transform = Transform3D(0.967524, 0.246168, -0.0574301, -0.252779, 0.942223, -0.219817, -3.72529e-09, 0.227195, 0.973849, -0.165596, -0.217321, -0.0453499)
 
-[node name="Footstep1" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("3_h6amt")
+[node name="hip" type="Node3D" parent="BackAnchor"]
 
-[node name="Footstep2" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("4_80tj4")
-
-[node name="Footstep3" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("5_nkk26")
-
-[node name="Footstep4" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("6_nfiu7")
-
-[node name="Footstep5" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("7_fjtsk")
-
-[node name="Footstep6" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("8_ib02d")
-
-[node name="grassFootsteps" type="Node3D" parent="."]
-
-[node name="Footstep1" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("9_15utb")
-volume_db = 36.761
-
-[node name="Footstep2" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("10_bpwr0")
-volume_db = 36.761
-
-[node name="Footstep3" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("11_c8kdt")
-volume_db = 36.761
-
-[node name="Footstep4" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("12_je4mm")
-volume_db = 36.761
-
-[node name="Footstep5" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("13_r2qcr")
-volume_db = 36.761
-
-[node name="Footstep6" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("14_5spwf")
-volume_db = 36.761
+[node name="Weapon" parent="." instance=ExtResource("4_fw1hq")]

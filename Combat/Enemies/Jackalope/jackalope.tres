@@ -77,4 +77,3 @@ enemyAIType = 1
 chanceOfUsingAbility = 50
 abilities = [ExtResource("1_bjolr")]
 turnOrderSpritePath = "res://Combat/Enemies/Jackalope/jackalope.png"
-hitSoundPath = ""

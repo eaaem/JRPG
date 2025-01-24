@@ -1,0 +1,78 @@
+[gd_scene load_steps=12 format=3 uid="uid://cva18ecovyx71"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AutoOneShotEffect.cs" id="1_604dw"]
+
+[sub_resource type="Gradient" id="Gradient_m6enw"]
+offsets = PackedFloat32Array(0.0658537, 0.548781, 1)
+colors = PackedColorArray(0.49, 0, 0.0408334, 1, 0.78, 0.468, 0, 1, 1, 0.8, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_2t2f8"]
+gradient = SubResource("Gradient_m6enw")
+
+[sub_resource type="Curve" id="Curve_f6oyx"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0]
+point_count = 1
+
+[sub_resource type="CurveTexture" id="CurveTexture_iyxnk"]
+curve = SubResource("Curve_f6oyx")
+
+[sub_resource type="Curve" id="Curve_i6jgd"]
+min_value = -1.0
+_data = [Vector2(0.0106667, 0.957895), 0.0, 0.0, 0, 0, Vector2(0.488, 0.0105263), 0.0, 0.0, 0, 0, Vector2(0.992, -0.789474), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_138gy"]
+curve = SubResource("Curve_i6jgd")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_nv40l"]
+angle_min = 45.0
+angle_max = 45.0
+direction = Vector3(0, 1, 0)
+spread = 180.0
+initial_velocity_min = 1.5
+initial_velocity_max = 1.5
+gravity = Vector3(0, 0, 0)
+radial_accel_min = 14.07
+radial_accel_max = 14.07
+tangential_accel_min = 0.999998
+tangential_accel_max = 0.999998
+damping_min = 6.533
+damping_max = 8.543
+color_ramp = SubResource("GradientTexture1D_2t2f8")
+emission_curve = SubResource("CurveTexture_iyxnk")
+hue_variation_curve = SubResource("CurveTexture_138gy")
+
+[sub_resource type="Curve" id="Curve_s4p2g"]
+_data = [Vector2(0.0506329, 0), 0.0, 0.0, 0, 0, Vector2(0.496202, 0.968421), 0.0, 0.0, 0, 0, Vector2(0.95443, 0.768421), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w5sco"]
+transparency = 1
+cull_mode = 2
+vertex_color_use_as_albedo = true
+emission = Color(0.376471, 0.184314, 0.176471, 1)
+emission_energy_multiplier = 0.43
+billboard_mode = 2
+grow_amount = -7.877
+use_particle_trails = true
+distance_fade_min_distance = 25.0
+distance_fade_max_distance = 0.0
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_7t6ue"]
+material = SubResource("StandardMaterial3D_w5sco")
+shape = 0
+size = 0.1
+section_segments = 5
+curve = SubResource("Curve_s4p2g")
+
+[node name="EnrageInitiateEffect" type="GPUParticles3D"]
+emitting = false
+amount = 64
+lifetime = 2.0
+one_shot = true
+speed_scale = 1.75
+explosiveness = 1.0
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_nv40l")
+draw_pass_1 = SubResource("RibbonTrailMesh_7t6ue")
+script = ExtResource("1_604dw")

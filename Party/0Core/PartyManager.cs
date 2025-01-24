@@ -47,6 +47,7 @@ public partial class PartyManager : Node
       Member memberToAdd = new Member();
       memberToAdd.baseMember = baseMembers[0];
       memberToAdd.level = 1;
+      memberToAdd.experience = 1;
       memberToAdd.characterName = baseMembers[0].memberName;
       memberToAdd.characterType = baseMembers[0].memberType;
       memberToAdd.affinity = Affinity.None;

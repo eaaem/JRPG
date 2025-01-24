@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1_byklr")
 name = "Enrage"
-description = "Vakthol gains 50% more strength in exchange for 50% less accuracy and 25% less defense. This ability is a toggle: activating it toggles Enrage on or off. When Enrage is toggled on, it cannot be toggled off for the remainder of Vakthol’s next turn. This ability does not take up Vakthol’s turn and counts as a free action."
+description = "Vakthol gains more strength in exchange for less accuracy and less defense. This ability is a toggle. When Enrage is toggled on, it cannot be toggled off for the remainder of Vakthol’s next turn. This ability does not take up Vakthol’s turn."
 manaCost = 0
 scriptPath = "res://Abilities/Party/Enrage/Enrage.cs"
 hitsAll = false
@@ -14,6 +14,9 @@ hitsSelf = true
 hitsTeam = false
 onlyHitsTeam = false
 onlyHitsSelf = true
+isEnemyHealingSpell = false
 bypassesDeaths = false
 graphicPath = ""
 requiredLevel = 0
+abilityWeight = 0
+notStackingEffectApplied = 0

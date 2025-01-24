@@ -43,6 +43,9 @@ enabled=PackedStringArray("res://addons/ObjectBrush/plugin.cfg")
 
 enemy="For world enemies."
 item="For items that can be picked up from the world."
+grass="Generates grass footstep sounds."
+dirt="Generates dirt footstep sounds."
+cutscene="Marks cutscene triggers, so they're recognized by the save system."
 
 [importer_defaults]
 

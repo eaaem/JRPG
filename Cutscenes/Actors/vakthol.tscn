@@ -1,20 +1,9 @@
-[gd_scene load_steps=19 format=3 uid="uid://cxn2617gd032j"]
+[gd_scene load_steps=8 format=3 uid="uid://cxn2617gd032j"]
 
 [ext_resource type="PackedScene" uid="uid://dxo8axv6qyav6" path="res://Party/Vakthol/vakthol.glb" id="1_bdygk"]
 [ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_s2ilf"]
 [ext_resource type="PackedScene" uid="uid://yhwlyfetwmre" path="res://Party/Vakthol/vakthol_axe.glb" id="2_ota3g"]
-[ext_resource type="AudioStream" uid="uid://b7i785pitce5k" path="res://Core/footstep1.wav" id="4_wo53n"]
-[ext_resource type="AudioStream" uid="uid://bok1x07qalrg5" path="res://Core/footstep2.wav" id="5_68l3i"]
-[ext_resource type="AudioStream" uid="uid://cssk5x4i0ki51" path="res://Core/footstep3.wav" id="6_0ug2f"]
-[ext_resource type="AudioStream" uid="uid://cti7dd0fwm5ww" path="res://Core/footstep4.wav" id="7_wubl2"]
-[ext_resource type="AudioStream" uid="uid://b546dpfrw5vpp" path="res://Core/footstep5.wav" id="8_itght"]
-[ext_resource type="AudioStream" uid="uid://bm3i2wii2wk4f" path="res://Core/footstep6.wav" id="9_oehb5"]
-[ext_resource type="AudioStream" uid="uid://c1r2wlvij1wh8" path="res://Core/footsteps_grass1.wav" id="10_wrqv3"]
-[ext_resource type="AudioStream" uid="uid://cwvfd71mwaj8u" path="res://Core/footsteps_grass2.wav" id="11_bh80l"]
-[ext_resource type="AudioStream" uid="uid://ekeqosutj7gi" path="res://Core/footsteps_grass3.wav" id="12_sj62r"]
-[ext_resource type="AudioStream" uid="uid://d3y8bkl5eaysb" path="res://Core/footsteps_grass4.wav" id="13_eb4au"]
-[ext_resource type="AudioStream" uid="uid://d3besxcv2duhq" path="res://Core/footsteps_grass5.wav" id="14_o43dy"]
-[ext_resource type="AudioStream" uid="uid://ck5donxagp11w" path="res://Core/footsteps_grass6.wav" id="15_v4gyf"]
+[ext_resource type="Script" path="res://Core/RandomAudioSelector.cs" id="4_c03dn"]
 
 [sub_resource type="Animation" id="Animation_ouotn"]
 resource_name = "WalkSounds"
@@ -94,7 +83,6 @@ bones/20/scale = Vector3(1, 1, 1)
 bones/21/rotation = Quaternion(0.812237, 0.00345493, 0.0638279, 0.579815)
 bones/21/scale = Vector3(1, 1, 1)
 bones/22/rotation = Quaternion(0.0815511, 0.659774, 0.129587, 0.7357)
-bones/22/scale = Vector3(1, 1, 1)
 bones/23/rotation = Quaternion(0.0926267, 0.089724, 0.326951, 0.936202)
 bones/23/scale = Vector3(1, 1, 1)
 bones/24/rotation = Quaternion(0.217501, -0.306277, 0.495134, 0.783409)
@@ -189,50 +177,18 @@ transform = Transform3D(-0.859644, -0.484911, -0.160852, 0.505312, -0.853425, -0
 [node name="BackAnchor" type="Node3D" parent="."]
 transform = Transform3D(0.898183, 0.439561, 0.00737561, -0.43852, 0.896991, -0.0557533, -0.0311228, 0.0468423, 0.998417, -0.358005, -0.641614, -0.192246)
 
-[node name="dirtFootsteps" type="Node3D" parent="."]
+[node name="dirt" type="AudioStreamPlayer3D" parent="."]
+bus = &"Effects"
+script = ExtResource("4_c03dn")
+directoryLocation = "res://Core/DirtFootsteps/"
+startOfSoundName = "footstep"
+numberOfTracks = 6
 
-[node name="Footstep1" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("4_wo53n")
-
-[node name="Footstep2" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("5_68l3i")
-
-[node name="Footstep3" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("6_0ug2f")
-
-[node name="Footstep4" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("7_wubl2")
-
-[node name="Footstep5" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("8_itght")
-
-[node name="Footstep6" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("9_oehb5")
-
-[node name="grassFootsteps" type="Node3D" parent="."]
-
-[node name="Footstep1" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("10_wrqv3")
-volume_db = 36.761
-
-[node name="Footstep2" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("11_bh80l")
-volume_db = 36.761
-
-[node name="Footstep3" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("12_sj62r")
-volume_db = 36.761
-
-[node name="Footstep4" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("13_eb4au")
-volume_db = 36.761
-
-[node name="Footstep5" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("14_o43dy")
-volume_db = 36.761
-
-[node name="Footstep6" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("15_v4gyf")
-volume_db = 36.761
+[node name="grass" type="AudioStreamPlayer3D" parent="."]
+bus = &"Effects"
+script = ExtResource("4_c03dn")
+directoryLocation = "res://Core/GrassFootsteps/"
+startOfSoundName = "footsteps_grass"
+numberOfTracks = 6
 
 [editable path="Model"]

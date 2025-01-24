@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b68g8kojb1tds"
+path="res://.godot/imported/water_base.obj-130f58784bac8e191397e724a82a57f9.mesh"
+
+[deps]
+
+files=["res://.godot/imported/water_base.obj-130f58784bac8e191397e724a82a57f9.mesh"]
+
+source_file="res://Levels/2Misc/Terrain/water_base.obj"
+dest_files=["res://.godot/imported/water_base.obj-130f58784bac8e191397e724a82a57f9.mesh", "res://.godot/imported/water_base.obj-130f58784bac8e191397e724a82a57f9.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

@@ -1,0 +1,125 @@
+[gd_scene load_steps=7 format=3 uid="uid://djxe2ufelucq0"]
+
+[ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_d8mtr"]
+[ext_resource type="PackedScene" uid="uid://btiosemuglk2q" path="res://Combat/Enemies/LupineMonstrosity/lupine_monstrosity.glb" id="2_al8a8"]
+[ext_resource type="PackedScene" uid="uid://c735el5v00jii" path="res://Combat/Enemies/LupineMonstrosity/lupine_monstrosity_particles.tscn" id="3_p3dvk"]
+[ext_resource type="Script" path="res://Core/RandomAudioSelector.cs" id="8_2yhul"]
+
+[sub_resource type="Animation" id="Animation_ouotn"]
+resource_name = "WalkSounds"
+length = 1.4167
+loop_mode = 1
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.4, 0.7, 1.1, 1.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"values": [{
+"args": [],
+"method": &"ActorFootstep"
+}, {
+"args": [],
+"method": &"ActorFootstep"
+}, {
+"args": [],
+"method": &"ActorFootstep"
+}, {
+"args": [],
+"method": &"ActorFootstep"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mmkw8"]
+_data = {
+"WalkSounds": SubResource("Animation_ouotn")
+}
+
+[node name="monstrosity" type="CharacterBody3D"]
+script = ExtResource("1_d8mtr")
+
+[node name="Model" parent="." instance=ExtResource("2_al8a8")]
+
+[node name="Skeleton3D" parent="Model/Armature" index="0"]
+bones/0/rotation = Quaternion(0.707107, -1.37679e-07, -1.37679e-07, 0.707107)
+bones/1/position = Vector3(0.369797, 0.216333, -0.342794)
+bones/2/position = Vector3(-0.369797, 0.216333, -0.342794)
+bones/3/position = Vector3(-8.40249e-07, 0.728067, -2.15773)
+bones/3/rotation = Quaternion(0.998669, 1.00423e-08, -1.94443e-07, 0.0515743)
+bones/4/position = Vector3(-5.41767e-18, 0.911624, -2.98628e-07)
+bones/4/rotation = Quaternion(0.104445, -2.37798e-13, 2.27491e-12, 0.994531)
+bones/5/rotation = Quaternion(-0.0418354, -3.75794e-14, -8.97487e-13, 0.999125)
+bones/6/rotation = Quaternion(-0.0200981, 0.000886639, 0.0440715, 0.998826)
+bones/7/rotation = Quaternion(0.541026, 0.464785, -0.533244, -0.454881)
+bones/7/scale = Vector3(1, 0.999998, 1)
+bones/8/rotation = Quaternion(0.00280753, -0.0161183, -0.383048, 0.923584)
+bones/8/scale = Vector3(1, 1, 1)
+bones/9/rotation = Quaternion(0.00970704, -1.01499e-07, 0.310825, 0.950418)
+bones/9/scale = Vector3(1.00003, 0.999973, 1)
+bones/10/rotation = Quaternion(0.0230007, 2.6956e-08, 0.736496, 0.67605)
+bones/11/rotation = Quaternion(0.541026, -0.464785, 0.533244, -0.454881)
+bones/11/scale = Vector3(1, 0.999998, 1)
+bones/12/rotation = Quaternion(0.00280754, 0.0161183, 0.383048, 0.923584)
+bones/12/scale = Vector3(1, 1, 1)
+bones/13/rotation = Quaternion(0.00970704, 1.01511e-07, -0.310825, 0.950418)
+bones/13/scale = Vector3(1.00003, 0.999973, 1)
+bones/14/rotation = Quaternion(0.0230007, -2.74167e-08, -0.736496, 0.67605)
+bones/15/rotation = Quaternion(-0.669519, 0.0182866, 0.016088, 0.742395)
+bones/16/rotation = Quaternion(-1.20635e-06, -3.21101e-08, -0.00517519, 0.999987)
+bones/17/rotation = Quaternion(-0.0564424, 0.00251241, -0.00978839, 0.998355)
+bones/17/scale = Vector3(1, 0.999999, 1)
+bones/18/rotation = Quaternion(-0.64461, 0.00977565, -0.0114792, 0.764363)
+bones/19/rotation = Quaternion(-0.669519, -0.0182866, -0.016088, 0.742395)
+bones/19/scale = Vector3(1, 1, 1)
+bones/20/rotation = Quaternion(-1.20635e-06, 3.22261e-08, 0.00517519, 0.999987)
+bones/21/rotation = Quaternion(-0.0564424, -0.00251241, 0.00978839, 0.998355)
+bones/22/rotation = Quaternion(-0.64461, -0.00977565, 0.0114792, 0.764363)
+bones/23/rotation = Quaternion(-3.13916e-07, -0.0120759, 0.999927, 3.79081e-09)
+bones/24/rotation = Quaternion(-0.112612, 7.81624e-12, -7.07052e-08, 0.993639)
+bones/25/rotation = Quaternion(-0.220001, -3.81365e-12, -1.38132e-07, 0.9755)
+bones/26/rotation = Quaternion(-0.202813, -4.22609e-12, -1.27338e-07, 0.979217)
+bones/28/position = Vector3(-0.337063, -0.00893573, 0.241012)
+bones/28/rotation = Quaternion(-0.132047, 0.451952, 0.84681, 0.247417)
+bones/29/position = Vector3(0.337062, -0.00893569, 0.241012)
+bones/29/rotation = Quaternion(0.132046, 0.451952, 0.84681, -0.247417)
+bones/30/position = Vector3(0.321793, 0.821833, -0.063167)
+bones/30/rotation = Quaternion(0.999935, 0, 0.0113931, 0)
+bones/32/position = Vector3(-0.321793, 0.821833, -0.0631667)
+bones/32/rotation = Quaternion(0.999935, 0, -0.0113935, 0)
+bones/33/position = Vector3(-0.369797, -1.66021, -0.0661876)
+bones/34/position = Vector3(0.321793, 0.415711, 3.0443)
+bones/35/position = Vector3(-0.321793, 0.415711, 3.0443)
+
+[node name="BoneAttachment3D" type="BoneAttachment3D" parent="."]
+transform = Transform3D(-0.960439, 5.89069e-14, -6.03029e-07, -6.01162e-07, 0.0758354, 0.957468, 4.76167e-08, 0.95744, -0.0758388, 3.0668e-12, 2.07237, 0.699264)
+bone_name = "neck1"
+bone_idx = 23
+use_external_skeleton = true
+external_skeleton = NodePath("../Model/Armature/Skeleton3D")
+
+[node name="GPUParticles3D2" parent="BoneAttachment3D" instance=ExtResource("3_p3dvk")]
+transform = Transform3D(1.04119, -7.10543e-15, 9.32587e-15, -1.77636e-14, 1.04119, -2.23517e-08, -2.16716e-13, 2.23517e-08, 1.04119, 0.071595, 0.737125, -0.152212)
+
+[node name="MethodsPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mmkw8")
+}
+
+[node name="dirt" type="AudioStreamPlayer3D" parent="."]
+bus = &"Effects"
+script = ExtResource("8_2yhul")
+directoryLocation = "res://Core/DirtFootsteps/"
+startOfSoundName = "footstep"
+numberOfTracks = 6
+
+[node name="grass" type="AudioStreamPlayer3D" parent="."]
+bus = &"Effects"
+script = ExtResource("8_2yhul")
+directoryLocation = "res://Core/GrassFootsteps/"
+startOfSoundName = "footsteps_grass"
+numberOfTracks = 6
+
+[editable path="Model"]

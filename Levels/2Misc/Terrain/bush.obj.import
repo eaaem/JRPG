@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://d1h15to0qhlqe"
+path="res://.godot/imported/bush.obj-26a76bb678a66edbb7739e7971b2da36.mesh"
+
+[deps]
+
+files=["res://.godot/imported/bush.obj-26a76bb678a66edbb7739e7971b2da36.mesh"]
+
+source_file="res://Levels/2Misc/Terrain/bush.obj"
+dest_files=["res://.godot/imported/bush.obj-26a76bb678a66edbb7739e7971b2da36.mesh", "res://.godot/imported/bush.obj-26a76bb678a66edbb7739e7971b2da36.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

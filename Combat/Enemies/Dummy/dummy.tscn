@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dujjbf8g10f8l"]
+[gd_scene load_steps=11 format=3 uid="uid://dujjbf8g10f8l"]
 
 [ext_resource type="Script" path="res://Combat/0Core/EnemyDataHolder.cs" id="1_305km"]
 [ext_resource type="PackedScene" uid="uid://bpvi8ok4d3vr7" path="res://Combat/Enemies/Dummy/dummy.glb" id="2_i3xst"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://bdbi8yvqbpttm" path="res://Abilities/0Core/animation_preferences.tscn" id="4_jsk0s"]
 [ext_resource type="Script" path="res://Abilities/0Core/WaitTimeEvent.cs" id="5_ddu1d"]
 [ext_resource type="Script" path="res://Abilities/0Core/AnimationPreference.cs" id="6_ersx2"]
+[ext_resource type="PackedScene" uid="uid://dvruf8jujbtvi" path="res://Combat/0Core/audio_data_holder.tscn" id="7_mc0lq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_816vj"]
 size = Vector3(2, 4, 3)
@@ -41,3 +42,5 @@ FighterSize = 1.0
 
 [node name="AnimationPreferences" parent="." instance=ExtResource("4_jsk0s")]
 preferences = [SubResource("Resource_pxioi")]
+
+[node name="AudioData" parent="." instance=ExtResource("7_mc0lq")]

@@ -373,6 +373,7 @@ public partial class CutsceneManager : Node
          }
 
          managers.Controller.IsInCutscene = false;
+         managers.Controller.DisableMovement = false;
          managers.Controller.Rotation = new Vector3(0f, managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y, 0f);
          managers.Controller.GetNode<Node3D>("CameraTarget").RotateY(-managers.Controller.GetNode<Node3D>("CameraTarget").Rotation.Y);
 

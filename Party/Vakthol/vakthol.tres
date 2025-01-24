@@ -133,7 +133,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_mupom"]
 script = ExtResource("5_w5ef2")
 statType = 2
-value = 14
+value = 15
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_jad1v"]
@@ -169,7 +169,7 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_i752s"]
 script = ExtResource("5_w5ef2")
 statType = 8
-value = 9
+value = 99
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_1114y"]

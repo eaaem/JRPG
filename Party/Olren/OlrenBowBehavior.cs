@@ -35,7 +35,7 @@ public partial class OlrenBowBehavior : Node
       combatManager.AttackAnimation += PlayAnimations;
 	}
 
-	async void PlayAnimations()
+	public async void PlayAnimations()
    {
       if (combatManager.CurrentFighter.fighterName == "Olren" && !combatManager.IsCompanionTurn)
       {

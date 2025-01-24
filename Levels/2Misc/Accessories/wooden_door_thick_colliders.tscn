@@ -2,8 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://dywuqybpsdvjf" path="res://Levels/2Misc/Accessories/wooden_door_thick.glb" id="1_33opk"]
 [ext_resource type="Script" path="res://Levels/0Core/Door.cs" id="2_1pgxh"]
-[ext_resource type="AudioStream" uid="uid://gm8d7lnm7ye8" path="res://Levels/0Core/door_open.ogg" id="3_injv0"]
-[ext_resource type="AudioStream" uid="uid://b04vc3ocgceuj" path="res://Levels/0Core/door_close.ogg" id="4_m5m8b"]
+[ext_resource type="AudioStream" uid="uid://c05ws27wnl1iq" path="res://Levels/0Core/door_open.wav" id="3_yvf5l"]
+[ext_resource type="AudioStream" uid="uid://bvhrr54r82kwi" path="res://Levels/0Core/door_close.wav" id="4_sm526"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oiuna"]
 size = Vector3(1.5, 2.2, 0.3)
@@ -22,9 +22,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.671795, -0.0883782, 0)
 shape = SubResource("BoxShape3D_oiuna")
 
 [node name="DoorOpen" type="AudioStreamPlayer3D" parent="." index="3"]
-stream = ExtResource("3_injv0")
-volume_db = 14.045
+stream = ExtResource("3_yvf5l")
 
 [node name="DoorClose" type="AudioStreamPlayer3D" parent="." index="4"]
-stream = ExtResource("4_m5m8b")
-volume_db = 14.045
+stream = ExtResource("4_sm526")

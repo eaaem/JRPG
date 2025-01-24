@@ -42,9 +42,6 @@ public partial class CharacterAudioController : Node
          }
       }
 
-      Node3D group = GetParent().GetNode<Node3D>(groupName + "Footsteps");
-      AudioStreamPlayer3D toPlay = group.GetChild<AudioStreamPlayer3D>(GD.RandRange(0, 5));
-
-      toPlay.Play();
+      GetParent().GetNode<RandomAudioSelector>(groupName).PlayRandomAudio();
    }
 }

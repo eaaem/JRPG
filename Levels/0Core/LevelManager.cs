@@ -17,7 +17,7 @@ public partial class LevelManager : Node
    public string location;
    public string InternalLocation { get; set; }
 
-   public string MainMenuScreenName { get; set;}
+   public string MainMenuScreenName { get; set; }
 
    [Export]
    private ManagerReferenceHolder managers;
@@ -75,7 +75,7 @@ public partial class LevelManager : Node
 
       if (!useSpawnLocation)
       {
-         worldMap.GetNode<CharacterBody3D>("Player").GlobalPosition = specialMap.GetNode<Node3D>(spawnPointName).GlobalPosition;
+         worldMap.GetNode<CharacterBody3D>("Player").GlobalPosition = informationHolder.GetNode<Node3D>(spawnPointName).GlobalPosition;
       }
       else
       {

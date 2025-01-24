@@ -1,4 +1,4 @@
-[gd_scene load_steps=128 format=3 uid="uid://b5ywsy2do4mme"]
+[gd_scene load_steps=137 format=3 uid="uid://b5ywsy2do4mme"]
 
 [ext_resource type="Script" path="res://Levels/dathrel_cabin/DathrelCabinActions.cs" id="1_jaort"]
 [ext_resource type="Script" path="res://Levels/0Core/MusicHolder.cs" id="1_tohmy"]
@@ -31,6 +31,7 @@
 [ext_resource type="ArrayMesh" uid="uid://dl2q7kvjyg0l6" path="res://Levels/dathrel_cabin/cabin_road.obj" id="25_m7sq3"]
 [ext_resource type="Texture2D" uid="uid://cmeyng8l7xdjn" path="res://Levels/dathrel_cabin/forest_back.png" id="26_mq3bv"]
 [ext_resource type="PackedScene" uid="uid://yhwlyfetwmre" path="res://Party/Vakthol/vakthol_axe.glb" id="31_gqeh6"]
+[ext_resource type="PackedScene" uid="uid://73sa01waibky" path="res://Levels/0Core/death_plane.tscn" id="32_obe1t"]
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_v4d0d"]
 vertices = PackedVector3Array(-25, 0.503485, -7.75, -22, 0.503485, -7.75, -22, 0.503485, -8.5, -49.5, 0.503485, -6.75, -25.25, 0.503485, -6.75, -21, 0.503485, -8.75, -21, 0.503485, -49.5, -49.5, 0.503485, -49.5, -20, 0.503485, -8.75, -19.75, 0.503485, -7.75, -14, 0.503485, -7.75, -14, 0.503485, -10, -13, 0.503485, -10.25, -13, 0.503485, -49.5, -1.25, 0.503485, -11.25, 0.5, 0.503485, -11.5, 1, 0.503485, -14.75, -11.75, 0.503485, -10, -11.75, 0.503485, -7.75, -1.25, 0.503485, -7.75, 2.5, 0.503485, -14.75, 2.25, 0.503485, -49.5, 33.25, 0.503485, -15, 43.25, 0.503485, 17.5, 49.5, 0.503485, 17.5, 49.5, 0.503485, -49.5, -21.25, 3.75349, -6.75, -24.25, 3.75349, -6.75, -21, 3.75349, -6.25, -21, 3.75349, 7.25, -21, 3.75349, 16.5, -20.5, 3.75349, 7, -12.5, 3.75349, 7, -12.5, 3.75349, 6.75, -13, 3.75349, 4.25, -13.25, 3.75349, 6.75, -13.25, 3.75349, 7, -13, 3.75349, 8.5, -13.25, 3.75349, -6.5, -12.75, 3.75349, -5, -12.5, 3.75349, -6.5, -12.5, 3.75349, -6.75, -13, 3.75349, -9.25, -13.25, 3.75349, -6.75, -20.5, 3.75349, -6.75, -21, 3.75349, -7.75, -0.5, 3.75349, 7, -0.5, 3.75349, 6.75, -21, 3.75349, -1.25, -22, 3.75349, -1, -21, 3.75349, -0.5, -21, 3.75349, 6.5, -24.25, 3.75349, 6.75, 16.5, 4.00349, -9, 17.75, 4.00349, -3, 24.75, 4.00349, -2, 35.75, 4.00349, -3.25, 32.5, 4.00349, -14, -20.5, 3.75349, 6.75, -0.5, 3.75349, -6.5, 0, 3.75349, -1.25, 0.25, 3.75349, -7.25, -0.5, 3.75349, -6.75, 0, 3.75349, -8, -0.25, 3.75349, -10.5, -0.25, 4.00349, 8, 0, 4.00349, 8.25, 0, 3.75349, 1.25, 1.75, 4.00349, -13.75, 9.75, 4.00349, -10, 11.75, 4.00349, -10, -13.25, 3.75349, -0.75, -12.75, 3.75349, 1.75, -12.75, 3.75349, -2.5, -13.25, 3.75349, -1, 1.25, 4.00349, -8, -20.5, 3.75349, -1, -20.75, 3.75349, -0.5, -20.75, 3.75349, -6.25, 4.5, 4.00349, -7.75, 10.75, 0.503485, -10.25, 15, 0.503485, -9.5, 16.5, 0.503485, -9.5, 28, 0.503485, -13.5, 4.5, 0.503485, -13.5, 2.25, 0.503485, -13, 1.75, 0.503485, -12.5, 1.5, 0.503485, -10.25, 5.25, 0.503485, -8.25, 8.25, 0.503485, -9.5, 8.25, 0.503485, -10, 1.5, 0.503485, -7.75, 17, 0.503485, -8.25, 18, 0.503485, -3.25, 24.75, 0.503485, -2.25, 31, 0.503485, -12.75, 30.25, 0.503485, -13, 32.75, 0.503485, -12.5, 32, 0.503485, -12, 31.5, 0.503485, -10.5, 27, 0.503485, 4.5, 41.25, 0.503485, 15.75, 26, 0.503485, -1.75, 0.75, 0.503485, 12, 2.25, 0.503485, 13.75, 6.5, 0.503485, 12.25, -14, 0.503485, 2.5, -14, 0.503485, 0.25, -19.75, 0.503485, 0.25, -19.75, 0.503485, -5.5, -19.75, 0.503485, -2, -14, 0.503485, -2, -13.75, 0.503485, -3.5, -13.75, 0.503485, -4, -14, 0.503485, -5.5, -11.75, 0.503485, 3.5, -11.75, 0.503485, 5.75, -1.25, 0.503485, 5.75, -11.75, 0.503485, -3.25, -1.25, 0.503485, -0.5, -1.25, 0.503485, -5.5, -11.75, 0.503485, -5.5, -12, 0.503485, -4, 0.75, 0.503485, -0.25, -1.25, 0.503485, 0.5, 0.75, 0.503485, 0.25, 16.75, 0.503485, -2.25, 15.5, 0.503485, -8.25, 10.25, 0.503485, -9, 6, 0.503485, -7, -11.75, 0.503485, 2.5, -19.75, 0.503485, 5.75, -14, 0.503485, 5.75, -13.75, 0.503485, 3.25, 8.5, 0.503485, 12.25, 17.25, 0.503485, 6.25, 25.75, 0.503485, 4.5, 24.5, 0.503485, -1, 12.75, 0.503485, 14.25, 16.75, 0.503485, 12.25, 1, 0.503485, -6.25, -23, 0.503485, -1.75, -22, 0.503485, -2, -22, 0.503485, -5.5, -25, 0.503485, -5.5, -25.25, 0.503485, 6, -49.5, 0.503485, 15.25, -22, 0.503485, 5.75, -22, 0.503485, 0.25, -23, 0.503485, 0, -22, 0.503485, 15.25, -22, 0.503485, 8, -25, 0.503485, 8, 25.75, 4.00349, -1, 26.75, 4.00349, 3.5, 26.75, 4.00349, 5.25, 25, 4.00349, 5.75, 26, 4.00349, 19.25, 42.25, 4.00349, 17.5, 0, 3.75349, 10.5, -5, 4.00349, 8.25, -1, 4.00349, 10.75, 18, 4.00349, 7.25, 17.75, 4.00349, 12.75, 13.25, 4.00349, 15.25, 11.75, 4.00349, 15.25, -1, 4.00349, 11.5, 8, 4.00349, 13.25, 3, 4.00349, 14.75, 1.5, 4.00349, 14.75, -3.25, 4.00349, 22.5, 18, 0.503485, 10.25, 18, 0.503485, 12, 18.5, 0.503485, 12.25, 39.75, 0.503485, 16.5, 26.5, 0.503485, 5.75, 18.25, 0.503485, 7.5, -6.25, 0.503485, 8, -11.75, 0.503485, 8, -12, 0.503485, 9.5, -4.5, 0.503485, 22.5, -13.75, 0.503485, 9.5, -14, 0.503485, 8, -19.75, 0.503485, 8, -19.75, 0.503485, 17.25, -3, 0.503485, 49.5, -3.5, 0.503485, 23.75, -4.25, 0.503485, 23.5, -21, 0.503485, 17.5, -21, 0.503485, 49.5, -2.75, 0.503485, 8.5, -1.25, 0.503485, 9.5, -1.25, 0.503485, 8.5, 1, 0.503485, 15, 1, 0.503485, 14.25, -1.5, 0.503485, 11, -4.5, 0.503485, 9.5, -3.25, 0.503485, 21, 15.5, 0.503485, 14.75, 28.5, 0.503485, 15.75, 17.75, 0.503485, 13.25, 15.5, 0.503485, 14.25, 6.5, 0.503485, 14.25, 9, 0.503485, 14.25, 7.75, 0.503485, 13.5, 6.5, 0.503485, 13.75, -22, 0.503485, 17.25, -49.5, 0.503485, 49.5, -2.25, 0.503485, 22, 35.75, 0.503485, 18, 11.75, 0.503485, 15.5, 2.25, 0.503485, 15.25, 43, 0.503485, 18.5, 42, 0.503485, 18.75, 49.5, 0.503485, 49.5, 24.25, 0.503485, 49.5, 24, 0.503485, 20.75, 15, 0.503485, 21.75, 15.25, 0.503485, 49.5, 5.75, 0.503485, 22.75, 6, 0.503485, 49.5)
@@ -547,12 +548,12 @@ script = ExtResource("15_m5xxr")
 CommandType = 6
 MakeLocked = true
 
-[sub_resource type="Resource" id="Resource_tm276"]
+[sub_resource type="Resource" id="Resource_71cl0"]
 script = ExtResource("15_m5xxr")
 CommandType = 10
-WaitTime = 0.1
+WaitTime = 2.0
 
-[sub_resource type="Resource" id="Resource_2c1em"]
+[sub_resource type="Resource" id="Resource_n5yqs"]
 script = ExtResource("15_m5xxr")
 CommandType = 4
 Hide = false
@@ -579,7 +580,7 @@ SubstituteDialogues = []
 [sub_resource type="Resource" id="Resource_gl2su"]
 script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_58i2m")
-commands = Array[Object]([SubResource("Resource_grjwk"), SubResource("Resource_k4w2t"), SubResource("Resource_tm276"), SubResource("Resource_2c1em"), SubResource("Resource_s4him"), SubResource("Resource_26nov")])
+commands = Array[Object]([SubResource("Resource_grjwk"), SubResource("Resource_k4w2t"), SubResource("Resource_71cl0"), SubResource("Resource_n5yqs"), SubResource("Resource_s4him"), SubResource("Resource_26nov")])
 
 [sub_resource type="Resource" id="Resource_7quax"]
 script = ExtResource("10_ftb8e")
@@ -611,6 +612,50 @@ script = ExtResource("17_3bi70")
 dialogue = SubResource("Resource_0y1cu")
 commands = null
 
+[sub_resource type="Resource" id="Resource_ieuhx"]
+script = ExtResource("15_m5xxr")
+CommandType = 6
+MakeLocked = true
+
+[sub_resource type="Resource" id="Resource_bmegm"]
+script = ExtResource("15_m5xxr")
+CommandType = 4
+Hide = true
+
+[sub_resource type="Resource" id="Resource_5uu1e"]
+script = ExtResource("15_m5xxr")
+CommandType = 10
+WaitTime = 2.5
+
+[sub_resource type="Resource" id="Resource_il2y7"]
+script = ExtResource("15_m5xxr")
+CommandType = 4
+Hide = false
+
+[sub_resource type="Resource" id="Resource_jsihf"]
+script = ExtResource("15_m5xxr")
+CommandType = 6
+MakeLocked = false
+
+[sub_resource type="Resource" id="Resource_autsl"]
+script = ExtResource("15_m5xxr")
+CommandType = 7
+
+[sub_resource type="Resource" id="Resource_e7g2v"]
+script = ExtResource("10_ftb8e")
+speaker = ""
+characterType = 0
+emotion = 0
+content = ""
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_31cnr"]
+script = ExtResource("17_3bi70")
+dialogue = SubResource("Resource_e7g2v")
+commands = Array[Object]([SubResource("Resource_ieuhx"), SubResource("Resource_bmegm"), SubResource("Resource_5uu1e"), SubResource("Resource_il2y7"), SubResource("Resource_jsihf"), SubResource("Resource_autsl")])
+
 [sub_resource type="Resource" id="Resource_hyg46"]
 script = ExtResource("10_ftb8e")
 speaker = ""
@@ -628,7 +673,7 @@ commands = Array[Object]([])
 
 [sub_resource type="Resource" id="Resource_fmg35"]
 script = ExtResource("18_33bqp")
-items = [SubResource("Resource_wtqn1"), SubResource("Resource_gl2su"), SubResource("Resource_2n0c2"), SubResource("Resource_sqxoo"), SubResource("Resource_gl2su"), SubResource("Resource_310tj")]
+items = [SubResource("Resource_wtqn1"), SubResource("Resource_gl2su"), SubResource("Resource_2n0c2"), SubResource("Resource_sqxoo"), SubResource("Resource_31cnr"), SubResource("Resource_310tj")]
 actors = [SubResource("Resource_parue")]
 PreCutsceneCommands = []
 hideParty = false
@@ -920,11 +965,11 @@ light_bake_mode = 1
 omni_range = 13.099
 omni_attenuation = 0.0220971
 
-[node name="cutscene0" parent="." groups=["cutscene"] instance=ExtResource("14_qk27y")]
+[node name="cutscene0" parent="." instance=ExtResource("14_qk27y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.6932, 0.182665, 4.36391)
 cutsceneObject = SubResource("Resource_abksg")
 
-[node name="cutscene1" parent="." groups=["cutscene"] instance=ExtResource("14_qk27y")]
+[node name="cutscene1" parent="." instance=ExtResource("14_qk27y")]
 transform = Transform3D(1.61503, 0, 0, 0, 1, 0, 0, 0, 1.40816, -6.15502, 0.122084, 0.82083)
 cutsceneObject = SubResource("Resource_fmg35")
 
@@ -1097,6 +1142,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.8457, 0, 4.94501)
 [node name="vakthol_axe" parent="." instance=ExtResource("31_gqeh6")]
 transform = Transform3D(0.981766, -0.182287, -0.0539123, 0.182456, 0.983213, -0.00181202, 0.0533375, -0.00805762, 0.998544, -17.3085, 0, 6.34519)
 visible = false
+
+[node name="DeathPlane" parent="." instance=ExtResource("32_obe1t")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -22.9937, 0)
 
 [editable path="ExitPoint"]
 [editable path="Cabin"]

@@ -221,22 +221,22 @@ public partial class CharacterController : CharacterBody3D
          // Rotates the character controller, which in turn rotates the camera
          if (!IsInCutscene && !IsOverridingMovement)
          {
-            RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * HorizontalSensitivity * sensitivityModifier));
+            RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * HorizontalSensitivity * sensitivityModifier * 0.25f));
          }
          else
          {
-            cameraTarget.RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * HorizontalSensitivity * sensitivityModifier));
+            cameraTarget.RotateY(Mathf.DegToRad(-mouseMotion.Relative.X * HorizontalSensitivity * sensitivityModifier * 0.25f));
          }
 
          // Rotate the model accordingly
          if (!IsInCutscene && !IsOverridingMovement)
          {
-            model.RotateY(Mathf.DegToRad(mouseMotion.Relative.X * HorizontalSensitivity * sensitivityModifier));
+            model.RotateY(Mathf.DegToRad(mouseMotion.Relative.X * HorizontalSensitivity * sensitivityModifier * 0.25f));
          }
 
          // Rotates along the x-axis, clamping to prevent too much rotation
          Vector3 clampRotation = cameraTarget.Rotation;
-         clampRotation.X -= (mouseMotion.Relative.Y * HorizontalSensitivity * sensitivityModifier) / 50f;
+         clampRotation.X -= (mouseMotion.Relative.Y * HorizontalSensitivity * sensitivityModifier * 0.25f) / 50f;
          clampRotation.X = Mathf.Clamp(clampRotation.X, Mathf.DegToRad(-45f), Mathf.DegToRad(maxClamp));
          cameraTarget.Rotation = clampRotation;
       }
@@ -244,7 +244,7 @@ public partial class CharacterController : CharacterBody3D
 
    public void PlaceWeaponOnBack()
    {
-      attachment.BoneName = "torso";
+      attachment.BoneName = weaponAnchor.GetChild(0).Name;
 
       weapon.Position = weaponAnchor.Position;
       weapon.Rotation = weaponAnchor.Rotation;

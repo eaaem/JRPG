@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://ckuvpdr8h8rob"]
+[gd_scene load_steps=12 format=3 uid="uid://ckuvpdr8h8rob"]
 
 [ext_resource type="Script" path="res://Cutscenes/Actor.cs" id="1_hkicw"]
 [ext_resource type="PackedScene" uid="uid://c0ket33redsfx" path="res://Levels/2Misc/People/peasant_female.glb" id="2_qi8k7"]
@@ -8,18 +8,7 @@
 [ext_resource type="Material" uid="uid://drkudhfypq11q" path="res://Levels/2Misc/People/brown_eyes.tres" id="6_pv3uk"]
 [ext_resource type="Material" uid="uid://bp3bf7sr1jhsr" path="res://Levels/2Misc/People/black_peasant_clothes.tres" id="7_0ge16"]
 [ext_resource type="Material" uid="uid://cyxf7jvdetewr" path="res://Levels/2Misc/People/dark_lips.tres" id="8_3s8ol"]
-[ext_resource type="AudioStream" uid="uid://b7i785pitce5k" path="res://Core/footstep1.wav" id="9_c15qh"]
-[ext_resource type="AudioStream" uid="uid://bok1x07qalrg5" path="res://Core/footstep2.wav" id="10_bqg8l"]
-[ext_resource type="AudioStream" uid="uid://cssk5x4i0ki51" path="res://Core/footstep3.wav" id="11_2ly20"]
-[ext_resource type="AudioStream" uid="uid://cti7dd0fwm5ww" path="res://Core/footstep4.wav" id="12_6qpog"]
-[ext_resource type="AudioStream" uid="uid://b546dpfrw5vpp" path="res://Core/footstep5.wav" id="13_27t1n"]
-[ext_resource type="AudioStream" uid="uid://bm3i2wii2wk4f" path="res://Core/footstep6.wav" id="14_4m3ff"]
-[ext_resource type="AudioStream" uid="uid://c1r2wlvij1wh8" path="res://Core/footsteps_grass1.wav" id="15_f33bv"]
-[ext_resource type="AudioStream" uid="uid://cwvfd71mwaj8u" path="res://Core/footsteps_grass2.wav" id="16_sj0tn"]
-[ext_resource type="AudioStream" uid="uid://ekeqosutj7gi" path="res://Core/footsteps_grass3.wav" id="17_2mwmp"]
-[ext_resource type="AudioStream" uid="uid://d3y8bkl5eaysb" path="res://Core/footsteps_grass4.wav" id="18_1mbfo"]
-[ext_resource type="AudioStream" uid="uid://d3besxcv2duhq" path="res://Core/footsteps_grass5.wav" id="19_heyuu"]
-[ext_resource type="AudioStream" uid="uid://ck5donxagp11w" path="res://Core/footsteps_grass6.wav" id="20_0iydj"]
+[ext_resource type="Script" path="res://Core/RandomAudioSelector.cs" id="9_0feln"]
 
 [sub_resource type="Animation" id="Animation_ouotn"]
 resource_name = "WalkSounds"
@@ -106,50 +95,18 @@ libraries = {
 "": SubResource("AnimationLibrary_mmkw8")
 }
 
-[node name="dirtFootsteps" type="Node3D" parent="."]
+[node name="dirt" type="AudioStreamPlayer3D" parent="."]
+bus = &"Effects"
+script = ExtResource("9_0feln")
+directoryLocation = "res://Core/DirtFootsteps/"
+startOfSoundName = "footstep"
+numberOfTracks = 6
 
-[node name="Footstep1" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("9_c15qh")
-
-[node name="Footstep2" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("10_bqg8l")
-
-[node name="Footstep3" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("11_2ly20")
-
-[node name="Footstep4" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("12_6qpog")
-
-[node name="Footstep5" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("13_27t1n")
-
-[node name="Footstep6" type="AudioStreamPlayer3D" parent="dirtFootsteps"]
-stream = ExtResource("14_4m3ff")
-
-[node name="grassFootsteps" type="Node3D" parent="."]
-
-[node name="Footstep1" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("15_f33bv")
-volume_db = 36.761
-
-[node name="Footstep2" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("16_sj0tn")
-volume_db = 36.761
-
-[node name="Footstep3" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("17_2mwmp")
-volume_db = 36.761
-
-[node name="Footstep4" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("18_1mbfo")
-volume_db = 36.761
-
-[node name="Footstep5" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("19_heyuu")
-volume_db = 36.761
-
-[node name="Footstep6" type="AudioStreamPlayer3D" parent="grassFootsteps"]
-stream = ExtResource("20_0iydj")
-volume_db = 36.761
+[node name="grass" type="AudioStreamPlayer3D" parent="."]
+bus = &"Effects"
+script = ExtResource("9_0feln")
+directoryLocation = "res://Core/GrassFootsteps/"
+startOfSoundName = "footsteps_grass"
+numberOfTracks = 6
 
 [editable path="Model"]

@@ -31,8 +31,8 @@ baseValue = 0
 [sub_resource type="Resource" id="Resource_rc2te"]
 script = ExtResource("2_2jnxr")
 statType = 4
-value = 0
-baseValue = 0
+value = 5
+baseValue = 5
 
 [sub_resource type="Resource" id="Resource_51126"]
 script = ExtResource("2_2jnxr")
@@ -68,9 +68,11 @@ baseValue = 0
 script = ExtResource("1_wac1q")
 enemyName = "Dummy"
 level = 0
+baseAttackDamage = 1
 stats = [SubResource("Resource_w6ju7"), SubResource("Resource_twgtt"), SubResource("Resource_b44t2"), SubResource("Resource_rlxxm"), SubResource("Resource_rc2te"), SubResource("Resource_51126"), SubResource("Resource_8axmd"), SubResource("Resource_25cw4"), SubResource("Resource_nlfdg"), SubResource("Resource_ja8jr")]
 model = ExtResource("1_fnxwu")
 affinity = 0
+enemyAIType = 0
+chanceOfUsingAbility = 0
 abilities = []
-turnOrderSpritePath = ""
-hitSoundPath = ""
+turnOrderSpritePath = "res://Combat/Enemies/Dummy/dummy.png"

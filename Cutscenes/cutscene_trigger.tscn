@@ -5,7 +5,7 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_crx3q"]
 size = Vector3(5, 1, 5)
 
-[node name="CutsceneTrigger" type="Node3D"]
+[node name="CutsceneTrigger" type="Node3D" groups=["cutscene"]]
 script = ExtResource("1_72a3g")
 
 [node name="Area3D" type="Area3D" parent="."]

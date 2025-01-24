@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://bok1x07qalrg5"
-path="res://.godot/imported/footstep2.wav-d3d16ce714b67320c9f6bc21d9266f40.sample"
+uid="uid://bvhrr54r82kwi"
+path="res://.godot/imported/door_close.wav-6ffa848e14198911573e225f20c78f7a.sample"
 
 [deps]
 
-source_file="res://Core/footstep2.wav"
-dest_files=["res://.godot/imported/footstep2.wav-d3d16ce714b67320c9f6bc21d9266f40.sample"]
+source_file="res://Levels/0Core/door_close.wav"
+dest_files=["res://.godot/imported/door_close.wav-6ffa848e14198911573e225f20c78f7a.sample"]
 
 [params]
 

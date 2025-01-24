@@ -70,7 +70,6 @@ public partial class SaveManager : Node
          managers.LevelManager.MainMenuScreenName = "theralin";
          managers.Controller.DisableMovement = false;
          managers.Controller.DisableCamera = false;
-         managers.Controller.HideWeapon();
       }
 
       // Save location datas. You need to save these FIRST (before you do the regular save), because it's needed to create the level

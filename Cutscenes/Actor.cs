@@ -14,7 +14,7 @@ public partial class Actor : CharacterBody3D
    Vector3 currentDestination;
    Vector3 currentDirection;
 
-   private bool isRotating;
+   public bool IsRotating { get; set; }
    private float currentTargetRotation;
 
    private Node3D weapon;
@@ -31,6 +31,9 @@ public partial class Actor : CharacterBody3D
    private float trackingTargetRotation;
    Node3D model;
 
+   [Signal]
+   public delegate void MoveIsFinishedEventHandler();
+
    public override void _Ready()
    {
       model = GetNode<Node3D>("Model");
@@ -40,9 +43,6 @@ public partial class Actor : CharacterBody3D
       {
          weapon = GetNode<Node3D>("Weapon");
          weaponAnchor = GetNode<Node3D>("BackAnchor");
-
-         //secondaryWeapon = GetNode<Node3D>("SecondaryWeapon");
-         //secondaryAnchor = GetNode<Node3D>("SecondaryAnchor");
 
          RemoveChild(weapon);
 
@@ -65,7 +65,7 @@ public partial class Actor : CharacterBody3D
          return;
       }
 
-      attachment.BoneName = "middle_arm.L.001";
+      attachment.BoneName = "weapon_holder";
 
       weapon.Position = GetNode<Node3D>("WieldAnchor").Position;
       weapon.Rotation = GetNode<Node3D>("WieldAnchor").Rotation;
@@ -79,7 +79,7 @@ public partial class Actor : CharacterBody3D
          return;
       }
 
-      attachment.BoneName = "torso";
+      attachment.BoneName = weaponAnchor.GetChild(0).Name;
 
       weapon.Position = weaponAnchor.Position;
       weapon.Rotation = weaponAnchor.Rotation;
@@ -117,9 +117,7 @@ public partial class Actor : CharacterBody3D
          }
       }
 
-      Node3D group = GetNode<Node3D>(groupName + "Footsteps");
-      AudioStreamPlayer3D toPlay = group.GetChild<AudioStreamPlayer3D>(GD.RandRange(0, 5));
-      toPlay.Play();
+      GetNode<RandomAudioSelector>(groupName).PlayRandomAudio();
    }
 
    /*public void PlaceSecondaryWeaponOnBack()
@@ -174,19 +172,20 @@ public partial class Actor : CharacterBody3D
       Velocity = Vector3.Zero;
       player.Play(actorStatus.idleAnim);
       methodsPlayer.Stop();
+      EmitSignal(SignalName.MoveIsFinished);
    }
 
    public void RotateCharacter(float targetRotation)
    {
       currentTargetRotation = Mathf.DegToRad(targetRotation);
-      isRotating = true;
+      IsRotating = true;
    }
 
    public void TurnCharacterToLookAt(Vector3 targetPosition)
    {
       Basis lookAt = Basis.LookingAt(targetPosition - GlobalPosition, Vector3.Up, true);
       currentTargetRotation = lookAt.GetEuler().Y;
-      isRotating = true;
+      IsRotating = true;
    }
 
    public async override void _PhysicsProcess(double delta)
@@ -197,7 +196,7 @@ public partial class Actor : CharacterBody3D
          MoveAndSlide();
       }
 
-      if (isRotating)
+      if (IsRotating)
       {
          await ToSignal(GetTree().CreateTimer(0.01f), "timeout");
 
@@ -207,7 +206,7 @@ public partial class Actor : CharacterBody3D
 
          if (Mathf.Abs(Mathf.AngleDifference(model.Rotation.Y, currentTargetRotation)) < 0.01f)
          {
-            isRotating = false;
+            IsRotating = false;
          }
       }
 

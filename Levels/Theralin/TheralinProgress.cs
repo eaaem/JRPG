@@ -16,6 +16,8 @@ public partial class TheralinProgress : LevelProgession
 
    public override void LoadLevel()
    {
+      SetPhysicsProcess(false);
+
       progress = managers.LevelManager.LocationDatas[managers.LevelManager.ActiveLocationDataID].levelProgress;
       for (int i = 0; i < (progress < 4 ? progress : 3); i++)
       {
@@ -147,6 +149,65 @@ public partial class TheralinProgress : LevelProgession
       olren.model.GlobalPosition = new Vector3(-14.393f, 0, 12.987f);
    }
 
+   void OlrenWield()
+   {
+      GetNode<Actor>("/root/BaseNode/olren").WieldWeapon();
+   }
+
+   async void OlrenBowShoot()
+   {
+      Node3D arrow = GetNode<Node3D>("/root/BaseNode/olren/Model/Armature/Skeleton3D/QuiverHolder/SecondaryWeapon/ArrowHolder/Arrow");
+      Node3D arrowHolder = arrow.GetParent<Node3D>();
+
+      BoneAttachment3D attachment = new BoneAttachment3D();
+      GetNode<Skeleton3D>("/root/BaseNode/olren/Model/Armature/Skeleton3D").AddChild(attachment);
+
+      attachment.BoneName = "hand.R";
+
+      AnimationPlayer bowPlayer = GetNode<AnimationPlayer>("/root/BaseNode/olren/Model/Armature/Skeleton3D/WeaponAttachment/Weapon/AnimationPlayer");
+
+      Vector3 oldRotation = arrow.Rotation;
+
+      Node3D parent = new Node3D();
+      GetNode<Actor>("/root/BaseNode/olren").AddChild(parent);
+
+      AudioStreamPlayer3D audioPlayer = GD.Load<PackedScene>("res://Core/self_destructing_3d_audio_player.tscn").Instantiate<AudioStreamPlayer3D>();
+      parent.AddChild(audioPlayer);
+      audioPlayer.Stream = GD.Load<AudioStream>("res://Party/Olren/olren_attack.wav");
+      audioPlayer.Play();
+
+      // Move the arrow to the attachment when grabbed, play the draw and release bow animations when necessary, then return everything to the rest state
+      await ToSignal(GetTree().CreateTimer(1f), "timeout");
+      arrowHolder.RemoveChild(arrow);
+      arrow.Rotation = new Vector3(0, 0, Mathf.DegToRad(-30f));
+      attachment.AddChild(arrow);
+
+      await ToSignal(GetTree().CreateTimer(0.9f), "timeout");
+      bowPlayer.Play("Draw");
+
+      await ToSignal(GetTree().CreateTimer(bowPlayer.CurrentAnimationLength + 0.35f), "timeout");
+      bowPlayer.Play("Release");
+      attachment.RemoveChild(arrow);
+
+      GetNode<Node3D>("/root/BaseNode/Level/olren_arrow_projectile").Visible = true;
+      SetPhysicsProcess(true);
+
+      await ToSignal(GetTree().CreateTimer(bowPlayer.CurrentAnimationLength), "timeout");
+      bowPlayer.Play("AtRest");
+      arrowHolder.AddChild(arrow);
+      arrow.Rotation = oldRotation;
+   }
+
+   public override void _PhysicsProcess(double delta)
+   {
+      if (GetNode<PathFollow3D>("/root/BaseNode/Level/olren_arrow_projectile/Path3D/PathFollow3D").ProgressRatio >= 1f)
+      {
+         SetPhysicsProcess(false);
+      }
+
+      GetNode<PathFollow3D>("/root/BaseNode/Level/olren_arrow_projectile/Path3D/PathFollow3D").ProgressRatio += (float)(0.1f * delta);
+   }
+
    /// <summary>
    /// Arlitha/Thalria cutscene (adds Thalria, moves Arlitha, deletes the block preventing access to the Athlia cutscene)
    /// </summary>
@@ -171,6 +232,12 @@ public partial class TheralinProgress : LevelProgession
       Node3D block = GetNode<Node3D>("/root/BaseNode/Level/argument_block");
       GetNode<Node3D>("/root/BaseNode/Level").CallDeferred(Node3D.MethodName.RemoveChild, block);
       block.CallDeferred(Node3D.MethodName.QueueFree);
+
+      if (GetNode<Node3D>("/root/BaseNode/Level").HasNode("cutscene5"))
+      {
+         GetNode<CollisionShape3D>("/root/BaseNode/Level/cutscene5/Area3D/CollisionShape3D").Disabled = false;
+         GetNode<Node3D>("/root/BaseNode/Level/cutscene5_items").Visible = true;
+      }
    }
 
    void ThirdTheralinCutscene()
@@ -513,7 +580,7 @@ public partial class TheralinProgress : LevelProgession
          managers.Controller.DisableMovement = true;
          managers.Controller.DisableCamera = true;
 
-         for (int i = 1; i <= 4; i++)
+         for (int i = 2; i <= 4; i++)
          {
             GetNode<OverworldPartyController>("/root/BaseNode/PartyMembers/Member" + i).EnablePathfinding = false;
          }
@@ -553,7 +620,7 @@ public partial class TheralinProgress : LevelProgession
             }
          }
 
-         //GetNode<Node3D>("/root/BaseNode/Level/cutscene6_objects").Visible = true;
+         GetNode<Node3D>("/root/BaseNode/Level/thoran").Visible = false;
 
          await ToSignal(GetTree().CreateTimer(5f), "timeout");
 

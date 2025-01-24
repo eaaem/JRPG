@@ -93,6 +93,17 @@ public partial class CombatStackStatusManager : Node
                   }
                }
             }
+            else if (statusEffect == StatusEffect.Enraged)
+            {
+               combatManager.ApplyStatModifier(StatType.Strength, Mathf.CeilToInt(target.stats[(int)StatType.Strength].baseValue * 0.75f), duration,
+                                               combatManager.CurrentTarget, combatManager.CurrentFighter, StatusEffect.Enraged);
+               combatManager.ApplyStatModifier(StatType.Accuracy, -1 * Mathf.CeilToInt(target.stats[(int)StatType.Accuracy].baseValue * 0.5f), duration,
+                                               combatManager.CurrentTarget, combatManager.CurrentFighter, StatusEffect.Enraged);       
+               combatManager.ApplyStatModifier(StatType.Fortitude, -1 * Mathf.CeilToInt(target.stats[(int)StatType.Fortitude].baseValue * 0.25f), duration,
+                                               combatManager.CurrentTarget, combatManager.CurrentFighter, StatusEffect.Enraged);            
+               combatManager.ApplyStatModifier(StatType.Willpower, -1 * Mathf.CeilToInt(target.stats[(int)StatType.Willpower].baseValue * 0.25f), duration,
+                                               combatManager.CurrentTarget, combatManager.CurrentFighter, StatusEffect.Enraged);                       
+            }
          }
       }
    }
@@ -221,7 +232,7 @@ public partial class CombatStackStatusManager : Node
       {
          if (target.statModifiers[i].attachedStatus == status.effect)
          {
-            target.statModifiers.Remove(target.statModifiers[i]);
+            combatManager.RemoveStatModifier(target.statModifiers[i], target);
             i--;
          }
       }

@@ -1,4 +1,4 @@
-[gd_scene load_steps=219 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=209 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -96,18 +96,7 @@
 [ext_resource type="Texture2D" uid="uid://bbapqo1qh5j3c" path="res://Menus/0Core/main_menu_background.png" id="75_4g5gp"]
 [ext_resource type="Texture2D" uid="uid://c4qlde51dy5va" path="res://Menus/0Core/medium_button.png" id="78_tg0m5"]
 [ext_resource type="Script" path="res://Party/0Core/CharacterAudioController.cs" id="79_pr45g"]
-[ext_resource type="AudioStream" uid="uid://b7i785pitce5k" path="res://Core/footstep1.wav" id="80_k0a62"]
-[ext_resource type="AudioStream" uid="uid://bok1x07qalrg5" path="res://Core/footstep2.wav" id="81_fnttl"]
-[ext_resource type="AudioStream" uid="uid://cssk5x4i0ki51" path="res://Core/footstep3.wav" id="82_pidmq"]
-[ext_resource type="AudioStream" uid="uid://cti7dd0fwm5ww" path="res://Core/footstep4.wav" id="83_bhx1r"]
-[ext_resource type="AudioStream" uid="uid://b546dpfrw5vpp" path="res://Core/footstep5.wav" id="84_8qd2p"]
-[ext_resource type="AudioStream" uid="uid://bm3i2wii2wk4f" path="res://Core/footstep6.wav" id="85_sjf67"]
-[ext_resource type="AudioStream" uid="uid://c1r2wlvij1wh8" path="res://Core/footsteps_grass1.wav" id="86_y4pru"]
-[ext_resource type="AudioStream" uid="uid://cwvfd71mwaj8u" path="res://Core/footsteps_grass2.wav" id="87_oomc2"]
-[ext_resource type="AudioStream" uid="uid://ekeqosutj7gi" path="res://Core/footsteps_grass3.wav" id="88_huk1f"]
-[ext_resource type="AudioStream" uid="uid://d3y8bkl5eaysb" path="res://Core/footsteps_grass4.wav" id="89_rvlxq"]
-[ext_resource type="AudioStream" uid="uid://d3besxcv2duhq" path="res://Core/footsteps_grass5.wav" id="90_mj2l2"]
-[ext_resource type="AudioStream" uid="uid://ck5donxagp11w" path="res://Core/footsteps_grass6.wav" id="91_ysla0"]
+[ext_resource type="Script" path="res://Core/RandomAudioSelector.cs" id="87_luvfv"]
 [ext_resource type="PackedScene" uid="uid://bddsqfx7ce22k" path="res://Combat/UI/damage_text.tscn" id="105_k6kgj"]
 
 [sub_resource type="Resource" id="Resource_vsscq"]
@@ -330,6 +319,18 @@ isCleanseable = false
 isNegative = false
 displayRemainingTurns = true
 graphicEffectPath = "res://Combat/StatusEffects/provoking_effect.tscn"
+boneToAttachForGraphic = "head"
+materialEffectPath = ""
+colorIndex = 0
+
+[sub_resource type="Resource" id="Resource_jbeqx"]
+script = ExtResource("4_t2qrl")
+effect = 12
+description = "Strength increased, accuracy and defense decreased"
+isCleanseable = false
+isNegative = false
+displayRemainingTurns = false
+graphicEffectPath = "res://Combat/StatusEffects/enrage_effect.tscn"
 boneToAttachForGraphic = "head"
 materialEffectPath = ""
 colorIndex = 0
@@ -816,7 +817,7 @@ ButtonSoundManager = NodePath("../AudioPlayers/ButtonSoundController")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.36896, -1.7533, -8.04547)
 script = ExtResource("1_821s7")
 affinityTable = [SubResource("Resource_vsscq"), SubResource("Resource_fk2ok"), SubResource("Resource_b1i57"), SubResource("Resource_i7a2u"), SubResource("Resource_hqnmo"), SubResource("Resource_lojwi"), SubResource("Resource_8rq4s"), SubResource("Resource_f5wbw"), SubResource("Resource_bih4v"), SubResource("Resource_0qamu")]
-StatusDatas = [SubResource("Resource_xl1dm"), SubResource("Resource_igf5a"), SubResource("Resource_vj0lt"), SubResource("Resource_h6dwx"), SubResource("Resource_5kq13"), SubResource("Resource_mftyv"), SubResource("Resource_e01c7"), SubResource("Resource_au516"), SubResource("Resource_1u3ta"), SubResource("Resource_1rshu"), SubResource("Resource_7vgvf"), SubResource("Resource_48cbu")]
+StatusDatas = [SubResource("Resource_xl1dm"), SubResource("Resource_igf5a"), SubResource("Resource_vj0lt"), SubResource("Resource_h6dwx"), SubResource("Resource_5kq13"), SubResource("Resource_mftyv"), SubResource("Resource_e01c7"), SubResource("Resource_au516"), SubResource("Resource_1u3ta"), SubResource("Resource_1rshu"), SubResource("Resource_7vgvf"), SubResource("Resource_48cbu"), SubResource("Resource_jbeqx")]
 managers = NodePath("../ManagerReferenceHolder")
 uiManager = NodePath("UIManager")
 abilityManager = NodePath("AbilityManager")
@@ -3107,6 +3108,7 @@ theme_override_fonts/normal_font = ExtResource("35_v46tb")
 theme_override_font_sizes/normal_font_size = 20
 bbcode_enabled = true
 text = "Select an option."
+scroll_active = false
 
 [node name="VictoryScreen" type="Control" parent="UI"]
 visible = false
@@ -4218,7 +4220,7 @@ visible = false
 layout_mode = 3
 anchors_preset = 0
 
-[node name="Back" type="Panel" parent="UI/ItemPickup" node_paths=PackedStringArray("managers")]
+[node name="Back" type="Panel" parent="UI/ItemPickup" node_paths=PackedStringArray("managers", "pickupSound")]
 layout_mode = 0
 offset_left = 105.0
 offset_top = 900.0
@@ -4228,6 +4230,7 @@ mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxTexture_7s27j")
 script = ExtResource("36_qnjxv")
 managers = NodePath("../../../ManagerReferenceHolder")
+pickupSound = NodePath("../../../AudioPlayers/Levels/ItemPickup")
 
 [node name="Text" type="Label" parent="UI/ItemPickup/Back"]
 layout_mode = 0
@@ -4475,6 +4478,8 @@ current = true
 [node name="BackAnchor" type="Node3D" parent="PartyMembers/Member1"]
 transform = Transform3D(0.87339, -0.487022, 0, 0.487022, 0.87339, 0, 0, 0, 1, 0.416, -0.5, -0.129)
 
+[node name="torso" type="Node3D" parent="PartyMembers/Member1/BackAnchor"]
+
 [node name="IdleCombatAnchor" type="Node3D" parent="PartyMembers/Member1"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, -1)
 
@@ -4499,51 +4504,17 @@ tree_root = SubResource("AnimationNodeBlendTree_h7jng")
 anim_player = NodePath("../AnimationMethods")
 parameters/Movement/blend_position = 0
 
-[node name="dirtFootsteps" type="Node3D" parent="PartyMembers/Member1"]
+[node name="dirt" type="AudioStreamPlayer3D" parent="PartyMembers/Member1"]
+script = ExtResource("87_luvfv")
+directoryLocation = "res://Core/DirtFootsteps/"
+startOfSoundName = "footstep"
+numberOfTracks = 6
 
-[node name="Footstep1" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/dirtFootsteps"]
-stream = ExtResource("80_k0a62")
-
-[node name="Footstep2" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/dirtFootsteps"]
-stream = ExtResource("81_fnttl")
-
-[node name="Footstep3" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/dirtFootsteps"]
-stream = ExtResource("82_pidmq")
-
-[node name="Footstep4" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/dirtFootsteps"]
-stream = ExtResource("83_bhx1r")
-
-[node name="Footstep5" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/dirtFootsteps"]
-stream = ExtResource("84_8qd2p")
-
-[node name="Footstep6" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/dirtFootsteps"]
-stream = ExtResource("85_sjf67")
-
-[node name="grassFootsteps" type="Node3D" parent="PartyMembers/Member1"]
-
-[node name="Footstep1" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/grassFootsteps"]
-stream = ExtResource("86_y4pru")
-volume_db = 15.267
-
-[node name="Footstep2" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/grassFootsteps"]
-stream = ExtResource("87_oomc2")
-volume_db = 15.267
-
-[node name="Footstep3" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/grassFootsteps"]
-stream = ExtResource("88_huk1f")
-volume_db = 15.267
-
-[node name="Footstep4" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/grassFootsteps"]
-stream = ExtResource("89_rvlxq")
-volume_db = 15.267
-
-[node name="Footstep5" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/grassFootsteps"]
-stream = ExtResource("90_mj2l2")
-volume_db = 15.267
-
-[node name="Footstep6" type="AudioStreamPlayer3D" parent="PartyMembers/Member1/grassFootsteps"]
-stream = ExtResource("91_ysla0")
-volume_db = 15.267
+[node name="grass" type="AudioStreamPlayer3D" parent="PartyMembers/Member1"]
+script = ExtResource("87_luvfv")
+directoryLocation = "res://Core/GrassFootsteps/"
+startOfSoundName = "footsteps_grass"
+numberOfTracks = 6
 
 [node name="AudioHandler" type="Node3D" parent="PartyMembers/Member1"]
 script = ExtResource("79_pr45g")

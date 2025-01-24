@@ -66,7 +66,6 @@ section_segments = 5
 curve = SubResource("Curve_s4p2g")
 
 [node name="ProvokeInitiateEffect" type="GPUParticles3D"]
-emitting = false
 amount = 32
 lifetime = 2.0
 one_shot = true

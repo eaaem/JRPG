@@ -8,7 +8,7 @@ script = ExtResource("2_pfuqe")
 CommandType = 12
 InvolvedFighter = ""
 SpecialCodeOverride = 2
-TargetName = "ProvokeCast"
+TargetName = "EnrageCast"
 
 [sub_resource type="Resource" id="Resource_kh10h"]
 script = ExtResource("2_pfuqe")
@@ -34,6 +34,7 @@ script = ExtResource("2_pfuqe")
 CommandType = 18
 PathToSound = "res://Abilities/Party/Provoke/vakthol_provoke.wav"
 Is3DSound = true
+Volume = 0.0
 Path = ""
 SpecialCodeOverride = 2
 NodeName = ""

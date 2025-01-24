@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dqtf3wh2hun3r" path="res://Combat/Arena/base_arena.tscn" id="1_6vcl6"]
 [ext_resource type="ArrayMesh" uid="uid://cxlvdllflhnms" path="res://Levels/AthiliCopse/GlbFiles/athili_copse_section1_tree_area.obj" id="5_7l3ut"]
 [ext_resource type="ArrayMesh" uid="uid://nuic6rnphjhw" path="res://Levels/AthiliCopse/GlbFiles/athili_copse_bushes.obj" id="6_jeai2"]
-[ext_resource type="ArrayMesh" uid="uid://ccl1rrix6k47y" path="res://Levels/AthiliCopse/bush.res" id="7_nw82k"]
+[ext_resource type="ArrayMesh" uid="uid://ccl1rrix6k47y" path="res://Levels/2Misc/Terrain/bush.res" id="7_nw82k"]
 [ext_resource type="PackedScene" uid="uid://f4r3ffmrufy0" path="res://Levels/AthiliCopse/Other/grass.tscn" id="8_m87di"]
 [ext_resource type="ArrayMesh" uid="uid://dv8cort7ml0cx" path="res://Levels/AthiliCopse/Meshes/section1_road.res" id="9_txk8b"]
 [ext_resource type="ArrayMesh" uid="uid://bedjky4rgg2tr" path="res://Levels/AthiliCopse/Meshes/section2_road.res" id="10_w172w"]
