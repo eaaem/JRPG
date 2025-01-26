@@ -22,7 +22,27 @@ no_depth_test = true
 text = "CRIT"
 font_size = 100
 
+[node name="SecondaryHighlight" type="Decal" parent="."]
+visible = false
+texture_albedo = ExtResource("1_4h4cc")
+texture_emission = ExtResource("1_4h4cc")
+modulate = Color(0.18, 0.330333, 1, 1)
+cull_mask = 32
+
 [node name="SelectionHighlight" type="Decal" parent="."]
+visible = false
+texture_albedo = ExtResource("1_4h4cc")
+texture_emission = ExtResource("1_4h4cc")
+cull_mask = 32
+
+[node name="CompanionPlacement" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.43809, 0, 1.45333)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CompanionPlacement"]
+visible = false
+mesh = SubResource("CylinderMesh_qlp6l")
+
+[node name="SelectionHighlight" type="Decal" parent="CompanionPlacement"]
 visible = false
 texture_albedo = ExtResource("1_4h4cc")
 texture_emission = ExtResource("1_4h4cc")

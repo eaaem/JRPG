@@ -5,13 +5,18 @@
 [resource]
 script = ExtResource("1_lw8du")
 name = "Heartburst"
-description = "too long"
+description = "Select up to 3 targets other than Athlia. All living targets, as well as Athlia, are healed and gain a buff to all of their stats for 2 turns. She can also select dead targets; they are revived with 1 HP."
 manaCost = 10
-scriptName = "Heartburst"
+scriptPath = "res://Abilities/Party/Heartburst/Heartburst.cs"
 hitsAll = false
 hitsSurrounding = false
-hitsSelf = true
+hitsSelf = false
 hitsTeam = true
 onlyHitsTeam = true
+onlyHitsSelf = false
+isEnemyHealingSpell = false
 bypassesDeaths = true
+graphicPath = "res://Abilities/Party/Heartburst/heartburst_camera_directions.tscn"
 requiredLevel = 0
+abilityWeight = 0
+notStackingEffectApplied = 0

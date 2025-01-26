@@ -88,7 +88,8 @@ public partial class CombatManager : Node
    private Node3D baseNode;
 
    public List<Fighter> Fighters { get; set; }
-   private List<int> fighterTurnOrders = new List<int>();
+   private List<TurnOrder> fighterTurnOrders = new List<TurnOrder>();
+   private int numberOfTrueTurns = 0;
 
    public bool IsAttacking { get; set; }
    private bool isCasting;
@@ -97,6 +98,8 @@ public partial class CombatManager : Node
    public Fighter CurrentTarget { get; set; }
    public InventoryItem CurrentItem { get; set; }
    public AbilityResource CurrentAbility { get; set; }
+
+   public bool OverridePanelDownHiding { get; set; }
 
    private bool isProcessing;
 
@@ -120,8 +123,11 @@ public partial class CombatManager : Node
 	public override void _Ready()
 	{
       Fighters = new List<Fighter>();
-      //StatusDatas = new StatusData[0];
       AbilityTargetGraphic = string.Empty;
+
+      GetNode<Button>("/root/BaseNode/UI/Options/Choices/ItemButton").MouseEntered += () => uiManager.HoverOverInformation("Use an item.");
+      GetNode<Button>("/root/BaseNode/UI/Options/Choices/ItemButton").MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+      GetNode<Button>("/root/BaseNode/UI/Options/Choices/ItemButton").ButtonDown += managers.ButtonSoundManager.OnClick;
 	}
 
    public void ResetNodes()
@@ -213,7 +219,8 @@ public partial class CombatManager : Node
 
          // When the next turn is selected, the first fighter will be deleted off, so this duplicates the first fighter, preventing them from losing their turn
          fighterTurnOrders.Insert(0, fighterTurnOrders[0]);
-         uiManager.CreateTurnOrderPortrait(Fighters[fighterTurnOrders[0]], fighterTurnOrders[0], 0);
+         uiManager.CreateTurnOrderPortrait(Fighters[fighterTurnOrders[0].id], fighterTurnOrders[0].id, 0);
+         numberOfTrueTurns = 0;
 
          enemyScript.QueueFree();
 
@@ -608,27 +615,25 @@ public partial class CombatManager : Node
 
          if (CurrentFighter.companion != null && !CurrentFighter.companion.hadTurn)
          {
+            CurrentFighter.UIPanel.GetNode<RichTextLabel>("CompanionHolder/Duration").Text = "[right]" + CurrentFighter.companion.duration + " turns";
+            IsCompanionTurn = true;
+            CurrentFighter.companion.hadTurn = true;
             CurrentFighter.companion.duration--;
-            CurrentFighter.UIPanel.GetNode<Label>("CompanionHolder/Duration").Text = "[right]" + CurrentFighter.companion.duration + " turns";
-
-            if (CurrentFighter.companion.duration <= 0)
-            {
-               RemoveCompanion(CurrentFighter);
-            }
-            else
-            {
-               IsCompanionTurn = true;
-               CurrentFighter.companion.hadTurn = true;
-               uiManager.SetHighlightVisibility(CurrentFighter, true, true);
-               uiManager.ClearAbilityUI();
-               uiManager.GenerateAbilityUI();
-               PlayerTurn();
-               return;
-            }  
+            uiManager.SetHighlightVisibility(CurrentFighter, true, true);
+            uiManager.HighlightTurnOrderPortrait();
+            uiManager.ClearAbilityUI();
+            uiManager.GenerateAbilityUI();
+            PlayerTurn();
+            return;
          }
          else if (CurrentFighter.companion != null)
          {
             uiManager.SetHighlightVisibility(CurrentFighter, false, true);
+
+             if (CurrentFighter.companion.duration <= 0)
+            {
+               RemoveCompanion(CurrentFighter);
+            }
          }
       }
 
@@ -636,9 +641,24 @@ public partial class CombatManager : Node
 
       if (fighterTurnOrders.Count > 0)
       {
-         fighterTurnOrders.Remove(fighterTurnOrders[0]);
+         TurnOrder currentTurn = fighterTurnOrders[0];
+
+         while (currentTurn.isShadow)
+         {
+            fighterTurnOrders.Remove(currentTurn);
+            currentTurn = fighterTurnOrders[0];
+
+            if (fighterTurnOrders.Count == 0)
+            {
+               GD.PrintErr("No non-shadow turns found; recalculating turns.");
+               PopulateTurnOrder();
+            }
+         }
+
+         fighterTurnOrders.Remove(currentTurn);
          uiManager.DeleteTurnOrderPortrait();
-         InitializeTurn(Fighters[fighterTurnOrders[0]]);
+         numberOfTrueTurns--;
+         InitializeTurn(Fighters[fighterTurnOrders[0].id]);
       }
       
       PopulateTurnOrder();
@@ -693,26 +713,66 @@ public partial class CombatManager : Node
 
    void PopulateTurnOrder(int populateAmount = 10)
    {
-      while (fighterTurnOrders.Count < populateAmount) 
+      while (numberOfTrueTurns < populateAmount) 
       {
          for (int i = 0; i < Fighters.Count; i++) 
          {
-            if (!Fighters[i].isDead)
+            Fighters[i].actionLevel += CalculateCurrentSpeed(Fighters[i]);
+
+            if (Fighters[i].actionLevel >= 100) 
             {
-               Fighters[i].actionLevel += CalculateCurrentSpeed(Fighters[i]);
-
-               if (Fighters[i].actionLevel >= 100) 
+               if (Fighters[i].isDead)
                {
-                  fighterTurnOrders.Add(i);
-                  uiManager.CreateTurnOrderPortrait(Fighters[i], i);
-                  Fighters[i].actionLevel = 0;
+                  fighterTurnOrders.Add(new TurnOrder(i, true));
+               }
+               else
+               {
+                  fighterTurnOrders.Add(new TurnOrder(i, false));
+                  numberOfTrueTurns++;
 
-                  if (fighterTurnOrders.Count >= 10)
+                  if (uiManager.GetNumberOfPortraits() < 10)
                   {
-                     return;
+                     uiManager.CreateTurnOrderPortrait(Fighters[i], i);
                   }
                }
-            }            
+
+               Fighters[i].actionLevel = 0;
+
+               if (numberOfTrueTurns >= 10)
+               {
+                  return;
+               }
+            }          
+         }
+      }
+   }
+
+   public void ReviveFighter(Fighter fighter)
+   {
+      int fighterID = 0;
+
+      for (int i = 0; i < Fighters.Count; i++)
+      {
+         if (fighter == Fighters[i])
+         {
+            fighterID = i;
+            break;
+         }
+      }
+
+      uiManager.ClearAllTurnOrderPortraits();
+
+      for (int i = 0; i < fighterTurnOrders.Count; i++)
+      {
+         if (fighterTurnOrders[i].id == fighterID)
+         {
+            fighterTurnOrders[i].isShadow = false;
+            numberOfTrueTurns++;
+         }
+
+         if (!fighterTurnOrders[i].isShadow && uiManager.GetNumberOfPortraits() < 10)
+         {
+            uiManager.CreateTurnOrderPortrait(Fighters[fighterTurnOrders[i].id], fighterTurnOrders[i].id);
          }
       }
    }
@@ -794,10 +854,20 @@ public partial class CombatManager : Node
             if (Fighters[i].isEnemy)
             {
                Fighters[i].model.GetNode<Node3D>("Model").Rotation = new Vector3(0f, Mathf.DegToRad(-90f), 0f);
+
+               if (Fighters[i].companion != null)
+               {
+                  Fighters[i].companion.model.GetNode<Node3D>("Model").Rotation = new Vector3(0f, Mathf.DegToRad(-90f), 0f);
+               }
             }
             else
             {
                Fighters[i].model.GetNode<Node3D>("Model").Rotation = new Vector3(0f, Mathf.DegToRad(90f), 0f);
+
+               if (Fighters[i].companion != null)
+               {
+                  Fighters[i].companion.model.GetNode<Node3D>("Model").Rotation = new Vector3(0f, Mathf.DegToRad(90f), 0f);
+               }
             }
          }
 
@@ -812,20 +882,37 @@ public partial class CombatManager : Node
 
       if (IsCompanionTurn)
       {
-         uiManager.SetItemButtonVisible(true);
+         uiManager.SetItemButtonDisabled(true);
+
+         Decal turnHighlight = (Decal)CurrentFighter.placementNode.GetNode<Decal>("CompanionPlacement/SelectionHighlight").Duplicate();
+         CurrentFighter.placementNode.GetNode<Node3D>("CompanionPlacement").AddChild(turnHighlight);
+         turnHighlight.Modulate = new Color(0.906f, 0.515f, 0.234f);
+         turnHighlight.Name = "TurnHighlight";
+         turnHighlight.Visible = true;
+
+         GetNode<Button>("/root/BaseNode/UI/Options/Choices/ItemButton").MouseEntered += () => uiManager.HoverOverInformation("Companions cannot use items.");
+         GetNode<Button>("/root/BaseNode/UI/Options/Choices/ItemButton").MouseEntered -= managers.ButtonSoundManager.OnHoverOver;
+         GetNode<Button>("/root/BaseNode/UI/Options/Choices/ItemButton").ButtonDown -= managers.ButtonSoundManager.OnClick;
       }
       else
       {
-         uiManager.SetItemButtonVisible(false);
+         if (uiManager.IsItemButtonDisabled())
+         {
+            GetNode<Button>("/root/BaseNode/UI/Options/Choices/ItemButton").MouseEntered += () => uiManager.HoverOverInformation("Use an item.");
+            GetNode<Button>("/root/BaseNode/UI/Options/Choices/ItemButton").MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+            GetNode<Button>("/root/BaseNode/UI/Options/Choices/ItemButton").ButtonDown += managers.ButtonSoundManager.OnClick;
+         }
+
+         uiManager.SetItemButtonDisabled(false);
+
+         Decal turnHighlight = (Decal)CurrentFighter.placementNode.GetNode<Decal>("SelectionHighlight").Duplicate();
+         CurrentFighter.placementNode.AddChild(turnHighlight);
+         turnHighlight.Modulate = new Color(0.906f, 0.515f, 0.234f);
+         turnHighlight.Name = "TurnHighlight";
+         turnHighlight.Visible = true;
       }
 
-      uiManager.SetChoicesVisible(true);
-      
-      Decal turnHighlight = (Decal)CurrentFighter.placementNode.GetNode<Decal>("SelectionHighlight").Duplicate();
-      CurrentFighter.placementNode.AddChild(turnHighlight);
-      turnHighlight.Modulate = new Color(0.906f, 0.515f, 0.234f);
-      turnHighlight.Name = "TurnHighlight";
-      turnHighlight.Visible = true;
+      uiManager.SetChoicesVisible(true);      
    }
 
    public void OnFighterPanelDown(Fighter target)
@@ -844,10 +931,13 @@ public partial class CombatManager : Node
          itemManager.UseItem(target);
       }
 
-      uiManager.SetCancelButtonVisible(false);
-      uiManager.SetItemListVisible(false);
-      uiManager.SetAbilityContainerVisible(false);
-      uiManager.SetTargetsVisible(false);
+      if (!OverridePanelDownHiding)
+      {
+         uiManager.SetCancelButtonVisible(false);
+         uiManager.SetItemListVisible(false);
+         uiManager.SetAbilityContainerVisible(false);
+         uiManager.SetTargetsVisible(false);
+      }
    }
 
    void OnAttackButtonDown()
@@ -903,9 +993,13 @@ public partial class CombatManager : Node
          uiManager.ResetManaBarLossIndicator();
          CurrentAbility = null;
 
+         GetNode<Button>("/root/BaseNode/UI/Options/FinalizeButton").Visible = false;
          for (int i = 0; i < Fighters.Count; i++)
          {
-            Fighters[i].placementNode.GetNode<MeshInstance3D>("MeshInstance3D").Visible = false;
+            if (!Fighters[i].isEnemy)
+            {
+               Fighters[i].placementNode.GetNode<Decal>("SecondaryHighlight").Visible = false;
+            }
          }
       }
       else if (CurrentItem != null)
@@ -926,6 +1020,7 @@ public partial class CombatManager : Node
          Fighters[i].placementNode.GetNode<Decal>("SelectionHighlight").Visible = false;
       }
       
+      OverridePanelDownHiding = false;
       IsAttacking = false;
       uiManager.StopHoveringOverInformation();
    }
@@ -965,29 +1060,71 @@ public partial class CombatManager : Node
       // Athlia's attacks deal 10% damage
       damage.baseDamage = passiveManager.AthliaPassive(damage.baseDamage);
 
-      AttackPreferences attackPreferences = CurrentFighter.model.GetNode<AttackPreferences>("AttackPreferences");
-      AbilityCommandHolder holder;
+      AttackPreferences attackPreferences;
 
-      if (CurrentFighter.placementNode.HasNode("TurnHighlight"))
+      if (IsCompanionTurn)
       {
-         Decal turnHighlight = CurrentFighter.placementNode.GetNode<Decal>("TurnHighlight");
-         CurrentFighter.placementNode.RemoveChild(turnHighlight);
-         turnHighlight.QueueFree();
-      }
-
-      if (attackPreferences.OverrideCopy)
-      {
-         holder = CurrentFighter.model.GetNode<AbilityCommandHolder>(attackPreferences.PathToOverride);
+         attackPreferences = CurrentFighter.companion.model.GetNode<AttackPreferences>("AttackPreferences");
       }
       else
       {
-         if (attackPreferences.IsRanged)
+         attackPreferences = CurrentFighter.model.GetNode<AttackPreferences>("AttackPreferences");
+      }
+      AbilityCommandHolder holder;
+
+      if (IsCompanionTurn)
+      {
+         if (CurrentFighter.placementNode.GetNode<Node3D>("CompanionPlacement").HasNode("TurnHighlight"))
          {
-            holder = GetNode<AbilityCommandHolder>("AbilityManager/RangedPreferences");
+            Decal turnHighlight = CurrentFighter.placementNode.GetNode<Decal>("CompanionPlacement/TurnHighlight");
+            CurrentFighter.placementNode.GetNode<Node3D>("CompanionPlacement").RemoveChild(turnHighlight);
+            turnHighlight.QueueFree();
+         }
+      }
+      else
+      {
+         if (CurrentFighter.placementNode.HasNode("TurnHighlight"))
+         {
+            Decal turnHighlight = CurrentFighter.placementNode.GetNode<Decal>("TurnHighlight");
+            CurrentFighter.placementNode.RemoveChild(turnHighlight);
+            turnHighlight.QueueFree();
+         }
+      }
+
+      if (IsCompanionTurn)
+      {
+         if (attackPreferences.OverrideCopy)
+         {
+            holder = CurrentFighter.model.GetNode<AbilityCommandHolder>(attackPreferences.PathToOverride);
          }
          else
          {
-            holder = GetNode<AbilityCommandHolder>("AbilityManager/MeleePreferences");
+            if (attackPreferences.IsRanged)
+            {
+               holder = GetNode<AbilityCommandHolder>("AbilityManager/RangedPreferences");
+            }
+            else
+            {
+               holder = GetNode<AbilityCommandHolder>("AbilityManager/MeleePreferences");
+            }
+         }
+      }
+      else
+      {
+         if (attackPreferences.OverrideCopy)
+         {
+            holder = CurrentFighter.model.GetNode<AbilityCommandHolder>(attackPreferences.PathToOverride);
+         }
+         else
+         {
+            if (attackPreferences.IsRanged)
+            {
+               holder = GetNode<AbilityCommandHolder>("AbilityManager/RangedPreferences");
+            }
+            else
+            {
+               holder = GetNode<AbilityCommandHolder>("AbilityManager/MeleePreferences");
+            }
          }
       }
 
@@ -1095,13 +1232,18 @@ public partial class CombatManager : Node
 
    public void CreateAudioOnFighter(Fighter fighter, string pathToAudio)
    {
+      CreateAudioOnNode(fighter.model, pathToAudio);
+   }
+
+   void CreateAudioOnNode(Node3D node, string pathToAudio)
+   {
       if (pathToAudio.Length == 0)
       {
          return;
       }
 
       Node3D parent = new Node3D();
-      fighter.model.AddChild(parent);
+      node.AddChild(parent);
       AudioStreamPlayer3D audioPlayer = GD.Load<PackedScene>("res://Core/self_destructing_3d_audio_player.tscn").Instantiate<AudioStreamPlayer3D>();
       parent.AddChild(audioPlayer);
 
@@ -1345,10 +1487,9 @@ public partial class CombatManager : Node
 
          for (int j = 0; j < fighterTurnOrders.Count; j++)
          {
-            if (fighterTurnOrders[j] == deadFighterIDs[i])
+            if (fighterTurnOrders[j].id == deadFighterIDs[i])
             {
-               fighterTurnOrders.Remove(fighterTurnOrders[j]);
-               j--;
+               fighterTurnOrders[j].isShadow = true;
             }
          }
 
@@ -1414,6 +1555,18 @@ public partial class CombatManager : Node
       affectedFighter.UIPanel.GetNode<Panel>("CompanionHolder").Visible = false;
       GetNode<Node3D>("/root/BaseNode").RemoveChild(affectedFighter.companion.model);
       affectedFighter.companion.model.QueueFree();
+
+      int id = 0;
+      for (int i = 0; i < Fighters.Count; i++)
+      {
+         if (Fighters[i].placementNode == affectedFighter.placementNode)
+         {
+            id = i;
+            break;
+         }
+      }
+
+      uiManager.UpdateTurnOrderPortraitCompanions(id, true);
       affectedFighter.companion = null;
    }
 
@@ -1730,13 +1883,25 @@ public partial class CombatManager : Node
 
    public void RegularCast(List<Fighter> targets, bool playHitAnimation = true, string overrideGraphicController = "")
    {
-      if (CurrentFighter.placementNode.HasNode("TurnHighlight"))
+      if (IsCompanionTurn)
       {
-         Decal turnHighlight = CurrentFighter.placementNode.GetNode<Decal>("TurnHighlight");
-         CurrentFighter.placementNode.RemoveChild(turnHighlight);
-         turnHighlight.QueueFree();
+         if (CurrentFighter.placementNode.GetNode<Node3D>("CompanionPlacement").HasNode("TurnHighlight"))
+         {
+            Decal turnHighlight = CurrentFighter.placementNode.GetNode<Decal>("CompanionPlacement/TurnHighlight");
+            CurrentFighter.placementNode.GetNode<Node3D>("CompanionPlacement").RemoveChild(turnHighlight);
+            turnHighlight.QueueFree();
+         }
       }
-
+      else
+      {
+         if (CurrentFighter.placementNode.HasNode("TurnHighlight"))
+         {
+            Decal turnHighlight = CurrentFighter.placementNode.GetNode<Decal>("TurnHighlight");
+            CurrentFighter.placementNode.RemoveChild(turnHighlight);
+            turnHighlight.QueueFree();
+         }
+      }
+      
       abilityManager.CreateAbilityGraphicController(targets, playHitAnimation, overrideGraphicController);     
    }
 
@@ -1764,6 +1929,18 @@ public partial class CombatManager : Node
       {
          companionUIHolder.Visible = true;
          CurrentFighter.companion.model.Visible = true;
+         int id = 0;
+
+         for (int i = 0; i < Fighters.Count; i++)
+         {
+            if (Fighters[i].placementNode == CurrentFighter.placementNode)
+            {
+               id = i;
+               break;
+            }
+         }
+
+         uiManager.UpdateTurnOrderPortraitCompanions(id, false);
       }
 
       double waitTime = FocusOnTargets(targets, playHitAnimation);
@@ -1781,7 +1958,7 @@ public partial class CombatManager : Node
       ProcessValues();
    }
 
-   public void CreateCompanion(Fighter caster, Enemy companionData, int duration)
+   public void CreateCompanion(Fighter caster, Enemy companionData, int duration, Material materialOverride = null, string pathToGraphic = "", string soundPath = "")
    {
       Companion newCompanion = new Companion();
       newCompanion.enemyDataSource = companionData;
@@ -1806,24 +1983,30 @@ public partial class CombatManager : Node
          }
       }
 
-      newCompanion.maxMana = companionData.stats[1].value * caster.level / 2;
+      newCompanion.maxMana = Mathf.RoundToInt(companionData.stats[1].value * 1.5f * (caster.level / 2));
       newCompanion.currentMana = newCompanion.maxMana;
 
       newCompanion.duration = duration;
       newCompanion.baseAttackDamage = companionData.baseAttackDamage;
+      newCompanion.spritePath = companionData.turnOrderSpritePath;
 
       caster.companion = newCompanion;
-      InitializeCompanionGraphics(caster);
+      InitializeCompanionGraphics(caster, materialOverride, pathToGraphic);
+
+      if (soundPath.Length > 0)
+      {
+         CreateAudioOnNode(newCompanion.model, soundPath);
+      }
    }
 
-   void InitializeCompanionGraphics(Fighter affectedFighter)
+   void InitializeCompanionGraphics(Fighter affectedFighter, Material materialOverride, string pathToGraphic)
    {
       Panel companionUIHolder = affectedFighter.UIPanel.GetNode<Panel>("CompanionHolder");
 
-      companionUIHolder.GetNode<Label>("NameLabel").Text = affectedFighter.companion.companionName;
-      companionUIHolder.GetNode<Label>("ManaLabel").Text = affectedFighter.companion.currentMana + "/" + affectedFighter.companion.maxMana;
-      companionUIHolder.GetNode<ProgressBar>("ManaBar").Value = 100;
-      companionUIHolder.GetNode<Label>("Duration").Text = "[right]" + affectedFighter.companion.duration;
+      companionUIHolder.GetNode<RichTextLabel>("NameLabel").Text = affectedFighter.companion.companionName;
+      companionUIHolder.GetNode<RichTextLabel>("ManaLabel").Text = affectedFighter.companion.currentMana + "/" + affectedFighter.companion.maxMana;
+      companionUIHolder.GetNode<TextureProgressBar>("ManaBar").Value = 100;
+      companionUIHolder.GetNode<RichTextLabel>("Duration").Text = "[right]" + affectedFighter.companion.duration + " turns";
 
       PackedScene packedSceneModel = GD.Load<PackedScene>(affectedFighter.companion.enemyDataSource.model.ResourcePath);
       affectedFighter.companion.model = packedSceneModel.Instantiate<Node3D>();
@@ -1832,13 +2015,32 @@ public partial class CombatManager : Node
       Node3D fighterModel = affectedFighter.model.GetNode<Node3D>("Model");
       Basis fighterBasis = fighterModel.GlobalTransform.Basis;
 
-      affectedFighter.companion.model.GlobalPosition = fighterModel.GlobalPosition - fighterBasis.Z - (fighterBasis.X * 1.5f);
+      //affectedFighter.companion.model.GlobalPosition = fighterModel.GlobalPosition - fighterBasis.Z - (fighterBasis.X * 1.5f);
+      //affectedFighter.companion.model.Rotation = Vector3.Zero;
+      affectedFighter.companion.model.GlobalPosition = affectedFighter.placementNode.GetNode<Node3D>("CompanionPlacement").GlobalPosition;
       affectedFighter.companion.model.Rotation = Vector3.Zero;
       affectedFighter.companion.model.GetNode<Node3D>("Model").Rotation = fighterModel.Rotation;
       affectedFighter.companion.model.GetNode<Node3D>("Model").Position = Vector3.Zero;
 
+      if (materialOverride != null)
+      {
+         List<MeshInstance3D> meshes = GetMeshes(affectedFighter.companion.model.GetNode<Node3D>("Model"));
+
+         for (int i = 0; i < meshes.Count; i++)
+         {
+            meshes[i].MaterialOverride = materialOverride;
+         }
+      }
+
+      if (pathToGraphic.Length > 0)
+      {
+         GpuParticles3D graphic = GD.Load<PackedScene>(pathToGraphic).Instantiate<GpuParticles3D>();
+         affectedFighter.companion.model.AddChild(graphic);
+      }
+
       affectedFighter.companion.model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle", 0.25f);
       affectedFighter.companion.model.Visible = false;
+      companionUIHolder.Visible = false;
    }
 
    public Fighter GetFighterFromIndex(int index, bool isEnemy)
@@ -1888,5 +2090,17 @@ public partial class DamagingEntity
       this.scalingAttack = scalingAttack;
       this.scalingDefense = scalingDefense;
       this.damageType = damageType;
+   }
+}
+
+public partial class TurnOrder
+{
+   public int id;
+   public bool isShadow;
+
+   public TurnOrder(int id, bool isShadow)
+   {
+      this.id = id;
+      this.isShadow = isShadow;
    }
 }

@@ -234,8 +234,8 @@ description = "Physical damage decreased and losing health each turn"
 isCleanseable = true
 isNegative = true
 displayRemainingTurns = true
-graphicEffectPath = ""
-boneToAttachForGraphic = ""
+graphicEffectPath = "res://Combat/StatusEffects/burn_effect.tscn"
+boneToAttachForGraphic = "root"
 materialEffectPath = ""
 colorIndex = 2
 
@@ -270,8 +270,8 @@ description = "All stats increased"
 isCleanseable = false
 isNegative = false
 displayRemainingTurns = true
-graphicEffectPath = ""
-boneToAttachForGraphic = ""
+graphicEffectPath = "res://Combat/StatusEffects/megabuff_effect.tscn"
+boneToAttachForGraphic = "root"
 materialEffectPath = ""
 colorIndex = 0
 
@@ -2906,45 +2906,25 @@ theme_override_constants/separation = 0
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("64_xypp5")
-
-[node name="Label" type="Label" parent="UI/Options/Choices/AttackButton"]
-layout_mode = 0
-offset_right = 300.0
-offset_bottom = 60.0
-theme = ExtResource("42_jpbmj")
+theme_override_fonts/font = ExtResource("35_v46tb")
+theme_override_font_sizes/font_size = 25
 text = "Attack"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="CastButton" type="Button" parent="UI/Options/Choices"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("64_xypp5")
+theme_override_fonts/font = ExtResource("35_v46tb")
 theme_override_font_sizes/font_size = 25
-
-[node name="Label" type="Label" parent="UI/Options/Choices/CastButton"]
-layout_mode = 0
-offset_right = 300.0
-offset_bottom = 60.0
-theme = ExtResource("42_jpbmj")
 text = "Cast"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="ItemButton" type="Button" parent="UI/Options/Choices"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("64_xypp5")
-theme_override_font_sizes/font_size = 0
-
-[node name="Label" type="Label" parent="UI/Options/Choices/ItemButton"]
-layout_mode = 0
-offset_right = 300.0
-offset_bottom = 60.0
-theme = ExtResource("42_jpbmj")
+theme_override_fonts/font = ExtResource("35_v46tb")
+theme_override_font_sizes/font_size = 25
 text = "Item"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="AbilityContainer" type="ScrollContainer" parent="UI/Options"]
 visible = false
@@ -2990,10 +2970,12 @@ vertical_alignment = 1
 [node name="FinalizeButton" type="Button" parent="UI/Options"]
 visible = false
 layout_mode = 0
-offset_left = 48.0
-offset_top = 380.0
-offset_right = 208.0
-offset_bottom = 429.6
+offset_left = -265.0
+offset_top = 152.0
+offset_right = -105.0
+offset_bottom = 201.6
+theme = ExtResource("64_xypp5")
+theme_override_font_sizes/font_size = 25
 text = "Cast"
 
 [node name="Items" type="Panel" parent="UI/Options"]
@@ -3223,11 +3205,10 @@ bbcode_enabled = true
 text = "Vakthol"
 
 [node name="Branches" type="VBoxContainer" parent="UI/DialogueScreen/Back"]
-visible = false
 layout_mode = 0
-offset_left = 1520.0
+offset_left = 656.0
 offset_top = -328.0
-offset_right = 1760.0
+offset_right = 896.0
 offset_bottom = -8.0
 mouse_filter = 2
 theme_override_constants/separation = 0
@@ -4325,16 +4306,16 @@ theme_override_font_sizes/font_size = 30
 selected = 0
 fit_to_longest_item = false
 item_count = 6
-popup/item_0/text = "1"
-popup/item_1/text = "5"
+popup/item_0/text = "  1"
+popup/item_1/text = "  5"
 popup/item_1/id = 1
-popup/item_2/text = "10"
+popup/item_2/text = "  10"
 popup/item_2/id = 2
-popup/item_3/text = "25"
+popup/item_3/text = "  25"
 popup/item_3/id = 3
-popup/item_4/text = "50"
+popup/item_4/text = "  50"
 popup/item_4/id = 4
-popup/item_5/text = "100"
+popup/item_5/text = "  100"
 popup/item_5/id = 5
 
 [node name="GoldDisplay" type="RichTextLabel" parent="UI/Shop/Background/Buttons"]
@@ -4428,12 +4409,20 @@ offset_right = 120.0
 offset_bottom = 515.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_pqu20")
 
-[node name="ScrollContainer" type="ScrollContainer" parent="UI/CombatOrderList"]
+[node name="ScrollBar" type="VScrollBar" parent="UI/CombatOrderList"]
 layout_mode = 0
-offset_right = 115.0
+offset_left = 109.0
+offset_right = 117.0
+offset_bottom = 510.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="UI/CombatOrderList"]
+layout_direction = 2
+layout_mode = 0
+offset_right = 245.0
 offset_bottom = 510.0
 theme = SubResource("Theme_adihd")
 horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UI/CombatOrderList/ScrollContainer"]
 layout_mode = 2
@@ -4803,14 +4792,13 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="mouse_entered" from="UI/Options/Choices/CastButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
 [connection signal="mouse_entered" from="UI/Options/Choices/CastButton" to="CombatManager/UIManager" method="HoverOverInformation" binds= ["Cast an ability with mana."]]
 [connection signal="mouse_exited" from="UI/Options/Choices/CastButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
-[connection signal="button_down" from="UI/Options/Choices/ItemButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Options/Choices/ItemButton" to="CombatManager" method="OnItemButtonDown"]
-[connection signal="mouse_entered" from="UI/Options/Choices/ItemButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
-[connection signal="mouse_entered" from="UI/Options/Choices/ItemButton" to="CombatManager/UIManager" method="HoverOverInformation" binds= ["Use an item."]]
 [connection signal="mouse_exited" from="UI/Options/Choices/ItemButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
 [connection signal="button_down" from="UI/Options/CancelButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Options/CancelButton" to="CombatManager" method="OnCancelButtonDown"]
 [connection signal="mouse_entered" from="UI/Options/CancelButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Options/FinalizeButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="mouse_entered" from="UI/Options/FinalizeButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
 [connection signal="button_down" from="UI/VictoryScreen/Back/Exit" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/VictoryScreen/Back/Exit" to="CombatManager" method="OnExitButtonDown"]
 [connection signal="mouse_entered" from="UI/VictoryScreen/Back/Exit" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
@@ -4895,8 +4883,12 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="item_selected" from="UI/Shop/Background/Buttons/Bulk" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="item_selected" from="UI/Shop/Background/Buttons/Bulk" to="UI/Shop/Background" method="OnSelectBulk"]
 [connection signal="mouse_entered" from="UI/Shop/Background/Buttons/Bulk" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Shop/Background/Notification/YesButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Shop/Background/Notification/YesButton" to="UI/Shop/Background" method="OnYesButtonDown"]
+[connection signal="mouse_entered" from="UI/Shop/Background/Notification/YesButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/Shop/Background/Notification/NoButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Shop/Background/Notification/NoButton" to="UI/Shop/Background" method="OnNoButtonDown"]
+[connection signal="mouse_entered" from="UI/Shop/Background/Notification/NoButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
 [connection signal="button_down" from="MainMenu/Background/Main/Continue" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="MainMenu/Background/Main/Continue" to="MainMenu" method="OnContinueButtonDown"]
 [connection signal="mouse_entered" from="MainMenu/Background/Main/Continue" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]

@@ -10,16 +10,21 @@ stats = [null, null, null, null, null, null, null, null, null, null]
 [resource]
 script = ExtResource("2_pfb34")
 name = "Tertha Arboth"
-description = "A small, carved wooden statue of Tertha, goddess of life and the earth."
+description = "Special
+A small, carved wooden statue of Tertha, goddess of life and the earth."
 scriptPath = ""
+combatGraphicsPath = ""
 specialModifier = 0.0
 hitsAll = false
 hitsSurrounding = false
 hitsSelf = false
 hitsTeam = false
-itemType = 0
+onlyHitsTeam = false
+onlyHitsSelf = false
+itemType = 8
 itemCategory = 0
 price = 3
 affectedStats = SubResource("Resource_0kp3l")
 usableOutsideCombat = false
 outOfCombatUseMessage = ""
+outOfCombatAudioPath = ""

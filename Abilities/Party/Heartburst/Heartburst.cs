@@ -16,10 +16,10 @@ public partial class Heartburst : PlayerAbilityBehavior
       finalizeButton = GetNode<Button>("/root/BaseNode/UI/Options/FinalizeButton");
 
       finalizeButton.ButtonDown += OnFinalizeDown;
-      abilityContainer = GetNode<Panel>("/root/BaseNode/UI/Options/Abilities");
-      selectionBox = GetNode<CanvasGroup>("/root/BaseNode/UI/Options");
+      //abilityContainer = GetNode<Panel>("/root/BaseNode/UI/Options/Abilities");
+     // selectionBox = GetNode<CanvasGroup>("/root/BaseNode/UI/Options");
 
-      PlayerAbilityReadySetup();
+      base._Ready();
    }
 
    public override void OnButtonDown()
@@ -27,39 +27,45 @@ public partial class Heartburst : PlayerAbilityBehavior
       SetTeamOnCast(button);
       finalizeButton.Visible = true;
       finalizeButton.Disabled = true;
+      finalizeButton.MouseFilter = Control.MouseFilterEnum.Ignore;
+      combatManager.OverridePanelDownHiding = true;
    }
 
    public override void OnCast()
    {
       if (combatManager.CurrentAbility == resource)
       {
-         cancelButton.Visible = true;
-         selectionBox.Visible = true;
-         abilityContainer.Visible = true;
-
          if (!currentTargets.Contains(combatManager.CurrentTarget) && currentTargets.Count < 3 && combatManager.CurrentTarget != combatManager.CurrentFighter)
          {
             currentTargets.Add(combatManager.CurrentTarget);
             finalizeButton.Disabled = false;
-            combatManager.CurrentTarget.placementNode.GetChild<MeshInstance3D>(0).Visible = true;
+            finalizeButton.MouseFilter = Control.MouseFilterEnum.Stop;
+            combatManager.CurrentTarget.placementNode.GetNode<Decal>("SecondaryHighlight").Visible = true;
          }
          else if (currentTargets.Contains(combatManager.CurrentTarget))
          {
             currentTargets.Remove(combatManager.CurrentTarget);
-            combatManager.CurrentTarget.placementNode.GetChild<MeshInstance3D>(0).Visible = false;
+            combatManager.CurrentTarget.placementNode.GetNode<Decal>("SecondaryHighlight").Visible = false;
             
             if (currentTargets.Count <= 0)
             {
                finalizeButton.Disabled = true;
+               finalizeButton.MouseFilter = Control.MouseFilterEnum.Ignore;
             }
          }
+
+         uiManager.ShowSelectionBox();
+         uiManager.SetTargetsVisible(true);
+         uiManager.SetCancelButtonVisible(true);
       }
    }
 
-   public void OnFinalizeDown()
+   public async void OnFinalizeDown()
    {
       combatManager.CurrentFighter.wasHit = true;
       currentTargets.Add(combatManager.CurrentFighter);
+
+      List<Fighter> revivedFighters = new List<Fighter>();
 
       for (int i = 0; i < currentTargets.Count; i++)
       {
@@ -67,7 +73,8 @@ public partial class Heartburst : PlayerAbilityBehavior
          
          if (!currentTargets[i].isDead)
          {
-            currentTargets[i].currentHealth += Mathf.CeilToInt(currentTargets[i].maxHealth * 0.1f);
+            int healAmount = Mathf.CeilToInt(currentTargets[i].maxHealth * 0.2f);
+            currentTargets[i].currentHealth += healAmount;
             
             for (int j = 0; j < currentTargets[i].currentStatuses.Count; j++)
             {
@@ -78,25 +85,35 @@ public partial class Heartburst : PlayerAbilityBehavior
             }
 
             stacksAndStatusManager.ApplyStatus(100, currentTargets[i], StatusEffect.MegaBuff, 2, 2);
+            uiManager.ProjectDamageText(currentTargets[i], healAmount, DamageType.None, false, true);
          }
          else
          {
             currentTargets[i].currentHealth = 1;
             currentTargets[i].isDead = false;
-            currentTargets[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("CombatIdle");
+            revivedFighters.Add(currentTargets[i]);
+            uiManager.ProjectDamageText(currentTargets[i], 1, DamageType.None, false, true);
          }
          
-         currentTargets[i].placementNode.GetChild<MeshInstance3D>(0).Visible = false;
+         currentTargets[i].placementNode.GetNode<Decal>("SecondaryHighlight").Visible = false;
       }
 
-      combatManager.CurrentFighter.currentMana -= resource.manaCost;
-      combatManager.CurrentFighter.specialCooldown = 3;
+      combatManager.CurrentFighter.specialCooldown = 4;
 
       combatManager.RegularCast(currentTargets, false);
-      abilityContainer.Visible = false;
-      cancelButton.Visible = false;
-      selectionBox.Visible = false;
-      
       finalizeButton.Visible = false;
+      combatManager.OverridePanelDownHiding = false;
+      uiManager.HideAll();
+      uiManager.SetTargetsVisible(false);
+
+      combatManager.CurrentFighter.currentMana -= combatManager.CurrentAbility.manaCost;
+
+      await ToSignal(GetTree().CreateTimer(2.1f), "timeout");
+
+      for (int i = 0; i < revivedFighters.Count; i++)
+      {
+         revivedFighters[i].model.GetNode<AnimationPlayer>("Model/AnimationPlayer").Play("Revive", 0f);
+         combatManager.ReviveFighter(revivedFighters[i]);
+      }
    }
 }

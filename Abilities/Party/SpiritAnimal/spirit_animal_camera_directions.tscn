@@ -1,0 +1,125 @@
+[gd_scene load_steps=18 format=3 uid="uid://bgq42u3e2011y"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_508kb"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_x5asv"]
+
+[sub_resource type="Resource" id="Resource_koqid"]
+script = ExtResource("2_x5asv")
+CommandType = 1
+NodeName = "camera_target"
+Path = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 1, 0)
+PathToScene = ""
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_xps0x"]
+script = ExtResource("2_x5asv")
+CommandType = 2
+Path = "camera_target"
+SpecialCodeOverride = 5
+
+[sub_resource type="Resource" id="Resource_d71cx"]
+script = ExtResource("2_x5asv")
+CommandType = 3
+Path = ""
+SpecialCodeOverride = 2
+
+[sub_resource type="Resource" id="Resource_h43et"]
+script = ExtResource("2_x5asv")
+CommandType = 4
+Target = Vector3(3, 2, -0.5)
+RelativeToSelf = false
+UseLocal = true
+
+[sub_resource type="Resource" id="Resource_dc7ih"]
+script = ExtResource("2_x5asv")
+CommandType = 8
+LookImmediately = true
+Speed = 0.0
+
+[sub_resource type="Resource" id="Resource_ghq5v"]
+script = ExtResource("2_x5asv")
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "SpiritAnimalCast"
+
+[sub_resource type="Resource" id="Resource_iyjrl"]
+script = ExtResource("2_x5asv")
+CommandType = 10
+Amount = 0.3
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_kw4d7"]
+script = ExtResource("2_x5asv")
+CommandType = 1
+NodeName = "hand_effect"
+Path = "Model/Armature/Skeleton3D"
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/SpiritAnimal/spirit_animal_effect.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_y20fu"]
+script = ExtResource("2_x5asv")
+CommandType = 18
+PathToSound = "res://Abilities/Party/SpiritAnimal/olren_spirit_animal.wav"
+Is3DSound = true
+Volume = 0.0
+Path = ""
+SpecialCodeOverride = 2
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_f14da"]
+script = ExtResource("2_x5asv")
+CommandType = 10
+Amount = 1.2
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_oy2ti"]
+script = ExtResource("2_x5asv")
+CommandType = 18
+PathToSound = "res://Abilities/Party/SpiritAnimal/spirit_animal_finish.wav"
+Is3DSound = true
+Volume = 0.0
+Path = "CompanionPlacement"
+SpecialCodeOverride = 1
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_12hpy"]
+script = ExtResource("2_x5asv")
+CommandType = 1
+NodeName = "end_effect"
+Path = "CompanionPlacement"
+SpecialCodeOverride = 1
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/SpiritAnimal/spirit_animal_spawn_effect.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_ojegb"]
+script = ExtResource("2_x5asv")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_kx2v5"]
+script = ExtResource("2_x5asv")
+CommandType = 10
+Amount = 2.0
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_8bome"]
+script = ExtResource("2_x5asv")
+CommandType = 17
+
+[node name="SpiritAnimalCameraDirections" type="Node3D"]
+script = ExtResource("1_508kb")
+commands = [SubResource("Resource_koqid"), SubResource("Resource_xps0x"), SubResource("Resource_d71cx"), SubResource("Resource_h43et"), SubResource("Resource_dc7ih"), SubResource("Resource_ghq5v"), SubResource("Resource_iyjrl"), SubResource("Resource_kw4d7"), SubResource("Resource_y20fu"), SubResource("Resource_f14da"), SubResource("Resource_oy2ti"), SubResource("Resource_12hpy"), SubResource("Resource_ojegb"), SubResource("Resource_kx2v5"), SubResource("Resource_8bome")]

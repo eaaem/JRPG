@@ -556,9 +556,23 @@ public partial class AbilityCommandInstance : Node
          case SpecialCodeOverride.None:
             return new List<Node3D>();
          case SpecialCodeOverride.CasterPlacement:
-            return new List<Node3D>() { combatManager.CurrentFighter.placementNode };
+            if (combatManager.IsCompanionTurn)
+            {
+               return new List<Node3D>() { combatManager.CurrentFighter.placementNode.GetNode<Node3D>("CompanionPlacement") };
+            }
+            else
+            {
+               return new List<Node3D>() { combatManager.CurrentFighter.placementNode };
+            }
          case SpecialCodeOverride.CasterModel:
-            return new List<Node3D>() { combatManager.CurrentFighter.model };
+            if (combatManager.IsCompanionTurn)
+            {
+               return new List<Node3D>() { combatManager.CurrentFighter.companion.model };
+            }
+            else
+            {
+               return new List<Node3D>() { combatManager.CurrentFighter.model };
+            }
          case SpecialCodeOverride.TargetsPlacement:
          {
             List<Node3D> result = new List<Node3D>();

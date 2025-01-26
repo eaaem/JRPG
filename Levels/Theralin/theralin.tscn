@@ -1,4 +1,4 @@
-[gd_scene load_steps=1271 format=4 uid="uid://be52m7kr2a0hf"]
+[gd_scene load_steps=1286 format=4 uid="uid://be52m7kr2a0hf"]
 
 [ext_resource type="Script" path="res://Levels/theralin/TheralinProgress.cs" id="1_6nlxi"]
 [ext_resource type="Script" path="res://Levels/1Features/Shop/ShopItem.cs" id="1_yfmkp"]
@@ -167,7 +167,7 @@ SubstituteDialogues = []
 [sub_resource type="Resource" id="Resource_ct712"]
 script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_tdi28")
-commands = null
+commands = Array[Object]([])
 
 [sub_resource type="Resource" id="Resource_u1xxq"]
 script = ExtResource("57_5jpaq")
@@ -178,6 +178,18 @@ Hide = true
 script = ExtResource("57_5jpaq")
 CommandType = 6
 MakeLocked = true
+
+[sub_resource type="Resource" id="Resource_j3ibp"]
+script = ExtResource("57_5jpaq")
+CommandType = 19
+ActorName = "athlia"
+Target = "vakthol"
+
+[sub_resource type="Resource" id="Resource_4e866"]
+script = ExtResource("57_5jpaq")
+CommandType = 19
+ActorName = "thalria"
+Target = "vakthol"
 
 [sub_resource type="Resource" id="Resource_xc60h"]
 script = ExtResource("57_5jpaq")
@@ -211,7 +223,7 @@ SubstituteDialogues = []
 [sub_resource type="Resource" id="Resource_obhwo"]
 script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_y0a7l")
-commands = Array[Object]([SubResource("Resource_u1xxq"), SubResource("Resource_qfnuv"), SubResource("Resource_xc60h"), SubResource("Resource_npnev"), SubResource("Resource_47uep"), SubResource("Resource_t6p1k")])
+commands = Array[Object]([SubResource("Resource_u1xxq"), SubResource("Resource_qfnuv"), SubResource("Resource_j3ibp"), SubResource("Resource_4e866"), SubResource("Resource_xc60h"), SubResource("Resource_npnev"), SubResource("Resource_47uep"), SubResource("Resource_t6p1k")])
 
 [sub_resource type="Resource" id="Resource_iu31n"]
 script = ExtResource("3_xigqe")
@@ -273,6 +285,18 @@ script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_1b01j")
 commands = null
 
+[sub_resource type="Resource" id="Resource_a3tkn"]
+script = ExtResource("57_5jpaq")
+CommandType = 19
+ActorName = "athlia"
+Target = "arthon"
+
+[sub_resource type="Resource" id="Resource_2q3lk"]
+script = ExtResource("57_5jpaq")
+CommandType = 19
+ActorName = "thalria"
+Target = "athlia"
+
 [sub_resource type="Resource" id="Resource_04ae4"]
 script = ExtResource("3_xigqe")
 speaker = ""
@@ -286,7 +310,7 @@ SubstituteDialogues = []
 [sub_resource type="Resource" id="Resource_8615r"]
 script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_04ae4")
-commands = null
+commands = Array[Object]([SubResource("Resource_a3tkn"), SubResource("Resource_2q3lk")])
 
 [sub_resource type="Resource" id="Resource_4opi1"]
 script = ExtResource("3_xigqe")
@@ -336,7 +360,7 @@ commands = null
 [sub_resource type="Resource" id="Resource_ghmqd"]
 script = ExtResource("57_wqgyi")
 items = [SubResource("Resource_214nj"), SubResource("Resource_ct712"), SubResource("Resource_obhwo"), SubResource("Resource_nj3oo"), SubResource("Resource_tvc6d"), SubResource("Resource_yih3s"), SubResource("Resource_vwimx"), SubResource("Resource_8615r"), SubResource("Resource_yjg63"), SubResource("Resource_2e15q"), SubResource("Resource_34f2u")]
-actors = [null]
+actors = []
 PreCutsceneCommands = []
 hideParty = false
 cameraPosition = Vector3(0, 0, 0)
@@ -884,13 +908,13 @@ Destination = Vector3(3.57182, 0, 72.9397)
 script = ExtResource("57_5jpaq")
 CommandType = 11
 ActorName = "thalria"
-Destination = Vector3(4.50459, 0, 73.2524)
+Destination = Vector3(4.505, 0, 75)
 
 [sub_resource type="Resource" id="Resource_bufan"]
 script = ExtResource("57_5jpaq")
 CommandType = 11
 ActorName = "athlia"
-Destination = Vector3(3.39962, 0, 73.4548)
+Destination = Vector3(3.9, 0, 73.455)
 
 [sub_resource type="Resource" id="Resource_f32v1"]
 script = ExtResource("57_5jpaq")
@@ -4744,6 +4768,16 @@ CommandType = 3
 ActorName = "thalria"
 YRotation = -103.1
 
+[sub_resource type="Resource" id="Resource_8d5xo"]
+script = ExtResource("57_5jpaq")
+CommandType = 6
+MakeLocked = true
+
+[sub_resource type="Resource" id="Resource_m7r2p"]
+script = ExtResource("57_5jpaq")
+CommandType = 4
+Hide = true
+
 [sub_resource type="Resource" id="Resource_2fk0j"]
 script = ExtResource("57_54ffb")
 actorName = "arlitha"
@@ -4781,7 +4815,7 @@ MakeLocked = true
 [sub_resource type="Resource" id="Resource_24foh"]
 script = ExtResource("57_5jpaq")
 CommandType = 10
-WaitTime = 3.5
+WaitTime = 3.0
 
 [sub_resource type="Resource" id="Resource_huy8l"]
 script = ExtResource("57_5jpaq")
@@ -5536,7 +5570,7 @@ script = ExtResource("3_xigqe")
 speaker = ""
 characterType = 2
 emotion = 0
-content = "Fine. We’ll just blackmail him."
+content = "Fine. We’ll just blackmail Narthil."
 opensShop = false
 Initiator = 0
 SubstituteDialogues = []
@@ -5879,7 +5913,7 @@ commands = null
 script = ExtResource("57_wqgyi")
 items = [SubResource("Resource_1twr7"), SubResource("Resource_xplqt"), SubResource("Resource_h1xkx"), SubResource("Resource_2ivye"), SubResource("Resource_3d8hg"), SubResource("Resource_3gdmy"), SubResource("Resource_byslp"), SubResource("Resource_jk4hm"), SubResource("Resource_nh84y"), SubResource("Resource_4dkh1"), SubResource("Resource_vtn82"), SubResource("Resource_u12o2"), SubResource("Resource_ayxcr"), SubResource("Resource_fitho"), SubResource("Resource_gkwtn"), SubResource("Resource_w0go6"), SubResource("Resource_1oltt"), SubResource("Resource_h1pph"), SubResource("Resource_2yg0u"), SubResource("Resource_6gefw"), SubResource("Resource_5qbwb"), SubResource("Resource_aceip"), SubResource("Resource_0cb71"), SubResource("Resource_50ovh"), SubResource("Resource_soxlc"), SubResource("Resource_mm5ni"), SubResource("Resource_uhfyl"), SubResource("Resource_efiqb"), SubResource("Resource_pwmd7"), SubResource("Resource_raads"), SubResource("Resource_o3nsg"), SubResource("Resource_sxq4r"), SubResource("Resource_qx50a"), SubResource("Resource_2rscv"), SubResource("Resource_rf6hm"), SubResource("Resource_jimmj"), SubResource("Resource_0vqqp"), SubResource("Resource_yh8ju"), SubResource("Resource_je5mf"), SubResource("Resource_8ujg0"), SubResource("Resource_nvhqr"), SubResource("Resource_606ih"), SubResource("Resource_c1c0q"), SubResource("Resource_06ujk"), SubResource("Resource_01s55"), SubResource("Resource_nqjhq"), SubResource("Resource_03eyg"), SubResource("Resource_3wyjp"), SubResource("Resource_py5qc"), SubResource("Resource_yq4kk"), SubResource("Resource_usi8p"), SubResource("Resource_gipvn"), SubResource("Resource_gofr0"), SubResource("Resource_o680g"), SubResource("Resource_ta68c"), SubResource("Resource_1odij"), SubResource("Resource_tamqj"), SubResource("Resource_j23fr"), SubResource("Resource_8ixnc")]
 actors = [SubResource("Resource_2fk0j"), SubResource("Resource_fwh6u"), SubResource("Resource_pa1q4")]
-PreCutsceneCommands = [SubResource("Resource_e3rqa"), SubResource("Resource_mv340"), SubResource("Resource_1icna"), SubResource("Resource_ygs7j"), SubResource("Resource_xmyvw"), SubResource("Resource_6j8ao")]
+PreCutsceneCommands = [SubResource("Resource_e3rqa"), SubResource("Resource_mv340"), SubResource("Resource_1icna"), SubResource("Resource_ygs7j"), SubResource("Resource_xmyvw"), SubResource("Resource_6j8ao"), SubResource("Resource_8d5xo"), SubResource("Resource_m7r2p")]
 hideParty = true
 cameraPosition = Vector3(1.78299, 2.93229, 71.6196)
 cameraRotation = Vector3(-0.54136, -2.17465, 0.00364467)
@@ -5890,7 +5924,7 @@ fadeBlackExitTransition = true
 script = ExtResource("57_5jpaq")
 CommandType = 11
 ActorName = "athlia"
-Destination = Vector3(-34.388, 0, 6.68405)
+Destination = Vector3(-34.388, 0.083, 6.684)
 
 [sub_resource type="Resource" id="Resource_aump0"]
 script = ExtResource("57_5jpaq")
@@ -5902,7 +5936,7 @@ YRotation = 162.8
 script = ExtResource("57_5jpaq")
 CommandType = 11
 ActorName = "thelren"
-Destination = Vector3(-33.4414, 0, 4.44696)
+Destination = Vector3(-33.441, 0.083, 4.447)
 
 [sub_resource type="Resource" id="Resource_n6btr"]
 script = ExtResource("57_5jpaq")
@@ -5914,7 +5948,7 @@ YRotation = -25.2
 script = ExtResource("57_5jpaq")
 CommandType = 11
 ActorName = "arthon"
-Destination = Vector3(-36.7274, 3.8147e-06, 4.72962)
+Destination = Vector3(-36.727, 0.083, 4.73)
 
 [sub_resource type="Resource" id="Resource_fi3k2"]
 script = ExtResource("57_5jpaq")
@@ -6001,7 +6035,7 @@ tiedMember = ""
 [sub_resource type="Resource" id="Resource_b7fr6"]
 script = ExtResource("57_5jpaq")
 CommandType = 10
-WaitTime = 2.25
+WaitTime = 1.75
 
 [sub_resource type="Resource" id="Resource_q5hf1"]
 script = ExtResource("57_5jpaq")
@@ -7323,7 +7357,7 @@ script = ExtResource("3_xigqe")
 speaker = "Arthon"
 characterType = 0
 emotion = 0
-content = "With Olren’s birthday, I wonder if he’s reaching out at all."
+content = "With Olren’s birthday, and the chaos around town, I wonder if he may have shown up."
 opensShop = false
 Initiator = 0
 SubstituteDialogues = []
@@ -7465,7 +7499,7 @@ SubstituteDialogues = []
 [sub_resource type="Resource" id="Resource_nw5f2"]
 script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_8gq5k")
-commands = null
+commands = Array[Object]([])
 
 [sub_resource type="Resource" id="Resource_ukm2r"]
 script = ExtResource("3_xigqe")
@@ -7553,7 +7587,7 @@ RotateToFace = true
 script = ExtResource("57_5jpaq")
 CommandType = 1
 ActorName = "thalria"
-Destination = Vector3(-17.732, 0, 10.374)
+Destination = Vector3(-19.75, 0, 10.135)
 RotateToFace = true
 
 [sub_resource type="Resource" id="Resource_7q4hi"]
@@ -7690,9 +7724,9 @@ commands = null
 [sub_resource type="Resource" id="Resource_b5xg0"]
 script = ExtResource("3_xigqe")
 speaker = ""
-characterType = 3
+characterType = 2
 emotion = 0
-content = "But… Arthon wouldn’t hurt him."
+content = "Arthon would probably kill him."
 opensShop = false
 Initiator = 0
 SubstituteDialogues = []
@@ -7700,21 +7734,6 @@ SubstituteDialogues = []
 [sub_resource type="Resource" id="Resource_a1hbc"]
 script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_b5xg0")
-commands = null
-
-[sub_resource type="Resource" id="Resource_48ohd"]
-script = ExtResource("3_xigqe")
-speaker = ""
-characterType = 2
-emotion = 0
-content = "He absolutely would."
-opensShop = false
-Initiator = 0
-SubstituteDialogues = []
-
-[sub_resource type="Resource" id="Resource_eo02g"]
-script = ExtResource("58_2jsij")
-dialogue = SubResource("Resource_48ohd")
 commands = null
 
 [sub_resource type="Resource" id="Resource_prjyp"]
@@ -7761,6 +7780,65 @@ script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_ndne3")
 commands = Array[Object]([SubResource("Resource_prjyp"), SubResource("Resource_d2nhc"), SubResource("Resource_xkgyh"), SubResource("Resource_u4kjk"), SubResource("Resource_0w5pb"), SubResource("Resource_7h0dy")])
 
+[sub_resource type="Resource" id="Resource_48ohd"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 3
+emotion = 0
+content = "...Yes. You're right."
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_eo02g"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_48ohd")
+commands = null
+
+[sub_resource type="Resource" id="Resource_bj7f3"]
+script = ExtResource("57_5jpaq")
+CommandType = 4
+Hide = true
+
+[sub_resource type="Resource" id="Resource_klqm8"]
+script = ExtResource("57_5jpaq")
+CommandType = 6
+MakeLocked = true
+
+[sub_resource type="Resource" id="Resource_jho6d"]
+script = ExtResource("57_5jpaq")
+CommandType = 10
+WaitTime = 2.0
+
+[sub_resource type="Resource" id="Resource_ep4ll"]
+script = ExtResource("57_5jpaq")
+CommandType = 4
+Hide = false
+
+[sub_resource type="Resource" id="Resource_alyr6"]
+script = ExtResource("57_5jpaq")
+CommandType = 6
+MakeLocked = false
+
+[sub_resource type="Resource" id="Resource_qp7ep"]
+script = ExtResource("57_5jpaq")
+CommandType = 7
+
+[sub_resource type="Resource" id="Resource_23kym"]
+script = ExtResource("3_xigqe")
+speaker = ""
+characterType = 0
+emotion = 0
+content = ""
+opensShop = false
+Initiator = 0
+SubstituteDialogues = []
+
+[sub_resource type="Resource" id="Resource_3evh8"]
+script = ExtResource("58_2jsij")
+dialogue = SubResource("Resource_23kym")
+commands = Array[Object]([SubResource("Resource_bj7f3"), SubResource("Resource_klqm8"), SubResource("Resource_jho6d"), SubResource("Resource_ep4ll"), SubResource("Resource_alyr6"), SubResource("Resource_qp7ep")])
+
 [sub_resource type="Resource" id="Resource_oqs3b"]
 script = ExtResource("3_xigqe")
 speaker = ""
@@ -7776,6 +7854,12 @@ script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_oqs3b")
 commands = null
 
+[sub_resource type="Resource" id="Resource_1yg8y"]
+script = ExtResource("57_5jpaq")
+CommandType = 19
+ActorName = "athlia"
+Target = "vakthol"
+
 [sub_resource type="Resource" id="Resource_x73vl"]
 script = ExtResource("3_xigqe")
 speaker = ""
@@ -7789,7 +7873,7 @@ SubstituteDialogues = []
 [sub_resource type="Resource" id="Resource_v2b8y"]
 script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_x73vl")
-commands = null
+commands = Array[Object]([SubResource("Resource_1yg8y")])
 
 [sub_resource type="Resource" id="Resource_7fy2w"]
 script = ExtResource("3_xigqe")
@@ -7868,7 +7952,7 @@ script = ExtResource("3_xigqe")
 speaker = ""
 characterType = 1
 emotion = 0
-content = "Fine, he’s [i]almost[/i] an adult. But what [i]almost[/i] sixteen-year-old knows what they’re doing?"
+content = "Fine, he’s [i]almost[/i] an adult. But what [i]almost[/i] adult knows what they're doing?"
 opensShop = false
 Initiator = 0
 SubstituteDialogues = []
@@ -7877,12 +7961,6 @@ SubstituteDialogues = []
 script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_j2l7b")
 commands = null
-
-[sub_resource type="Resource" id="Resource_ll67o"]
-script = ExtResource("57_5jpaq")
-CommandType = 19
-ActorName = "athlia"
-Target = "vakthol"
 
 [sub_resource type="Resource" id="Resource_4lgnd"]
 script = ExtResource("57_5jpaq")
@@ -7903,7 +7981,7 @@ SubstituteDialogues = []
 [sub_resource type="Resource" id="Resource_hxbsv"]
 script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_4k6jg")
-commands = Array[Object]([SubResource("Resource_ll67o"), SubResource("Resource_4lgnd")])
+commands = Array[Object]([SubResource("Resource_4lgnd")])
 
 [sub_resource type="Resource" id="Resource_rufo4"]
 script = ExtResource("57_5jpaq")
@@ -7987,7 +8065,7 @@ commands = null
 
 [sub_resource type="Resource" id="Resource_oq7nk"]
 script = ExtResource("57_wqgyi")
-items = [SubResource("Resource_6iwfl"), SubResource("Resource_2eosw"), SubResource("Resource_sl4cl"), SubResource("Resource_o3k2f"), SubResource("Resource_fe7us"), SubResource("Resource_gowso"), SubResource("Resource_h4u1k"), SubResource("Resource_irt1w"), SubResource("Resource_d2mue"), SubResource("Resource_7umjc"), SubResource("Resource_ukfps"), SubResource("Resource_scf6r"), SubResource("Resource_4nv0g"), SubResource("Resource_v2pri"), SubResource("Resource_k2dp1"), SubResource("Resource_iynl4"), SubResource("Resource_svr05"), SubResource("Resource_nrk1q"), SubResource("Resource_8cvn4"), SubResource("Resource_3ntd1"), SubResource("Resource_dge32"), SubResource("Resource_bhbfn"), SubResource("Resource_0wgkl"), SubResource("Resource_cndfj"), SubResource("Resource_xsb03"), SubResource("Resource_5nk0g"), SubResource("Resource_2lg5g"), SubResource("Resource_oqee7"), SubResource("Resource_wunvj"), SubResource("Resource_0sk5v"), SubResource("Resource_h4hk6"), SubResource("Resource_hegjo"), SubResource("Resource_ecs8n"), SubResource("Resource_3qu2c"), SubResource("Resource_q7bgu"), SubResource("Resource_dpbpa"), SubResource("Resource_qb5cg"), SubResource("Resource_x2qij"), SubResource("Resource_6um04"), SubResource("Resource_rann7"), SubResource("Resource_k1dar"), SubResource("Resource_a4edv"), SubResource("Resource_m51eh"), SubResource("Resource_n6yb5"), SubResource("Resource_i7qjx"), SubResource("Resource_xoosd"), SubResource("Resource_l8eh1"), SubResource("Resource_o1obv"), SubResource("Resource_cxpv5"), SubResource("Resource_ywht8"), SubResource("Resource_bdyig"), SubResource("Resource_eqaww"), SubResource("Resource_4wdbe"), SubResource("Resource_w7bby"), SubResource("Resource_vqtaq"), SubResource("Resource_1b0n4"), SubResource("Resource_r4y32"), SubResource("Resource_tn4kf"), SubResource("Resource_w5xke"), SubResource("Resource_qfpyi"), SubResource("Resource_ai2vl"), SubResource("Resource_cbg2j"), SubResource("Resource_4h0ao"), SubResource("Resource_bjigs"), SubResource("Resource_4iop5"), SubResource("Resource_u6wvm"), SubResource("Resource_pooiq"), SubResource("Resource_i5ycv"), SubResource("Resource_kohjg"), SubResource("Resource_tp7nt"), SubResource("Resource_nw5f2"), SubResource("Resource_6t1jx"), SubResource("Resource_18cot"), SubResource("Resource_aiqko"), SubResource("Resource_ui3um"), SubResource("Resource_2cj3p"), SubResource("Resource_uky7g"), SubResource("Resource_af2rd"), SubResource("Resource_a1hbc"), SubResource("Resource_eo02g"), SubResource("Resource_5gm0a"), SubResource("Resource_474u3"), SubResource("Resource_v2b8y"), SubResource("Resource_u846x"), SubResource("Resource_yph0e"), SubResource("Resource_0op8g"), SubResource("Resource_cnosq"), SubResource("Resource_jpyql"), SubResource("Resource_hxbsv"), SubResource("Resource_s88xb"), SubResource("Resource_l7eck"), SubResource("Resource_41dlc")]
+items = [SubResource("Resource_6iwfl"), SubResource("Resource_2eosw"), SubResource("Resource_sl4cl"), SubResource("Resource_o3k2f"), SubResource("Resource_fe7us"), SubResource("Resource_gowso"), SubResource("Resource_h4u1k"), SubResource("Resource_irt1w"), SubResource("Resource_d2mue"), SubResource("Resource_7umjc"), SubResource("Resource_ukfps"), SubResource("Resource_scf6r"), SubResource("Resource_4nv0g"), SubResource("Resource_v2pri"), SubResource("Resource_k2dp1"), SubResource("Resource_iynl4"), SubResource("Resource_svr05"), SubResource("Resource_nrk1q"), SubResource("Resource_8cvn4"), SubResource("Resource_3ntd1"), SubResource("Resource_dge32"), SubResource("Resource_bhbfn"), SubResource("Resource_0wgkl"), SubResource("Resource_cndfj"), SubResource("Resource_xsb03"), SubResource("Resource_5nk0g"), SubResource("Resource_2lg5g"), SubResource("Resource_oqee7"), SubResource("Resource_wunvj"), SubResource("Resource_0sk5v"), SubResource("Resource_h4hk6"), SubResource("Resource_hegjo"), SubResource("Resource_ecs8n"), SubResource("Resource_3qu2c"), SubResource("Resource_q7bgu"), SubResource("Resource_dpbpa"), SubResource("Resource_qb5cg"), SubResource("Resource_x2qij"), SubResource("Resource_6um04"), SubResource("Resource_rann7"), SubResource("Resource_k1dar"), SubResource("Resource_a4edv"), SubResource("Resource_m51eh"), SubResource("Resource_n6yb5"), SubResource("Resource_i7qjx"), SubResource("Resource_xoosd"), SubResource("Resource_l8eh1"), SubResource("Resource_o1obv"), SubResource("Resource_cxpv5"), SubResource("Resource_ywht8"), SubResource("Resource_bdyig"), SubResource("Resource_eqaww"), SubResource("Resource_4wdbe"), SubResource("Resource_w7bby"), SubResource("Resource_vqtaq"), SubResource("Resource_1b0n4"), SubResource("Resource_r4y32"), SubResource("Resource_tn4kf"), SubResource("Resource_w5xke"), SubResource("Resource_qfpyi"), SubResource("Resource_ai2vl"), SubResource("Resource_cbg2j"), SubResource("Resource_4h0ao"), SubResource("Resource_bjigs"), SubResource("Resource_4iop5"), SubResource("Resource_u6wvm"), SubResource("Resource_pooiq"), SubResource("Resource_i5ycv"), SubResource("Resource_kohjg"), SubResource("Resource_tp7nt"), SubResource("Resource_nw5f2"), SubResource("Resource_6t1jx"), SubResource("Resource_18cot"), SubResource("Resource_aiqko"), SubResource("Resource_ui3um"), SubResource("Resource_2cj3p"), SubResource("Resource_uky7g"), SubResource("Resource_af2rd"), SubResource("Resource_a1hbc"), SubResource("Resource_5gm0a"), SubResource("Resource_eo02g"), SubResource("Resource_3evh8"), SubResource("Resource_474u3"), SubResource("Resource_v2b8y"), SubResource("Resource_u846x"), SubResource("Resource_yph0e"), SubResource("Resource_0op8g"), SubResource("Resource_cnosq"), SubResource("Resource_jpyql"), SubResource("Resource_hxbsv"), SubResource("Resource_s88xb"), SubResource("Resource_l7eck"), SubResource("Resource_41dlc")]
 actors = [SubResource("Resource_83lkd"), SubResource("Resource_h80b0"), SubResource("Resource_2yrds"), SubResource("Resource_mpixd"), SubResource("Resource_to05q")]
 PreCutsceneCommands = [SubResource("Resource_2kpwr"), SubResource("Resource_aump0"), SubResource("Resource_s0vyr"), SubResource("Resource_n6btr"), SubResource("Resource_5yqcl"), SubResource("Resource_fi3k2"), SubResource("Resource_7q24c"), SubResource("Resource_gd7a1"), SubResource("Resource_3sgki"), SubResource("Resource_3k2ll"), SubResource("Resource_0nne0"), SubResource("Resource_kipcu")]
 hideParty = true
@@ -9322,7 +9400,7 @@ script = ExtResource("3_xigqe")
 speaker = ""
 characterType = 3
 emotion = 0
-content = "I’m sure they wouldn’t hurt Uncle Dathrel."
+content = "I'm certain everything will turn out fine."
 opensShop = false
 Initiator = 0
 SubstituteDialogues = []
@@ -9455,6 +9533,12 @@ script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_vpv5n")
 commands = Array[Object]([])
 
+[sub_resource type="Resource" id="Resource_oiwm8"]
+script = ExtResource("57_5jpaq")
+CommandType = 19
+ActorName = "vakthol"
+Target = "thalria"
+
 [sub_resource type="Resource" id="Resource_jve8a"]
 script = ExtResource("3_xigqe")
 speaker = ""
@@ -9468,7 +9552,7 @@ SubstituteDialogues = []
 [sub_resource type="Resource" id="Resource_swq82"]
 script = ExtResource("58_2jsij")
 dialogue = SubResource("Resource_jve8a")
-commands = null
+commands = Array[Object]([SubResource("Resource_oiwm8")])
 
 [sub_resource type="Resource" id="Resource_mg505"]
 script = ExtResource("57_5jpaq")
@@ -10091,7 +10175,7 @@ script = ExtResource("3_xigqe")
 speaker = "Thoran"
 characterType = 0
 emotion = 0
-content = "Such were Lunis's words in the Dawn Text, Birth of the Moon, line 18."
+content = "Such were Lunis's words in the Dawn Text, Birth of the Moon, lines 18 through 20."
 opensShop = false
 Initiator = 0
 SubstituteDialogues = []
@@ -11937,7 +12021,7 @@ script = ExtResource("2_0ejmu")
 dialogueList = SubResource("Resource_cgb7s")
 
 [node name="arthon" parent="." instance=ExtResource("66_3mh84")]
-transform = Transform3D(0.0935004, 0, 0.995619, 0, 1, 0, -0.995619, 0, 0.0935004, -36.7274, 3.8147e-06, 4.72962)
+transform = Transform3D(0.0935004, 0, 0.995619, 0, 1, 0, -0.995619, 0, 0.0935004, -36.7274, 0.0839308, 4.72962)
 script = ExtResource("14_qi11r")
 animationName = "Sitting"
 
@@ -11947,7 +12031,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -36.8021, -2.38419e-07, 4.808
 [node name="cutscene4_items" type="Node3D" parent="."]
 
 [node name="athlia" parent="cutscene4_items" instance=ExtResource("67_n8ryf")]
-transform = Transform3D(-0.955319, 0, 0.295575, 0, 1, 0, -0.295575, 0, -0.955319, -34.388, 0, 6.68405)
+transform = Transform3D(-0.955319, 0, 0.295575, 0, 1, 0, -0.295575, 0, -0.955319, -34.388, 0.0718158, 6.68405)
 script = null
 
 [node name="Model" parent="cutscene4_items/athlia" index="1"]
@@ -11960,7 +12044,7 @@ libraries = {
 }
 
 [node name="thelren" parent="cutscene4_items" instance=ExtResource("68_hiu8h")]
-transform = Transform3D(0.904664, 0, -0.426126, 0, 1, 0, 0.426126, 0, 0.904664, -33.4414, 0, 4.44696)
+transform = Transform3D(0.904664, 0, -0.426126, 0, 1, 0, 0.426126, 0, 0.904664, -33.4414, 0.0828165, 4.44696)
 script = null
 
 [node name="Model" parent="cutscene4_items/thelren" index="0"]
@@ -11981,6 +12065,7 @@ script = null
 disabled = true
 
 [node name="cutscene5_items" type="Node3D" parent="."]
+visible = false
 
 [node name="alrith" parent="cutscene5_items" instance=ExtResource("71_y21xb")]
 transform = Transform3D(0.873925, 0, 0.486061, 0, 1, 0, -0.486061, 0, 0.873925, 49.22, 3.22298, 46.176)
@@ -13000,8 +13085,7 @@ transform = Transform3D(-53.7346, 0, -12.033, 0, 50, 0, 72.1983, 0, -8.95577, -3
 texture = ExtResource("85_phrnx")
 
 [node name="Node3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.36054, -7.15256e-07, -10.8086)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.7648, 0, 10.1354)
 
 [node name="ExitPoint" parent="." instance=ExtResource("79_41sdb")]
 transform = Transform3D(0.984078, 0, -0.177737, 0, 1, 0, 0.177737, 0, 0.984078, -5.14537, 1.0704, -22.9021)

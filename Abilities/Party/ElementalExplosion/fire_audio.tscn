@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://di0pmpq51kqll"]
+
+[ext_resource type="AudioStream" uid="uid://bul4uhllpghp4" path="res://Abilities/Party/Fireball/thalria_fireball_explode.wav" id="1_j8gao"]
+[ext_resource type="Script" path="res://Core/DestructingTimedAudioPlayer.cs" id="2_v4asb"]
+
+[node name="DestructingTimedAudioPlayer" type="AudioStreamPlayer3D"]
+stream = ExtResource("1_j8gao")
+volume_db = -5.647
+bus = &"Effects"
+script = ExtResource("2_v4asb")
+timeBeforePlay = 1.4
+
+[connection signal="finished" from="." to="." method="OnFinish"]

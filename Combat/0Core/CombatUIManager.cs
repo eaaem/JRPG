@@ -65,6 +65,11 @@ public partial class CombatUIManager : Node
 
    private bool uiIsUpdated = false;
 
+   public override void _Ready()
+   {
+      turnOrderContainer.GetParent<ScrollContainer>().GetVScrollBar().Share(turnOrderContainer.GetParent().GetParent().GetNode<VScrollBar>("ScrollBar"));
+   }
+
    public void HidePanels() 
    {
       for (int i = 0; i < partyPanels.Count; i++)
@@ -707,9 +712,10 @@ public partial class CombatUIManager : Node
 
          if (fighter.companion != null)
          {
-            fighter.UIPanel.GetNode<Label>("CompanionHolder/ManaDescription").Text = fighter.companion.currentMana + "/" + fighter.companion.maxMana;
+            fighter.UIPanel.GetNode<RichTextLabel>("CompanionHolder/ManaLabel").Text = "[right]" + fighter.companion.currentMana + "/" + fighter.companion.maxMana;
             fighter.UIPanel.GetNode<TextureProgressBar>("CompanionHolder/ManaBar").Value = (fighter.companion.currentMana * 1f / fighter.companion.maxMana) * 100f;
-         }
+            fighter.UIPanel.GetNode<TextureProgressBar>("CompanionHolder/ManaBar/LossBar").Value = 0f;
+      }
       }
 
       uiIsUpdated = true;
@@ -717,9 +723,18 @@ public partial class CombatUIManager : Node
 
    public void UpdatePartyMemberManaBar(Fighter fighter)
    {
-      fighter.UIPanel.GetNode<TextureProgressBar>("ManaBar").Value = (fighter.currentMana * 1f / fighter.maxMana) * 100f;
-      fighter.UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value = 0f;
-      fighter.UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = "[right]" + fighter.currentMana + "/" + fighter.maxMana;
+      if (combatManager.IsCompanionTurn)
+      {
+         fighter.UIPanel.GetNode<TextureProgressBar>("CompanionHolder/ManaBar").Value = (fighter.companion.currentMana * 1f / fighter.companion.maxMana) * 100f;
+         fighter.UIPanel.GetNode<TextureProgressBar>("CompanionHolder/ManaBar/LossBar").Value = 0f;
+         fighter.UIPanel.GetNode<RichTextLabel>("CompanionHolder/ManaLabel").Text = "[right]" + fighter.companion.currentMana + "/" + fighter.companion.maxMana;
+      }
+      else
+      {
+         fighter.UIPanel.GetNode<TextureProgressBar>("ManaBar").Value = (fighter.currentMana * 1f / fighter.maxMana) * 100f;
+         fighter.UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value = 0f;
+         fighter.UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = "[right]" + fighter.currentMana + "/" + fighter.maxMana;
+      }
    }
 
    public void EnableOptions()
@@ -968,13 +983,48 @@ public partial class CombatUIManager : Node
       {
          turnOrderContainer.MoveChild(portrait, index);
       }
+
+      if (fighter.companion != null)
+      {
+         portrait.GetNode<Control>("CompanionPortrait").Visible = true;
+         portrait.GetNode<Sprite2D>("CompanionPortrait/Sprite").Texture = GD.Load<Texture2D>(fighter.companion.spritePath);
+         portrait.GetNode<RichTextLabel>("CompanionPortrait/Text").Text = "[center]" + fighter.companion.companionName;
+      }
+   }
+
+   public void UpdateTurnOrderPortraitCompanions(int fighterID, bool hideCompanions)
+   {
+      foreach (Control node in turnOrderContainer.GetChildren())
+      {
+         if (node.GetNode<FighterID>("FighterID").id == fighterID)
+         {
+            if (hideCompanions)
+            {
+               node.GetNode<Control>("CompanionPortrait").Visible = false;
+            }
+            else
+            {
+               node.GetNode<Control>("CompanionPortrait").Visible = true;
+               node.GetNode<Sprite2D>("CompanionPortrait/Sprite").Texture = GD.Load<Texture2D>(combatManager.Fighters[fighterID].companion.spritePath);
+               node.GetNode<RichTextLabel>("CompanionPortrait/Text").Text = "[center]" + combatManager.Fighters[fighterID].companion.companionName;
+            }
+         }
+      }
    }
 
    public void HighlightTurnOrderPortrait()
    {
       if (turnOrderContainer.GetChildCount() > 0)
       {
-         turnOrderContainer.GetChild<Control>(0).GetNode<Panel>("Highlight").Visible = true;
+         if (combatManager.IsCompanionTurn)
+         {
+            turnOrderContainer.GetChild<Control>(0).GetNode<Panel>("Highlight").Visible = false;
+            turnOrderContainer.GetChild<Control>(0).GetNode<Panel>("CompanionPortrait/Highlight").Visible = true;
+         }
+         else
+         {
+            turnOrderContainer.GetChild<Control>(0).GetNode<Panel>("Highlight").Visible = true;
+         }
       }
    }
 
@@ -1009,6 +1059,11 @@ public partial class CombatUIManager : Node
       }
    }
 
+   public int GetNumberOfPortraits()
+   {
+      return turnOrderContainer.GetChildCount();
+   }
+
    public bool IsEquivalentToMessageText(string toCompare)
    {
       return messageText.Text == toCompare;
@@ -1018,13 +1073,28 @@ public partial class CombatUIManager : Node
    {
       Control UIPanel = combatManager.CurrentFighter.UIPanel;
 
-      if (UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value == 0)
+      if (combatManager.IsCompanionTurn)
       {
-         UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value = UIPanel.GetNode<TextureProgressBar>("ManaBar").Value;
-         UIPanel.GetNode<TextureProgressBar>("ManaBar").Value = ((combatManager.CurrentFighter.currentMana - lossAmount) 
-                                                                  * 1f / combatManager.CurrentFighter.maxMana) * 100f;
-         UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = "[right][color=red]" + (combatManager.CurrentFighter.currentMana - lossAmount) + "[/color]/" +
-                                                            combatManager.CurrentFighter.maxMana;
+         if (UIPanel.GetNode<TextureProgressBar>("CompanionHolder/ManaBar/LossBar").Value == 0)
+         {
+            UIPanel.GetNode<TextureProgressBar>("CompanionHolder/ManaBar/LossBar").Value = UIPanel.GetNode<TextureProgressBar>("CompanionHolder/ManaBar").Value;
+            UIPanel.GetNode<TextureProgressBar>("CompanionHolder/ManaBar").Value = ((combatManager.CurrentFighter.companion.currentMana - lossAmount) 
+                                                                     * 1f / combatManager.CurrentFighter.companion.maxMana) * 100f;
+            UIPanel.GetNode<RichTextLabel>("CompanionHolder/ManaLabel").Text = "[right][color=red]" + (combatManager.CurrentFighter.companion.currentMana - lossAmount) 
+                                                                              + "[/color]/" + combatManager.CurrentFighter.companion.maxMana;
+         }
+         
+      }
+      else
+      {
+         if (UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value == 0)
+         {
+            UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value = UIPanel.GetNode<TextureProgressBar>("ManaBar").Value;
+            UIPanel.GetNode<TextureProgressBar>("ManaBar").Value = ((combatManager.CurrentFighter.currentMana - lossAmount) 
+                                                                     * 1f / combatManager.CurrentFighter.maxMana) * 100f;
+            UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = "[right][color=red]" + (combatManager.CurrentFighter.currentMana - lossAmount) + "[/color]/" +
+                                                               combatManager.CurrentFighter.maxMana;
+         }
       }
    }
 
@@ -1032,11 +1102,25 @@ public partial class CombatUIManager : Node
    {
       Control UIPanel = combatManager.CurrentFighter.UIPanel;
 
-      if (UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value > 0)
+      if (combatManager.IsCompanionTurn)
       {
-         UIPanel.GetNode<TextureProgressBar>("ManaBar").Value = UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value;
-         UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value = 0;
-         UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = "[right]" + combatManager.CurrentFighter.currentMana + "/" + combatManager.CurrentFighter.maxMana;
+         if (UIPanel.GetNode<TextureProgressBar>("CompanionHolder/ManaBar/LossBar").Value > 0)
+         {
+            UIPanel.GetNode<TextureProgressBar>("CompanionHolder/ManaBar").Value = UIPanel.GetNode<TextureProgressBar>("CompanionHolder/ManaBar/LossBar").Value;
+            UIPanel.GetNode<TextureProgressBar>("CompanionHolder/ManaBar/LossBar").Value = 0;
+            UIPanel.GetNode<RichTextLabel>("CompanionHolder/ManaLabel").Text = "[right]" + combatManager.CurrentFighter.companion.currentMana + "/" 
+                                                                               + combatManager.CurrentFighter.companion.maxMana;
+         }
+         
+      }
+      else
+      {
+         if (UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value > 0)
+         {
+            UIPanel.GetNode<TextureProgressBar>("ManaBar").Value = UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value;
+            UIPanel.GetNode<TextureProgressBar>("ManaBar/LossBar").Value = 0;
+            UIPanel.GetNode<RichTextLabel>("ManaLabel").Text = "[right]" + combatManager.CurrentFighter.currentMana + "/" + combatManager.CurrentFighter.maxMana;
+         }
       }
    }
 
@@ -1048,7 +1132,6 @@ public partial class CombatUIManager : Node
 
       lossBar.Value = healthBar.Value;
       healthBar.Value = (fighter.currentHealth * 1f / fighter.maxHealth) * 100f;
-
 
       await ToSignal(GetTree().CreateTimer(0.75f), "timeout");
 
@@ -1119,7 +1202,7 @@ public partial class CombatUIManager : Node
    {
       foreach (Node child in target.UIPanel.GetChildren())
       {
-         if (child.Name == "DamageIndicator")
+         if (child.Name.ToString().StartsWith("DamageIndicator"))
          {
             ShiftDamageTextUpward((Label3D)child, target);
          }
@@ -1217,9 +1300,14 @@ public partial class CombatUIManager : Node
       options.Visible = visible;
    }
 
-   public void SetItemButtonVisible(bool visible) 
+   public void SetItemButtonDisabled(bool visible) 
    {
       options.GetNode<VBoxContainer>("Choices").GetNode<Button>("ItemButton").Disabled = visible;
+   }
+
+   public bool IsItemButtonDisabled()
+   {
+      return options.GetNode<VBoxContainer>("Choices").GetNode<Button>("ItemButton").Disabled;
    }
 
    public void SetCancelButtonVisible(bool visible) 

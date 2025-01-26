@@ -17,6 +17,7 @@ visible = false
 layout_mode = 0
 offset_right = 110.0
 offset_bottom = 85.0
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_0ja0h")
 
 [node name="FighterID" type="Node" parent="."]
@@ -27,6 +28,37 @@ position = Vector2(55, 30)
 texture = ExtResource("2_2kg3g")
 
 [node name="Text" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_top = 60.0
+offset_right = 110.0
+offset_bottom = 85.0
+mouse_filter = 2
+theme = ExtResource("3_hcmx3")
+theme_override_font_sizes/normal_font_size = 18
+bbcode_enabled = true
+text = "[center]Dire Wolf"
+
+[node name="CompanionPortrait" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 121.0
+offset_top = 10.0
+offset_right = 231.0
+offset_bottom = 95.0
+scale = Vector2(0.75, 0.75)
+
+[node name="Highlight" type="Panel" parent="CompanionPortrait"]
+visible = false
+layout_mode = 0
+offset_right = 110.0
+offset_bottom = 85.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0ja0h")
+
+[node name="Sprite" type="Sprite2D" parent="CompanionPortrait"]
+position = Vector2(55, 30)
+texture = ExtResource("2_2kg3g")
+
+[node name="Text" type="RichTextLabel" parent="CompanionPortrait"]
 layout_mode = 0
 offset_top = 60.0
 offset_right = 110.0

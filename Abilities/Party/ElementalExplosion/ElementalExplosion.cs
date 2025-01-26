@@ -14,10 +14,8 @@ public partial class ElementalExplosion : PlayerAbilityBehavior
       if (combatManager.CurrentAbility == resource)
       {
          combatManager.CurrentTarget.wasHit = true;
-         //int damage = combatManager.CalculateDamage(combatManager.currentFighter.level * 20, StatType.Intelligence, StatType.Willpower, DamageType.Magical);
-         //combatManager.ProcessAttack(damage, combatManager.currentTarget);
          List<DamagingEntity> damagers = new List<DamagingEntity>();
-         damagers.Add(new DamagingEntity(combatManager.CurrentFighter.level * 2, StatType.Intelligence, StatType.Willpower, DamageType.Magical));
+         damagers.Add(new DamagingEntity(8, StatType.Intelligence, StatType.Willpower, DamageType.Magical));
 
          for (int i = 0; i < combatManager.CurrentTarget.stacks.Count; i++)
          {
@@ -25,15 +23,16 @@ public partial class ElementalExplosion : PlayerAbilityBehavior
             {
                int stackQuantity = combatManager.CurrentTarget.stacks[i].quantity;
                stacksAndStatusManager.ApplyStatus(100, combatManager.CurrentTarget, StatusEffect.Burn, stackQuantity + 1, stackQuantity + 1);
-               damagers.Add(new DamagingEntity(combatManager.CurrentFighter.level * 2, StatType.Intelligence, StatType.Willpower, DamageType.Fire));
+               damagers.Add(new DamagingEntity(7 * stackQuantity, StatType.Intelligence, StatType.Willpower, DamageType.Fire));
+
+               combatManager.CurrentTarget.model.AddChild(GD.Load<PackedScene>("res://Abilities/Party/ElementalExplosion/elemental_explosion_fire.tscn").Instantiate<AutoOneShotEffect>());
+               combatManager.CurrentTarget.model.AddChild(GD.Load<PackedScene>("res://Abilities/Party/ElementalExplosion/fire_audio.tscn").Instantiate<DestructingTimedAudioPlayer>());
 
                stacksAndStatusManager.RemoveStack(combatManager.CurrentTarget, "Elemental Rot (Fire)", stackQuantity);
             }
          }
 
          combatManager.ProcessAttack(damagers, combatManager.CurrentTarget);
-
-         combatManager.CurrentFighter.currentMana -= resource.manaCost;
 
          combatManager.RegularCast(new List<Fighter>() { combatManager.CurrentTarget });
       }

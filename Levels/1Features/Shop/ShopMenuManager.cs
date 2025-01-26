@@ -56,7 +56,9 @@ public partial class ShopMenuManager : Node
       IsBuying = true;
 
       buyButton.Disabled = true;
+      buyButton.MouseFilter = Control.MouseFilterEnum.Ignore;
       sellButton.Disabled = false;
+      sellButton.MouseFilter = Control.MouseFilterEnum.Stop;
 
       Input.MouseMode = Input.MouseModeEnum.Visible;
       shopBack.Visible = true;
@@ -69,7 +71,9 @@ public partial class ShopMenuManager : Node
    void OnBuyButtonDown()
    {
       buyButton.Disabled = true;
+      buyButton.MouseFilter = Control.MouseFilterEnum.Ignore;
       sellButton.Disabled = false;
+      sellButton.MouseFilter = Control.MouseFilterEnum.Stop;
       ClearItemContainer();
       LoadBuyingItems();
       IsBuying = true;
@@ -78,7 +82,9 @@ public partial class ShopMenuManager : Node
    void OnSellButtonDown()
    {
       buyButton.Disabled = false;
+      buyButton.MouseFilter = Control.MouseFilterEnum.Stop;
       sellButton.Disabled = true;
+      sellButton.MouseFilter = Control.MouseFilterEnum.Ignore;
       ClearItemContainer();
       LoadSellingItems();
       IsBuying = false;
@@ -99,12 +105,20 @@ public partial class ShopMenuManager : Node
       {
          Panel itemButton = itemButtonPrefab.Instantiate<Panel>();
 
+         itemButton.GetNode<Button>("Button").ButtonDown += managers.ButtonSoundManager.OnClick;
+         itemButton.GetNode<Button>("Button").MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+
          itemButton.GetNode<Button>("Button").Text = "   " + currentShopItem.selection[i].name + " (" + currentShopItem.selection[i].price * currentBulk + " g)";
          itemButton.GetNode<Label>("InStock").Visible = false;
          itemButton.GetNode<Button>("Button").TooltipText = currentShopItem.selection[i].description;
 
          itemButton.GetNode<ShopItemHolder>("ItemHolder").item = currentShopItem.selection[i];
          itemButton.GetNode<ShopItemHolder>("ItemHolder").quantity = currentBulk;
+
+         if (currentShopItem.selection[i].itemType == ItemType.Special)
+         {
+            itemButton.GetNode<Button>("Button").AddThemeColorOverride("font_color", new Color(0.75f, 0.53f, 1f));
+         }
 
          itemContainer.AddChild(itemButton);
       }
@@ -114,16 +128,22 @@ public partial class ShopMenuManager : Node
    {
       for (int i = 0; i < managers.PartyManager.Items.Count; i++)
       {
-         Panel itemButton = itemButtonPrefab.Instantiate<Panel>();
+         if (managers.PartyManager.Items[i].item.itemType != ItemType.Special)
+         {
+            Panel itemButton = itemButtonPrefab.Instantiate<Panel>();
+
+            itemButton.GetNode<Button>("Button").ButtonDown += managers.ButtonSoundManager.OnClick;
+            itemButton.GetNode<Button>("Button").MouseEntered += managers.ButtonSoundManager.OnHoverOver;
          
-         itemButton.GetNode<Button>("Button").Text = "   " + managers.PartyManager.Items[i].item.name + " (" + (managers.PartyManager.Items[i].item.price * currentBulk) 
-                                                           + " g)";
-         itemButton.GetNode<Label>("InStock").Text = "x" + managers.PartyManager.Items[i].quantity;
+            itemButton.GetNode<Button>("Button").Text = "   " + managers.PartyManager.Items[i].item.name + " (" + (managers.PartyManager.Items[i].item.price * currentBulk) 
+                                                            + " g)";
+            itemButton.GetNode<Label>("InStock").Text = "x" + managers.PartyManager.Items[i].quantity;
 
-         itemButton.GetNode<ShopItemHolder>("ItemHolder").item = managers.PartyManager.Items[i].item;
-         itemButton.GetNode<ShopItemHolder>("ItemHolder").quantity = managers.PartyManager.Items[i].quantity;
+            itemButton.GetNode<ShopItemHolder>("ItemHolder").item = managers.PartyManager.Items[i].item;
+            itemButton.GetNode<ShopItemHolder>("ItemHolder").quantity = managers.PartyManager.Items[i].quantity;
 
-         itemContainer.AddChild(itemButton);
+            itemContainer.AddChild(itemButton);
+         }
       }
    }
 
@@ -138,7 +158,12 @@ public partial class ShopMenuManager : Node
          InventoryItem inventoryItem = IsBuying ? new InventoryItem(currentShopItem.selection[i], currentBulk) 
                                        : managers.PartyManager.Items[i];
 
-         int priceToUse = GetMaxQuantity(inventoryItem.quantity, currentBulk) * inventoryItem.item.price;
+         int priceToUse = inventoryItem.item.price;
+
+         if (inventoryItem.item.itemType != ItemType.Special)
+         {
+            priceToUse = GetMaxQuantity(inventoryItem.quantity, currentBulk) * inventoryItem.item.price;
+         }
 
          child.GetNode<Button>("Button").Text = "   " + inventoryItem.item.name + " (" + priceToUse + " g)";
       }
@@ -146,7 +171,12 @@ public partial class ShopMenuManager : Node
 
    public void OnSelectItem(InventoryItem inventoryItem)
    {
-      int quantity = GetMaxQuantity(inventoryItem.quantity, currentBulk);
+      int quantity = 1;
+
+      if (inventoryItem.item.itemType != ItemType.Special)
+      {
+         quantity = GetMaxQuantity(inventoryItem.quantity, currentBulk);
+      }
 
       if (IsBuying && managers.PartyManager.Gold < quantity * inventoryItem.item.price)
       {
@@ -202,12 +232,18 @@ public partial class ShopMenuManager : Node
       foreach (Panel child in itemContainer.GetChildren())
       {
          child.GetNode<Button>("Button").Disabled = true;
+         child.GetNode<Button>("Button").MouseFilter = Control.MouseFilterEnum.Ignore;
       }
 
       bulkButton.Disabled = true;
       buyButton.Disabled = true;
       sellButton.Disabled = true;
       exitButton.Disabled = true;
+
+      bulkButton.MouseFilter = Control.MouseFilterEnum.Ignore;
+      buyButton.MouseFilter = Control.MouseFilterEnum.Ignore;
+      sellButton.MouseFilter = Control.MouseFilterEnum.Ignore;
+      exitButton.MouseFilter = Control.MouseFilterEnum.Ignore;
    }
 
    int GetMaxQuantity(int currentQuantity, int desiredQuantity)
@@ -220,22 +256,29 @@ public partial class ShopMenuManager : Node
       foreach (Panel child in itemContainer.GetChildren())
       {
          child.GetNode<Button>("Button").Disabled = false;
+         child.GetNode<Button>("Button").MouseFilter = Control.MouseFilterEnum.Stop;
       }
 
       bulkButton.Disabled = false;
+      bulkButton.MouseFilter = Control.MouseFilterEnum.Stop;
 
       if (IsBuying)
       {
          buyButton.Disabled = true;
+         buyButton.MouseFilter = Control.MouseFilterEnum.Ignore;
          sellButton.Disabled = false;
+         sellButton.MouseFilter = Control.MouseFilterEnum.Stop;
       }
       else
       {
          buyButton.Disabled = false;
+         buyButton.MouseFilter = Control.MouseFilterEnum.Stop;
          sellButton.Disabled = true;
+         sellButton.MouseFilter = Control.MouseFilterEnum.Ignore;
       }
       
       exitButton.Disabled = false;
+      exitButton.MouseFilter = Control.MouseFilterEnum.Stop;
    }
 
    void OnExitButtonDown()

@@ -200,7 +200,7 @@ theme_override_font_sizes/normal_font_size = 25
 bbcode_enabled = true
 text = "[right]50/50"
 
-[node name="RichTextLabel" type="RichTextLabel" parent="CompanionHolder"]
+[node name="Duration" type="RichTextLabel" parent="CompanionHolder"]
 layout_mode = 0
 offset_top = 80.0
 offset_right = 250.0

@@ -52,6 +52,7 @@ public partial class ItemMenuManager : Panel
          if (!currentItem.item.usableOutsideCombat)
          {
             currentButton.Disabled = true;
+            currentButton.MouseFilter = MouseFilterEnum.Ignore;
          }
 
          if (currentItem.item.scriptPath != "")
@@ -212,6 +213,7 @@ public partial class ItemMenuManager : Panel
          if (child.GetNode<ItemResourceHolder>("ResourceHolder").itemResource.item.usableOutsideCombat)
          {
             child.Disabled = false;
+            child.MouseFilter = MouseFilterEnum.Stop;
          }
       }
    }
@@ -221,6 +223,7 @@ public partial class ItemMenuManager : Panel
       foreach (Button child in itemsContainer.GetChildren())
       {
          child.Disabled = true;
+         child.MouseFilter = MouseFilterEnum.Ignore;
       }
    }
 }

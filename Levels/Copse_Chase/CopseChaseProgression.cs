@@ -48,24 +48,24 @@ public partial class CopseChaseProgression : LevelProgession
       managers.DialogueManager.NextCutsceneDialogue();
    }
 
-   async void TriggerHowls()
+   async void TriggerHowls(Node3D body)
    {
       progress = 2;
 
       Area3D area = GetNode<Area3D>("../HowlTrigger");
 
-      GetParent().RemoveChild(area);
-      area.QueueFree();
+      GetParent().CallDeferred("remove_child", area);
+      area.CallDeferred("queue_free");
 
-      GetNode<AudioStreamPlayer>("../Howl1").Play();
+      GetNode<AudioStreamPlayer3D>("../Howl1").Play();
 
       await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
 
-      GetNode<AudioStreamPlayer>("../Howl2").Play();
+      GetNode<AudioStreamPlayer3D>("../Howl2").Play();
       
       await ToSignal(GetTree().CreateTimer(0.7f), "timeout");
 
-      GetNode<AudioStreamPlayer>("../Howl3").Play();
+      GetNode<AudioStreamPlayer3D>("../Howl3").Play();
    }
 
    void MarkOtherOutThereCutscene()
@@ -76,15 +76,15 @@ public partial class CopseChaseProgression : LevelProgession
       if (GetParent().HasNode("cutscene1"))
       {
          CutsceneTrigger toDelete = GetParent().GetNode<CutsceneTrigger>("cutscene1");
-         GetParent().RemoveChild(toDelete);
-         toDelete.QueueFree();
+         GetParent().CallDeferred("remove_child", toDelete);
+         toDelete.CallDeferred("queue_free");
       }
 
       if (GetParent().HasNode("cutscene2"))
       {
          CutsceneTrigger toDelete = GetParent().GetNode<CutsceneTrigger>("cutscene2");
-         GetParent().RemoveChild(toDelete);
-         toDelete.QueueFree();
+         GetParent().CallDeferred("remove_child", toDelete);
+         toDelete.CallDeferred("queue_free");
       }
    }
 
@@ -96,52 +96,52 @@ public partial class CopseChaseProgression : LevelProgession
       if (GetParent().HasNode("cutscene3"))
       {
          CutsceneTrigger toDelete = GetParent().GetNode<CutsceneTrigger>("cutscene3");
-         GetParent().RemoveChild(toDelete);
-         toDelete.QueueFree();
+         GetParent().CallDeferred("remove_child", toDelete);
+         toDelete.CallDeferred("queue_free");
       }
 
       if (GetParent().HasNode("cutscene4"))
       {
          CutsceneTrigger toDelete = GetParent().GetNode<CutsceneTrigger>("cutscene4");
-         GetParent().RemoveChild(toDelete);
-         toDelete.QueueFree();
+         GetParent().CallDeferred("remove_child", toDelete);
+         toDelete.CallDeferred("queue_free");
       }
    }
 
-   async void TriggerOneMonstrosity()
+   async void TriggerOneMonstrosity(Node3D body)
    {
       progress = 3;
       RemoveMonstrosityTriggers();
 
       ActorStatus actorStatus = new ActorStatus();
-      actorStatus.moveSpeed = 1.5f;
+      actorStatus.moveSpeed = 4f;
       actorStatus.idleAnim = "StalkStop";
       actorStatus.walkAnim = "Stalk";
 
       GetNode<Actor>("../monstrosity1").Visible = true;
-      GetNode<Actor>("../monstrosity1").MoveCharacter(actorStatus, new Vector3(174, 8, -154f), true);
+      GetNode<Actor>("../monstrosity1").MoveCharacter(actorStatus, new Vector3(135, 0.3f, -40f), true);
 
       await ToSignal(GetNode<Actor>("../monstrosity1"), Actor.SignalName.MoveIsFinished);
 
       await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
 
-      actorStatus.moveSpeed = 5f;
+      actorStatus.moveSpeed = 8f;
       actorStatus.walkAnim = "CombatRun";
 
-      GetNode<Actor>("../monstrosity1").MoveCharacter(actorStatus, new Vector3(230f, 8, -139f), true);
+      GetNode<Actor>("../monstrosity1").MoveCharacter(actorStatus, new Vector3(87, 0.3f, -57f), true);
 
-      await ToSignal(GetTree().CreateTimer(5f), "timeout");
+      await ToSignal(GetTree().CreateTimer(10f), "timeout");
 
       GetNode<Actor>("../monstrosity1").Visible = false;
    }
 
-   async void TriggerTwoMonstrosity()
+   async void TriggerTwoMonstrosity(Node3D body)
    {
       progress = 3;
       RemoveMonstrosityTriggers();
 
       ActorStatus actorStatus = new ActorStatus();
-      actorStatus.moveSpeed = 1.5f;
+      actorStatus.moveSpeed = 4f;
       actorStatus.idleAnim = "StalkStop";
       actorStatus.walkAnim = "Stalk";
 
@@ -152,12 +152,12 @@ public partial class CopseChaseProgression : LevelProgession
 
       await ToSignal(GetTree().CreateTimer(1.5f), "timeout");
 
-      actorStatus.moveSpeed = 5f;
+      actorStatus.moveSpeed = 8f;
       actorStatus.walkAnim = "CombatRun";
 
       GetNode<Actor>("../monstrosity2").MoveCharacter(actorStatus, new Vector3(-46f, 1f, -189f), true);
 
-      await ToSignal(GetTree().CreateTimer(5f), "timeout");
+      await ToSignal(GetTree().CreateTimer(10f), "timeout");
 
       GetNode<Actor>("../monstrosity2").Visible = false;
    }
@@ -167,15 +167,15 @@ public partial class CopseChaseProgression : LevelProgession
       if (GetParent().HasNode("MonstrosityTrigger1"))
       {
          Area3D trigger1 = GetParent().GetNode<Area3D>("MonstrosityTrigger1");
-         GetParent().RemoveChild(trigger1);
-         trigger1.QueueFree();
+         GetParent().CallDeferred("remove_child", trigger1);
+         trigger1.CallDeferred("queue_free");
       }
       
       if (GetParent().HasNode("MonstrosityTrigger2"))
       {
          Area3D trigger2 = GetParent().GetNode<Area3D>("MonstrosityTrigger2");
-         GetParent().RemoveChild(trigger2);
-         trigger2.QueueFree();
+         GetParent().CallDeferred("remove_child", trigger2);
+         trigger2.CallDeferred("queue_free");
       }
    }
 }

@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://iggnyuu1afrw"]
+
+[ext_resource type="Texture2D" uid="uid://ceyn4vs6p0fv7" path="res://Abilities/Shared/Heal/sparkle.png" id="1_g6hxk"]
+[ext_resource type="Script" path="res://Abilities/0Core/TerminatingEffect.cs" id="2_rdmco"]
+
+[sub_resource type="Gradient" id="Gradient_y5y0e"]
+colors = PackedColorArray(0.197937, 0.197937, 0.197937, 1, 0.683077, 0.683077, 0.683077, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_vlahs"]
+gradient = SubResource("Gradient_y5y0e")
+
+[sub_resource type="Curve" id="Curve_xxcti"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.450862), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_pijnq"]
+curve = SubResource("Curve_xxcti")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_0ih3p"]
+emission_shape = 1
+emission_sphere_radius = 0.15
+gravity = Vector3(0, 0.25, 0)
+tangential_accel_min = -0.250002
+tangential_accel_max = 0.249998
+scale_curve = SubResource("CurveTexture_pijnq")
+color_initial_ramp = SubResource("GradientTexture1D_vlahs")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j8s2j"]
+transparency = 1
+vertex_color_use_as_albedo = true
+albedo_texture = ExtResource("1_g6hxk")
+billboard_mode = 3
+billboard_keep_scale = true
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_x2773"]
+material = SubResource("StandardMaterial3D_j8s2j")
+size = Vector2(0.15, 0.15)
+
+[node name="SpiritAnimalEffect" type="BoneAttachment3D"]
+bone_name = "hand.R"
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+amount = 32
+process_material = SubResource("ParticleProcessMaterial_0ih3p")
+draw_pass_1 = SubResource("QuadMesh_x2773")
+script = ExtResource("2_rdmco")
+duration = 1.2

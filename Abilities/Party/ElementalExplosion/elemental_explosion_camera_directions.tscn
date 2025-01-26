@@ -1,0 +1,134 @@
+[gd_scene load_steps=20 format=3 uid="uid://cg85nnnv73ijp"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_r0wx5"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_ycwwp"]
+
+[sub_resource type="Resource" id="Resource_aun8t"]
+script = ExtResource("2_ycwwp")
+CommandType = 1
+NodeName = "camera_target"
+Path = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 1, 0)
+PathToScene = ""
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_os6no"]
+script = ExtResource("2_ycwwp")
+CommandType = 2
+Path = "camera_target"
+SpecialCodeOverride = 5
+
+[sub_resource type="Resource" id="Resource_2vbuv"]
+script = ExtResource("2_ycwwp")
+CommandType = 3
+Path = ""
+SpecialCodeOverride = 2
+
+[sub_resource type="Resource" id="Resource_tq1dv"]
+script = ExtResource("2_ycwwp")
+CommandType = 4
+Target = Vector3(3, 2, 0.5)
+RelativeToSelf = false
+UseLocal = true
+
+[sub_resource type="Resource" id="Resource_dhp6u"]
+script = ExtResource("2_ycwwp")
+CommandType = 8
+LookImmediately = true
+Speed = 0.0
+
+[sub_resource type="Resource" id="Resource_aystd"]
+script = ExtResource("2_ycwwp")
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "ElementalExplosionCast"
+
+[sub_resource type="Resource" id="Resource_tai7w"]
+script = ExtResource("2_ycwwp")
+CommandType = 10
+Amount = 0.75
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_aslsw"]
+script = ExtResource("2_ycwwp")
+CommandType = 15
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+Target = Vector3(0, 0, 0)
+TargetName = ""
+TargetCodeOverride = 4
+Amount = 10.0
+LookImmediately = false
+
+[sub_resource type="Resource" id="Resource_c5eq1"]
+script = ExtResource("2_ycwwp")
+CommandType = 4
+Target = Vector3(-1.75, 3, 0)
+RelativeToSelf = false
+UseLocal = true
+
+[sub_resource type="Resource" id="Resource_ox38w"]
+script = ExtResource("2_ycwwp")
+CommandType = 2
+Path = ""
+SpecialCodeOverride = 4
+
+[sub_resource type="Resource" id="Resource_vdg2l"]
+script = ExtResource("2_ycwwp")
+CommandType = 8
+LookImmediately = true
+Speed = 0.0
+
+[sub_resource type="Resource" id="Resource_d6hin"]
+script = ExtResource("2_ycwwp")
+CommandType = 10
+Amount = 0.65
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_aler2"]
+script = ExtResource("2_ycwwp")
+CommandType = 18
+PathToSound = "res://Abilities/Party/ElementalExplosion/thalria_elemental_explosion.wav"
+Is3DSound = true
+Volume = 0.0
+Path = ""
+SpecialCodeOverride = 4
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_2h4iq"]
+script = ExtResource("2_ycwwp")
+CommandType = 1
+NodeName = "effect"
+Path = ""
+SpecialCodeOverride = 4
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/ElementalExplosion/elemental_explosion_regular.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_nmyi1"]
+script = ExtResource("2_ycwwp")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_ckvwq"]
+script = ExtResource("2_ycwwp")
+CommandType = 10
+Amount = 1.5
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_rg0ow"]
+script = ExtResource("2_ycwwp")
+CommandType = 17
+
+[node name="ElementalExplosionCameraDirections" type="Node3D"]
+script = ExtResource("1_r0wx5")
+commands = [SubResource("Resource_aun8t"), SubResource("Resource_os6no"), SubResource("Resource_2vbuv"), SubResource("Resource_tq1dv"), SubResource("Resource_dhp6u"), SubResource("Resource_aystd"), SubResource("Resource_tai7w"), SubResource("Resource_aslsw"), SubResource("Resource_c5eq1"), SubResource("Resource_ox38w"), SubResource("Resource_vdg2l"), SubResource("Resource_d6hin"), SubResource("Resource_aler2"), SubResource("Resource_2h4iq"), SubResource("Resource_nmyi1"), SubResource("Resource_ckvwq"), SubResource("Resource_rg0ow")]

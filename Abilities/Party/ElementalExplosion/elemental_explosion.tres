@@ -5,12 +5,18 @@
 [resource]
 script = ExtResource("1_m58wi")
 name = "Elemental Explosion"
-description = "blah"
+description = "When Thalria casts any elemental attack on an enemy, they gain a stack of Elemental Rot, according to the element of that attack. Upon using this spell, all stacks are consumed, dealing damage of the corresponding element."
 manaCost = 7
-scriptName = "ElementalExplosion"
-hitsAll = true
+scriptPath = "res://Abilities/Party/ElementalExplosion/ElementalExplosion.cs"
+hitsAll = false
 hitsSurrounding = false
 hitsSelf = false
 hitsTeam = false
+onlyHitsTeam = false
+onlyHitsSelf = false
+isEnemyHealingSpell = false
 bypassesDeaths = false
+graphicPath = "res://Abilities/Party/ElementalExplosion/elemental_explosion_camera_directions.tscn"
 requiredLevel = 0
+abilityWeight = 0
+notStackingEffectApplied = 0

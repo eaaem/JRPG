@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsvpn0vawl45a"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_16q18"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 0.0
+emission_ring_radius = 0.75
+emission_ring_inner_radius = 0.25
+gravity = Vector3(0, 3, 0)
+radial_accel_min = -2.0
+radial_accel_max = -2.0
+tangential_accel_min = -3.0
+tangential_accel_max = 3.0
+color = Color(0.412152, 0.412152, 0.412152, 1)
+hue_variation_min = -1.0
+hue_variation_max = 1.0
+
+[sub_resource type="Curve" id="Curve_0x8tw"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.512766, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5oya6"]
+cull_mode = 2
+shading_mode = 0
+vertex_color_use_as_albedo = true
+use_particle_trails = true
+
+[sub_resource type="RibbonTrailMesh" id="RibbonTrailMesh_nrge8"]
+material = SubResource("StandardMaterial3D_5oya6")
+shape = 0
+size = 0.05
+curve = SubResource("Curve_0x8tw")
+
+[node name="MegabuffEffect" type="GPUParticles3D"]
+amount = 32
+lifetime = 0.75
+trail_enabled = true
+process_material = SubResource("ParticleProcessMaterial_16q18")
+draw_pass_1 = SubResource("RibbonTrailMesh_nrge8")

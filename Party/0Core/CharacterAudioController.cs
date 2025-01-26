@@ -14,8 +14,8 @@ public partial class CharacterAudioController : Node
    {
       PhysicsDirectSpaceState3D spaceState = GetNode<Node3D>("/root/BaseNode").GetWorld3D().DirectSpaceState;
 
-      Vector3 origin = parent.Position + Vector3.Up;
-      Vector3 end = origin + (Vector3.Down * 5f);
+      Vector3 origin = parent.GlobalPosition + (Vector3.Up * 5f);
+      Vector3 end = origin + (Vector3.Down * 15f);
       // 64 = layer 7, which is where terrain is
       PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(origin, end, 64);
       query.CollideWithAreas = true;

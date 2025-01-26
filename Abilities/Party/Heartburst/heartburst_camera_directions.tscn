@@ -1,0 +1,115 @@
+[gd_scene load_steps=17 format=3 uid="uid://dhge0vsyyimy2"]
+
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommandInstance.cs" id="1_7kmln"]
+[ext_resource type="Script" path="res://Abilities/0Core/AbilityCommand.cs" id="2_xpis5"]
+
+[sub_resource type="Resource" id="Resource_1cxdb"]
+script = ExtResource("2_xpis5")
+CommandType = 1
+NodeName = "camera_target"
+Path = "/root/BaseNode/Level/Arena"
+SpecialCodeOverride = 0
+Target = Vector3(0, 1.5, 0)
+PathToScene = ""
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_nxf1i"]
+script = ExtResource("2_xpis5")
+CommandType = 2
+Path = "camera_target"
+SpecialCodeOverride = 5
+
+[sub_resource type="Resource" id="Resource_ejhlb"]
+script = ExtResource("2_xpis5")
+CommandType = 3
+Path = "camera_target"
+SpecialCodeOverride = 5
+
+[sub_resource type="Resource" id="Resource_d7ye1"]
+script = ExtResource("2_xpis5")
+CommandType = 4
+Target = Vector3(-8, 2, 0)
+RelativeToSelf = false
+UseLocal = true
+
+[sub_resource type="Resource" id="Resource_op5ja"]
+script = ExtResource("2_xpis5")
+CommandType = 8
+LookImmediately = false
+Speed = 0.0
+
+[sub_resource type="Resource" id="Resource_faqya"]
+script = ExtResource("2_xpis5")
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "HeartburstCast"
+
+[sub_resource type="Resource" id="Resource_j2rmw"]
+script = ExtResource("2_xpis5")
+CommandType = 10
+Amount = 0.4
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_j17ac"]
+script = ExtResource("2_xpis5")
+CommandType = 1
+NodeName = "effect"
+Path = ""
+SpecialCodeOverride = 4
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/Heal/heal_effect.tscn"
+IsProjectile = false
+CreateMultiple = true
+
+[sub_resource type="Resource" id="Resource_k6ulw"]
+script = ExtResource("2_xpis5")
+CommandType = 18
+PathToSound = "res://Abilities/Party/Heal/athlia_minor_heal.wav"
+Is3DSound = true
+Volume = 0.0
+Path = ""
+SpecialCodeOverride = 2
+NodeName = ""
+
+[sub_resource type="Resource" id="Resource_38ein"]
+script = ExtResource("2_xpis5")
+CommandType = 10
+Amount = 1.6
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_wosc5"]
+script = ExtResource("2_xpis5")
+CommandType = 1
+NodeName = "heal_end"
+Path = ""
+SpecialCodeOverride = 4
+Target = Vector3(0, 0, 0)
+PathToScene = "res://Abilities/Party/Heal/heal_effect_finish.tscn"
+IsProjectile = false
+CreateMultiple = false
+
+[sub_resource type="Resource" id="Resource_x542f"]
+script = ExtResource("2_xpis5")
+CommandType = 11
+
+[sub_resource type="Resource" id="Resource_fqm45"]
+script = ExtResource("2_xpis5")
+CommandType = 10
+Amount = 2.0
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
+
+[sub_resource type="Resource" id="Resource_ynvw1"]
+script = ExtResource("2_xpis5")
+CommandType = 17
+
+[node name="HeartburstCameraDirections" type="Node3D"]
+script = ExtResource("1_7kmln")
+commands = [SubResource("Resource_1cxdb"), SubResource("Resource_nxf1i"), SubResource("Resource_ejhlb"), SubResource("Resource_d7ye1"), SubResource("Resource_op5ja"), SubResource("Resource_faqya"), SubResource("Resource_j2rmw"), SubResource("Resource_j17ac"), SubResource("Resource_k6ulw"), SubResource("Resource_38ein"), SubResource("Resource_wosc5"), SubResource("Resource_x542f"), SubResource("Resource_fqm45"), SubResource("Resource_ynvw1")]

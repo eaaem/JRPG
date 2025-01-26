@@ -181,6 +181,10 @@ public partial class DialogueManager : Node
          GenerateBranches();
          branchingDialogueContainer.Visible = true;
       }
+      else
+      {
+         branchingDialogueContainer.Visible = false;
+      }
 
       for (int i = 0; i < currentObject.content.Length; i++)
       {

@@ -19,21 +19,26 @@ public partial class CombatAbilityManager : Node
 
    public void PlayerCastAbility(Fighter target)
    {
-      if (combatManager.CurrentAbility.hitsSelf && !combatManager.CurrentAbility.hitsAll && !combatManager.CurrentAbility.hitsSurrounding 
+      /*if (combatManager.CurrentAbility.hitsSelf && !combatManager.CurrentAbility.hitsAll && !combatManager.CurrentAbility.hitsSurrounding 
           && !combatManager.CurrentAbility.hitsTeam && target != combatManager.CurrentFighter)
       {
          return;
-      }
+      }*/
 
-      for (int i = 0; i < combatManager.Fighters.Count; i++)
+      if (!combatManager.OverridePanelDownHiding)
       {
-         combatManager.Fighters[i].placementNode.GetNode<Decal>("SelectionHighlight").Visible = false;
+         for (int i = 0; i < combatManager.Fighters.Count; i++)
+         {
+            combatManager.Fighters[i].placementNode.GetNode<Decal>("SelectionHighlight").Visible = false;
+         }
+
+         uiManager.HideAll();
+         combatManager.CurrentFighter.currentMana -= combatManager.CurrentAbility.manaCost;
+         uiManager.UpdatePartyMemberManaBar(combatManager.CurrentFighter);
       }
 
       combatManager.CurrentTarget = target;
-      uiManager.HideAll();
-      combatManager.CurrentFighter.currentMana -= combatManager.CurrentAbility.manaCost;
-      uiManager.UpdatePartyMemberManaBar(combatManager.CurrentFighter);
+   
       EmitSignal(SignalName.AbilityCast);
    }
 

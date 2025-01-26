@@ -1,10 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://b1ub3e88mq513"]
+[gd_scene load_steps=3 format=3 uid="uid://b1ub3e88mq513"]
 
 [ext_resource type="Script" path="res://Dialogue/0Core/BranchButtonBehavior.cs" id="1_ldmv4"]
+[ext_resource type="Theme" uid="uid://b1ndyocqpom7" path="res://Menus/0Core/small_button.tres" id="1_wtda4"]
 
 [node name="BranchButton" type="Button"]
+custom_minimum_size = Vector2(0, 35)
 offset_right = 64.0
-offset_bottom = 49.6
+offset_bottom = 50.0
+theme = ExtResource("1_wtda4")
+theme_override_font_sizes/font_size = 25
 text = "Talk"
 
 [node name="ScriptHolder" type="Node2D" parent="."]

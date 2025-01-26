@@ -40,8 +40,10 @@ public partial class TheralinProgress : LevelProgession
       }
    }
 
-   public void FirstCutsceneInitiated()
+   public async void FirstCutsceneInitiated()
    {
+      await ToSignal(managers.CutsceneManager, CutsceneManager.SignalName.CutsceneBegan);
+
       FirstTheralinCutscene();
 
       string[] thalriaEquipment = new string[6];
@@ -61,6 +63,8 @@ public partial class TheralinProgress : LevelProgession
       thalria.currentMana = thalria.GetMaxMana();
 
       thalria.model.GlobalPosition = new Vector3(3.179f, 0, 72.412f);
+
+      managers.PartyManager.AddItem(new InventoryItem(GD.Load<ItemResource>("res://Items/Other/glittering_pendant.tres"), 1));
 
       GetNode<CharacterController>("/root/BaseNode/PartyMembers/Member1").GlobalPosition = new Vector3(1.168f, 0, 68.9f);
       

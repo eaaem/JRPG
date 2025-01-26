@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dajoruyquu4sb"]
+
+[ext_resource type="Theme" uid="uid://b1ndyocqpom7" path="res://Menus/0Core/small_button.tres" id="1_b64sj"]
+[ext_resource type="Script" path="res://Abilities/Party/SpiritAnimal/SpiritAnimalHolder.cs" id="1_clty2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_76c7a"]
+bg_color = Color(0.85, 0.842917, 0.425, 0.360784)
+
+[node name="AbilityButton1" type="Button"]
+custom_minimum_size = Vector2(150, 25)
+offset_right = 150.0
+offset_bottom = 25.0
+theme = ExtResource("1_b64sj")
+theme_override_font_sizes/font_size = 15
+
+[node name="Highlight" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 150.0
+offset_bottom = 25.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_76c7a")
+
+[node name="ScriptHolder" type="Node2D" parent="."]
+script = ExtResource("1_clty2")

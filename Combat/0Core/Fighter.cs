@@ -83,4 +83,5 @@ public partial class Companion
    public Node3D model;
    public int duration;
    public bool hadTurn;
+   public string spritePath;
 }
