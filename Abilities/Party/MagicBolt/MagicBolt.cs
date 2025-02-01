@@ -13,7 +13,7 @@ public partial class MagicBolt : PlayerAbilityBehavior
    {
       if (combatManager.CurrentAbility == resource)
       {
-         DamagingEntity damager = new DamagingEntity(5, StatType.Intelligence, StatType.Willpower, DamageType.Magical);
+         DamagingEntity damager = new DamagingEntity(7, StatType.Intelligence, StatType.Willpower, DamageType.Magical);
          combatManager.ProcessAttack(new List<DamagingEntity>() { damager }, combatManager.CurrentTarget);
          combatManager.RegularCast(new List<Fighter>() { combatManager.CurrentTarget });
       }

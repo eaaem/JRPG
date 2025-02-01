@@ -1,4 +1,4 @@
-[gd_scene load_steps=209 format=3 uid="uid://d3jboextng2ij"]
+[gd_scene load_steps=210 format=3 uid="uid://d3jboextng2ij"]
 
 [ext_resource type="Script" path="res://Core/ManagerReferenceHolder.cs" id="1_7hlfi"]
 [ext_resource type="Script" path="res://Combat/0Core/CombatManager.cs" id="1_821s7"]
@@ -343,7 +343,7 @@ SpecialCodeOverride = 2
 Target = Vector3(0, 0, 0)
 TargetName = ""
 TargetCodeOverride = 4
-Amount = 10.0
+Amount = 8.0
 LookImmediately = false
 
 [sub_resource type="Resource" id="Resource_4c630"]
@@ -351,6 +351,13 @@ script = ExtResource("10_6pqua")
 CommandType = 16
 
 [sub_resource type="Resource" id="Resource_0qute"]
+script = ExtResource("10_6pqua")
+CommandType = 12
+InvolvedFighter = ""
+SpecialCodeOverride = 2
+TargetName = "Attack"
+
+[sub_resource type="Resource" id="Resource_cne1l"]
 script = ExtResource("10_6pqua")
 CommandType = 18
 PathToSound = "ATTACK"
@@ -360,13 +367,6 @@ Path = ""
 SpecialCodeOverride = 2
 NodeName = ""
 
-[sub_resource type="Resource" id="Resource_ut0rk"]
-script = ExtResource("10_6pqua")
-CommandType = 12
-InvolvedFighter = ""
-SpecialCodeOverride = 2
-TargetName = "Attack"
-
 [sub_resource type="Resource" id="Resource_ljk7v"]
 script = ExtResource("10_6pqua")
 CommandType = 10
@@ -375,7 +375,7 @@ PauseAnimation = "AttackWait"
 Path = ""
 SpecialCodeOverride = 2
 
-[sub_resource type="Resource" id="Resource_yuhsi"]
+[sub_resource type="Resource" id="Resource_ut0rk"]
 script = ExtResource("10_6pqua")
 CommandType = 10
 Amount = 0.0
@@ -383,9 +383,17 @@ PauseAnimation = "AttackProjectile"
 Path = ""
 SpecialCodeOverride = 2
 
-[sub_resource type="Resource" id="Resource_iepjr"]
+[sub_resource type="Resource" id="Resource_yuhsi"]
 script = ExtResource("10_6pqua")
 CommandType = 11
+
+[sub_resource type="Resource" id="Resource_iepjr"]
+script = ExtResource("10_6pqua")
+CommandType = 10
+Amount = 0.5
+PauseAnimation = ""
+Path = ""
+SpecialCodeOverride = 0
 
 [sub_resource type="Resource" id="Resource_1oh5s"]
 script = ExtResource("10_6pqua")
@@ -398,7 +406,7 @@ InvolvedFighter = ""
 SpecialCodeOverride = 2
 TargetName = ""
 TargetCodeOverride = 4
-Amount = 0.5
+Amount = 0.25
 PauseAnimation = "AttackWait"
 
 [sub_resource type="Resource" id="Resource_nbepo"]
@@ -413,7 +421,7 @@ InvolvedFighter = ""
 SpecialCodeOverride = 2
 TargetName = "Attack"
 
-[sub_resource type="Resource" id="Resource_exslb"]
+[sub_resource type="Resource" id="Resource_ep4hp"]
 script = ExtResource("10_6pqua")
 CommandType = 18
 PathToSound = "ATTACK"
@@ -423,7 +431,7 @@ Path = ""
 SpecialCodeOverride = 2
 NodeName = ""
 
-[sub_resource type="Resource" id="Resource_xpf8s"]
+[sub_resource type="Resource" id="Resource_exslb"]
 script = ExtResource("10_6pqua")
 CommandType = 10
 Amount = 0.0
@@ -431,16 +439,16 @@ PauseAnimation = "AttackWait"
 Path = ""
 SpecialCodeOverride = 2
 
-[sub_resource type="Resource" id="Resource_fhjva"]
+[sub_resource type="Resource" id="Resource_xpf8s"]
 script = ExtResource("10_6pqua")
 CommandType = 11
 
-[sub_resource type="Resource" id="Resource_gnhnw"]
+[sub_resource type="Resource" id="Resource_fhjva"]
 script = ExtResource("10_6pqua")
 CommandType = 14
 PauseUntilTargetReached = false
 
-[sub_resource type="Resource" id="Resource_gi53r"]
+[sub_resource type="Resource" id="Resource_gnhnw"]
 script = ExtResource("10_6pqua")
 CommandType = 17
 
@@ -838,11 +846,11 @@ enemyAbilityUseHolder = ExtResource("6_gn3sp")
 
 [node name="RangedPreferences" type="Node3D" parent="CombatManager/AbilityManager"]
 script = ExtResource("9_4lxtk")
-commands = [SubResource("Resource_kn2cf"), SubResource("Resource_4c630"), SubResource("Resource_0qute"), SubResource("Resource_ut0rk"), SubResource("Resource_ljk7v"), SubResource("Resource_yuhsi"), SubResource("Resource_iepjr"), SubResource("Resource_1oh5s")]
+commands = [SubResource("Resource_kn2cf"), SubResource("Resource_4c630"), SubResource("Resource_0qute"), SubResource("Resource_cne1l"), SubResource("Resource_ljk7v"), SubResource("Resource_ut0rk"), SubResource("Resource_yuhsi"), SubResource("Resource_iepjr"), SubResource("Resource_1oh5s")]
 
 [node name="MeleePreferences" type="Node3D" parent="CombatManager/AbilityManager"]
 script = ExtResource("9_4lxtk")
-commands = [SubResource("Resource_h7pwi"), SubResource("Resource_nbepo"), SubResource("Resource_y7rrk"), SubResource("Resource_exslb"), SubResource("Resource_xpf8s"), SubResource("Resource_fhjva"), SubResource("Resource_gnhnw"), SubResource("Resource_gi53r")]
+commands = [SubResource("Resource_h7pwi"), SubResource("Resource_nbepo"), SubResource("Resource_y7rrk"), SubResource("Resource_ep4hp"), SubResource("Resource_exslb"), SubResource("Resource_xpf8s"), SubResource("Resource_fhjva"), SubResource("Resource_gnhnw")]
 
 [node name="UIManager" type="Node3D" parent="CombatManager" node_paths=PackedStringArray("managers", "combatManager", "UI", "partyList", "enemyList", "options", "abilityContainer", "abilityButtonContainer", "secondaryOptions", "secondaryOptionsContainer", "messageText", "cancelButton", "finalizeButton", "itemsList", "itemsContainer", "victoryScreen", "turnOrderContainer")]
 script = ExtResource("6_143na")
@@ -4192,7 +4200,7 @@ text = "No"
 script = ExtResource("35_dwed3")
 managers = NodePath("../../../../ManagerReferenceHolder")
 tabs = [NodePath("../MenuContainer/Additional/TabsContainer/PartyButton"), NodePath("../MenuContainer/Additional/TabsContainer/ItemButton"), NodePath("../MenuContainer/Additional/TabsContainer/SettingsButton"), NodePath("../MenuContainer/Additional/TabsContainer/SaveButton"), NodePath("../MenuContainer/Additional/TabsContainer/QuitButton")]
-menuPanels = [NodePath("../MenuContainer/Party"), NodePath("../MenuContainer/Items"), NodePath("../MenuContainer/Settings")]
+menuPanels = [NodePath("../MenuContainer/Party"), NodePath("../MenuContainer/Items"), NodePath("../MenuContainer/Settings"), NodePath("../MenuContainer/Menu")]
 openSound = NodePath("../../../../AudioPlayers/UI_SFX/UIOpen")
 closeSound = NodePath("../../../../AudioPlayers/UI_SFX/UIClose")
 
@@ -4764,33 +4772,14 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="button_down" from="UI/Overlay/OverwriteMessage/NoButton" to="UI/PartyMenuLayer/PartyMenu/MenuManager" method="OnCancelSave"]
 [connection signal="button_down" from="UI/Overlay/ConfirmationWindow/Back/ConfirmButton" to="MainMenu" method="OnConfirmDelete"]
 [connection signal="mouse_entered" from="UI/Overlay/ConfirmationWindow/Back/ConfirmButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
-[connection signal="button_down" from="UI/Overlay/ConfirmationWindow/Back/BackButton" to="MainMenu" method="OnBackButtonDown" binds= ["/root/BaseNode/UI/Overlay/ConfirmationWindow", "/root/BaseNode/MainMenu/Background/LoadGameSlots"]]
 [connection signal="mouse_entered" from="UI/Overlay/ConfirmationWindow/Back/BackButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
-[connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [0, true]]
-[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager/UIManager" method="OnHoverOverFighterPanel" binds= [0, true]]
-[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel1/Holder/Selection" to="CombatManager/UIManager" method="OnStopHoverOverFighterPanel" binds= [0, true]]
-[connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [1, true]]
-[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager/UIManager" method="OnHoverOverFighterPanel" binds= [1, true]]
-[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel2/Holder/Selection" to="CombatManager/UIManager" method="OnStopHoverOverFighterPanel" binds= [1, true]]
-[connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [2, true]]
-[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager/UIManager" method="OnHoverOverFighterPanel" binds= [2, true]]
-[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel3/Holder/Selection" to="CombatManager/UIManager" method="OnStopHoverOverFighterPanel" binds= [2, true]]
-[connection signal="button_down" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [3, true]]
-[connection signal="mouse_entered" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager/UIManager" method="OnHoverOverFighterPanel" binds= [3, true]]
-[connection signal="mouse_exited" from="UI/CombatEnemyList/HBoxContainer/Panel4/Holder/Selection" to="CombatManager/UIManager" method="OnStopHoverOverFighterPanel" binds= [3, true]]
-[connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel1/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [0, false]]
-[connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel2/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [1, false]]
-[connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel3/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [2, false]]
-[connection signal="button_down" from="UI/CombatPartyListOLD/HBoxContainer/Panel4/Holder/Selection" to="CombatManager" method="OnFighterPanelDown" binds= [3, false]]
 [connection signal="button_down" from="UI/Options/Choices/AttackButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Options/Choices/AttackButton" to="CombatManager" method="OnAttackButtonDown"]
 [connection signal="mouse_entered" from="UI/Options/Choices/AttackButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
-[connection signal="mouse_entered" from="UI/Options/Choices/AttackButton" to="CombatManager/UIManager" method="HoverOverInformation" binds= ["Attack an enemy with equipped weapon. Deals physical damage."]]
 [connection signal="mouse_exited" from="UI/Options/Choices/AttackButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
 [connection signal="button_down" from="UI/Options/Choices/CastButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/Options/Choices/CastButton" to="CombatManager" method="OnCastButtonDown"]
 [connection signal="mouse_entered" from="UI/Options/Choices/CastButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
-[connection signal="mouse_entered" from="UI/Options/Choices/CastButton" to="CombatManager/UIManager" method="HoverOverInformation" binds= ["Cast an ability with mana."]]
 [connection signal="mouse_exited" from="UI/Options/Choices/CastButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
 [connection signal="button_down" from="UI/Options/Choices/ItemButton" to="CombatManager" method="OnItemButtonDown"]
 [connection signal="mouse_exited" from="UI/Options/Choices/ItemButton" to="CombatManager/UIManager" method="StopHoveringOverInformation"]
@@ -4802,12 +4791,18 @@ musicPath = "res://Menus/Main/main_menu.mp3"
 [connection signal="button_down" from="UI/VictoryScreen/Back/Exit" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/VictoryScreen/Back/Exit" to="CombatManager" method="OnExitButtonDown"]
 [connection signal="mouse_entered" from="UI/VictoryScreen/Back/Exit" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Weapon" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [1]]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Head" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [2]]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Chest" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [3]]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Legs" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [4]]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Arms" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [5]]
-[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Accessory" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnEquipButtonDown" binds= [6]]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Weapon" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Weapon" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Head" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Head" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Chest" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Chest" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Legs" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Legs" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Arms" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Arms" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
+[connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Accessory" to="AudioPlayers/ButtonSoundController" method="OnClick"]
+[connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/Equipment/VBoxContainer/Accessory" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]
 [connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/SwapButton" to="AudioPlayers/ButtonSoundController" method="OnClick"]
 [connection signal="button_down" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/SwapButton" to="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party" method="OnSwapButtonDown"]
 [connection signal="mouse_entered" from="UI/PartyMenuLayer/PartyMenu/MenuContainer/Party/SwapButton" to="AudioPlayers/ButtonSoundController" method="OnHoverOver"]

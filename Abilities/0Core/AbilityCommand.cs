@@ -1,4 +1,4 @@
-#if TOOLS
+//#if TOOLS
 using Godot;
 using Godot.Collections;
 
@@ -624,4 +624,4 @@ public partial class AbilityCommand : Resource
       return result;
    }
 }
-#endif
+//#endif

@@ -11,7 +11,7 @@
 [sub_resource type="Resource" id="Resource_vm6um"]
 script = ExtResource("5_hx03e")
 eventName = "AttackWait"
-waitTime = 0.65
+waitTime = 0.9
 projectilePath = ""
 
 [sub_resource type="Resource" id="Resource_dboyi"]

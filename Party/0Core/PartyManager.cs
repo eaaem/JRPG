@@ -212,6 +212,7 @@ public partial class PartyManager : Node
          if (Items[i].item.name == itemToRemove.item.name)
          {
             Items[i].quantity -= itemToRemove.quantity;
+            GD.Print(itemToRemove.quantity);
 
             if (Items[i].quantity <= 0)
             {

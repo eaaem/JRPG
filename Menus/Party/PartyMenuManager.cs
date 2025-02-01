@@ -52,6 +52,13 @@ public partial class PartyMenuManager : Panel
       reequipList = GetNode<VBoxContainer>("ReequipBackground/Reequip/VBoxContainer");
       addPartyButton = GetNode<Button>("AddPartyButton");
       removePartyButton = GetNode<Button>("RemovePartyButton");
+
+      GetNode<Button>("Equipment/VBoxContainer/Weapon").ButtonDown += () => OnEquipButtonDown(1);
+      GetNode<Button>("Equipment/VBoxContainer/Head").ButtonDown += () => OnEquipButtonDown(2);
+      GetNode<Button>("Equipment/VBoxContainer/Chest").ButtonDown += () => OnEquipButtonDown(3);
+      GetNode<Button>("Equipment/VBoxContainer/Legs").ButtonDown += () => OnEquipButtonDown(4);
+      GetNode<Button>("Equipment/VBoxContainer/Arms").ButtonDown += () => OnEquipButtonDown(5);
+      GetNode<Button>("Equipment/VBoxContainer/Accessory").ButtonDown += () => OnEquipButtonDown(6);
 	}
 
    public void CancelReequip()
@@ -279,7 +286,7 @@ public partial class PartyMenuManager : Panel
       {
          ItemResource item = managers.PartyManager.Items[i].item;
          if (item.itemType == (ItemType)index && (item.itemCategory == currentMember.baseMember.itemCategoryWorn 
-            || item.itemCategory == currentMember.baseMember.itemCategoryWielded) || item.itemType == ItemType.Accessory)
+            || item.itemCategory == currentMember.baseMember.itemCategoryWielded || item.itemType == ItemType.Accessory))
          {
             AddReequipButton(managers.PartyManager.Items[i].item);
          }
@@ -291,9 +298,12 @@ public partial class PartyMenuManager : Panel
    void AddReequipButton(ItemResource item)
    {
       Button button = reequipButtonPrefab.Instantiate<Button>();
-      button.Text = item.name;
+      button.Text = "   " + item.name;
       button.TooltipText = item.description;
       button.GetNode<ItemResourceHolder>("ResourceHolder").itemResource = new InventoryItem(item, 1);
+
+      button.MouseEntered += managers.ButtonSoundManager.OnHoverOver;
+      button.ButtonDown += managers.ButtonSoundManager.OnClick;
 
       reequipList.AddChild(button);
    }
@@ -599,11 +609,13 @@ public partial class PartyMenuManager : Panel
       inputDisabled = true;
       foreach (Button button in partyList.GetChildren())
       {
+         button.MouseFilter = MouseFilterEnum.Ignore;
          button.Disabled = true;
       }
 
       foreach (Button button in equipmentList.GetChildren())
       {
+         button.MouseFilter = MouseFilterEnum.Ignore;
          button.Disabled = true;
       }
    }
@@ -613,11 +625,13 @@ public partial class PartyMenuManager : Panel
       inputDisabled = false;
       foreach (Button button in partyList.GetChildren())
       {
+         button.MouseFilter = MouseFilterEnum.Stop;
          button.Disabled = false;
       }
 
       foreach (Button button in equipmentList.GetChildren())
       {
+         button.MouseFilter = MouseFilterEnum.Stop;
          button.Disabled = false;
       }
    }

@@ -6,7 +6,7 @@ public partial class Gust : EnemyAbilityBehavior
    public override void OnEnemyCast()
    {
       System.Collections.Generic.List<DamagingEntity> damagers = new System.Collections.Generic.List<DamagingEntity>();
-      damagers.Add(new DamagingEntity(2, StatType.Intelligence, StatType.Willpower, DamageType.Air));
+      damagers.Add(new DamagingEntity(5, StatType.Intelligence, StatType.Willpower, DamageType.Air));
       
       System.Collections.Generic.List<Fighter> targets = new System.Collections.Generic.List<Fighter>();
 

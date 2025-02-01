@@ -102,6 +102,8 @@ public partial class DialogueManager : Node
             previousDialogueLists.Add(currentDialogueList);
             currentDialogueList = interaction.exitShopDialogue;
          }
+
+         managers.MenuManager.canTakeInput = false;
          
          CurrentIndex = 0;
          NextDialogue(0);
@@ -322,8 +324,9 @@ public partial class DialogueManager : Node
             Vector3 origin = camera.ProjectRayOrigin(mousePosition);
             Vector3 end = origin + camera.ProjectRayNormal(mousePosition) * 5;
             // 4 = layer 3, which is where dialogue objects rest
-            PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(origin, end, 4);
+            PhysicsRayQueryParameters3D query = PhysicsRayQueryParameters3D.Create(origin, end);
             query.CollideWithAreas = true;
+            query.Exclude = new Godot.Collections.Array<Rid> { managers.Controller.GetRid() };
 
             var result = spaceState.IntersectRay(query);
 
@@ -366,6 +369,7 @@ public partial class DialogueManager : Node
       Input.MouseMode = Input.MouseModeEnum.Captured;
       DialogueIsActive = false;
       LockInput = false;
+      managers.MenuManager.canTakeInput = true;
       EmitSignal(SignalName.DialogueEnded);
    }
 }

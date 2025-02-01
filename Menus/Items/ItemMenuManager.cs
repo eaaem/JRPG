@@ -46,13 +46,14 @@ public partial class ItemMenuManager : Panel
          currentButton.TooltipText = currentItem.item.description;
          currentButton.Name = "ItemButton" + (i + 1);
 
-         currentButton.ButtonDown += managers.ButtonSoundManager.OnClick;
-         currentButton.MouseEntered += managers.ButtonSoundManager.OnHoverOver;
-
          if (!currentItem.item.usableOutsideCombat)
          {
             currentButton.Disabled = true;
-            currentButton.MouseFilter = MouseFilterEnum.Ignore;
+         }
+         else
+         {
+            currentButton.ButtonDown += managers.ButtonSoundManager.OnClick;
+            currentButton.MouseEntered += managers.ButtonSoundManager.OnHoverOver;
          }
 
          if (currentItem.item.scriptPath != "")
@@ -213,7 +214,6 @@ public partial class ItemMenuManager : Panel
          if (child.GetNode<ItemResourceHolder>("ResourceHolder").itemResource.item.usableOutsideCombat)
          {
             child.Disabled = false;
-            child.MouseFilter = MouseFilterEnum.Stop;
          }
       }
    }
@@ -223,7 +223,6 @@ public partial class ItemMenuManager : Panel
       foreach (Button child in itemsContainer.GetChildren())
       {
          child.Disabled = true;
-         child.MouseFilter = MouseFilterEnum.Ignore;
       }
    }
 }

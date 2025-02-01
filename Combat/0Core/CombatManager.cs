@@ -214,8 +214,8 @@ public partial class CombatManager : Node
          arenaCamera.MakeCurrent();
          uiManager.ClearAllTurnOrderPortraits();
 
-         // Only populate 1 to start, since the first gets improperly clipped
-         PopulateTurnOrder(1);
+         // Start populating
+         PopulateTurnOrder(5);
 
          // When the next turn is selected, the first fighter will be deleted off, so this duplicates the first fighter, preventing them from losing their turn
          fighterTurnOrders.Insert(0, fighterTurnOrders[0]);
@@ -641,23 +641,8 @@ public partial class CombatManager : Node
 
       if (fighterTurnOrders.Count > 0)
       {
-         TurnOrder currentTurn = fighterTurnOrders[0];
-
-         while (currentTurn.isShadow)
-         {
-            fighterTurnOrders.Remove(currentTurn);
-            currentTurn = fighterTurnOrders[0];
-
-            if (fighterTurnOrders.Count == 0)
-            {
-               GD.PrintErr("No non-shadow turns found; recalculating turns.");
-               PopulateTurnOrder();
-            }
-         }
-
-         fighterTurnOrders.Remove(currentTurn);
+         fighterTurnOrders.Remove(fighterTurnOrders[0]);
          uiManager.DeleteTurnOrderPortrait();
-         numberOfTrueTurns--;
          InitializeTurn(Fighters[fighterTurnOrders[0].id]);
       }
       
@@ -713,43 +698,34 @@ public partial class CombatManager : Node
 
    void PopulateTurnOrder(int populateAmount = 10)
    {
-      while (numberOfTrueTurns < populateAmount) 
+      while (fighterTurnOrders.Count < populateAmount) 
       {
          for (int i = 0; i < Fighters.Count; i++) 
          {
-            Fighters[i].actionLevel += CalculateCurrentSpeed(Fighters[i]);
-
-            if (Fighters[i].actionLevel >= 100) 
+            if (!Fighters[i].isDead)
             {
-               if (Fighters[i].isDead)
-               {
-                  fighterTurnOrders.Add(new TurnOrder(i, true));
-               }
-               else
+               Fighters[i].actionLevel += CalculateCurrentSpeed(Fighters[i]);
+
+               if (Fighters[i].actionLevel >= 100) 
                {
                   fighterTurnOrders.Add(new TurnOrder(i, false));
-                  numberOfTrueTurns++;
+                  uiManager.CreateTurnOrderPortrait(Fighters[i], i);
 
-                  if (uiManager.GetNumberOfPortraits() < 10)
+                  Fighters[i].actionLevel = 0;
+
+                  if (fighterTurnOrders.Count >= 10)
                   {
-                     uiManager.CreateTurnOrderPortrait(Fighters[i], i);
+                     return;
                   }
-               }
-
-               Fighters[i].actionLevel = 0;
-
-               if (numberOfTrueTurns >= 10)
-               {
-                  return;
-               }
-            }          
+               }     
+            }  
          }
       }
    }
 
    public void ReviveFighter(Fighter fighter)
    {
-      int fighterID = 0;
+      /*int fighterID = 0;
 
       for (int i = 0; i < Fighters.Count; i++)
       {
@@ -774,7 +750,7 @@ public partial class CombatManager : Node
          {
             uiManager.CreateTurnOrderPortrait(Fighters[fighterTurnOrders[i].id], fighterTurnOrders[i].id);
          }
-      }
+      }*/
    }
 
    int CalculateCurrentSpeed(Fighter fighter)
@@ -1489,7 +1465,8 @@ public partial class CombatManager : Node
          {
             if (fighterTurnOrders[j].id == deadFighterIDs[i])
             {
-               fighterTurnOrders[j].isShadow = true;
+               fighterTurnOrders.Remove(fighterTurnOrders[j]);
+               j--;
             }
          }
 

@@ -236,7 +236,7 @@ public partial class CharacterController : CharacterBody3D
 
          // Rotates along the x-axis, clamping to prevent too much rotation
          Vector3 clampRotation = cameraTarget.Rotation;
-         clampRotation.X -= (mouseMotion.Relative.Y * HorizontalSensitivity * sensitivityModifier * 0.25f) / 50f;
+         clampRotation.X += (mouseMotion.Relative.Y * HorizontalSensitivity * sensitivityModifier * 0.25f) / 50f;
          clampRotation.X = Mathf.Clamp(clampRotation.X, Mathf.DegToRad(-45f), Mathf.DegToRad(maxClamp));
          cameraTarget.Rotation = clampRotation;
       }

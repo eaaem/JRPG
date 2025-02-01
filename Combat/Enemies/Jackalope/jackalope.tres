@@ -8,7 +8,7 @@
 [sub_resource type="Resource" id="Resource_rhmsn"]
 script = ExtResource("2_7gig3")
 statType = 0
-value = 7
+value = 5
 baseValue = 0
 
 [sub_resource type="Resource" id="Resource_ocqu6"]
@@ -69,7 +69,7 @@ baseValue = 0
 script = ExtResource("1_kncb1")
 enemyName = "Jackalope"
 level = 2
-baseAttackDamage = 3
+baseAttackDamage = 4
 stats = [SubResource("Resource_rhmsn"), SubResource("Resource_ocqu6"), SubResource("Resource_pti5b"), SubResource("Resource_ad8ux"), SubResource("Resource_ytb7w"), SubResource("Resource_kqtbl"), SubResource("Resource_pn44w"), SubResource("Resource_kmmwc"), SubResource("Resource_cxof3"), SubResource("Resource_esfkd")]
 model = ExtResource("1_n03h3")
 affinity = 3

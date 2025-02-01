@@ -5,7 +5,8 @@ enum TheralinProgressMarkers
 {
    FirstTheralinCutscene,
    SecondTheralinCutscene,
-   ThirdTheralinCutscene
+   ThirdTheralinCutscene,
+   FourthTheralinCutscene
 }
 
 public partial class TheralinProgress : LevelProgession
@@ -22,6 +23,11 @@ public partial class TheralinProgress : LevelProgession
       for (int i = 0; i < (progress < 4 ? progress : 3); i++)
       {
          Call(((TheralinProgressMarkers)i).ToString());
+      }
+
+      if (progress > 183)
+      {
+         FourthTheralinCutscene();
       }
 
       RandomDistortion();
@@ -209,7 +215,7 @@ public partial class TheralinProgress : LevelProgession
          SetPhysicsProcess(false);
       }
 
-      GetNode<PathFollow3D>("/root/BaseNode/Level/olren_arrow_projectile/Path3D/PathFollow3D").ProgressRatio += (float)(0.1f * delta);
+      GetNode<PathFollow3D>("/root/BaseNode/Level/olren_arrow_projectile/Path3D/PathFollow3D").ProgressRatio += (float)(5f * delta);
    }
 
    /// <summary>
@@ -249,10 +255,14 @@ public partial class TheralinProgress : LevelProgession
       Node3D items = GetNode<Node3D>("/root/BaseNode/Level/cutscene5_items");
       GetNode<Node3D>("/root/BaseNode/Level").CallDeferred(Node3D.MethodName.RemoveChild, items);
       items.CallDeferred(Node3D.MethodName.QueueFree);
-      GetNode<CollisionShape3D>("../EarlyExitBox/CollisionShape3D").Disabled = true;
-      GetNode<CollisionShape3D>("../ExitPoint/CollisionShape3D").Disabled = false;
 
       StartDistortionTimer();
+   }
+
+   void FourthTheralinCutscene()
+   {
+      GetNode<CollisionShape3D>("../EarlyExitBox/CollisionShape3D").Disabled = true;
+      GetNode<CollisionShape3D>("../ExitPoint/CollisionShape3D").Disabled = false;
    }
 
    public void ShopTutorial()
@@ -632,6 +642,8 @@ public partial class TheralinProgress : LevelProgession
          CutsceneTrigger trigger = GetNode<CutsceneTrigger>("cutscene6");
          managers.CutsceneManager.InitiateCutscene(trigger.cutsceneObject, trigger.id);
          GetNode<AudioStreamPlayer>("/root/BaseNode/MusicPlayer").VolumeDb = 0f;
+
+         FourthTheralinCutscene();
 
          for (int i = 0; i < managers.PartyManager.Party.Count; i++)
          {

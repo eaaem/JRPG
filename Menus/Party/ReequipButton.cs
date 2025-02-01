@@ -7,7 +7,7 @@ public partial class ReequipButton : Node
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
-      menuManager = GetNode<PartyMenuManager>("/root/BaseNode/UI/PartyMenu/TabContainer/Party");
+      menuManager = GetNode<PartyMenuManager>("/root/BaseNode/UI/PartyMenuLayer/PartyMenu/MenuContainer/Party");
       GetParent<Button>().ButtonDown += OnReequipDown;
 	}
 

@@ -99,6 +99,10 @@ public partial class WorldEnemy : CharacterBody3D
       Vector3 velocity = Velocity;
       distance = GlobalPosition.DistanceTo(player.GlobalPosition);
 
+      if (!IsOnFloor()) {
+         velocity.Y -= gravity * (float)delta;
+      }
+
       if (distance < VisibilityThreshhold)
       {
          Visible = true;

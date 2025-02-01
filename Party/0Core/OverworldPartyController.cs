@@ -148,6 +148,13 @@ public partial class OverworldPartyController : CharacterBody3D
             MovementTarget = targetPosition;
          }
 
+         // Teleport if too far away
+         if (distance > 50f)
+         {
+            GlobalPosition = playerModel.GlobalTransform.Basis.Z * (1.75f * index);
+            return;
+         }
+
          if (navigationAgent.IsNavigationFinished())
          {
             if (movementBlend > -10)

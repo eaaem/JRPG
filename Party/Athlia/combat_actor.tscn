@@ -11,7 +11,7 @@
 [sub_resource type="Resource" id="Resource_k0q4u"]
 script = ExtResource("8_cmr0p")
 eventName = "AttackWait"
-waitTime = 0.8
+waitTime = 1.1
 projectilePath = ""
 
 [sub_resource type="Resource" id="Resource_k3ui1"]
@@ -47,15 +47,12 @@ bones/4/rotation = Quaternion(-3.71801e-09, -1.45377e-11, 1.16415e-10, 1)
 bones/5/rotation = Quaternion(-0.00031852, 0.0535757, -0.00635386, 0.998544)
 bones/6/position = Vector3(0.0127904, 0.103606, 0.094117)
 bones/6/rotation = Quaternion(-0.0890857, 0.104424, -0.742799, 0.655293)
-bones/8/scale = Vector3(1, 1, 1)
 bones/9/rotation = Quaternion(-0.198561, 0.00416166, -0.0153324, 0.97996)
 bones/10/position = Vector3(7.39874e-05, -0.000606858, -4.56687e-06)
 bones/10/rotation = Quaternion(0.695094, 0.141626, -0.696243, -0.109694)
 bones/11/position = Vector3(-0.0127905, 0.103606, 0.094117)
 bones/11/rotation = Quaternion(-0.0980086, -0.101819, 0.719075, 0.680411)
 bones/12/rotation = Quaternion(-0.210499, -0.00970654, 0.0173713, 0.977392)
-bones/13/scale = Vector3(1, 1, 1)
-bones/14/scale = Vector3(1, 1, 1)
 bones/16/rotation = Quaternion(0.789453, -0.000275853, -6.89817e-05, 0.61381)
 bones/17/scale = Vector3(1, 1, 1)
 bones/18/rotation = Quaternion(-0.198561, 0.00416235, -0.0153283, 0.97996)
