@@ -6,10 +6,6 @@ public partial class MenuManager : Node
    [Export]
    private ManagerReferenceHolder managers;
    [Export]
-   private Button[] tabs = new Button[0];
-   [Export]
-   private Panel[] menuPanels = new Panel[0];
-   [Export]
    private AudioStreamPlayer openSound;
    [Export]
    private AudioStreamPlayer closeSound;
@@ -18,6 +14,10 @@ public partial class MenuManager : Node
    public CharacterController controller;
    private AnimationPlayer animationPlayer;
    private Panel container;
+
+   private Button[] tabs = new Button[5];
+   private Panel[] menuPanels = new Panel[3];
+
 
    private Panel quitOptions;
    private Panel quitConfirmation;
@@ -50,6 +50,20 @@ public partial class MenuManager : Node
       miscMenuManager = container.GetNode<MiscMenuManager>("Menu");
       quitOptions = container.GetNode<Panel>("QuitOptions");
       quitConfirmation = quitOptions.GetNode<Panel>("QuitConfirmation");
+
+      container.GetNode<Button>("Additional/TabsContainer/PartyButton").ButtonDown += () => OnTabPressed(0);
+      container.GetNode<Button>("Additional/TabsContainer/ItemButton").ButtonDown += () => OnTabPressed(1);
+      container.GetNode<Button>("Additional/TabsContainer/SettingsButton").ButtonDown += () => OnTabPressed(2);
+      container.GetNode<Button>("Additional/TabsContainer/SaveButton").ButtonDown += () => OnTabPressed(3);
+      container.GetNode<Button>("Additional/TabsContainer/QuitButton").ButtonDown += () => OnTabPressed(4);
+
+      tabs[0] = GetNode<Button>("Additional/TabsContainer/PartyButton");
+      tabs[1] = GetNode<Button>("Additional/TabsContainer/ItemButton");
+      tabs[2] = GetNode<Button>("Additional/TabsContainer/SettingsButton");
+      tabs[3] = GetNode<Button>("Additional/TabsContainer/SaveButton");
+      tabs[4] = GetNode<Button>("Additional/TabsContainer/QuitButton");
+
+      // Do the menu panels
 
       blackScreen = GetNode<ColorRect>("/root/BaseNode/UI/Overlay/BlackScreen");
    }

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=36 format=3 uid="uid://b6424vyj7dspo"]
+[gd_resource type="Resource" load_steps=36 format=3 uid="uid://b6424vyj7dspo"]
 
 [ext_resource type="Resource" uid="uid://dkv8ppnb0xemb" path="res://Abilities/Party/Provoke/provoke.tres" id="1_5j7s7"]
 [ext_resource type="Script" path="res://Party/0Core/PartyMemberBase.cs" id="2_xhbsv"]

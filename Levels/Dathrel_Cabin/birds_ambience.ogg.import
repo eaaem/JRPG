@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://cllgncsg58k7r"
-path="res://.godot/imported/birds_ambience.ogg-d83dd58dbc84cf8983c94cc69e730d95.oggvorbisstr"
+path="res://.godot/imported/birds_ambience.ogg-05b30ef49a1bddf2ba31d4a520570404.oggvorbisstr"
 
 [deps]
 
-source_file="res://Levels/dathrel_cabin/birds_ambience.ogg"
-dest_files=["res://.godot/imported/birds_ambience.ogg-d83dd58dbc84cf8983c94cc69e730d95.oggvorbisstr"]
+source_file="res://Levels/Dathrel_Cabin/birds_ambience.ogg"
+dest_files=["res://.godot/imported/birds_ambience.ogg-05b30ef49a1bddf2ba31d4a520570404.oggvorbisstr"]
 
 [params]
 

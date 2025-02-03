@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://q2aqccl1jg3c"
-path="res://.godot/imported/howl2.wav-6c6d999c343263b451eaba9731498fb0.sample"
+path="res://.godot/imported/howl2.wav-acd60bb0f890f97b3eaad852ee33131e.sample"
 
 [deps]
 
-source_file="res://Levels/copse_chase/howl2.wav"
-dest_files=["res://.godot/imported/howl2.wav-6c6d999c343263b451eaba9731498fb0.sample"]
+source_file="res://Levels/Copse_Chase/howl2.wav"
+dest_files=["res://.godot/imported/howl2.wav-acd60bb0f890f97b3eaad852ee33131e.sample"]
 
 [params]
 

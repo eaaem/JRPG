@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://bgk6i4irabe2c"
-path="res://.godot/imported/copse_chase.mp3-56a0c2edd3026d55f0d2e1014c4a6463.mp3str"
+path="res://.godot/imported/copse_chase.mp3-f51c89b97c7cdd97a90c6084c22feb44.mp3str"
 
 [deps]
 
-source_file="res://Levels/copse_chase/copse_chase.mp3"
-dest_files=["res://.godot/imported/copse_chase.mp3-56a0c2edd3026d55f0d2e1014c4a6463.mp3str"]
+source_file="res://Levels/Copse_Chase/copse_chase.mp3"
+dest_files=["res://.godot/imported/copse_chase.mp3-f51c89b97c7cdd97a90c6084c22feb44.mp3str"]
 
 [params]
 

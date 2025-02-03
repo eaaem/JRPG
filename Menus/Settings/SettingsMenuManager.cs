@@ -44,6 +44,10 @@ public partial class SettingsMenuManager : Panel
       videoButton = GetNode<Button>("ButtonsContainer/Video");
       controlsButton = GetNode<Button>("ButtonsContainer/Controls");
 
+      videoButton.ButtonDown += () => OnTabButtonDown(0);
+      controlsButton.ButtonDown += () => OnTabButtonDown(1);
+      GetNode<Button>("ButtonsContainer/Audio").ButtonDown += () => OnTabButtonDown(2);
+
       InitializeResolutions();
 
       configFile = new ConfigFile();

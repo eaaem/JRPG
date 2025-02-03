@@ -35,6 +35,17 @@ public partial class MainMenuManager : CanvasLayer
       managers.MenuManager.canTakeInput = false;
       managers.Controller.DisableGravity = true;
 
+      slots.GetNode<Button>("Slot1").ButtonDown += () => OnSlotDown(0);
+      slots.GetNode<Button>("Slot2").ButtonDown += () => OnSlotDown(1);
+      slots.GetNode<Button>("Slot3").ButtonDown += () => OnSlotDown(2);
+      slots.GetNode<Button>("Slot4").ButtonDown += () => OnSlotDown(3);
+      slots.GetNode<Button>("Slot5").ButtonDown += () => OnSlotDown(4);
+
+      loadGameSlots.GetNode<Button>("Back").ButtonDown += () => OnBackButtonDown("/root/BaseNode/MainMenu/Background/LoadGameSlots",
+                                                                                 "/root/BaseNode/MainMenu/Background/Main");
+      settingsScreen.GetNode<Button>("Back").ButtonDown += () => OnBackButtonDown("/root/BaseNode/MainMenu/Background/Settings",
+                                                                                 "/root/BaseNode/MainMenu/Background/Main");                                                                          
+
       CreateMainMenuLevel();
       CheckLoadGameButtonAvailability();
       CheckNewGameButtonAvailability();

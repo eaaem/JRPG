@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://dibna3d4kofhm"
-path="res://.godot/imported/birds_ambience_breaks.ogg-59a76e3d166566c83346c923acaabca3.oggvorbisstr"
+path="res://.godot/imported/birds_ambience_breaks.ogg-de147565019212f1c3ecb7ea89ab02d3.oggvorbisstr"
 
 [deps]
 
-source_file="res://Levels/copse_chase/birds_ambience_breaks.ogg"
-dest_files=["res://.godot/imported/birds_ambience_breaks.ogg-59a76e3d166566c83346c923acaabca3.oggvorbisstr"]
+source_file="res://Levels/Copse_Chase/birds_ambience_breaks.ogg"
+dest_files=["res://.godot/imported/birds_ambience_breaks.ogg-de147565019212f1c3ecb7ea89ab02d3.oggvorbisstr"]
 
 [params]
 

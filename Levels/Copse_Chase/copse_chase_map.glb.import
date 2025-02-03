@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bc7x3xb6fvvn0"
-path="res://.godot/imported/copse_chase_map.glb-9608e26625155c220b4888d478cef367.scn"
+path="res://.godot/imported/copse_chase_map.glb-80c66a777a867cbbfeeadc0787a61342.scn"
 
 [deps]
 
-source_file="res://Levels/copse_chase/copse_chase_map.glb"
-dest_files=["res://.godot/imported/copse_chase_map.glb-9608e26625155c220b4888d478cef367.scn"]
+source_file="res://Levels/Copse_Chase/copse_chase_map.glb"
+dest_files=["res://.godot/imported/copse_chase_map.glb-80c66a777a867cbbfeeadc0787a61342.scn"]
 
 [params]
 

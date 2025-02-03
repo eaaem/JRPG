@@ -3,12 +3,12 @@
 importer="oggvorbisstr"
 type="AudioStreamOggVorbis"
 uid="uid://50pynwci77hb"
-path="res://.godot/imported/crickets.ogg-37bdd55c4c2fa7c831ae10d190facc2b.oggvorbisstr"
+path="res://.godot/imported/crickets.ogg-4912bfbd34e48dcaf635e08208b709be.oggvorbisstr"
 
 [deps]
 
-source_file="res://Levels/copse_chase/crickets.ogg"
-dest_files=["res://.godot/imported/crickets.ogg-37bdd55c4c2fa7c831ae10d190facc2b.oggvorbisstr"]
+source_file="res://Levels/Copse_Chase/crickets.ogg"
+dest_files=["res://.godot/imported/crickets.ogg-4912bfbd34e48dcaf635e08208b709be.oggvorbisstr"]
 
 [params]
 

@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=37 format=3 uid="uid://ck7wy6s7wajxw"]
+[gd_resource type="Resource" load_steps=37 format=3 uid="uid://ck7wy6s7wajxw"]
 
 [ext_resource type="Resource" uid="uid://uhdvsljdtwyn" path="res://Abilities/Party/Fireball/fireball.tres" id="1_5s0wk"]
 [ext_resource type="Resource" uid="uid://cikhdcha1qans" path="res://Abilities/Party/MagicBolt/magic_bolt.tres" id="1_8g1pl"]

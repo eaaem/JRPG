@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="ItemResource" load_steps=7 format=3 uid="uid://bi6wovgrhfd0i"]
+[gd_resource type="Resource" load_steps=7 format=3 uid="uid://bi6wovgrhfd0i"]
 
 [ext_resource type="Script" path="res://Combat/0Core/StatContainer.cs" id="1_v7p1m"]
 [ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="2_23j6y"]

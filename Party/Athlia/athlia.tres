@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=36 format=3 uid="uid://0y8iemdigx00"]
+[gd_resource type="Resource" load_steps=36 format=3 uid="uid://0y8iemdigx00"]
 
 [ext_resource type="Resource" uid="uid://lx78kbhd5261" path="res://Abilities/Party/Heal/minor_heal.tres" id="1_3b551"]
 [ext_resource type="Resource" uid="uid://dbcuvabocierf" path="res://Abilities/Party/Inspire/inspire.tres" id="1_vr0p4"]

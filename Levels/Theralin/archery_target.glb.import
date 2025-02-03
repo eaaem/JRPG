@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://pt0hkagsuovp"
-path="res://.godot/imported/archery_target.glb-391e06706f4104fc5e714ca32b403b56.scn"
+path="res://.godot/imported/archery_target.glb-e56ed2ed9e5c41242db6875bb6f3d5f0.scn"
 
 [deps]
 
-source_file="res://Levels/theralin/archery_target.glb"
-dest_files=["res://.godot/imported/archery_target.glb-391e06706f4104fc5e714ca32b403b56.scn"]
+source_file="res://Levels/Theralin/archery_target.glb"
+dest_files=["res://.godot/imported/archery_target.glb-e56ed2ed9e5c41242db6875bb6f3d5f0.scn"]
 
 [params]
 
