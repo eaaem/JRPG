@@ -3,12 +3,12 @@
 importer="mp3"
 type="AudioStreamMP3"
 uid="uid://k870uhgtftu2"
-path="res://.godot/imported/cabin.mp3-d66ec716a1b7216fe799619ee1ca0610.mp3str"
+path="res://.godot/imported/cabin.mp3-f73d8fb323e8a1021a8917fae5837d4b.mp3str"
 
 [deps]
 
-source_file="res://Levels/Dathrel_Cabin/cabin.mp3"
-dest_files=["res://.godot/imported/cabin.mp3-d66ec716a1b7216fe799619ee1ca0610.mp3str"]
+source_file="res://Levels/dathrel_cabin/cabin.mp3"
+dest_files=["res://.godot/imported/cabin.mp3-f73d8fb323e8a1021a8917fae5837d4b.mp3str"]
 
 [params]
 

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bndyjbj3k6ouc"
-path="res://.godot/imported/theralin_map.glb-876cbd8dcc3778c24b530802bfaa7f65.scn"
+path="res://.godot/imported/theralin_map.glb-deca05bc51fba09e7d4825eca648eae2.scn"
 
 [deps]
 
-source_file="res://Levels/Theralin/theralin_map.glb"
-dest_files=["res://.godot/imported/theralin_map.glb-876cbd8dcc3778c24b530802bfaa7f65.scn"]
+source_file="res://Levels/theralin/theralin_map.glb"
+dest_files=["res://.godot/imported/theralin_map.glb-deca05bc51fba09e7d4825eca648eae2.scn"]
 
 [params]
 

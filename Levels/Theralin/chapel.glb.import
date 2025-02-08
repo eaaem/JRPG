@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dape1e1ahmhdh"
-path="res://.godot/imported/chapel.glb-133e4cf28e0bbcab8d586f9fecc294ab.scn"
+path="res://.godot/imported/chapel.glb-4052ec2548f265b14a2e482e4541bf9b.scn"
 
 [deps]
 
-source_file="res://Levels/Theralin/chapel.glb"
-dest_files=["res://.godot/imported/chapel.glb-133e4cf28e0bbcab8d586f9fecc294ab.scn"]
+source_file="res://Levels/theralin/chapel.glb"
+dest_files=["res://.godot/imported/chapel.glb-4052ec2548f265b14a2e482e4541bf9b.scn"]
 
 [params]
 

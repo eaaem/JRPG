@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=14 format=3 uid="uid://ce0tsdq6erl15"]
+[gd_resource type="Resource" script_class="Enemy" load_steps=14 format=3 uid="uid://ce0tsdq6erl15"]
 
 [ext_resource type="PackedScene" uid="uid://dujjbf8g10f8l" path="res://Combat/Enemies/Dummy/dummy.tscn" id="1_fnxwu"]
 [ext_resource type="Script" path="res://Combat/0Core/Enemy.cs" id="1_wac1q"]

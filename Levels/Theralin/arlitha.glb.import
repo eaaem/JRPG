@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://c4vhebv7ydujm"
-path="res://.godot/imported/arlitha.glb-a025b523ae082f813073c74f4fada8cc.scn"
+path="res://.godot/imported/arlitha.glb-6751f50783583b5bc0a8cf54022cf7e2.scn"
 
 [deps]
 
-source_file="res://Levels/Theralin/arlitha.glb"
-dest_files=["res://.godot/imported/arlitha.glb-a025b523ae082f813073c74f4fada8cc.scn"]
+source_file="res://Levels/theralin/arlitha.glb"
+dest_files=["res://.godot/imported/arlitha.glb-6751f50783583b5bc0a8cf54022cf7e2.scn"]
 
 [params]
 

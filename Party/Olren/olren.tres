@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=36 format=3 uid="uid://cuw45oxjrj1jr"]
+[gd_resource type="Resource" script_class="PartyMemberBase" load_steps=36 format=3 uid="uid://cuw45oxjrj1jr"]
 
 [ext_resource type="Resource" uid="uid://cvour86yaerwa" path="res://Abilities/Party/Birdseye/birdseye.tres" id="1_4jh0q"]
 [ext_resource type="Script" path="res://Combat/0Core/Stat.cs" id="2_3od8h"]

@@ -57,13 +57,16 @@ public partial class MenuManager : Node
       container.GetNode<Button>("Additional/TabsContainer/SaveButton").ButtonDown += () => OnTabPressed(3);
       container.GetNode<Button>("Additional/TabsContainer/QuitButton").ButtonDown += () => OnTabPressed(4);
 
-      tabs[0] = GetNode<Button>("Additional/TabsContainer/PartyButton");
-      tabs[1] = GetNode<Button>("Additional/TabsContainer/ItemButton");
-      tabs[2] = GetNode<Button>("Additional/TabsContainer/SettingsButton");
-      tabs[3] = GetNode<Button>("Additional/TabsContainer/SaveButton");
-      tabs[4] = GetNode<Button>("Additional/TabsContainer/QuitButton");
+      tabs[0] = container.GetNode<Button>("Additional/TabsContainer/PartyButton");
+      tabs[1] = container.GetNode<Button>("Additional/TabsContainer/ItemButton");
+      tabs[2] = container.GetNode<Button>("Additional/TabsContainer/SettingsButton");
+      tabs[3] = container.GetNode<Button>("Additional/TabsContainer/SaveButton");
+      tabs[4] = container.GetNode<Button>("Additional/TabsContainer/QuitButton");
 
       // Do the menu panels
+      menuPanels[0] = container.GetNode<Panel>("Party");
+      menuPanels[1] = container.GetNode<Panel>("Items");
+      menuPanels[2] = container.GetNode<Panel>("Settings");
 
       blackScreen = GetNode<ColorRect>("/root/BaseNode/UI/Overlay/BlackScreen");
    }

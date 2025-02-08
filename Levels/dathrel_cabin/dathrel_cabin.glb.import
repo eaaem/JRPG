@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://0bghlkvkgcip"
-path="res://.godot/imported/dathrel_cabin.glb-a69a2af8e3fae4053b9b18d7ab086fac.scn"
+path="res://.godot/imported/dathrel_cabin.glb-fac5246b85cc0cbe9de1a9d01dc961f0.scn"
 
 [deps]
 
-source_file="res://Levels/Dathrel_Cabin/dathrel_cabin.glb"
-dest_files=["res://.godot/imported/dathrel_cabin.glb-a69a2af8e3fae4053b9b18d7ab086fac.scn"]
+source_file="res://Levels/dathrel_cabin/dathrel_cabin.glb"
+dest_files=["res://.godot/imported/dathrel_cabin.glb-fac5246b85cc0cbe9de1a9d01dc961f0.scn"]
 
 [params]
 

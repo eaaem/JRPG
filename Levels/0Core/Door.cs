@@ -41,4 +41,12 @@ public partial class Door : Node
       await ToSignal(GetTree().CreateTimer(animationPlayer.CurrentAnimationLength), "timeout");
       isChangingStates = false;
    }
+
+   void OnBodyEntered(Node3D body)
+   {
+      if (!isOpen)
+      {
+         ChangeDoorState();
+      }
+   }
 }

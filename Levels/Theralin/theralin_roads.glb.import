@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://dqluyckvcra0g"
-path="res://.godot/imported/theralin_roads.glb-d10c719042cc482e18ce7f0b0f302c51.scn"
+path="res://.godot/imported/theralin_roads.glb-cbccef72db02fd7ef7570bbf0804cf4a.scn"
 
 [deps]
 
-source_file="res://Levels/Theralin/theralin_roads.glb"
-dest_files=["res://.godot/imported/theralin_roads.glb-d10c719042cc482e18ce7f0b0f302c51.scn"]
+source_file="res://Levels/theralin/theralin_roads.glb"
+dest_files=["res://.godot/imported/theralin_roads.glb-cbccef72db02fd7ef7570bbf0804cf4a.scn"]
 
 [params]
 

@@ -10,10 +10,9 @@ public partial class SettingsMenuManager : Panel
    [Export]
    private ManagerReferenceHolder managers;
 
+   Panel[] panels = new Panel[3];
    [Export]
-   Panel[] panels;
-   [Export]
-   Button[] tabs;
+   Button[] tabs = new Button[3];
 
    Panel videoPanel;
    Panel controlsPanel;
@@ -53,11 +52,29 @@ public partial class SettingsMenuManager : Panel
       configFile = new ConfigFile();
       Error error = configFile.Load("user://settings.cfg");
 
+      tabs[0] = videoButton;
+      tabs[1] = controlsButton;
+      tabs[2] = GetNode<Button>("ButtonsContainer/Audio");
+
+      panels[0] = videoPanel;
+      panels[1] = controlsPanel;
+      panels[2] = GetNode<Panel>("Audio");
+
       // There is no config file, we need to make one
       if (error != Error.Ok)
       {
+         GD.Print("Creating new");
          configFile.SetValue("video", "windowed_mode", 4);
          configFile.SetValue("video", "resolution", "1920x1080");
+
+         configFile.SetValue("controls", "sensitivity", characterController.HorizontalSensitivity);
+
+         configFile.SetValue("audio", "master", 0);
+         configFile.SetValue("audio", "music", 0);
+         configFile.SetValue("audio", "effects", 0);
+         configFile.SetValue("audio", "ambience", 0);
+         configFile.SetValue("audio", "ui", 0);
+
          return;
       }
 

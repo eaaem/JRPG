@@ -7,6 +7,7 @@ public partial class OverworldPartyController : CharacterBody3D
    private int index;
 
    private const float DistanceThreshold = 10f;
+   private const float SprintThreshhold = 15f;
 
    [Export]
    private ManagerReferenceHolder managers;
@@ -142,16 +143,23 @@ public partial class OverworldPartyController : CharacterBody3D
             velocity.Y -= gravity * (float)delta;
          }
 
+         bool isSprinting = false;
+
          if (distance >= DistanceThreshold + (3f * index))
          {
             targetPosition = player.GlobalPosition - (playerModel.GlobalTransform.Basis.Z * (1.75f * index));
             MovementTarget = targetPosition;
+
+            if (distance >= SprintThreshhold + (3f * index))
+            {
+               isSprinting = true;
+            }
          }
 
          // Teleport if too far away
-         if (distance > 50f)
+         if (distance > 500f)
          {
-            GlobalPosition = playerModel.GlobalTransform.Basis.Z * (1.75f * index);
+            GlobalPosition = player.GlobalPosition - (playerModel.GlobalTransform.Basis.Z * (1.75f * index));
             return;
          }
 
@@ -178,16 +186,16 @@ public partial class OverworldPartyController : CharacterBody3D
          modelRotation.Y = Mathf.LerpAngle(model.Rotation.Y, Mathf.Atan2(velocity.X, velocity.Z), 0.25f);
          model.Rotation = modelRotation;
 
-         float speed = player.IsSprinting ? managers.Controller.SprintSpeed : managers.Controller.RegularSpeed;
+         float speed = isSprinting ? managers.Controller.SprintSpeed : managers.Controller.RegularSpeed;
 
          velocity.X = currentAgentPosition.DirectionTo(nextPathPosition).X * speed * 1.1f;
          velocity.Z = currentAgentPosition.DirectionTo(nextPathPosition).Z * speed * 1.1f;
 
-         if ((player.IsSprinting && movementBlend < 10) || (!player.IsSprinting && movementBlend < 0)) 
+         if ((isSprinting && movementBlend < 10) || (!isSprinting && movementBlend < 0)) 
          {
             movementBlend += 1;
          }
-         else if (!player.IsSprinting && movementBlend > 0)
+         else if (!isSprinting && movementBlend > 0)
          {
             movementBlend -= 1;
          }
